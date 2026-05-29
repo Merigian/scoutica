@@ -57,8 +57,7 @@ export default async function LandingPage() {
       <section className="relative flex flex-col lg:grid lg:grid-cols-12 min-h-[88vh] lg:min-h-screen bg-[var(--bg)]">
         {/* Type column */}
         <div className="order-2 lg:order-1 lg:col-span-5 relative z-10 flex flex-col px-6 sm:px-10 lg:px-14 xl:px-20 pt-12 lg:pt-32 pb-14 lg:pb-16">
-          <div className="hidden lg:flex items-center justify-between hairline-b pb-6">
-            <p className="text-meta text-[var(--ink-3)]">{t("cover.masthead")}</p>
+          <div className="hidden lg:flex items-center justify-end hairline-b pb-6">
             <p className="text-meta text-[var(--ink-3)]">{issueDate}</p>
           </div>
 
@@ -100,9 +99,6 @@ export default async function LandingPage() {
             className="object-cover object-[62%_28%]"
           />
           <div className="absolute inset-0 bg-gradient-to-bl from-transparent via-transparent to-[var(--ink)]/35" />
-          <div className="absolute left-6 lg:left-10 top-6 lg:top-10 flex flex-col gap-2 lg:hidden">
-            <p className="text-meta text-white/90">{t("cover.masthead")}</p>
-          </div>
           <div className="absolute right-6 lg:right-12 bottom-6 lg:bottom-10 text-right">
             <p className="text-meta text-white/85">N° 01 · {issueDate}</p>
             <p className="text-eyebrow text-white/90 mt-2">{t("cover.manifestoTop")}</p>
