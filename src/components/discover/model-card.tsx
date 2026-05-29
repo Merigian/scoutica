@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useTransition } from "react";
+import { useState, useTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -73,10 +73,9 @@ function ProfileImage({
   showGradient,
 }: ProfileImageProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const touchStartX = useRef<number | null>(null);
   const hasMultiple = images.length > 1;
 
-  const goTo = (e: React.MouseEvent, dir: "prev" | "next") => {
+  const go = (e: React.MouseEvent, dir: "prev" | "next") => {
     e.preventDefault();
     e.stopPropagation();
     setCurrentIndex((prev) =>
@@ -87,24 +86,7 @@ function ProfileImage({
   };
 
   return (
-    <div
-      className="absolute inset-0"
-      onTouchStart={(e) => {
-        touchStartX.current = e.touches[0].clientX;
-      }}
-      onTouchEnd={(e) => {
-        if (touchStartX.current === null || !hasMultiple) return;
-        const diff = e.changedTouches[0].clientX - touchStartX.current;
-        if (Math.abs(diff) > 50) {
-          setCurrentIndex((prev) =>
-            diff < 0
-              ? (prev + 1) % images.length
-              : (prev - 1 + images.length) % images.length
-          );
-        }
-        touchStartX.current = null;
-      }}
-    >
+    <div className="absolute inset-0">
       {images.length > 0 ? (
         <Image
           src={images[currentIndex]}
@@ -123,42 +105,39 @@ function ProfileImage({
         <>
           <button
             type="button"
-            aria-label="prev"
-            onClick={(e) => goTo(e, "prev")}
-            className="absolute left-2 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white opacity-0 transition-opacity hover:bg-black/60 group-hover:opacity-100"
+            aria-label="Previous photo"
+            onClick={(e) => go(e, "prev")}
+            className="nav-zone absolute inset-y-0 left-0 z-10 flex w-1/3 items-center justify-start pl-3 focus:outline-none"
           >
-            <ChevronLeft className="h-4 w-4" />
+            <span className="nav-arrow flex h-9 w-9 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md">
+              <ChevronLeft className="h-4 w-4" strokeWidth={1.75} />
+            </span>
           </button>
+
           <button
             type="button"
-            aria-label="next"
-            onClick={(e) => goTo(e, "next")}
-            className="absolute right-2 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white opacity-0 transition-opacity hover:bg-black/60 group-hover:opacity-100"
+            aria-label="Next photo"
+            onClick={(e) => go(e, "next")}
+            className="nav-zone absolute inset-y-0 right-0 z-10 flex w-1/3 items-center justify-end pr-3 focus:outline-none"
           >
-            <ChevronRight className="h-4 w-4" />
+            <span className="nav-arrow flex h-9 w-9 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md">
+              <ChevronRight className="h-4 w-4" strokeWidth={1.75} />
+            </span>
           </button>
-        </>
-      )}
 
-      {hasMultiple && (
-        <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-1">
-          {images.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              aria-label={`image ${i + 1}`}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setCurrentIndex(i);
-              }}
-              className={cn(
-                "h-1.5 rounded-full transition-all",
-                i === currentIndex ? "w-4 bg-white" : "w-1.5 bg-white/50"
-              )}
-            />
-          ))}
-        </div>
+          <div className="pointer-events-none absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-1">
+            {images.map((_, i) => (
+              <span
+                key={i}
+                aria-hidden
+                className={cn(
+                  "h-1.5 rounded-full transition-all",
+                  i === currentIndex ? "w-4 bg-white" : "w-1.5 bg-white/50"
+                )}
+              />
+            ))}
+          </div>
+        </>
       )}
 
       {isBoosted && (

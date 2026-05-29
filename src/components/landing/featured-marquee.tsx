@@ -85,7 +85,7 @@ export function FeaturedMarquee({ children }: FeaturedMarqueeProps) {
     <div className="flex flex-col gap-6">
       <div
         ref={trackRef}
-        className="relative overflow-x-auto overflow-y-hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden touch-pan-x overscroll-x-contain"
+        className="relative overflow-x-auto overflow-y-hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden touch-auto overscroll-x-contain"
       >
         <div className="flex w-max gap-6">{children}</div>
       </div>
