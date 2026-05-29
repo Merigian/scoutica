@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { StudioCard as StudioCardType } from "@/server/queries/studios";
@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { STUDIO_TYPE_LABELS, STUDIO_AMENITIES } from "@/config/enums";
 import { MapPin, Camera, Clock, Calendar, Building2, ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { cn } from "@/lib/utils";
 
 interface StudioCardProps {
   studio: StudioCardType;
@@ -19,7 +20,6 @@ export function StudioCard({ studio, locale }: StudioCardProps) {
   const lang = locale === "en" ? "en" : "it";
   const t = useTranslations("components.studioCard");
   const [currentIndex, setCurrentIndex] = useState(0);
-  const touchStartX = useRef<number | null>(null);
   const images = studio.images.length > 0 ? studio.images : studio.coverImage ? [studio.coverImage] : [];
   const hasMultiple = images.length > 1;
 
@@ -48,20 +48,7 @@ export function StudioCard({ studio, locale }: StudioCardProps) {
     <Link href={`/${locale}/studios/${studio.slug}`}>
       <Card className="group overflow-hidden hover:ring-1 hover:ring-gold/30 transition-all duration-300  h-full">
         {/* Image Carousel */}
-        <div
-          className="relative aspect-video bg-[var(--bg-soft)] overflow-hidden"
-          onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
-          onTouchEnd={(e) => {
-            if (touchStartX.current === null || !hasMultiple) return;
-            const diff = e.changedTouches[0].clientX - touchStartX.current;
-            if (Math.abs(diff) > 50) {
-              setCurrentIndex((prev) =>
-                diff < 0 ? (prev + 1) % images.length : (prev - 1 + images.length) % images.length
-              );
-            }
-            touchStartX.current = null;
-          }}
-        >
+        <div className="relative aspect-video bg-[var(--bg-soft)] overflow-hidden">
           {images.length > 0 ? (
             <Image
               src={images[currentIndex]}
@@ -76,37 +63,38 @@ export function StudioCard({ studio, locale }: StudioCardProps) {
             </div>
           )}
 
-          {/* Prev / Next buttons */}
           {hasMultiple && (
             <>
               <button
+                type="button"
+                aria-label="Previous photo"
                 onClick={(e) => goTo(e, "prev")}
-                className="absolute left-1 top-1/2 -translate-y-1/2 h-7 w-7 rounded-full bg-black/40 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/60 z-10"
+                className="nav-zone absolute inset-y-0 left-0 z-10 flex w-1/3 items-center justify-start pl-3 focus:outline-none"
               >
-                <ChevronLeft className="h-4 w-4" />
+                <ChevronLeft className="nav-arrow h-6 w-6 text-white" strokeWidth={1.5} />
               </button>
               <button
+                type="button"
+                aria-label="Next photo"
                 onClick={(e) => goTo(e, "next")}
-                className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 rounded-full bg-black/40 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/60 z-10"
+                className="nav-zone absolute inset-y-0 right-0 z-10 flex w-1/3 items-center justify-end pr-3 focus:outline-none"
               >
-                <ChevronRight className="h-4 w-4" />
+                <ChevronRight className="nav-arrow h-6 w-6 text-white" strokeWidth={1.5} />
               </button>
-            </>
-          )}
 
-          {/* Dot indicators */}
-          {hasMultiple && (
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1 z-10">
-              {images.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); setCurrentIndex(i); }}
-                  className={`h-1.5 rounded-full transition-all ${
-                    i === currentIndex ? "w-3 bg-white" : "w-1.5 bg-white/50"
-                  }`}
-                />
-              ))}
-            </div>
+              <div className="pointer-events-none absolute bottom-2 left-1/2 z-10 flex -translate-x-1/2 items-center gap-1">
+                {images.map((_, i) => (
+                  <span
+                    key={i}
+                    aria-hidden
+                    className={cn(
+                      "h-1.5 rounded-full transition-all",
+                      i === currentIndex ? "w-3 bg-white" : "w-1.5 bg-white/50"
+                    )}
+                  />
+                ))}
+              </div>
+            </>
           )}
 
           {/* Type badge */}
