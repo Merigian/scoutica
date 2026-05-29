@@ -12,8 +12,8 @@ const MODEL_TABS = [
   { key: "dashboard", href: "/model/home", icon: User },
   { key: "opportunities", href: "/model/castings", icon: Megaphone },
   { key: "applications", href: "/model/applications", icon: FileText },
+  { key: "requests", href: "/model/contacts", icon: Inbox },
   { key: "messages", href: "/model/messages", icon: MessageSquare },
-  { key: "notifications", href: "/model/notifications", icon: Bell },
 ];
 
 const SCOUT_TABS = [

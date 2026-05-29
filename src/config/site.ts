@@ -21,6 +21,7 @@ export const NAV_ITEMS = {
     { key: "opportunities", href: "/model/castings", icon: "Megaphone" },
     { key: "applications", href: "/model/applications", icon: "FileText" },
     { key: "saved", href: "/model/saved", icon: "Bookmark" },
+    { key: "requests", href: "/model/contacts", icon: "Inbox" },
     { key: "messages", href: "/model/messages", icon: "MessageSquare" },
     { key: "notifications", href: "/model/notifications", icon: "Bell" },
     { key: "settings", href: "/model/settings", icon: "Settings" },
