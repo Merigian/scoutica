@@ -34,49 +34,51 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 hairline-b bg-[var(--bg)]/95 backdrop-blur-sm px-4 lg:px-6">
-      <button
-        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        className="lg:hidden p-2 hover:bg-[var(--bg-soft)] transition-colors"
-        aria-label="Menu"
-      >
-        {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-      </button>
+    <>
+      <header className="sticky top-0 z-30 flex h-14 items-center gap-4 hairline-b bg-[var(--bg)]/95 backdrop-blur-sm px-4 lg:px-6">
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="lg:hidden p-2 hover:bg-[var(--bg-soft)] transition-colors"
+          aria-label="Menu"
+        >
+          {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
 
-      <Link href={"/dashboard" as never} className="lg:hidden flex items-center gap-2 text-[var(--ink)]" aria-label="Scoutica">
-        <LogoMark size="sm" />
-        <ScouticaWordmark size="sm" />
-      </Link>
+        <Link href={"/dashboard" as never} className="lg:hidden flex items-center gap-2 text-[var(--ink)]" aria-label="Scoutica">
+          <LogoMark size="sm" />
+          <ScouticaWordmark size="sm" />
+        </Link>
 
-      <div className="flex-1" />
+        <div className="flex-1" />
 
-      {session?.user && (
-        <div className="flex items-center gap-1">
-          <ThemeToggle className="p-2 text-[var(--ink-3)] hover:text-[var(--ink)] hover:bg-[var(--bg-soft)] transition-colors" />
-          <button
-            onClick={toggleLocale}
-            className="px-3 py-2 text-[13px] text-[var(--ink-3)] hover:text-[var(--ink)] hover:bg-[var(--bg-soft)] transition-colors"
-            title={t("switchToOtherLang")}
-          >
-            {t("otherLangCode")}
-          </button>
-          <Button variant="ghost" size="icon" asChild>
-            <Link href={`/${role}/notifications` as never}>
-              <Bell className="h-[18px] w-[18px]" />
-            </Link>
-          </Button>
-          <button
-            onClick={handleSignOut}
-            className="lg:hidden flex items-center gap-2 p-2 text-sm text-[var(--ink-3)] hover:bg-[var(--bg-soft)] hover:text-[var(--ink)] transition-colors"
-            aria-label="Sign out"
-          >
-            <LogOut className="h-4 w-4" />
-          </button>
-        </div>
-      )}
+        {session?.user && (
+          <div className="flex items-center gap-1">
+            <ThemeToggle className="p-2 text-[var(--ink-3)] hover:text-[var(--ink)] hover:bg-[var(--bg-soft)] transition-colors" />
+            <button
+              onClick={toggleLocale}
+              className="px-3 py-2 text-[13px] text-[var(--ink-3)] hover:text-[var(--ink)] hover:bg-[var(--bg-soft)] transition-colors"
+              title={t("switchToOtherLang")}
+            >
+              {t("otherLangCode")}
+            </button>
+            <Button variant="ghost" size="icon" asChild>
+              <Link href={`/${role}/notifications` as never}>
+                <Bell className="h-[18px] w-[18px]" />
+              </Link>
+            </Button>
+            <button
+              onClick={handleSignOut}
+              className="lg:hidden flex items-center gap-2 p-2 text-sm text-[var(--ink-3)] hover:bg-[var(--bg-soft)] hover:text-[var(--ink)] transition-colors"
+              aria-label="Sign out"
+            >
+              <LogOut className="h-4 w-4" />
+            </button>
+          </div>
+        )}
+      </header>
 
       {mobileMenuOpen && (
-        <div className="fixed inset-0 top-14 z-50 bg-[var(--bg)] lg:hidden animate-fade-in">
+        <div className="fixed inset-x-0 top-14 bottom-0 z-50 overflow-y-auto bg-[var(--bg)] lg:hidden animate-fade-in">
           <nav className="p-6">
             <ul className="space-y-0 hairline-t">
               {navItems.map((item) => {
@@ -102,6 +104,6 @@ export function Header() {
           </nav>
         </div>
       )}
-    </header>
+    </>
   );
 }
