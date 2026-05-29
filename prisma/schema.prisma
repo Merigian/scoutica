@@ -1,0 +1,1074 @@
+// Scoutica — Full Database Schema
+// PostgreSQL + Prisma v6
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── ENUMS ──────────────────────────────────────────────────────────
+
+enum UserRole {
+  MODEL
+  SCOUT
+  STUDIO
+  ADMIN
+}
+
+enum ScoutSubtype {
+  SCOUT
+  AGENCY
+  BRAND
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  NON_BINARY
+  OTHER
+}
+
+enum EyeColor {
+  BROWN
+  BLUE
+  GREEN
+  HAZEL
+  GRAY
+  AMBER
+  OTHER
+}
+
+enum HairColor {
+  BLACK
+  BROWN
+  BLONDE
+  RED
+  AUBURN
+  GRAY
+  WHITE
+  OTHER
+}
+
+enum Ethnicity {
+  CAUCASIAN
+  AFRICAN
+  ASIAN
+  LATINO
+  MIDDLE_EASTERN
+  MIXED
+  OTHER
+}
+
+enum ModelCategory {
+  COMMERCIAL
+  EDITORIAL
+  RUNWAY
+  BEAUTY
+  FITTING
+  SHOWROOM
+  PLUS_SIZE
+  PETITE
+  FITNESS
+  LINGERIE
+  SWIMWEAR
+  OTHER
+}
+
+enum ProfessionalStatus {
+  NEW_FACE
+  EXPERIENCED
+  AGENCY_REPRESENTED
+  FREELANCE
+}
+
+enum ProfileVisibility {
+  PUBLIC
+  VERIFIED_SCOUTS_ONLY
+  PRIVATE
+}
+
+enum ModelProfileStatus {
+  INCOMPLETE
+  ACTIVE
+}
+
+enum VerificationStatus {
+  PENDING
+  WAITLISTED
+  VERIFICATION_REQUIRED
+  VERIFICATION_SUBMITTED
+  APPROVED
+  REJECTED
+}
+
+enum ContactRequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  EXPIRED
+}
+
+enum ContactReason {
+  SCOUTING
+  CASTING
+  JOB_OPPORTUNITY
+  EDITORIAL
+  OTHER
+}
+
+enum CastingStatus {
+  DRAFT
+  PUBLISHED
+  CLOSED
+  ARCHIVED
+}
+
+enum ApplicationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+}
+
+enum JobType {
+  SHOOTING
+  ECOMMERCE
+  CAMPAIGN
+  RUNWAY
+  FITTING
+  SHOWROOM
+  SOCIAL_COLLAB
+  EVENT
+  HOSTESS
+  OTHER
+}
+
+enum CastingType {
+  PHYSICAL
+  ONLINE
+}
+
+enum JobStatus {
+  DRAFT
+  PUBLISHED
+  CLOSED
+  ARCHIVED
+}
+
+enum PipelineStage {
+  SAVED
+  CONTACTED
+  REPLIED
+  SHORTLISTED
+  BOOKED
+}
+
+enum PlanTier {
+  FREE
+  MODEL_PRO
+  STARTER
+  PRO
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  TRIALING
+  INCOMPLETE
+}
+
+enum ReportReason {
+  HARASSMENT
+  INAPPROPRIATE_CONTENT
+  FAKE_PROFILE
+  SPAM
+  OTHER
+}
+
+enum ReportStatus {
+  PENDING
+  REVIEWED
+  RESOLVED
+  DISMISSED
+}
+
+enum ReportedContentType {
+  USER
+  PROFILE
+  IMAGE
+  CASTING
+  MESSAGE
+}
+
+enum NotificationType {
+  CONTACT_REQUEST_RECEIVED
+  CONTACT_REQUEST_ACCEPTED
+  CONTACT_REQUEST_REJECTED
+  NEW_MESSAGE
+  APPLICATION_SUBMITTED
+  APPLICATION_ACCEPTED
+  APPLICATION_REJECTED
+  JOB_APPLICATION_SUBMITTED
+  JOB_APPLICATION_ACCEPTED
+  JOB_APPLICATION_REJECTED
+  VERIFICATION_APPROVED
+  VERIFICATION_REJECTED
+  BOOST_ACTIVATED
+  BOOST_EXPIRED
+  STUDIO_INQUIRY_RECEIVED
+  BOOKING_RECEIVED
+  BOOKING_CONFIRMED
+  BOOKING_CANCELLED
+  SYSTEM
+}
+
+// ─── AUTH.JS MODELS ─────────────────────────────────────────────────
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ─── CORE USER ─────────────────────────────────────────────────────
+
+model User {
+  id             String    @id @default(cuid())
+  name           String?
+  email          String    @unique
+  emailVerified  DateTime?
+  hashedPassword String?
+  image          String?
+  role           UserRole  @default(MODEL)
+  locale         String    @default("it")
+  isSuspended    Boolean   @default(false)
+  suspendedReason String?
+  termsAcceptedAt DateTime?
+  lastActiveAt    DateTime?
+
+  // Auth.js relations
+  accounts Account[]
+  sessions Session[]
+
+  // Role-specific profiles
+  modelProfile   ModelProfile?
+  scoutProfile   ScoutProfile?
+  studioProfile  StudioProfile?
+
+  // Studio inquiries sent
+  studioInquiries StudioInquiry[]
+  studioBookings  StudioBooking[]
+
+  // Subscription
+  subscription Subscription?
+
+  // Messaging
+  conversationParticipants ConversationParticipant[]
+
+  // Notifications
+  notifications Notification[]
+
+  // Trust & Safety
+  blocksGiven    Block[] @relation("blocker")
+  blocksReceived Block[] @relation("blocked")
+  reportsFiled   Report[] @relation("reporter")
+
+  // Engagement
+  profileViews ProfileView[]
+  profileLikes ProfileLike[]
+
+  // Saved opportunities (castings + jobs)
+  savedListings SavedListing[]
+
+  // Waitlist
+  waitlistEntry WaitlistEntry?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─── MODEL PROFILE ─────────────────────────────────────────────────
+
+model ModelProfile {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  slug   String @unique
+
+  // Personal info
+  fullName    String?
+  bio         String? @db.Text
+  dateOfBirth DateTime?
+  gender      Gender?
+  city        String?
+  region      String?
+
+  // Body measurements
+  height    Int?   // cm
+  bust      Int?   // cm
+  waist     Int?   // cm
+  hips      Int?   // cm
+  shoeSize  Float?
+  dressSize String?
+
+  // Appearance
+  eyeColor  EyeColor?
+  hairColor HairColor?
+  ethnicity Ethnicity?
+
+  // Professional
+  categories         ModelCategory[]
+  professionalStatus ProfessionalStatus?
+  spokenLanguages    String[]
+  travelAvailability Boolean @default(false)
+
+  // Social links
+  instagramUrl  String?
+  tiktokUrl     String?
+  youtubeUrl    String?
+  xUrl          String?
+  websiteUrl    String?
+  followerCount Int?
+
+  // Media Pro
+  videoUrl    String?
+  bookPdfUrl  String?
+
+  // Profile state
+  status          ModelProfileStatus @default(INCOMPLETE)
+  visibility      ProfileVisibility @default(PUBLIC)
+  isPublished     Boolean           @default(false)
+  publishedAt     DateTime?
+  completenessScore Int             @default(0)
+
+  // Engagement counters (denormalized for sort performance)
+  viewCount Int @default(0)
+  likeCount Int @default(0)
+
+  // Relations
+  portfolioImages   PortfolioImage[]
+  contactsReceived  ContactRequest[]
+  castingApplications CastingApplication[]
+  jobApplications     JobApplication[]
+  boosts            Boost[]
+  shortlistItems    ShortlistItem[]
+  views             ProfileView[]
+  likes             ProfileLike[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isPublished, visibility])
+  @@index([city])
+  @@index([region])
+  @@index([completenessScore])
+  @@index([viewCount])
+  @@index([likeCount])
+}
+
+// ─── PORTFOLIO IMAGE ───────────────────────────────────────────────
+
+model PortfolioImage {
+  id             String       @id @default(cuid())
+  modelProfileId String
+  modelProfile   ModelProfile @relation(fields: [modelProfileId], references: [id], onDelete: Cascade)
+
+  url       String
+  key       String   // S3/R2 object key
+  width     Int?
+  height    Int?
+  sizeBytes Int?
+  order     Int      @default(0)
+  isCover   Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@index([modelProfileId, order])
+}
+
+// ─── SCOUT PROFILE ─────────────────────────────────────────────────
+
+model ScoutProfile {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Business info
+  subtype          ScoutSubtype
+  businessName     String?
+  roleTitle        String?
+  bio              String? @db.Text
+  city             String?
+  country          String  @default("IT")
+  professionalEmail String?
+  websiteUrl       String?
+  socialProfileUrl String?
+  vatNumber        String?
+  purposeOfUse     String?  @db.Text
+
+  // Verification
+  verificationStatus VerificationStatus @default(PENDING)
+  verificationNotes  String?
+  verifiedAt         DateTime?
+
+  // Relations
+  contactsSent    ContactRequest[]
+  castings        Casting[]
+  jobs            Job[]
+  shortlistBoards ShortlistBoard[]
+  savedSearches   SavedSearch[]
+  privateNotes    PrivateNote[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([verificationStatus])
+}
+
+// ─── CONTACT REQUEST ───────────────────────────────────────────────
+
+model ContactRequest {
+  id             String       @id @default(cuid())
+  scoutProfileId String
+  scoutProfile   ScoutProfile @relation(fields: [scoutProfileId], references: [id], onDelete: Cascade)
+  modelProfileId String
+  modelProfile   ModelProfile @relation(fields: [modelProfileId], references: [id], onDelete: Cascade)
+
+  subject  String
+  message  String  @db.Text
+  reason   ContactReason
+
+  status      ContactRequestStatus @default(PENDING)
+  respondedAt DateTime?
+
+  // Created conversation (on accept)
+  conversationId String?       @unique
+  conversation   Conversation? @relation(fields: [conversationId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([scoutProfileId, modelProfileId])
+  @@index([modelProfileId, status])
+  @@index([scoutProfileId, status])
+}
+
+// ─── MESSAGING ─────────────────────────────────────────────────────
+
+model Conversation {
+  id            String    @id @default(cuid())
+  lastMessageAt DateTime?
+
+  participants ConversationParticipant[]
+  messages     Message[]
+  contactRequest ContactRequest?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ConversationParticipant {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  lastReadAt DateTime?
+
+  @@unique([conversationId, userId])
+  @@index([userId])
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderId       String
+  body           String       @db.Text
+
+  createdAt DateTime @default(now())
+
+  @@index([conversationId, createdAt])
+}
+
+// ─── CASTINGS ──────────────────────────────────────────────────────
+
+model Casting {
+  id             String       @id @default(cuid())
+  scoutProfileId String
+  scoutProfile   ScoutProfile @relation(fields: [scoutProfileId], references: [id], onDelete: Cascade)
+
+  title        String
+  description  String   @db.Text
+  city         String?
+  region       String?
+  castingDate  DateTime?
+  deadline     DateTime?
+  requirements String?  @db.Text
+  compensation String?
+  isPaid       Boolean  @default(false)
+  spots        Int?
+  notes        String?  @db.Text
+
+  // Casting type (physical/online)
+  castingType       CastingType?
+  time              String?
+  address           String?
+  instructions      String?  @db.Text
+  materialsRequired String?  @db.Text
+
+  status      CastingStatus @default(DRAFT)
+  publishedAt DateTime?
+
+  // Promoted castings appear first in search (revenue stream)
+  isPromoted  Boolean   @default(false)
+  promotedAt  DateTime?
+
+  applications CastingApplication[]
+  savedBy      SavedListing[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, publishedAt])
+  @@index([city])
+  @@index([deadline])
+}
+
+model CastingApplication {
+  id             String       @id @default(cuid())
+  castingId      String
+  casting        Casting      @relation(fields: [castingId], references: [id], onDelete: Cascade)
+  modelProfileId String
+  modelProfile   ModelProfile @relation(fields: [modelProfileId], references: [id], onDelete: Cascade)
+
+  introMessage String? @db.Text
+  status       ApplicationStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([castingId, modelProfileId])
+  @@index([castingId, status])
+  @@index([modelProfileId])
+}
+
+// ─── JOBS (LAVORI) ─────────────────────────────────────────────────
+
+model Job {
+  id             String       @id @default(cuid())
+  scoutProfileId String
+  scoutProfile   ScoutProfile @relation(fields: [scoutProfileId], references: [id], onDelete: Cascade)
+
+  title             String
+  description       String   @db.Text
+  jobType           JobType
+  brand             String?
+  city              String?
+  region            String?
+  location          String?
+  jobDates          String?
+  compensation      String?
+  isPaid            Boolean  @default(false)
+  modelRequirements String?  @db.Text
+  spotsNeeded       Int?
+  deadline          DateTime?
+  notes             String?  @db.Text
+  referenceImages   String[]
+
+  status      JobStatus @default(DRAFT)
+  publishedAt DateTime?
+
+  applications JobApplication[]
+  savedBy     SavedListing[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, publishedAt])
+  @@index([city])
+  @@index([deadline])
+  @@index([jobType])
+}
+
+model JobApplication {
+  id             String       @id @default(cuid())
+  jobId          String
+  job            Job          @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  modelProfileId String
+  modelProfile   ModelProfile @relation(fields: [modelProfileId], references: [id], onDelete: Cascade)
+
+  introMessage String? @db.Text
+  status       ApplicationStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([jobId, modelProfileId])
+  @@index([jobId, status])
+  @@index([modelProfileId])
+}
+
+// ─── SAVED LISTINGS (model bookmarks for castings/jobs) ─────────────
+
+model SavedListing {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  castingId String?
+  casting   Casting? @relation(fields: [castingId], references: [id], onDelete: Cascade)
+
+  jobId     String?
+  job       Job?     @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, castingId])
+  @@unique([userId, jobId])
+  @@index([userId, createdAt])
+}
+
+// ─── SHORTLISTS ────────────────────────────────────────────────────
+
+model ShortlistBoard {
+  id             String       @id @default(cuid())
+  scoutProfileId String
+  scoutProfile   ScoutProfile @relation(fields: [scoutProfileId], references: [id], onDelete: Cascade)
+
+  name        String
+  description String?
+
+  items ShortlistItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([scoutProfileId])
+}
+
+model ShortlistItem {
+  id             String         @id @default(cuid())
+  boardId        String
+  board          ShortlistBoard @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  modelProfileId String
+  modelProfile   ModelProfile   @relation(fields: [modelProfileId], references: [id], onDelete: Cascade)
+
+  pipelineStage PipelineStage @default(SAVED)
+  note          String?       @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([boardId, modelProfileId])
+  @@index([boardId, pipelineStage])
+}
+
+model PrivateNote {
+  id             String       @id @default(cuid())
+  scoutProfileId String
+  scoutProfile   ScoutProfile @relation(fields: [scoutProfileId], references: [id], onDelete: Cascade)
+  modelProfileId String
+
+  content String @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([scoutProfileId, modelProfileId])
+}
+
+// ─── SAVED SEARCHES ────────────────────────────────────────────────
+
+model SavedSearch {
+  id             String       @id @default(cuid())
+  scoutProfileId String
+  scoutProfile   ScoutProfile @relation(fields: [scoutProfileId], references: [id], onDelete: Cascade)
+
+  name    String
+  filters Json
+
+  createdAt DateTime @default(now())
+
+  @@index([scoutProfileId])
+}
+
+// ─── SUBSCRIPTIONS ─────────────────────────────────────────────────
+
+model Subscription {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  stripeCustomerId     String? @unique
+  stripeSubscriptionId String? @unique
+  stripePriceId        String?
+
+  plan   PlanTier           @default(FREE)
+  status SubscriptionStatus @default(ACTIVE)
+
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
+  cancelAtPeriodEnd  Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─── BOOSTS ────────────────────────────────────────────────────────
+
+model Boost {
+  id             String       @id @default(cuid())
+  modelProfileId String
+  modelProfile   ModelProfile @relation(fields: [modelProfileId], references: [id], onDelete: Cascade)
+
+  stripePaymentId String?
+  startsAt        DateTime
+  endsAt          DateTime
+
+  createdAt DateTime @default(now())
+
+  @@index([modelProfileId, endsAt])
+}
+
+// ─── NOTIFICATIONS ─────────────────────────────────────────────────
+
+model Notification {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type     NotificationType
+  title    String
+  body     String
+  link     String?
+  isRead   Boolean @default(false)
+  metadata Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId, isRead, createdAt])
+}
+
+// ─── TRUST & SAFETY ────────────────────────────────────────────────
+
+model Block {
+  id        String @id @default(cuid())
+  blockerId String
+  blocker   User   @relation("blocker", fields: [blockerId], references: [id], onDelete: Cascade)
+  blockedId String
+  blocked   User   @relation("blocked", fields: [blockedId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([blockerId, blockedId])
+  @@index([blockedId])
+}
+
+model Report {
+  id         String @id @default(cuid())
+  reporterId String
+  reporter   User   @relation("reporter", fields: [reporterId], references: [id], onDelete: Cascade)
+
+  reportedUserId     String?
+  reportedContentType ReportedContentType
+  reportedContentId  String?
+
+  reason     ReportReason
+  details    String? @db.Text
+  status     ReportStatus @default(PENDING)
+  adminNotes String? @db.Text
+  resolvedAt DateTime?
+
+  createdAt DateTime @default(now())
+
+  @@index([status, createdAt])
+}
+
+// ─── STUDIO ENUMS ──────────────────────────────────────────────────
+
+enum StudioType {
+  PHOTO_STUDIO
+  SHOWROOM
+  REHEARSAL_SPACE
+  EVENT_SPACE
+  COWORKING
+  OTHER
+}
+
+enum StudioStatus {
+  DRAFT
+  PUBLISHED
+  PAUSED
+  ARCHIVED
+}
+
+enum StudioInquiryStatus {
+  PENDING
+  REPLIED
+  CLOSED
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+// ─── STUDIO PROFILE ───────────────────────────────────────────────
+
+model StudioProfile {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  businessName String?
+  bio          String? @db.Text
+  city         String?
+  region       String?
+  country      String  @default("IT")
+  vatNumber    String?
+  websiteUrl   String?
+  phoneNumber  String?
+
+  studios Studio[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─── STUDIO LISTING ───────────────────────────────────────────────
+
+model Studio {
+  id              String        @id @default(cuid())
+  studioProfileId String
+  studioProfile   StudioProfile @relation(fields: [studioProfileId], references: [id], onDelete: Cascade)
+  slug            String        @unique
+
+  name              String
+  description       String?     @db.Text
+  studioType        StudioType
+  address           String?
+  city              String?
+  region            String?
+  zipCode           String?
+  latitude          Float?
+  longitude         Float?
+  sizeSqm           Int?
+  maxCapacity       Int?
+  amenities         String[]
+  hourlyRate        Float?
+  dailyRate         Float?
+  weeklyRate        Float?
+  minHours          Int?
+  availabilityNotes String?     @db.Text
+  contactEmail      String?
+  contactPhone      String?
+
+  status      StudioStatus @default(DRAFT)
+  isPublished Boolean      @default(false)
+  publishedAt DateTime?
+
+  images       StudioImage[]
+  inquiries    StudioInquiry[]
+  bookings     StudioBooking[]
+  blockedDates StudioBlockedDate[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, isPublished])
+  @@index([city])
+  @@index([studioType])
+}
+
+// ─── STUDIO IMAGE ─────────────────────────────────────────────────
+
+model StudioImage {
+  id       String @id @default(cuid())
+  studioId String
+  studio   Studio @relation(fields: [studioId], references: [id], onDelete: Cascade)
+
+  url     String
+  key     String
+  order   Int     @default(0)
+  isCover Boolean @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@index([studioId, order])
+}
+
+// ─── STUDIO INQUIRY ───────────────────────────────────────────────
+
+model StudioInquiry {
+  id       String @id @default(cuid())
+  studioId String
+  studio   Studio @relation(fields: [studioId], references: [id], onDelete: Cascade)
+
+  senderUserId String?
+  senderUser   User?   @relation(fields: [senderUserId], references: [id], onDelete: SetNull)
+
+  name           String
+  email          String
+  phone          String?
+  message        String  @db.Text
+  preferredDates String?
+  durationHours  Int?
+
+  status StudioInquiryStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([studioId, status])
+  @@index([senderUserId])
+}
+
+// ─── STUDIO BOOKING ───────────────────────────────────────────────
+
+model StudioBooking {
+  id       String @id @default(cuid())
+  studioId String
+  studio   Studio @relation(fields: [studioId], references: [id], onDelete: Cascade)
+
+  senderUserId String?
+  senderUser   User?   @relation(fields: [senderUserId], references: [id], onDelete: SetNull)
+
+  name    String
+  email   String
+  phone   String?
+  message String? @db.Text
+
+  startDate  DateTime
+  endDate    DateTime
+  startTime  String?
+  endTime    String?
+  totalDays  Int
+  totalPrice Float?
+
+  status BookingStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([studioId, status])
+  @@index([studioId, startDate, endDate])
+  @@index([senderUserId])
+}
+
+// ─── STUDIO BLOCKED DATE ──────────────────────────────────────────
+
+model StudioBlockedDate {
+  id       String @id @default(cuid())
+  studioId String
+  studio   Studio @relation(fields: [studioId], references: [id], onDelete: Cascade)
+
+  date   DateTime
+  reason String?
+
+  createdAt DateTime @default(now())
+
+  @@unique([studioId, date])
+  @@index([studioId, date])
+}
+
+// ─── PROFILE ENGAGEMENT ────────────────────────────────────────────
+
+model ProfileView {
+  id             String       @id @default(cuid())
+  modelProfileId String
+  modelProfile   ModelProfile @relation(fields: [modelProfileId], references: [id], onDelete: Cascade)
+
+  viewerId  String?  // null for anonymous visitors
+  viewer    User?    @relation(fields: [viewerId], references: [id], onDelete: SetNull)
+  viewerIp  String?  // for anonymous dedup
+  viewDate  DateTime @db.Date // date-only for dedup (one view per user per day)
+
+  createdAt DateTime @default(now())
+
+  @@unique([modelProfileId, viewerId, viewDate])
+  @@index([modelProfileId])
+  @@index([modelProfileId, viewerIp, viewDate])
+}
+
+model ProfileLike {
+  id             String       @id @default(cuid())
+  modelProfileId String
+  modelProfile   ModelProfile @relation(fields: [modelProfileId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([modelProfileId, userId])
+  @@index([modelProfileId])
+  @@index([userId])
+}
+
+// ─── SITE SETTINGS ─────────────────────────────────────────────────
+
+model SiteSettings {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+// ─── WAITLIST ──────────────────────────────────────────────────────
+
+model WaitlistEntry {
+  id               String  @id @default(cuid())
+  userId           String  @unique
+  user             User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName         String?
+  businessName     String?
+  city             String?
+  professionalLink String?
+  talentTypesNeeded String?
+
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}

@@ -1,0 +1,2896 @@
+{
+  "common": {
+    "appName": "Scoutica",
+    "tagline": "The Italian platform for professional model scouting",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "search": "Search",
+    "filter": "Filter",
+    "reset": "Reset",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "viewAll": "View all",
+    "noResults": "No results",
+    "error": "Error",
+    "success": "Operation completed",
+    "required": "Required",
+    "optional": "Optional",
+    "or": "or",
+    "and": "and",
+    "yes": "Yes",
+    "no": "No",
+    "paid": "Paid",
+    "applied": "Applied",
+    "expired": "Expired",
+    "location": "Location",
+    "date": "Date",
+    "compensation": "Compensation",
+    "description": "Description",
+    "requirements": "Requirements",
+    "spots": "Spots",
+    "unknownError": "Unknown error",
+    "uploadError": "Error uploading",
+    "deletePhotoConfirm": "Delete this photo?",
+    "select": "Select...",
+    "address": "Address"
+  },
+  "nav": {
+    "home": "Home",
+    "pricing": "Pricing",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Sign in",
+    "register": "Sign up",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "portfolio": "Portfolio",
+    "castings": "Castings",
+    "lavori": "Jobs",
+    "applications": "Applications",
+    "contacts": "Contacts",
+    "messages": "Messages",
+    "notifications": "Notifications",
+    "settings": "Settings",
+    "discover": "Discover",
+    "boards": "Boards",
+    "verification": "Verification",
+    "billing": "Billing",
+    "users": "Users",
+    "verifications": "Verifications",
+    "reports": "Reports",
+    "subscriptions": "Subscriptions",
+    "studios": "My Studios",
+    "browseStudios": "Studios",
+    "bookings": "Bookings",
+    "inquiries": "Inquiries",
+    "logout": "Sign out",
+    "switchToOtherLang": "Passa all'italiano",
+    "otherLangCode": "IT",
+    "otherLangName": "Italiano",
+    "talentSearch": "Talent Search",
+    "postings": "Postings",
+    "opportunities": "Opportunities",
+    "jobs": "Jobs",
+    "favorites": "Favorites",
+    "saved": "Saved",
+    "accountSection": "Account",
+    "newCasting": "New casting",
+    "newJob": "New job",
+    "newStudio": "New studio"
+  },
+  "landing": {
+    "cover": {
+      "masthead": "Issue I · Italy",
+      "manifestoTop": "Publication · 2026",
+      "manifestoBottom": "An editorial register of Italian faces",
+      "scroll": "Read on"
+    },
+    "sections": {
+      "manifesto": "Manifesto",
+      "process": "The process",
+      "platform": "The platform",
+      "pricing": "Pricing",
+      "closing": "Coda"
+    },
+    "statsStrip": {
+      "modelsPublished": "Faces published",
+      "scoutsVerified": "Scouts accredited",
+      "regionsCovered": "Italian regions",
+      "studiosPartner": "Partner studios"
+    },
+    "pricingTeaser": {
+      "titleLine1": "Free for those who pose.",
+      "titleLine2": "Measured for those who scout.",
+      "lead": "No commission on your bookings, no hidden fees. Professional tooling, where it is needed.",
+      "startingFrom": "From",
+      "period": "per month, forever",
+      "cta": "See the plans"
+    },
+    "hero": {
+      "title": "Italian faces. Selected with care, presented with method.",
+      "subtitle": "A digital review bringing models, scouts, agencies and photo studios together under one editorial signature.",
+      "ctaModel": "I am a model",
+      "ctaModelDesc": "Build your portfolio and get noticed",
+      "ctaScout": "I am a scout or agency",
+      "ctaScoutDesc": "Find models and open castings",
+      "ctaStudio": "List your studio",
+      "ctaStudioDesc": "Make your space available",
+      "browseStudios": "Browse studios",
+      "trustVerified": "Accredited scouts and agencies",
+      "trustSafe": "Contracts and payments protected",
+      "trustProfessional": "Industry professionals only",
+      "studioLink": "Run a photo studio? Add it here →"
+    },
+    "features": {
+      "title": "The full fashion supply chain, under one editorial signature",
+      "forModel": "For models",
+      "forScout": "For scouts & agencies",
+      "forStudio": "For studios",
+      "profiles": {
+        "title": "Editorial portfolio",
+        "description": "A profile composed like a magazine. Photographs, self-tapes and measurements, always current."
+      },
+      "verified": {
+        "title": "Document verification",
+        "description": "Scouts, agencies and brands pass a human and document check before they may contact a face."
+      },
+      "safe": {
+        "title": "Releases and payments protected",
+        "description": "Ready-made releases, Stripe escrow, guaranteed payouts. Italian fashion, finally in good order."
+      },
+      "castings": {
+        "title": "Castings and studios in concert",
+        "description": "Publish a casting, book a studio, manage applications and shortlists without changing tool."
+      }
+    },
+    "featured": {
+      "title": "Cast of the month",
+      "subtitle": "A selection of the most sought-after faces",
+      "cta": "Sign up to read the rest",
+      "selectedLabel": "featured faces",
+      "viewAll": "Browse all registered faces →"
+    },
+    "popular": {
+      "label": "In the light",
+      "title": "Most read",
+      "subtitle": "The pages most consulted by our scouts this week",
+      "cta": "See all"
+    },
+    "cta": {
+      "title": "Italian scouting is changing address.",
+      "subtitle": "Join those rewriting the professional standard of Italian fashion, with method and quiet.",
+      "button": "Enter Scoutica"
+    },
+    "stats": {
+      "verified": "Accredited scouts",
+      "regions": "All Italian regions",
+      "safe": "Contacts protected",
+      "verifiedValue": "100%",
+      "regionsValue": "Italy",
+      "safeValue": "Protected"
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "subtitle": "Three steps, without shortcuts.",
+      "step1": {
+        "title": "Build your profile",
+        "description": "Sign up, add your photos and measurements, and obtain an editorial portfolio in minutes."
+      },
+      "step2": {
+        "title": "Be discovered",
+        "description": "Accredited scouts and agencies browse the profiles and find the faces they are looking for."
+      },
+      "step3": {
+        "title": "Work together",
+        "description": "Receive enquiries, apply to castings, sign and invoice without changing tool."
+      }
+    },
+    "bandi": {
+      "eyebrow": "03 — Preview",
+      "title": "Sample openings",
+      "subtitle": "A typical selection of castings, campaigns and editorials scouts publish on Scoutica. Sign up to access the real listings, updated daily.",
+      "viewAll": "Sign up to see them all",
+      "daysLeft": "in {n} days",
+      "deadlineLabel": "Deadline",
+      "statusLabel": "Status",
+      "compensoLabel": "Fee",
+      "periodLabel": "Shoot",
+      "ctaLabel": "Sign up to view",
+      "type": {
+        "casting": "Casting",
+        "job": "Job",
+        "editorial": "Editorial"
+      },
+      "status": {
+        "open": "Open",
+        "closingSoon": "Closing soon"
+      },
+      "items": [
+        {
+          "type": "editorial",
+          "title": "Editorial S/S 27 — Riviera Wind",
+          "scout": "Magazzini Generali",
+          "city": "Milan",
+          "description": "Two-day editorial between Portofino and Sanremo. Looking for 4 talents 18–28, Mediterranean look, natural feel.",
+          "fee": "€1,500 — €2,800",
+          "shootDate": "June 2026",
+          "daysLeft": 5,
+          "status": "open"
+        },
+        {
+          "type": "job",
+          "title": "Bottega 2027 Campaign",
+          "scout": "Atelier Vellutti",
+          "city": "Milan",
+          "description": "Print and digital campaign for the new leather collection. 3-day shoot, minimal brief, full usage 12 months.",
+          "fee": "€3,500 flat",
+          "shootDate": "July 2026",
+          "daysLeft": 8,
+          "status": "open"
+        },
+        {
+          "type": "casting",
+          "title": "Lookbook FW27 — Tyrrhenian Coast",
+          "scout": "Studio Marisa Romano",
+          "city": "Rome",
+          "description": "Urgent outdoor lookbook casting: 6 male and female figures, unconventional cuts, strong presence.",
+          "fee": "€600 / day",
+          "shootDate": "May 2026",
+          "daysLeft": 2,
+          "status": "closingSoon"
+        }
+      ]
+    },
+    "socialProof": {
+      "title": "A review in growth",
+      "models": "Published model profiles",
+      "scouts": "Accredited scouts and agencies",
+      "regions": "Italian regions covered"
+    }
+  },
+  "auth": {
+    "layout": {
+      "home": "Home",
+      "copyright": "© {year} Scoutica · Milan",
+      "cover": {
+        "masthead": "N° 01 · Scoutica",
+        "headline": "Authentic work. Verified identity.",
+        "attribution": "— Scoutica Manifesto",
+        "cities": "Milan · Rome · Florence"
+      }
+    },
+    "login": {
+      "eyebrow": "Sign in",
+      "title": "Sign in to Scoutica",
+      "subtitle": "Welcome back! Sign in to your account.",
+      "email": "Email",
+      "password": "Password",
+      "forgotPassword": "Forgot password?",
+      "submit": "Sign in",
+      "noAccount": "Don't have an account?",
+      "register": "Sign up",
+      "orContinueWith": "or continue with",
+      "google": "Google",
+      "invalidCredentials": "Invalid email or password",
+      "accountSuspended": "Your account has been suspended"
+    },
+    "forgotPassword": {
+      "eyebrowSent": "Email sent",
+      "eyebrowReset": "Forgot password",
+      "description": "Enter your email and we will send you instructions to reset your password.",
+      "submit": "Send reset link",
+      "sending": "Sending...",
+      "sentTitle": "Email sent",
+      "sentDescription": "If an account with the email {email} exists, you will receive instructions to reset your password.",
+      "backToLogin": "Back to login",
+      "error": "An error occurred. Please try again.",
+      "emailSent": "Email sent",
+      "emailSentDesc": "If an account with the email {email} exists, you will receive instructions to reset your password.",
+      "emailPlaceholder": "name@example.com",
+      "genericError": "An error occurred. Please try again.",
+      "submitting": "Sending..."
+    },
+    "register": {
+      "eyebrow": "Sign up",
+      "title": "Join Scoutica",
+      "subtitle": "Create your account and start your journey.",
+      "chooseRole": "How do you want to register?",
+      "asModel": "I'm a model",
+      "asModelDesc": "Create your professional profile and get discovered.",
+      "asScout": "I'm a professional",
+      "asScoutDesc": "Scout, agency or brand — discover new talent.",
+      "asStudio": "I have a studio",
+      "asStudioDesc": "Rent your space to fashion professionals.",
+      "businessName": "Business name",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "scoutType": "Business type",
+      "submit": "Create account",
+      "hasAccount": "Already have an account?",
+      "login": "Sign in",
+      "termsAgree": "By creating an account you agree to the",
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "registrationError": "Error during registration",
+      "scoutLabel": "Scout",
+      "agencyLabel": "Agency",
+      "brandLabel": "Brand",
+      "dateOfBirth": "Date of birth",
+      "ageConfirmation": "I confirm that I am at least 18 years old",
+      "termsAccept": "I accept the Terms of Service and Privacy Policy",
+      "underageError": "You must be at least 18 years old to register as a model",
+      "termsRequired": "You must accept the Terms of Service and Privacy Policy",
+      "ageConfirmRequired": "You must confirm that you are at least 18 years old",
+      "completeSetup": "Complete Registration",
+      "completeEyebrow": "Finalize profile",
+      "selectRole": "Choose your role to continue.",
+      "continue": "Continue",
+      "roles": {
+        "model": "Model",
+        "scout": "Scout",
+        "studio": "Studio"
+      },
+      "rolesDesc": {
+        "model": "Create your portfolio and receive opportunities.",
+        "scout": "Search talent and post castings.",
+        "studio": "List your space and receive bookings."
+      }
+    },
+    "verifyEmail": {
+      "eyebrowVerifying": "Verifying",
+      "eyebrowSuccess": "Success",
+      "eyebrowError": "Error",
+      "eyebrowInbox": "Check your inbox",
+      "title": "Verify your email",
+      "subtitle": "We sent a verification link to your email address.",
+      "checkInbox": "Check your inbox and click the link to verify your account.",
+      "resend": "Resend verification email",
+      "resending": "Sending...",
+      "resent": "Verification email sent!",
+      "verifying": "Verifying your email...",
+      "success": "Email verified successfully!",
+      "successDesc": "Your email has been verified. You can now continue.",
+      "continue": "Continue",
+      "invalidToken": "The verification link is invalid or has expired.",
+      "tokenExpired": "The verification link has expired. Please request a new one.",
+      "alreadyVerified": "Your email is already verified.",
+      "rateLimited": "Please wait a minute before requesting a new link.",
+      "error": "An error occurred during verification. Please try again."
+    },
+    "waitlist": {
+      "eyebrow": "Waitlist",
+      "title": "You're on the waitlist",
+      "subtitle": "The platform is not yet open to talent buyers. We'll notify you as soon as it opens.",
+      "formTitle": "Help us get to know you",
+      "fullName": "Full name",
+      "businessName": "Company / Agency / Brand",
+      "city": "City",
+      "professionalLink": "Website or professional link",
+      "talentTypesNeeded": "What type of talent are you looking for?",
+      "submit": "Save information",
+      "saved": "Information saved! We'll be in touch.",
+      "error": "Error saving information. Please try again."
+    },
+    "registrationError": "Error during registration",
+    "sendResetLink": "Send reset link",
+    "scoutLabel": "Scout",
+    "agencyLabel": "Agency",
+    "brandLabel": "Brand"
+  },
+  "model": {
+    "profile": {
+      "title": "Your Profile",
+      "completeness": "Profile completeness",
+      "levels": {
+        "basic": "Basic profile",
+        "almostComplete": "Almost complete",
+        "ready": "Ready to be discovered"
+      },
+      "publish": "Publish profile",
+      "unpublish": "Unpublish profile",
+      "publishRequirements": "To publish your profile you need to:",
+      "requireAge": "Be at least 18 years old",
+      "requireName": "Enter your full name",
+      "requireImage": "Upload at least one image",
+      "requireCover": "Set a cover image",
+      "sections": {
+        "personal": "Personal information",
+        "measurements": "Measurements",
+        "appearance": "Appearance",
+        "professional": "Professional information",
+        "social": "Social media",
+        "visibility": "Visibility"
+      },
+      "fields": {
+        "fullName": "Full name",
+        "bio": "Biography",
+        "dateOfBirth": "Date of birth",
+        "gender": "Gender",
+        "city": "City",
+        "region": "Region",
+        "height": "Height (cm)",
+        "bust": "Bust (cm)",
+        "waist": "Waist (cm)",
+        "hips": "Hips (cm)",
+        "shoeSize": "Shoe size",
+        "dressSize": "Dress size",
+        "eyeColor": "Eye color",
+        "hairColor": "Hair color",
+        "ethnicity": "Ethnicity",
+        "categories": "Categories",
+        "professionalStatus": "Professional status",
+        "spokenLanguages": "Spoken languages",
+        "travelAvailability": "Available to travel in Italy",
+        "instagram": "Instagram",
+        "tiktok": "TikTok",
+        "youtube": "YouTube",
+        "x": "X (Twitter)",
+        "website": "Website",
+        "followerCount": "Follower count",
+        "visibility": "Profile visibility"
+      }
+    },
+    "portfolio": {
+      "title": "Portfolio",
+      "upload": "Upload images",
+      "setCover": "Set as cover",
+      "removeCover": "Remove cover",
+      "deleteImage": "Delete image",
+      "reorder": "Reorder",
+      "maxImages": "Maximum 3 images",
+      "dragDrop": "Drag or click to upload",
+      "formats": "JPG, PNG, WebP — max 10MB"
+    },
+    "contacts": {
+      "title": "Contact requests",
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "rejected": "Rejected",
+      "accept": "Accept",
+      "reject": "Reject",
+      "noRequests": "No contact requests",
+      "from": "From"
+    },
+    "applications": {
+      "title": "Your applications",
+      "status": "Status",
+      "withdraw": "Withdraw application",
+      "noApplications": "You have no applications yet"
+    }
+  },
+  "scout": {
+    "profile": {
+      "title": "Professional Profile",
+      "fields": {
+        "businessName": "Business name",
+        "roleTitle": "Role",
+        "bio": "Description",
+        "city": "City",
+        "professionalEmail": "Professional email",
+        "website": "Website",
+        "socialProfile": "Social profile",
+        "vatNumber": "VAT number"
+      }
+    },
+    "verification": {
+      "title": "Account Verification",
+      "subtitle": "Complete verification to access the platform.",
+      "status": {
+        "pending": "Your verification request is under review.",
+        "approved": "Your account has been verified!",
+        "rejected": "Your verification request was rejected."
+      },
+      "submit": "Submit verification request",
+      "resubmit": "Submit again"
+    },
+    "discover": {
+      "title": "Discover models",
+      "filters": "Filters",
+      "results": "results",
+      "noResults": "No models found with these filters",
+      "clearFilters": "Clear filters",
+      "saveSearch": "Save search",
+      "requestContact": "Request contact",
+      "addToBoard": "Add to board",
+      "viewProfile": "View profile"
+    },
+    "boards": {
+      "title": "Shortlist boards",
+      "create": "Create board",
+      "name": "Board name",
+      "description": "Description",
+      "noBoards": "You have no boards yet",
+      "empty": "This board is empty"
+    },
+    "contacts": {
+      "title": "Contact requests sent",
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "rejected": "Rejected"
+    },
+    "castings": {
+      "title": "Your castings",
+      "create": "Create casting",
+      "edit": "Edit casting",
+      "applications": "Applications",
+      "noApplications": "No applications received",
+      "noCastings": "You have no castings yet"
+    }
+  },
+  "casting": {
+    "fields": {
+      "title": "Title",
+      "description": "Description",
+      "city": "City",
+      "region": "Region",
+      "castingDate": "Casting date",
+      "deadline": "Application deadline",
+      "requirements": "Requirements",
+      "compensation": "Compensation",
+      "isPaid": "Paid",
+      "spots": "Available spots",
+      "notes": "Additional notes"
+    },
+    "apply": "Apply",
+    "applied": "Application sent",
+    "introMessage": "Introduction message",
+    "closed": "Casting closed",
+    "deadline": "Deadline",
+    "spots": "spots",
+    "paid": "Paid",
+    "unpaid": "Unpaid"
+  },
+  "contact": {
+    "request": {
+      "title": "Request contact",
+      "subject": "Subject",
+      "message": "Message",
+      "reason": "Reason for contact",
+      "send": "Send request",
+      "dailyLimit": "You've reached your daily request limit",
+      "monthlyLimit": "You've reached your monthly request limit"
+    }
+  },
+  "messages": {
+    "title": "Messages",
+    "noConversations": "No conversations",
+    "typeMessage": "Type a message...",
+    "send": "Send"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all as read",
+    "noNotifications": "No notifications"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "account": "Account",
+    "deleteAccount": "Delete account",
+    "deleteAccountWarning": "This action is irreversible. All your data will be deleted.",
+    "billing": {
+      "title": "Subscription",
+      "currentPlan": "Current plan",
+      "changePlan": "Change plan",
+      "cancelPlan": "Cancel subscription",
+      "manageBilling": "Manage billing"
+    }
+  },
+  "pricing": {
+    "label": "Pricing",
+    "eyebrow": "Pricing · Plans · 2026",
+    "transactionalNote": "No hidden costs. Commissions apply only to transactions completed through Scoutica Pay.",
+    "payTeaserEyebrow": "Scoutica Pay · Coming",
+    "payTeaserCta": "Learn more",
+    "title": "Free for talent. Sustainable for the industry.",
+    "subtitle": "Models never pay. Scouts, agencies and studios pay only when the platform delivers real value: contacts, applications, bookings.",
+    "freeForever": "Free for talent",
+    "freeDesc": "Models never pay. Ever. Build your portfolio, apply to castings, receive requests — always.",
+    "plans": {
+      "model": {
+        "name": "Model",
+        "price": "€0",
+        "period": "forever",
+        "desc": "For those who want to be discovered in Italian fashion.",
+        "features": [
+          "Portfolio with 6 photos + 1 self-tape",
+          "Unlimited casting applications",
+          "Receive requests from verified scouts",
+          "Payments protected via Scoutica Pay"
+        ],
+        "cta": "Sign up as model"
+      },
+      "scoutPro": {
+        "name": "Scout Pro",
+        "price": "€29",
+        "period": "per month",
+        "desc": "For freelance scouts, casting directors, small brands.",
+        "features": [
+          "50 contact requests per month",
+          "Unlimited shortlist boards and saved searches",
+          "Advanced search and pro filters",
+          "AI look-alike search"
+        ],
+        "cta": "Start as Scout Pro",
+        "badge": "Most chosen"
+      },
+      "agency": {
+        "name": "Agency",
+        "price": "€149",
+        "period": "per month, 5 seats included",
+        "desc": "For structured agencies with booker teams.",
+        "features": [
+          "Shared workspace and audit log",
+          "250 contact requests per month",
+          "Extra seats at €29/month",
+          "Dedicated account manager"
+        ],
+        "cta": "Talk to us"
+      },
+      "studio": {
+        "name": "Studio",
+        "price": "€0",
+        "period": "12% commission on bookings",
+        "desc": "For photo studios and production locations.",
+        "features": [
+          "Public listing and synced calendar",
+          "Guaranteed payments via Stripe escrow",
+          "Studio Pro at €15/month → 10% commission",
+          "Reporting and analytics included"
+        ],
+        "cta": "List your studio"
+      }
+    },
+    "transactional": {
+      "label": "Transactional take-rate",
+      "title": "We earn only when you earn.",
+      "items": [
+        {
+          "name": "Studio booking",
+          "rate": "12%",
+          "desc": "On confirmed bookings. 10% for Studio Pro subscribers."
+        },
+        {
+          "name": "Model engagement",
+          "rate": "8%",
+          "desc": "On payments managed via Scoutica Pay (5% scout, 3% model)."
+        },
+        {
+          "name": "Promoted casting",
+          "rate": "€69 / 14 days",
+          "desc": "Your casting at the top of discovery. Featured €149."
+        },
+        {
+          "name": "Profile Spotlight",
+          "rate": "from €7",
+          "desc": "Visibility on homepage or by city/category. One week or one month."
+        }
+      ]
+    },
+    "ctaModel": "Sign up as Model",
+    "ctaScout": "Sign up as Scout",
+    "promotedTeaser": "Managed payments, standard contracts and guaranteed payouts arrive together with Scoutica Pay. Releasing before public launch.",
+    "feature1": {
+      "title": "Editorial portfolio",
+      "desc": "6 photos + self-tape, always free for models."
+    },
+    "feature2": {
+      "title": "Pro search",
+      "desc": "Advanced filters by measurements, city, categories."
+    },
+    "feature3": {
+      "title": "Castings and jobs",
+      "desc": "Post listings and receive qualified applications."
+    },
+    "feature4": {
+      "title": "Direct messaging",
+      "desc": "Safe conversations between models and verified scouts."
+    },
+    "feature5": {
+      "title": "Shortlists and pipeline",
+      "desc": "Organize talent into shareable boards."
+    },
+    "feature6": {
+      "title": "Verified profiles",
+      "desc": "Verified scouts and agencies for your safety."
+    }
+  },
+  "admin": {
+    "dashboard": {
+      "title": "Admin Dashboard",
+      "totalUsers": "Total users",
+      "totalModels": "Models",
+      "totalScouts": "Scouts",
+      "pendingVerifications": "Pending verifications",
+      "pendingReports": "Pending reports",
+      "activeSubscriptions": "Active subscriptions"
+    },
+    "verifications": {
+      "title": "Scout verifications",
+      "approve": "Approve",
+      "reject": "Reject",
+      "notes": "Notes for scout"
+    },
+    "users": {
+      "title": "User management",
+      "suspend": "Suspend",
+      "reactivate": "Reactivate",
+      "role": "Role",
+      "status": "Status"
+    },
+    "reports": {
+      "title": "Reports",
+      "resolve": "Resolve",
+      "dismiss": "Dismiss"
+    }
+  },
+  "trust": {
+    "report": {
+      "title": "Report",
+      "reason": "Reason",
+      "details": "Additional details",
+      "submit": "Submit report"
+    },
+    "block": {
+      "title": "Block user",
+      "confirm": "Are you sure you want to block this user?",
+      "blocked": "User blocked"
+    }
+  },
+  "boost": {
+    "title": "Profile Boost",
+    "description": "Increase your profile visibility for 7 days.",
+    "price": "€4.99",
+    "buy": "Buy boost",
+    "active": "Boost active",
+    "expires": "Expires on",
+    "stack": "Boosts can be stacked"
+  },
+  "footer": {
+    "tagline": "The Italian platform for professional model scouting.",
+    "about": "About us",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "rights": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "sections": {
+      "product": "Product",
+      "company": "Company",
+      "legal": "Legal"
+    },
+    "links": {
+      "studios": "Studios",
+      "register": "Sign up"
+    }
+  },
+  "about": {
+    "eyebrow": "Manifesto · About",
+    "title": "About us",
+    "lead": "An editorial platform for Italian fashion. Talent, eye, place — one system.",
+    "intro1": "<strong>Scoutica</strong> was born from the need to modernize the world of scouting in Italian fashion. Too often, contact between models and industry professionals happens through informal channels, Instagram DMs, and unstructured manual processes.",
+    "intro2": "Our mission is to create a professional, safe, and transparent space where models can present themselves at their best and where verified scouts, agencies, and brands can discover new talent efficiently and respectfully.",
+    "whyNow": {
+      "eyebrow": "02 — Why now",
+      "title": "Italian fashion deserves its own platform.",
+      "body": "Italy is the fourth fashion market in the world by revenue, yet its scouting still lives on DMs, IG screenshots, and private phone rubrics. In 2026 this is no longer acceptable — not for the talent, not for those searching, not for the brands who want to work properly."
+    },
+    "valuesTitle": "Our values",
+    "safety": "Safety",
+    "safetyDesc": "Every professional is verified by our team. Models have full control over who can contact them.",
+    "professionalism": "Professionalism",
+    "professionalismDesc": "Scoutica is not a social network. It is a professional platform designed for those who work seriously in the fashion industry.",
+    "quality": "Quality",
+    "qualityDesc": "We guide models in creating complete and professional profiles that represent them at their best.",
+    "italyFirst": "Italy first",
+    "italyFirstDesc": "Scoutica is designed for the Italian market. We know the territory, the agencies, and the needs of the industry.",
+    "principles": {
+      "eyebrow": "04 — Non-negotiable principles",
+      "title": "Five rules that don't change.",
+      "items": [
+        {
+          "n": "01",
+          "k": "Transparency",
+          "d": "Public pricing. Clear commissions. No hidden upsell."
+        },
+        {
+          "n": "02",
+          "k": "Human verification",
+          "d": "Scouts pass through a documental check made by people, not algorithms."
+        },
+        {
+          "n": "03",
+          "k": "Model in control",
+          "d": "The talent decides who sees what. Always. No exceptions."
+        },
+        {
+          "n": "04",
+          "k": "Editorial first",
+          "d": "A profile curated like a magazine, not like a CV."
+        },
+        {
+          "n": "05",
+          "k": "Made in Italy",
+          "d": "Italian by default. English for foreign clients. Everything else is the client."
+        }
+      ]
+    },
+    "madeIn": {
+      "eyebrow": "·",
+      "line1": "Scoutica is designed, built and maintained in Milan.",
+      "line2": "Legal seat, Italy."
+    }
+  },
+  "errors": {
+    "notFound": {
+      "title": "Page not found",
+      "description": "The page you are looking for does not exist or has been moved.",
+      "backHome": "Back to home"
+    },
+    "generic": {
+      "title": "Something went wrong",
+      "description": "An unexpected error occurred. Try again or go back to the previous page.",
+      "retry": "Retry",
+      "backHome": "Back to home"
+    },
+    "unknownError": "Unknown error"
+  },
+  "pages": {
+    "model": {
+      "home": {
+        "title": "Dashboard",
+        "greeting": "Welcome back, {name}",
+        "profileIncomplete": "Complete your profile to get discovered",
+        "profileNotPublished": "Publish your profile to appear in search results",
+        "completeProfile": "Complete profile",
+        "publishProfile": "Publish profile",
+        "viewProfile": "View profile",
+        "editProfile": "Edit profile",
+        "completeness": "Profile completeness",
+        "viewsThisWeek": "Views this week",
+        "viewsTrend": "{value}% vs last week",
+        "totalLikes": "Total likes",
+        "pendingContacts": "Pending requests",
+        "activeApplications": "Active applications",
+        "noChange": "No change",
+        "opportunities": "Recommended for you",
+        "opportunitiesDesc": "Opportunities matching your location",
+        "noOpportunities": "No opportunities yet",
+        "noOpportunitiesDesc": "New castings and jobs matching your profile will appear here.",
+        "browseAll": "Browse all",
+        "casting": "Casting",
+        "job": "Job",
+        "deadline": "Deadline: {date}",
+        "paid": "Paid",
+        "recentActivity": "Recent activity",
+        "noActivity": "No recent activity",
+        "noActivityDesc": "Your notifications and updates will appear here.",
+        "viewAll": "View all",
+        "quickActions": "Quick actions",
+        "updatePortfolio": "Update portfolio",
+        "browseOpportunities": "Browse opportunities",
+        "profileStrength": "Profile",
+        "strengthProfessional": "Professional",
+        "strengthGood": "Established",
+        "strengthBasic": "Starting",
+        "sommario": "Summary",
+        "numeri": "Numbers",
+        "avvisi": "Notices",
+        "movimenti": "Activity",
+        "eyebrow": "Dashboard"
+      },
+      "portfolio": {
+        "title": "Portfolio",
+        "description": "Manage your images. Maximum {maxPhotos} photos. JPG, PNG, WebP — max 10MB each.",
+        "yourImages": "Your images ({count}/{max})",
+        "upgradeTitle": "Upgrade to Model Pro",
+        "upgradeDesc": "9 photos, 1 video, PDF book — €14.99/mo",
+        "upgrade": "Upgrade"
+      },
+      "castings": {
+        "title": "Open Castings",
+        "description": "Explore castings posted by verified scouts and agencies",
+        "noResults": "There are no open castings at the moment. Check back later!",
+        "applied": "Applied",
+        "paid": "Paid",
+        "deadline": "Deadline:",
+        "noCastings": "No castings available",
+        "noCastingsDesc": "There are no open castings right now. Check back later!"
+      },
+      "jobs": {
+        "title": "Available Jobs",
+        "description": "Explore job opportunities posted by scouts and agencies",
+        "noResults": "There are no published jobs at the moment. Check back later!"
+      },
+      "applications": {
+        "title": "Your Applications",
+        "description": "Track your casting and job applications",
+        "statusPending": "Pending",
+        "statusAccepted": "Accepted",
+        "statusRejected": "Rejected",
+        "statusWithdrawn": "Withdrawn",
+        "appliedOn": "Applied on",
+        "job": "Job",
+        "castingExpired": "Casting expired",
+        "jobExpired": "Job expired",
+        "noApplications": "No applications",
+        "noApplicationsDesc": "You haven't applied to any castings or jobs yet. Explore available opportunities!",
+        "exploreCastings": "Explore castings",
+        "agency": "Agency"
+      },
+      "contacts": {
+        "title": "Contact Requests",
+        "description": "Manage requests received from scouts, agencies and brands",
+        "noRequests": "No requests yet",
+        "noRequestsDesc": "When a professional contacts you, you'll see the request here."
+      },
+      "messages": {
+        "title": "Messages",
+        "description": "Your conversations with verified professionals",
+        "noMessages": "No messages",
+        "noMessagesDesc": "When you accept a contact request, you can start chatting here."
+      },
+      "notifications": {
+        "noNotifications": "No notifications",
+        "noNotificationsDesc": "Your notifications will appear here.",
+        "title": "Notifications"
+      },
+      "discover": {
+        "title": "Discover Models",
+        "description": "Browse published model profiles on the platform",
+        "noProfiles": "No published profiles",
+        "noProfilesDesc": "There are no published profiles yet. Be the first to publish yours!",
+        "profile": "profile",
+        "profiles": "profiles"
+      },
+      "saved": {
+        "title": "Saved",
+        "description": "Castings and jobs you bookmarked to apply later",
+        "castingsLabel": "Castings",
+        "jobsLabel": "Jobs",
+        "castingTag": "Casting",
+        "jobTag": "Job",
+        "applied": "Applied",
+        "paid": "Paid",
+        "deadline": "Deadline",
+        "emptyTitle": "Nothing saved yet",
+        "emptyDesc": "Bookmark a casting or job from the Opportunities or Jobs page to find it back here.",
+        "addToSaved": "Save",
+        "removeFromSaved": "Remove from saved"
+      },
+      "billing": {
+        "freePlanDesc": "You're on the free plan. Upgrade to Model Pro to unlock all features.",
+        "month": "month",
+        "title": "Subscription & Billing",
+        "subscriptionActivated": "Model Pro subscription activated!",
+        "paymentCanceled": "Payment canceled",
+        "currentPlan": "Current plan",
+        "nextRenewal": "Next renewal: {date}",
+        "expiresOn": "Expires on {date}"
+      },
+      "castingDetail": {
+        "backToCastings": "Back to castings",
+        "paid": "Paid",
+        "applied": "Applied",
+        "expired": "Expired",
+        "postedBy": "Posted by",
+        "location": "Location",
+        "date": "Date",
+        "compensation": "Compensation",
+        "spots": "Spots",
+        "description": "Description",
+        "requirements": "Requirements",
+        "applicationDeadline": "Application deadline:",
+        "publishProfileFirst": "You must publish your profile before applying to castings."
+      },
+      "jobDetail": {
+        "backToJobs": "Back to jobs",
+        "paid": "Paid",
+        "applied": "Applied",
+        "expired": "Expired",
+        "postedBy": "Posted by",
+        "brand": "Brand",
+        "location": "Location",
+        "dates": "Dates",
+        "compensation": "Compensation",
+        "spots": "Spots",
+        "venue": "Venue",
+        "description": "Description",
+        "modelRequirements": "Model Requirements",
+        "applicationDeadline": "Application deadline:",
+        "publishProfileFirst": "You must publish your profile before applying to jobs."
+      },
+      "profile": {
+        "title": "Your Profile",
+        "description": "Complete your profile to get discovered by scouts."
+      },
+      "settings": {
+        "title": "Settings"
+      },
+      "lavori": {
+        "title": "Available Jobs",
+        "description": "Browse available jobs and apply",
+        "applied": "Applied",
+        "paid": "Paid",
+        "deadline": "Deadline:",
+        "noJobs": "No jobs available",
+        "noJobsDesc": "No jobs are currently published. Check back later!"
+      }
+    },
+    "scout": {
+      "jobs": {
+        "title": "My Jobs",
+        "description": "Manage your jobs and applications",
+        "new": "New job"
+      },
+      "castings": {
+        "title": "My Castings",
+        "description": "Manage your castings and applications",
+        "new": "New casting",
+        "applicationsReceived": "applications received",
+        "newCasting": "New casting",
+        "applications": "applications",
+        "noCastings": "No castings yet",
+        "noCastingsDesc": "Create your first casting to start receiving applications.",
+        "createCasting": "Create casting"
+      },
+      "discover": {
+        "noResults": "No results",
+        "noResultsDesc": "Try adjusting your search filters to find more profiles.",
+        "title": "Discover Talent",
+        "description": "Explore our database of models across Italy",
+        "result": "result",
+        "results": "results"
+      },
+      "favorites": {
+        "title": "Favorites",
+        "description": "Profiles you saved as favorites",
+        "profile": "profile",
+        "profiles": "profiles",
+        "empty": "No favorites yet",
+        "emptyDesc": "Save profiles from the Discover Talent page to find them back here."
+      },
+      "boards": {
+        "backToBoards": "Back to boards",
+        "profiles": "profiles",
+        "addFromDiscover": "Add profiles from the Discover Talent page.",
+        "title": "Shortlist Boards",
+        "description": "Organize talent in custom boards",
+        "noBoards": "No boards yet",
+        "noBoardsDesc": "Create a board to start organizing talent."
+      },
+      "contacts": {
+        "title": "Sent Requests",
+        "description": "Monitor the status of your contact requests",
+        "noRequests": "No requests sent",
+        "noRequestsDesc": "Go to Discover Talent to search and contact models.",
+        "discoverTalent": "Discover Talent"
+      },
+      "messages": {
+        "title": "Messages",
+        "description": "Your conversations with models",
+        "noMessages": "No messages",
+        "noMessagesDesc": "When you accept a contact request, you can start chatting here.",
+        "backToMessages": "Back to messages",
+        "noMessagesDescAlt": "When a model accepts your request, you can start chatting here."
+      },
+      "notifications": {
+        "noNotifications": "No notifications",
+        "noNotificationsDesc": "Your notifications will appear here.",
+        "title": "Notifications"
+      },
+      "profile": {
+        "title": "Profile",
+        "description": "Manage your profile information.",
+        "verificationStatus": "Verification status",
+        "type": "Type",
+        "currentPlan": "Current plan",
+        "pendingVerification": "Your verification request is under review.",
+        "pendingVerificationDesc": "Our team usually responds within 24-48 hours. In the meantime, you can complete your profile settings.",
+        "rejectedVerification": "Your verification request has been rejected.",
+        "resubmit": "Resubmit"
+      },
+      "billing": {
+        "freePlanDesc": "You're on the free plan. Upgrade to Starter or Pro to unlock all features.",
+        "month": "month",
+        "title": "Subscription & Billing",
+        "subscriptionActivated": "Subscription activated!",
+        "paymentCanceled": "Payment canceled",
+        "currentPlan": "Current plan",
+        "subscriptionActivatedSuccess": "Subscription activated successfully!",
+        "expiresOn": "Expires on {date}",
+        "nextRenewal": "Next renewal: {date}"
+      },
+      "boardDetail": {
+        "backToBoards": "Back to boards",
+        "profiles": "profiles",
+        "emptyBoard": "Empty board",
+        "emptyBoardDesc": "Add profiles from the Discover Talent page.",
+        "discoverTalent": "Discover Talent"
+      },
+      "castingsNew": {
+        "title": "New Casting",
+        "description": "Create a new casting to find the perfect talent",
+        "editTitle": "Edit Casting"
+      },
+      "castingApplications": {
+        "backToCastings": "Back to castings",
+        "applicationsReceived": "applications received",
+        "noApplications": "No applications yet",
+        "noApplicationsDesc": "When models apply, you'll see them here."
+      },
+      "lavori": {
+        "title": "My Jobs",
+        "description": "Manage your jobs and applications",
+        "newJob": "New job",
+        "deadline": "Deadline:",
+        "applications": "applications",
+        "noJobs": "No jobs yet",
+        "noJobsDesc": "Create your first job to start receiving applications.",
+        "createJob": "Create job"
+      },
+      "lavoriNew": {
+        "title": "New Job",
+        "description": "Create a new job listing to find the perfect talent",
+        "editTitle": "Edit Job"
+      },
+      "jobApplications": {
+        "backToJobs": "Back to jobs",
+        "applicationsReceived": "applications received",
+        "noApplications": "No applications yet",
+        "noApplicationsDesc": "When models apply, you'll see them here."
+      },
+      "settings": {
+        "title": "Settings"
+      },
+      "verification": {
+        "title": "Account Verification",
+        "description": "Complete the verification to access the platform and start discovering new talent."
+      },
+      "home": {
+        "greeting": "Hello, {name}",
+        "searchModels": "Search Models",
+        "newCasting": "New Casting",
+        "contactsUsed": "Contacts used",
+        "thisMonth": "this month",
+        "contactsRemaining": "contacts remaining",
+        "activeCastings": "Active castings",
+        "activeJobs": "Active jobs",
+        "pendingReview": "Pending review",
+        "activeConversations": "Conversations",
+        "shortlists": "Shortlists",
+        "modelsLiked": "Models saved",
+        "pendingContacts": "Pending contacts",
+        "recentApplications": "Recent applications",
+        "recentActivity": "Recent activity",
+        "viewAll": "View all",
+        "noApplicationsYet": "No applications yet. Publish a casting to get started!",
+        "noActivity": "No recent activity.",
+        "quickSearch": "Search models",
+        "quickCasting": "Create casting",
+        "quickJob": "Create job",
+        "quickBoards": "Your boards",
+        "eyebrow": "Dashboard",
+        "subtitle": "Overview of your scouting activity",
+        "contactsThisMonth": "Contacts this month",
+        "planLimits": "Plan limits",
+        "quickActionsDesc": "Your shortcuts",
+        "recentActivityDesc": "Latest updates",
+        "recentApplicationsDesc": "Most recent applications",
+        "upgradePlan": "Upgrade plan",
+        "viewPlans": "View plans",
+        "verificationPending": "Verification pending",
+        "verificationPendingDesc": "Your verification is under review. Complete your profile to speed it up.",
+        "verificationRequired": "Verification required",
+        "verificationRequiredDesc": "Complete verification to publish castings and contact talent.",
+        "quickActions": "Quick actions",
+        "sommario": "Summary",
+        "numeri": "Numbers",
+        "avvisi": "Notices",
+        "movimenti": "Activity",
+        "applicationStatus": {
+          "PENDING": "Pending",
+          "ACCEPTED": "Accepted",
+          "REJECTED": "Declined"
+        }
+      }
+    },
+    "studio": {
+      "studios": {
+        "title": "My Studios",
+        "description": "Manage your spaces and their listings",
+        "addStudio": "Add studio",
+        "noStudios": "No studios yet",
+        "noStudiosDesc": "Add your first studio to start receiving inquiries.",
+        "photos": "photos",
+        "inquiriesShort": "inquiries"
+      },
+      "bookings": {
+        "title": "Bookings",
+        "description": "Manage the bookings received for your studios",
+        "noBookings": "No bookings yet",
+        "noBookingsDesc": "Bookings will appear here when someone books your studios.",
+        "for": "For",
+        "date": "Date",
+        "time": "Time",
+        "price": "Price",
+        "contact": "Contact",
+        "day": "day",
+        "days": "days"
+      },
+      "inquiries": {
+        "title": "Received Inquiries",
+        "description": "Manage information requests for your studios",
+        "noInquiries": "No inquiries yet",
+        "noInquiriesDesc": "Inquiries will appear here when someone contacts your studios."
+      },
+      "messages": {
+        "title": "Messages",
+        "description": "Your conversations with clients and professionals",
+        "noMessages": "No messages",
+        "noMessagesDesc": "Your messages with clients and professionals will appear here.",
+        "noMessagesDescAlt": "When you receive inquiries for your studios, you can chat here."
+      },
+      "notifications": {
+        "noNotifications": "No notifications",
+        "noNotificationsDesc": "Your notifications will appear here.",
+        "title": "Notifications"
+      },
+      "settings": {
+        "title": "Settings"
+      },
+      "studioDetail": {
+        "editStudio": "Edit Studio",
+        "backToStudios": "Back to my studios"
+      },
+      "createError": "Error creating studio",
+      "createStudio": {
+        "nameRequired": "Studio name is required",
+        "title": "New Studio",
+        "subtitle": "Enter the details of your space",
+        "basicInfo": "Basic info",
+        "namePlaceholder": "Photography Studio Milan",
+        "spaceType": "Space type",
+        "descPlaceholder": "Describe your space, the atmosphere, what it is ideal for...",
+        "location": "Location",
+        "addressPlaceholder": "Via Roma 1",
+        "city": "City",
+        "cityPlaceholder": "Milan",
+        "region": "Region",
+        "regionPlaceholder": "Lombardy",
+        "zip": "ZIP",
+        "zipPlaceholder": "20100",
+        "spaceDetails": "Space details",
+        "area": "Area (m²)",
+        "maxCapacity": "Max capacity (people)",
+        "amenities": "Included amenities",
+        "rates": "Rates",
+        "hourlyRate": "Hourly rate (€)",
+        "dailyRate": "Daily rate (€)",
+        "weeklyRate": "Weekly rate (€)",
+        "minHours": "Minimum booking hours",
+        "availabilityNotes": "Availability notes",
+        "availabilityPlaceholder": "Mon-Fri 9:00-19:00, weekends on request...",
+        "contacts": "Contacts (shown in listing)",
+        "email": "Email",
+        "emailPlaceholder": "studio@example.com",
+        "phone": "Phone",
+        "phonePlaceholder": "+39 02 1234567",
+        "createError": "Error creating studio",
+        "submit": "Create studio",
+        "studioName": "Studio name"
+      },
+      "home": {
+        "eyebrow": "Dashboard",
+        "greeting": "Hello, {name}",
+        "greetingFallback": "Welcome",
+        "subtitle": "Overview of your studios and bookings",
+        "bookingsMonth": "Bookings this month",
+        "bookingsPending": "Awaiting confirmation",
+        "revenue30d": "Revenue last 30 days",
+        "publishedStudios": "Published studios",
+        "inquiriesPending": "Pending inquiries",
+        "upcomingBookings": "Upcoming bookings",
+        "upcomingDesc": "Future bookings, sorted by date",
+        "noBookings": "No upcoming bookings",
+        "noBookingsDesc": "Future bookings will appear here",
+        "inquiries": "Latest inquiries",
+        "inquiriesDesc": "Most recent information requests",
+        "noInquiries": "No inquiries",
+        "noInquiriesDesc": "Information requests will appear here",
+        "yourStudios": "Your spaces",
+        "yourStudiosDesc": "Manage and edit your studios",
+        "noStudios": "No studio created",
+        "noStudiosDesc": "Add your first space to start receiving inquiries",
+        "addStudio": "Add studio",
+        "viewAll": "View all",
+        "quickActions": "Quick actions",
+        "quickActionsDesc": "What you do most often",
+        "actionAddStudio": "Add studio",
+        "actionAddStudioDesc": "Publish a new space",
+        "actionViewBookings": "View bookings",
+        "actionViewBookingsDesc": "Manage requests and dates",
+        "actionViewInquiries": "View inquiries",
+        "actionViewInquiriesDesc": "Respond to new inquiries",
+        "actionEditProfile": "Studio profile",
+        "actionEditProfileDesc": "Update company info",
+        "recentActivity": "Recent activity",
+        "noActivity": "All clear",
+        "noActivityDesc": "Latest notifications will appear here",
+        "for": "For",
+        "status": {
+          "PENDING": "Pending",
+          "CONFIRMED": "Confirmed",
+          "CANCELLED": "Cancelled",
+          "COMPLETED": "Completed",
+          "REJECTED": "Rejected"
+        },
+        "inquiryStatus": {
+          "PENDING": "New",
+          "REPLIED": "Replied",
+          "CLOSED": "Closed"
+        }
+      }
+    },
+    "admin": {
+      "reports": {
+        "noReports": "No reports found",
+        "noReportsDesc": "There are no pending reports.",
+        "title": "Reports Management",
+        "description": "Review and manage user reports",
+        "reported": "Reported",
+        "by": "by",
+        "reportsToReview": "reports to review",
+        "from": "From:"
+      },
+      "verifications": {
+        "noPending": "No pending verifications",
+        "noPendingDesc": "There are no verification requests to review.",
+        "title": "Verifications",
+        "description": "Review and manage verification requests",
+        "noVerifications": "No pending verifications",
+        "submittedOn": "Submitted on",
+        "viewDocuments": "View Documents",
+        "pending": "Pending",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "requestsToReview": "requests to review",
+        "business": "Business:",
+        "city": "City:",
+        "registered": "Registered",
+        "noVerificationsDesc": "There are no verification requests to review.",
+        "submitted": "Submitted",
+        "purposeOfUse": "Purpose of use"
+      },
+      "castings": {
+        "noCastings": "No castings found",
+        "noCastingsDesc": "No castings have been created yet.",
+        "title": "Castings Management",
+        "description": "Manage all castings on the platform",
+        "applications": "applications",
+        "by": "By",
+        "totalCastings": "total castings",
+        "from": "By:"
+      },
+      "subscriptions": {
+        "noSubscriptions": "No subscriptions found",
+        "noSubscriptionsDesc": "No paid subscriptions yet.",
+        "title": "Subscriptions",
+        "description": "Manage platform subscriptions",
+        "expires": "Expires",
+        "activeSubscriptions": "active subscriptions"
+      },
+      "dashboard": {
+        "title": "Admin Dashboard",
+        "description": "Platform overview",
+        "totalUsers": "Total users",
+        "models": "Models",
+        "scoutsAgencies": "Scouts/Agencies",
+        "pendingVerifications": "Pending verifications",
+        "reports": "Reports",
+        "activeCastings": "Active castings",
+        "activeSubscriptions": "Active subscriptions",
+        "eyebrow": "Admin",
+        "subtitle": "Platform overview and moderation",
+        "recentActivity": "Recent activity",
+        "noActivity": "No recent activity",
+        "needsAttention": "Needs attention",
+        "overview": "Overview",
+        "growth": "Growth",
+        "moderation": "Moderation"
+      },
+      "settings": {
+        "title": "Platform Settings",
+        "description": "Configure platform settings",
+        "maintenanceMode": "Maintenance Mode",
+        "maintenanceDesc": "Enable maintenance mode to temporarily disable the platform",
+        "generalSettings": "General settings",
+        "comingSoon": "Platform settings will be available soon.",
+        "scoutGate": {
+          "title": "Scout Gate",
+          "description": "Control whether new talent buyers can proceed to verification or are placed on a waitlist.",
+          "statusOpen": "Gate is open",
+          "statusClosed": "Gate is closed",
+          "statusOpenDesc": "New talent buyers can proceed directly to verification.",
+          "statusClosedDesc": "New talent buyers are placed on a waitlist.",
+          "open": "Open gate",
+          "close": "Close gate",
+          "openConfirm": "Opening the gate will move {count} waitlisted scout(s) to verification. Continue?",
+          "closeConfirm": "Are you sure you want to close the gate? New talent buyers will be placed on a waitlist.",
+          "waitlistedCount": "{count} scout(s) currently on the waitlist",
+          "waitlistTitle": "Waitlisted Scouts"
+        }
+      },
+      "users": {
+        "title": "Users Management",
+        "description": "Manage all platform users",
+        "noUsers": "No users found",
+        "usersLatest": "users (latest 100)",
+        "suspended": "Suspended"
+      }
+    },
+    "marketing": {
+      "contact": {
+        "eyebrow": "Correspondence",
+        "title": "Let's talk.",
+        "lead": "For business inquiries, support, partnerships or editorial collaborations — we're here.",
+        "items": {
+          "generalEyebrow": "Email · General",
+          "pressEyebrow": "Email · Press & PR",
+          "addressEyebrow": "Address",
+          "addressValue": "Milan, Italy",
+          "socialEyebrow": "Social",
+          "socialValue": "Instagram · LinkedIn"
+        },
+        "cta": {
+          "eyebrow": "Start now",
+          "title": "You don't need to write. You need to come in.",
+          "body": "If you're a model, a scout or an agency — create your account in two minutes and enter the platform.",
+          "registerModel": "Sign up as a model",
+          "registerScout": "Sign up as a scout",
+          "registerStudio": "Have a studio?"
+        },
+        "footnote": "Scoutica · Milan"
+      },
+      "studios": {
+        "eyebrow": "Directory · Studios",
+        "ownersEyebrow": "For owners",
+        "spacesFound": "spaces found",
+        "spacesFoundPlural": "{count} spaces found",
+        "noSpaces": "No spaces available",
+        "noSpacesDesc": "There are no published studios at the moment. Check back soon!",
+        "ctaTitle": "Have a studio to rent?",
+        "ctaDesc": "List your space for free and start receiving inquiries from fashion professionals.",
+        "ctaButton": "Register your studio",
+        "title": "Studios & Spaces",
+        "description": "Find the perfect space for your next shoot, event, or creative project.",
+        "spaceFound": "space found",
+        "previous": "Previous",
+        "next": "Next",
+        "noStudios": "No studios found",
+        "noStudiosDesc": "Try adjusting your search filters.",
+        "registerStudio": "Register your studio"
+      },
+      "studioDetail": {
+        "from": "From",
+        "perHour": "/hour",
+        "perDay": "/day",
+        "description": "Description",
+        "features": "Features",
+        "location": "Location",
+        "bookThisStudio": "Book this studio",
+        "inquireAbout": "Inquire about this studio",
+        "availability": "Availability",
+        "reviews": "Reviews",
+        "noReviews": "No reviews yet",
+        "capacity": "Capacity",
+        "people": "people",
+        "backToStudios": "Back to studios",
+        "noPhotos": "No photos available",
+        "managedBy": "Managed by",
+        "amenities": "Amenities",
+        "directContact": "Direct Contact",
+        "rates": "Rates",
+        "hourlyRate": "Hourly rate",
+        "dailyRate": "Daily rate",
+        "weeklyRate": "Weekly rate",
+        "contactForPricing": "Contact for pricing"
+      }
+    },
+    "common": {
+      "backToJobs": "Back to jobs",
+      "backToCastings": "Back to castings",
+      "backToMessages": "Back to messages",
+      "backToStudios": "Back to studios",
+      "backToSearch": "Back to search",
+      "back": "Back",
+      "publishedBy": "Published by",
+      "publishProfileRequired": "You must publish your profile before you can apply."
+    },
+    "publicProfile": {
+      "about": "About",
+      "portfolio": "Portfolio",
+      "experience": "Experience",
+      "stats": "Stats",
+      "height": "Height",
+      "weight": "Weight",
+      "bust": "Bust",
+      "waist": "Waist",
+      "hips": "Hips",
+      "shoes": "Shoes",
+      "eyeColor": "Eye Color",
+      "hairColor": "Hair Color",
+      "contact": "Contact",
+      "sendMessage": "Send Message",
+      "addToBoard": "Add to Board",
+      "like": "Like",
+      "share": "Share",
+      "verified": "Verified",
+      "available": "Available",
+      "unavailable": "Unavailable",
+      "skills": "Skills",
+      "languages": "Languages",
+      "location": "Location",
+      "age": "Age",
+      "years": "years",
+      "cm": "cm",
+      "kg": "kg",
+      "unnamed": "Unnamed",
+      "views": "views",
+      "likes": "likes",
+      "applied": "Applied",
+      "paid": "Paid",
+      "availableToTravel": "Available to travel",
+      "measurements": "Measurements",
+      "appearance": "Appearance",
+      "eyes": "Eyes",
+      "hair": "Hair",
+      "ethnicity": "Ethnicity",
+      "dressSize": "Dress size",
+      "website": "Website",
+      "memberSince": "Member since",
+      "backToSearch": "Back to search",
+      "back": "Back"
+    },
+    "publicScoutProfile": {
+      "back": "Back",
+      "verified": "Verified",
+      "location": "Location",
+      "website": "Website",
+      "activeCastings": "Active castings",
+      "activeJobs": "Active jobs"
+    }
+  },
+  "forms": {
+    "job": {
+      "sectionDetails": "Job details",
+      "title": "Title",
+      "titlePlaceholder": "E.g.: Shooting for fashion brand",
+      "description": "Description",
+      "descriptionPlaceholder": "Describe the job in detail...",
+      "jobType": "Job type",
+      "selectPlaceholder": "Select...",
+      "brandClient": "Brand / Client",
+      "city": "City",
+      "region": "Region",
+      "specificLocation": "Specific location",
+      "locationPlaceholder": "E.g.: Photo studio on via Montenapoleone",
+      "jobDates": "Job dates",
+      "jobDatesPlaceholder": "E.g.: April 15-17, 2026",
+      "applicationDeadline": "Application deadline",
+      "availableSpots": "Available spots",
+      "sectionRequirements": "Requirements & compensation",
+      "modelRequirements": "Model requirements",
+      "modelRequirementsPlaceholder": "E.g.: Min height 175cm, sizes 38-42...",
+      "compensation": "Compensation",
+      "compensationPlaceholder": "E.g.: €500/day",
+      "paidJob": "This is a paid job",
+      "additionalNotes": "Additional notes (private)",
+      "saveChanges": "Save changes",
+      "createJob": "Create job"
+    },
+    "casting": {
+      "sectionDetails": "Casting details",
+      "title": "Title",
+      "titlePlaceholder": "E.g.: Casting for SS25 campaign",
+      "description": "Description",
+      "descriptionPlaceholder": "Describe the casting in detail...",
+      "city": "City",
+      "region": "Region",
+      "selectPlaceholder": "Select...",
+      "castingDate": "Casting date",
+      "applicationDeadline": "Application deadline",
+      "sectionType": "Casting type",
+      "mode": "Mode",
+      "time": "Time",
+      "timePlaceholder": "E.g.: 10:00 AM - 6:00 PM",
+      "address": "Address",
+      "addressPlaceholder": "E.g.: 8 Via Montenapoleone, Milan",
+      "onlineInstructions": "Online casting instructions",
+      "onlineInstructionsPlaceholder": "E.g.: Send a 30-second selfie video...",
+      "requiredMaterials": "Required materials",
+      "materialsPlaceholder": "E.g.: Photo book, comp card, ID...",
+      "sectionRequirements": "Requirements & compensation",
+      "requirements": "Requirements",
+      "requirementsPlaceholder": "E.g.: Min height 175cm, runway experience...",
+      "compensation": "Compensation",
+      "compensationPlaceholder": "E.g.: €500/day",
+      "availableSpots": "Available spots",
+      "paidJob": "This is a paid job",
+      "additionalNotes": "Additional notes (private)",
+      "saveChanges": "Save changes",
+      "createCasting": "Create casting"
+    },
+    "contact": {
+      "contactTitle": "Contact",
+      "contactDescription": "Send a professional contact request. The model can accept or decline.",
+      "requestSent": "Request sent!",
+      "requestSentDesc": "You'll be notified when the model responds.",
+      "reason": "Reason",
+      "selectReason": "Select reason...",
+      "subject": "Subject",
+      "subjectPlaceholder": "E.g.: Casting for SS25 campaign",
+      "message": "Message",
+      "messagePlaceholder": "Introduce yourself and explain the reason for contact...",
+      "charLimit": "Min 20 characters, max 1000",
+      "sendRequest": "Send request"
+    },
+    "modelProfile": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "selectRegionFirst": "Select a region first",
+      "bioPlaceholder": "Tell us about yourself...",
+      "selectCategories": "Select categories...",
+      "selectOneOrMore": "Select one or more categories",
+      "username": "username"
+    },
+    "scoutProfile": {
+      "businessInfo": "Business information",
+      "businessName": "Business name",
+      "businessNamePlaceholder": "E.g. Koci Agency",
+      "role": "Role",
+      "rolePlaceholder": "E.g. Casting Director",
+      "city": "City",
+      "cityPlaceholder": "E.g. Milan",
+      "vatNumber": "VAT number",
+      "vatNumberPlaceholder": "E.g. IT12345678901",
+      "bio": "Bio",
+      "bioPlaceholder": "Describe your business...",
+      "contacts": "Contacts",
+      "professionalEmail": "Professional email",
+      "emailPlaceholder": "E.g. info@agency.it",
+      "website": "Website",
+      "websitePlaceholder": "https://www.example.it",
+      "socialProfile": "Social profile",
+      "socialPlaceholder": "https://instagram.com/..."
+    }
+  },
+  "studio": {
+    "booking": {
+      "selectDatesFromCalendar": "Select dates from the calendar",
+      "selectTimeSlot": "Select a time slot",
+      "fillNameEmail": "Fill in name and email",
+      "bookingSent": "Booking sent!",
+      "bookingSentDesc": "The studio owner will confirm your booking shortly.",
+      "selectDates": "Select dates",
+      "selectDatesInstructions": "Click start date, then end date.",
+      "day": "day",
+      "days": "days",
+      "estimatedTotal": "Estimated total",
+      "priceToAgree": "Price to be agreed with the owner",
+      "yourDetails": "Your details",
+      "fullName": "Full name",
+      "phone": "Phone",
+      "additionalNotes": "Additional notes",
+      "projectPlaceholder": "Briefly describe your project...",
+      "bookNow": "Book now"
+    },
+    "inquiry": {
+      "fillRequired": "Fill in required fields",
+      "inquirySent": "Inquiry sent!",
+      "inquirySentDesc": "The studio owner will contact you shortly.",
+      "requestInfo": "Request info",
+      "name": "Name",
+      "phone": "Phone",
+      "preferredDates": "Preferred dates",
+      "duration": "Duration (hrs)",
+      "message": "Message",
+      "messagePlaceholder": "Describe your project and needs...",
+      "sendInquiry": "Send inquiry"
+    },
+    "filters": {
+      "searchPlaceholder": "Search by name, city...",
+      "allRegions": "All regions",
+      "allTypes": "All types",
+      "search": "Search",
+      "clear": "Clear"
+    },
+    "perHour": "/hr",
+    "perDay": "/day",
+    "noStudiosWithLocation": "No studios with location data",
+    "grid": "Grid",
+    "map": "Map",
+    "publish": {
+      "deleteConfirm": "Are you sure you want to delete this studio? This action is irreversible.",
+      "view": "View",
+      "publishBtn": "Publish",
+      "pause": "Pause"
+    },
+    "availability": {
+      "title": "Manage availability",
+      "instructions": "Click dates to select them, then block the selected dates.",
+      "blockDate": "Block {count} date",
+      "blockDates": "Block {count} dates",
+      "blockedDates": "Blocked dates ({count})"
+    },
+    "editForm": {
+      "saved": "Changes saved successfully",
+      "basicInfo": "Basic information",
+      "studioName": "Studio name",
+      "spaceType": "Space type",
+      "description": "Description",
+      "location": "Location",
+      "address": "Address",
+      "city": "City",
+      "region": "Region",
+      "postalCode": "ZIP code",
+      "spaceDetails": "Space details",
+      "area": "Area (m²)",
+      "maxCapacity": "Max capacity",
+      "includedServices": "Included services",
+      "rates": "Rates",
+      "hourly": "Hourly (€)",
+      "daily": "Daily (€)",
+      "weekly": "Weekly (€)",
+      "minHours": "Minimum hours",
+      "availabilityNotes": "Availability notes",
+      "contactsSection": "Contacts",
+      "email": "Email",
+      "phone": "Phone",
+      "saveChanges": "Save changes"
+    },
+    "photos": {
+      "unsupportedFormat": "Unsupported format. Use JPG, PNG or WebP.",
+      "fileTooLarge": "File too large. Maximum 10MB.",
+      "uploadError": "Error uploading",
+      "photosCount": "Photos ({count}/10)",
+      "addPhoto": "Add photo",
+      "addFirstPhoto": "Add at least one photo of your studio"
+    }
+  },
+  "portfolio": {
+    "noImages": "No images",
+    "noImagesDesc": "Upload your first photos to start building your portfolio.",
+    "uploadImage": "Upload image",
+    "cover": "Cover",
+    "deleteConfirm": "Are you sure you want to delete this image?",
+    "profilePhotos": "Profile photos",
+    "photosDesc": "Upload up to {maxPhotos} photos. The cover photo will be shown as preview to scouts.",
+    "addPhoto": "Add photo",
+    "unsupportedFormat": "Unsupported format. Use JPG, PNG or WebP.",
+    "fileTooLarge": "File too large. Maximum 10MB.",
+    "uploadError": "Error uploading",
+    "deletePhotoConfirm": "Delete this photo?",
+    "error": "Error"
+  },
+  "publish": {
+    "published": "Profile published",
+    "unpublished": "Profile not published",
+    "hideProfile": "Hide profile",
+    "publishProfile": "Publish profile",
+    "requirementsIntro": "To publish your profile you must meet all requirements:",
+    "reqAge": "Age 18+",
+    "reqName": "Full name",
+    "reqImage": "At least 1 image",
+    "reqCover": "Cover image set"
+  },
+  "applications": {
+    "apply": "Apply",
+    "applicationSent": "Application submitted successfully!",
+    "introMessage": "Introduction message (optional)",
+    "introPlaceholder": "Briefly introduce yourself to the scout...",
+    "submitApplication": "Submit application",
+    "accept": "Accept",
+    "reject": "Reject"
+  },
+  "layout": {
+    "switchLang": "Switch to English",
+    "switchLangAlt": "Passa all'italiano",
+    "langCode": "EN",
+    "langCodeAlt": "IT"
+  },
+  "ui": {
+    "timePicker": {
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "evening": "Evening",
+      "selectTime": "Select time",
+      "selectEndTime": "Now select the end time.",
+      "tapInstructions": "Tap start, then end. Occupied slots in red.",
+      "selected": "Selected",
+      "range": "Range",
+      "occupied": "Occupied"
+    },
+    "calendar": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun",
+      "selected": "Selected",
+      "unavailable": "Unavailable",
+      "today": "Today"
+    },
+    "imageCropper": {
+      "title": "Crop image",
+      "instructions": "Drag to move, use scroll wheel or buttons to zoom.",
+      "zoomOut": "Zoom out",
+      "zoomIn": "Zoom in",
+      "resetZoom": "Reset",
+      "cancel": "Cancel",
+      "cropAndUpload": "Crop & upload"
+    },
+    "password": {
+      "show": "Show password",
+      "hide": "Hide password"
+    }
+  },
+  "status": {
+    "saving": "Saving...",
+    "saved": "Saved",
+    "changesSaved": "Changes saved",
+    "errorSaving": "Error saving changes",
+    "errorSending": "Error sending",
+    "savedExcl": "Saved!"
+  },
+  "timeAgo": {
+    "now": "just now",
+    "minutesAgo": "{count}m ago",
+    "hoursAgo": "{count}h ago",
+    "daysAgo": "{count}d ago"
+  },
+  "actions": {
+    "unauthorized": "Unauthorized",
+    "profileNotFound": "Profile not found",
+    "imageNotFound": "Image not found",
+    "maxImages": "Maximum {max} images",
+    "uploadError": "Error uploading",
+    "deleteError": "Error deleting",
+    "updateError": "Error updating",
+    "publishError": "Error publishing",
+    "reorderError": "Error reordering",
+    "setCoverError": "Error setting cover",
+    "unpublishError": "Error unpublishing",
+    "invalidData": "Invalid data",
+    "notFound": "Not found",
+    "studioNotFound": "Studio not found",
+    "studioProfileNotFound": "Studio profile not found",
+    "createError": "Error creating",
+    "sendError": "Error sending request",
+    "requestNotFound": "Request not found",
+    "applicationNotFound": "Application not found",
+    "castingNotFound": "Casting not found or no longer open",
+    "jobNotFound": "Job not found or no longer open",
+    "deadlineExpired": "Application deadline has passed",
+    "alreadyApplied": "You have already applied",
+    "alreadySentRequest": "You already sent a request to this model",
+    "profileNotPublished": "Your profile must be published to apply",
+    "profileNotPublishedForBoost": "Your profile must be published to purchase a boost",
+    "verificationRequired": "Your account must be verified",
+    "planNoContacts": "Your plan does not include contact requests. Upgrade to Starter or Pro.",
+    "monthlyLimitReached": "You have reached your monthly limit of {limit} requests",
+    "dailyLimitReached": "You have reached your daily limit of {limit} requests",
+    "profileNotPublishedOrBlocked": "Profile not found or not published",
+    "cannotContactProfile": "Cannot contact this profile",
+    "requestAlreadyHandled": "This request has been already handled",
+    "titleDescriptionRequired": "Title and description are required to publish",
+    "missingRequirements": "Missing requirements: {list}",
+    "noFile": "No file",
+    "unsupportedFormat": "Unsupported format",
+    "fileTooLarge": "File too large (max 10MB)",
+    "imageIdMissing": "Image ID missing",
+    "dataMissing": "Missing data",
+    "maxStudioImages": "Maximum {max} images per studio",
+    "noActiveSubscription": "No active subscription",
+    "invalidPlan": "Invalid plan",
+    "paymentSessionError": "Error creating payment session",
+    "error": "Error"
+  },
+  "contactList": {
+    "pending": "Pending",
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "expired": "Expired",
+    "collapse": "Collapse",
+    "readMessage": "Read message",
+    "accept": "Accept",
+    "decline": "Decline",
+    "goToChat": "Go to chat",
+    "waitingResponse": "Waiting for response"
+  },
+  "settingsForm": {
+    "account": "Account",
+    "name": "Name",
+    "emailCannotChange": "Email cannot be changed.",
+    "language": "Language",
+    "save": "Save",
+    "saved": "Saved!"
+  },
+  "billingActions": {
+    "upgradeStarter": "Upgrade to Starter — €39/mo",
+    "upgradePro": "Upgrade to Pro — €99/mo",
+    "manageSubscription": "Manage subscription",
+    "upgradeModelPro": "Upgrade to Model Pro — €14.99/mo"
+  },
+  "profileView": {
+    "contact": "Contact",
+    "bust": "Bust",
+    "waist": "Waist",
+    "hips": "Hips",
+    "shoes": "Shoes",
+    "dressSize": "Dress size"
+  },
+  "validation": {
+    "subjectMinChars": "Subject must be at least 3 characters",
+    "messageMinChars": "Message must be at least 10 characters",
+    "titleMinChars": "Title must be at least 3 characters",
+    "descriptionMinChars": "Description must be at least 20 characters"
+  },
+  "components": {
+    "discover": {
+      "unnamed": "Unnamed",
+      "profilesFound": "{count} profile found",
+      "profilesFoundPlural": "{count} profiles found",
+      "activeToday": "Active today",
+      "activeThisWeek": "Active this week",
+      "activeThisMonth": "Active this month",
+      "verified": "Verified",
+      "gridDensity": "Grid density",
+      "density1": "1 column",
+      "density2": "2 columns",
+      "density3": "3 columns",
+      "density4": "4 columns",
+      "density5": "5 columns",
+      "years": "years",
+      "height": "Height",
+      "gender": "Gender",
+      "status": "Status",
+      "categories": "Categories",
+      "location": "Location",
+      "photos": "Photos",
+      "views": "Views",
+      "likes": "Likes",
+      "lastActive": "Last active",
+      "memberSince": "Member since",
+      "measurements": "Measurements",
+      "appearance": "Appearance",
+      "bust": "Bust",
+      "waist": "Waist",
+      "hips": "Hips",
+      "shoeSize": "Shoe",
+      "dressSize": "Dress size",
+      "eyes": "Eyes",
+      "hair": "Hair",
+      "ethnicity": "Ethnicity",
+      "languages": "Languages",
+      "travel": "Available to travel",
+      "addToFavorites": "Add to favorites",
+      "removeFromFavorites": "Remove from favorites",
+      "contact": "Contact",
+      "goToChat": "Go to chat",
+      "requestPending": "Request pending"
+    },
+    "pagination": {
+      "profileFound": "{count} profile found",
+      "profilesFound": "{count} profiles found"
+    },
+    "notifications": {
+      "markAllRead": "Mark all as read"
+    },
+    "profile": {
+      "contact": "Contact",
+      "goToChat": "Go to chat",
+      "requestPending": "Request pending"
+    },
+    "applicationActions": {
+      "accept": "Accept",
+      "reject": "Reject"
+    },
+    "jobApplicationActions": {
+      "accept": "Accept",
+      "reject": "Reject"
+    },
+    "studioCard": {
+      "perHour": "/hr",
+      "perDay": "/day"
+    },
+    "studiosView": {
+      "grid": "Grid",
+      "map": "Map"
+    },
+    "modelBilling": {
+      "upgrade": "Upgrade to Model Pro — €14.99/mo",
+      "manage": "Manage subscription"
+    },
+    "studioMap": {
+      "perHour": "/hr",
+      "perDay": "/day",
+      "noStudios": "No studios with location data"
+    },
+    "conversations": {
+      "noConversations": "No conversations yet",
+      "model": "Model",
+      "scout": "Scout"
+    },
+    "messageThread": {
+      "model": "Model",
+      "scout": "Scout",
+      "placeholder": "Type a message...",
+      "hint": "Press Enter to send, Shift+Enter for new line"
+    },
+    "scoutMessaging": {
+      "title": "Messages",
+      "selectChat": "Select a conversation",
+      "selectChatDesc": "Choose a conversation from the list to start chatting",
+      "noConversations": "No conversations yet",
+      "noConversationsDesc": "When a model accepts your contact request, you can start chatting here.",
+      "backToList": "Back",
+      "viewProfile": "View full profile",
+      "measurements": "Measurements",
+      "appearance": "Appearance",
+      "professional": "Professional",
+      "social": "Social",
+      "languages": "Languages",
+      "height": "Height",
+      "bust": "Bust",
+      "waist": "Waist",
+      "hips": "Hips",
+      "shoes": "Shoes",
+      "dressSize": "Dress size",
+      "eyeColor": "Eyes",
+      "hairColor": "Hair",
+      "ethnicity": "Ethnicity",
+      "status": "Status",
+      "categories": "Categories",
+      "travel": "Travel availability",
+      "travelYes": "Available",
+      "travelNo": "Not available",
+      "followers": "Followers",
+      "cm": "cm",
+      "eu": "EU",
+      "noProfile": "Profile not available",
+      "age": "{age} years"
+    },
+    "messaging": {
+      "title": "Messages",
+      "subtitle": "Direct, verified, archived conversations.",
+      "searchPlaceholder": "Search conversations…",
+      "searchInThread": "Search in thread…",
+      "filterAll": "All",
+      "filterUnread": "Unread",
+      "filterArchived": "Archived",
+      "filterPinned": "Pinned",
+      "noConversations": "No conversations yet",
+      "noConversationsDesc": "When someone accepts your contact request, conversations will appear here.",
+      "noResults": "No results",
+      "noResultsDesc": "Try adjusting your search or filters.",
+      "selectChat": "Select a conversation",
+      "selectChatDesc": "Choose a conversation from the list to start chatting.",
+      "emptyThread": "Start the conversation",
+      "emptyThreadDesc": "Send the first message to break the ice.",
+      "composerPlaceholder": "Write a message…",
+      "attach": "Attach a file",
+      "composerHint": "Enter to send · Shift+Enter for new line",
+      "send": "Send",
+      "sendFailed": "Send failed",
+      "retry": "Retry",
+      "loadOlder": "Load older messages",
+      "loadingMore": "Loading…",
+      "newMessages": "New messages",
+      "scrollToBottom": "Scroll to bottom",
+      "typing": "is typing…",
+      "readAt": "Read · {time}",
+      "sentAt": "Sent · {time}",
+      "online": "Online now",
+      "activeAgo": "Active {ago}",
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "roleModel": "Model",
+      "roleScout": "Scout",
+      "roleStudio": "Studio",
+      "backToList": "Back",
+      "openProfile": "Open profile",
+      "closeProfile": "Close profile",
+      "actions": "Actions",
+      "goToProfile": "Go to profile",
+      "pin": "Pin to top",
+      "unpin": "Unpin",
+      "archive": "Archive",
+      "unarchive": "Unarchive",
+      "mute": "Mute",
+      "unmute": "Unmute notifications",
+      "markUnread": "Mark as unread",
+      "report": "Report",
+      "block": "Block",
+      "deleteChat": "Delete conversation",
+      "confirmDelete": "Delete permanently?",
+      "confirmBlock": "Block this user?",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "profileTabs": {
+        "profile": "Profile",
+        "files": "Files",
+        "notes": "Notes"
+      },
+      "comingSoon": "Coming soon",
+      "noFiles": "No shared files",
+      "noNotes": "No private notes",
+      "viewProfile": "View full profile",
+      "measurements": "Measurements",
+      "appearance": "Appearance",
+      "professional": "Professional",
+      "social": "Social",
+      "languages": "Languages",
+      "height": "Height",
+      "bust": "Bust",
+      "waist": "Waist",
+      "hips": "Hips",
+      "shoes": "Shoes",
+      "dressSize": "Dress size",
+      "eyeColor": "Eyes",
+      "hairColor": "Hair",
+      "ethnicity": "Ethnicity",
+      "travelYes": "Available to travel",
+      "travelNo": "Not available to travel",
+      "followers": "Followers",
+      "cm": "cm",
+      "eu": "EU",
+      "noProfile": "Profile not available",
+      "verified": "Verified",
+      "unverified": "Not verified",
+      "counter": "{current}/{max}"
+    },
+    "billing": {
+      "upgradeStarter": "Upgrade to Starter — €39/mo",
+      "upgradePro": "Upgrade to Pro — €99/mo",
+      "manage": "Manage subscription"
+    },
+    "contactRequests": {
+      "collapse": "Collapse",
+      "readMessage": "Read message",
+      "accept": "Accept",
+      "decline": "Decline",
+      "goToChat": "Go to chat",
+      "waiting": "Waiting for response",
+      "statusPending": "Pending",
+      "statusAccepted": "Accepted",
+      "statusRejected": "Rejected",
+      "statusExpired": "Expired"
+    },
+    "reportActions": {
+      "notesPlaceholder": "Admin notes...",
+      "resolve": "Resolve",
+      "dismiss": "Dismiss",
+      "cancel": "Cancel",
+      "actions": "Actions",
+      "warnUser": "Warn User",
+      "suspendUser": "Suspend User"
+    },
+    "verificationActions": {
+      "rejectReason": "Reason for rejection...",
+      "confirmReject": "Confirm reject",
+      "cancel": "Cancel",
+      "approve": "Approve",
+      "reject": "Reject"
+    },
+    "studioAvailability": {
+      "title": "Manage availability",
+      "instructions": "Click dates to select them, then block the selected dates.",
+      "blockDate": "Block {count} date",
+      "blockDates": "Block {count} dates",
+      "blockedDates": "Blocked dates",
+      "unblock": "Unblock"
+    },
+    "calendar": {
+      "daysShortEn": "Mon,Tue,Wed,Thu,Fri,Sat,Sun",
+      "daysShortIt": "Lun,Mar,Mer,Gio,Ven,Sab,Dom",
+      "selected": "Selected",
+      "unavailable": "Unavailable",
+      "today": "Today"
+    },
+    "studioFilters": {
+      "searchPlaceholder": "Search by name, city...",
+      "allRegions": "All regions",
+      "allTypes": "All types",
+      "search": "Search",
+      "clear": "Clear"
+    },
+    "castingApply": {
+      "success": "Application submitted successfully!",
+      "apply": "Apply",
+      "messageLabel": "Introduction message (optional)",
+      "messagePlaceholder": "Briefly introduce yourself to the scout...",
+      "submit": "Submit application",
+      "cancel": "Cancel"
+    },
+    "jobApply": {
+      "success": "Application submitted successfully!",
+      "apply": "Apply",
+      "messageLabel": "Introduction message (optional)",
+      "messagePlaceholder": "Briefly introduce yourself to the scout...",
+      "submit": "Submit application",
+      "cancel": "Cancel"
+    },
+    "settingsForm": {
+      "account": "Account",
+      "profilePhoto": "Profile photo",
+      "photoHint": "JPG, PNG or WebP. Max 5MB.",
+      "name": "Name",
+      "emailReadonly": "Email cannot be changed.",
+      "language": "Language",
+      "save": "Save",
+      "saved": "Saved!"
+    },
+    "createBoard": {
+      "newBoard": "New board",
+      "createBoard": "Create board",
+      "name": "Name",
+      "namePlaceholder": "E.g.: Milan FW25 Casting",
+      "description": "Description (optional)",
+      "descPlaceholder": "Brief description...",
+      "cancel": "Cancel",
+      "create": "Create",
+      "error": "Error"
+    },
+    "timeSlotPicker": {
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "evening": "Evening",
+      "selectTime": "Select time",
+      "selectEnd": "Now select the end time.",
+      "instructions": "Tap start, then end. Occupied slots in red.",
+      "selected": "Selected",
+      "range": "Range",
+      "occupied": "Occupied"
+    },
+    "searchFilters": {
+      "searchPlaceholder": "Search by name, city, bio...",
+      "sortRelevance": "Relevance",
+      "sortRecent": "Most recent",
+      "sortCompleteness": "Completeness",
+      "sortPopular": "Most popular",
+      "sortBy": "Sort by",
+      "region": "Region",
+      "allFem": "All",
+      "city": "City",
+      "gender": "Gender",
+      "allMasc": "All",
+      "category": "Category",
+      "advancedFilters": "Advanced filters",
+      "clearFilters": "Clear filters",
+      "loading": "Loading...",
+      "bodySection": "Body & Measurements",
+      "heightMin": "Min height (cm)",
+      "heightMax": "Max height (cm)",
+      "ageMin": "Min age",
+      "ageMax": "Max age",
+      "bustMin": "Bust min (cm)",
+      "waistMin": "Waist min (cm)",
+      "hipsMin": "Hips min (cm)",
+      "bustMax": "Bust max (cm)",
+      "waistMax": "Waist max (cm)",
+      "hipsMax": "Hips max (cm)",
+      "shoeMin": "Shoe min (EU)",
+      "shoeMax": "Shoe max (EU)",
+      "appearance": "Appearance",
+      "eyeColor": "Eye color",
+      "hairColor": "Hair color",
+      "ethnicity": "Ethnicity",
+      "professional": "Professional",
+      "status": "Status",
+      "spokenLanguage": "Spoken language",
+      "availableToTravel": "Available to travel"
+    },
+    "castingForm": {
+      "cardTitle": "Casting details",
+      "title": "Title",
+      "titlePlaceholder": "E.g.: Casting for SS25 campaign",
+      "description": "Description",
+      "descPlaceholder": "Describe the casting in detail...",
+      "city": "City",
+      "region": "Region",
+      "select": "Select...",
+      "castingDate": "Casting date",
+      "deadline": "Application deadline",
+      "typeCardTitle": "Casting type",
+      "mode": "Mode",
+      "time": "Time",
+      "timePlaceholder": "E.g.: 10:00 AM - 6:00 PM",
+      "address": "Address",
+      "addressPlaceholder": "E.g.: 8 Via Montenapoleone, Milan",
+      "onlineInstructions": "Online casting instructions",
+      "onlineInstructionsPlaceholder": "E.g.: Send a 30-second selfie video...",
+      "materials": "Required materials",
+      "materialsPlaceholder": "E.g.: Photo book, comp card, ID...",
+      "requirementsCardTitle": "Requirements & compensation",
+      "requirements": "Requirements",
+      "requirementsPlaceholder": "E.g.: Min height 175cm, runway experience...",
+      "compensation": "Compensation",
+      "compensationPlaceholder": "E.g.: €500/day",
+      "spots": "Available spots",
+      "paidJob": "This is a paid job",
+      "notes": "Additional notes (private)",
+      "cancel": "Cancel",
+      "saveChanges": "Save changes",
+      "create": "Create casting",
+      "unknownError": "Unknown error"
+    },
+    "jobForm": {
+      "cardTitle": "Job details",
+      "title": "Title",
+      "titlePlaceholder": "E.g.: Shooting for fashion brand",
+      "description": "Description",
+      "descPlaceholder": "Describe the job in detail...",
+      "jobType": "Job type",
+      "select": "Select...",
+      "brand": "Brand / Client",
+      "city": "City",
+      "region": "Region",
+      "location": "Specific location",
+      "locationPlaceholder": "E.g.: Photo studio on via Montenapoleone",
+      "jobDates": "Job dates",
+      "jobDatesPlaceholder": "E.g.: April 15-17, 2026",
+      "deadline": "Application deadline",
+      "spots": "Available spots",
+      "requirementsCardTitle": "Requirements & compensation",
+      "requirements": "Model requirements",
+      "requirementsPlaceholder": "E.g.: Min height 175cm, sizes 38-42...",
+      "compensation": "Compensation",
+      "compensationPlaceholder": "E.g.: €500/day",
+      "paidJob": "This is a paid job",
+      "notes": "Additional notes (private)",
+      "cancel": "Cancel",
+      "saveChanges": "Save changes",
+      "create": "Create job",
+      "unknownError": "Unknown error"
+    },
+    "studioBooking": {
+      "errorSelectDates": "Select dates from the calendar",
+      "errorSelectTime": "Select a time slot",
+      "errorNameEmail": "Fill in name and email",
+      "errorSending": "Error sending",
+      "successTitle": "Booking sent!",
+      "successMessage": "The studio owner will confirm your booking shortly.",
+      "selectDates": "Select dates",
+      "calendarInstruction": "Click start date, then end date.",
+      "day": "day",
+      "days": "days",
+      "estimatedTotal": "Estimated total",
+      "priceHelp": "Price to be agreed with the owner",
+      "yourDetails": "Your details",
+      "fullName": "Full name",
+      "phone": "Phone",
+      "additionalNotes": "Additional notes",
+      "notesPlaceholder": "Briefly describe your project...",
+      "submit": "Book now"
+    },
+    "studioInquiry": {
+      "errorRequired": "Fill in required fields",
+      "errorSending": "Error sending",
+      "successTitle": "Inquiry sent!",
+      "successMessage": "The studio owner will contact you shortly.",
+      "cardTitle": "Request info",
+      "name": "Name",
+      "phone": "Phone",
+      "dates": "Preferred dates",
+      "duration": "Duration (hrs)",
+      "message": "Message",
+      "messagePlaceholder": "Describe your project and needs...",
+      "submit": "Send inquiry"
+    },
+    "contactForm": {
+      "dialogTitle": "Contact",
+      "dialogDesc": "Send a professional contact request. The model can accept or decline.",
+      "successTitle": "Request sent!",
+      "successMessage": "You'll be notified when the model responds.",
+      "reason": "Reason",
+      "reasonPlaceholder": "Select reason...",
+      "subject": "Subject",
+      "subjectPlaceholder": "E.g.: Casting for SS25 campaign",
+      "message": "Message",
+      "messagePlaceholder": "Introduce yourself and explain the reason for contact...",
+      "messageHelp": "Min 20 characters, max 1000",
+      "cancel": "Cancel",
+      "submit": "Send request"
+    },
+    "profileForm": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "cityNoRegion": "Select a region first",
+      "bioPlaceholder": "Tell us about yourself...",
+      "select": "Select...",
+      "igPlaceholder": "username",
+      "tiktokPlaceholder": "username",
+      "categoriesPlaceholder": "Select categories...",
+      "categoriesHelp": "Select one or more categories",
+      "saving": "Saving...",
+      "saved": "Changes saved",
+      "error": "Error saving changes"
+    },
+    "bookingActions": {
+      "confirmTitle": "Confirm booking",
+      "confirmBooking": "Confirm booking",
+      "markCompleted": "Mark as completed",
+      "cancelBooking": "Cancel booking"
+    },
+    "verificationForm": {
+      "resubmit": "Resubmit",
+      "submit": "Submit verification request",
+      "verified": "Your account has been verified!",
+      "verifiedDesc": "You can access all platform features.",
+      "pendingTitle": "Verification in progress",
+      "pendingDesc": "Our team is reviewing your request. You will receive a notification when verification is complete.",
+      "rejectedTitle": "Verification rejected",
+      "rejectedDesc": "You can update the information and resubmit.",
+      "submittedTitle": "Request sent!",
+      "submittedDesc": "You will receive a response within 24-48 hours.",
+      "dataSection": "Verification data",
+      "fullName": "Full name",
+      "businessName": "Business name",
+      "rolePlaceholder": "E.g.: Talent Scout, Casting Director...",
+      "city": "City",
+      "professionalEmail": "Professional email",
+      "website": "Website",
+      "linkedin": "LinkedIn",
+      "vatNumber": "VAT number (optional)",
+      "vatPlaceholder": "IT12345678901",
+      "purposeOfUse": "Why do you want to use Scoutica?",
+      "purposeOfUsePlaceholder": "Describe how you plan to use the platform...",
+      "italyOnly": "Italy",
+      "italyOnlyDesc": "Verification is available only for professionals based in Italy.",
+      "role": "Role"
+    },
+    "portfolio": {
+      "noImages": "No images",
+      "deleteConfirm": "Are you sure you want to delete this image?",
+      "noImagesDesc": "Upload your first photos to start building your portfolio.",
+      "upload": "Upload image",
+      "portfolioAlt": "Portfolio",
+      "cover": "Cover"
+    },
+    "profilePhotos": {
+      "formatError": "Format not supported. Use JPG, PNG or WebP.",
+      "sizeError": "File is too large. Maximum 10MB.",
+      "uploadError": "Error uploading",
+      "error": "Error",
+      "deleteConfirm": "Delete this photo?",
+      "title": "Profile photos",
+      "description": "Upload up to {maxPhotos} photos. The cover photo will be shown as preview to scouts.",
+      "photoAlt": "Profile photo",
+      "cover": "Cover",
+      "setCover": "Cover",
+      "delete": "Delete",
+      "addPhoto": "Add photo"
+    },
+    "studioPhotos": {
+      "formatError": "Format not supported. Use JPG, PNG or WebP.",
+      "sizeError": "File is too large. Maximum 10MB.",
+      "uploadError": "Error uploading",
+      "title": "Photos",
+      "addPhoto": "Add photo",
+      "emptyMessage": "Add at least one photo of your studio",
+      "studioAlt": "Studio"
+    },
+    "studioPublish": {
+      "deleteConfirm": "Are you sure you want to delete this studio? This action is irreversible.",
+      "view": "View",
+      "publish": "Publish",
+      "pause": "Pause"
+    },
+    "completenessScore": {
+      "basic": "Basic profile",
+      "almostComplete": "Almost complete",
+      "ready": "Ready to be discovered",
+      "completeProfile": "Complete your profile to increase visibility in searches."
+    },
+    "publishControl": {
+      "reqActive": "Profile activated (complete required fields)",
+      "reqAge": "Age 18+",
+      "reqName": "Full name",
+      "reqImage": "At least 1 image",
+      "reqCover": "Cover image set",
+      "published": "Profile published",
+      "notPublished": "Profile not published",
+      "online": "Online",
+      "offline": "Offline",
+      "hideProfile": "Hide profile",
+      "publishProfile": "Publish profile",
+      "requirementsMessage": "To publish your profile you must meet all requirements:"
+    },
+    "chatActions": {
+      "delete": "Delete",
+      "report": "Report",
+      "block": "Block",
+      "confirmDelete": "Delete this chat?",
+      "confirmBlock": "Block this user?",
+      "searchPlaceholder": "Search conversations..."
+    }
+  },
+  "config": {
+    "plans": {
+      "month": "month",
+      "modelProPhotos": "Up to 9 portfolio photos",
+      "modelProVideo": "1 video upload",
+      "modelProPdf": "PDF book upload",
+      "modelProBadge": "Pro badge on profile",
+      "modelProSupport": "Priority support",
+      "starterContacts": "20 contact requests per month",
+      "starterDaily": "5 requests per day",
+      "starterBoards": "3 shortlist boards",
+      "starterProfiles": "Up to 50 profiles per board",
+      "starterFilters": "Basic filters",
+      "proContacts": "100 contact requests per month",
+      "proDaily": "25 requests per day",
+      "proBoards": "Unlimited boards",
+      "proProfiles": "Unlimited profiles per board",
+      "proFilters": "Advanced filters",
+      "proSearches": "Saved searches",
+      "proSupport": "Priority support"
+    }
+  },
+  "serverErrors": {
+    "unauthorized": "Unauthorized",
+    "profileNotFound": "Profile not found",
+    "error": "Error",
+    "studioNotFound": "Studio not found",
+    "studioProfileNotFound": "Studio profile not found",
+    "imageNotFound": "Image not found",
+    "notFound": "Not found",
+    "invalidData": "Invalid data",
+    "scoutProfileNotFound": "Scout profile not found",
+    "profileNotFoundOrNotPublished": "Profile not found or not published",
+    "registrationError": "Error during registration",
+    "requestSendError": "Error sending request",
+    "emailAlreadyRegistered": "This email is already registered",
+    "portfolio": {
+      "maxPhotos": "Maximum {max} images",
+      "uploadError": "Error during upload",
+      "deleteError": "Error during deletion",
+      "setCoverError": "Error during setting",
+      "reorderError": "Error during reordering"
+    },
+    "stripe": {
+      "invalidPlan": "Invalid plan",
+      "paymentSessionError": "Error creating payment session",
+      "noActiveSubscription": "No active subscription",
+      "profileMustBePublished": "Your profile must be published to purchase a boost",
+      "boostActivatedTitle": "Boost activated!",
+      "boostActivatedBody": "Your profile will be featured for 7 days."
+    },
+    "modelProfile": {
+      "updateError": "Error updating profile",
+      "missingRequirements": "Missing requirements: {missing}",
+      "publishError": "Error during publishing",
+      "unpublishError": "Error during removal",
+      "titleDescRequired": "Title and description are required to publish",
+      "profileNotActive": "Complete your profile before publishing",
+      "activationRequirements": "To activate your profile you need:",
+      "requireFullName": "Full name",
+      "requireCity": "City or region",
+      "requireCategory": "At least one category",
+      "requireMeasurements": "At least 3 measurements (height + 2 others)",
+      "requirePhotos": "At least 3 portfolio photos",
+      "profileActivated": "Your profile is now active!",
+      "profileDeactivated": "Your profile has been deactivated due to missing required fields"
+    },
+    "studioBookings": {
+      "datesNoLongerAvailable": "Selected dates are no longer available",
+      "someDatesUnavailable": "Some selected dates are not available",
+      "bookingError": "Error during booking",
+      "bookingNotFound": "Booking not found",
+      "bookingNotPending": "Booking not pending",
+      "onlyConfirmedBookings": "Only confirmed bookings",
+      "newBookingTitle": "New booking — {studio}",
+      "newBookingBody": "{name} requested a booking from {from} to {to}",
+      "bookingConfirmedTitle": "Booking confirmed — {studio}",
+      "bookingConfirmedBody": "Your booking from {from} to {to} has been confirmed.",
+      "bookingCancelledTitle": "Booking cancelled — {studio}",
+      "bookingCancelledBody": "Your booking from {from} to {to} has been cancelled."
+    },
+    "scoutProfile": {
+      "updateError": "Error during update",
+      "submitError": "Error sending request"
+    },
+    "studios": {
+      "createError": "Error during creation",
+      "updateError": "Error during update",
+      "publishError": "Error during publishing",
+      "deleteError": "Error during deletion",
+      "newInquiryTitle": "New inquiry for your studio",
+      "newInquiryBody": "{name} sent an inquiry for \"{studio}\"",
+      "inquiryNotFound": "Inquiry not found"
+    },
+    "auth": {
+      "resetEmailSent": "Success",
+      "underageRegistration": "You must be at least 18 years old to register as a model",
+      "termsNotAccepted": "You must accept the Terms of Service and Privacy Policy",
+      "profileNotActive": "Complete your profile to unlock this feature",
+      "scoutGateClosed": "The platform is not yet open to talent buyers"
+    },
+    "contactRequest": {
+      "alreadySent": "You have already sent a request to this model",
+      "alreadyAccepted": "This contact request was already accepted. Go to your messages to chat.",
+      "mustBeVerified": "Your account must be verified to send contact requests",
+      "planNoContacts": "Your plan does not include contact requests. Upgrade to Starter or Pro.",
+      "accepted": "Contact request accepted!",
+      "rejected": "Contact request rejected",
+      "alreadyHandled": "This request has already been handled",
+      "requestAccepted": "Your contact request has been accepted. You can start a conversation.",
+      "requestRejected": "Your contact request has been rejected.",
+      "invalidMessage": "Invalid message",
+      "notInConversation": "You are not part of this conversation",
+      "monthlyLimitReached": "You have reached the monthly limit of {limit} requests",
+      "dailyLimitReached": "You have reached the daily limit of {limit} requests",
+      "cannotContactProfile": "Cannot contact this profile",
+      "newContactRequestTitle": "New contact request",
+      "requestNotFound": "Request not found"
+    },
+    "shortlists": {
+      "planNoBoards": "Your plan does not include shortlist boards",
+      "boardNotFound": "Board not found",
+      "itemNotFound": "Item not found",
+      "alreadyInBoard": "This profile is already in the board",
+      "boardLimitReached": "You have reached the limit of {limit} boards",
+      "itemLimitReached": "You have reached the limit of {limit} profiles per board"
+    },
+    "castings": {
+      "mustBeVerified": "Your account must be verified to create castings",
+      "notFoundOrClosed": "Casting not found or no longer open",
+      "notFound": "Casting not found",
+      "profileMustBePublished": "Your profile must be published to apply",
+      "deadlineExpired": "The application deadline has expired",
+      "alreadyApplied": "You have already applied to this casting",
+      "applicationNotFound": "Application not found",
+      "applicationAccepted": "Application accepted!",
+      "applicationRejected": "Application rejected",
+      "newApplicationTitle": "New application",
+      "newApplicationBody": "A new application has been submitted to your casting.",
+      "applicationAcceptedBody": "Your application for \"{title}\" has been accepted.",
+      "applicationRejectedBody": "Your application for \"{title}\" has been rejected."
+    },
+    "jobs": {
+      "mustBeVerified": "Your account must be verified to create jobs",
+      "notFoundOrClosed": "Job not found or no longer open",
+      "notFound": "Job not found",
+      "alreadyApplied": "You have already applied to this job",
+      "applicationAccepted": "Job application accepted!",
+      "applicationRejected": "Job application rejected",
+      "newApplicationTitle": "New job application",
+      "newApplicationBody": "A new application has been submitted to your job \"{title}\".",
+      "applicationAcceptedBody": "Your application for \"{title}\" has been accepted.",
+      "applicationRejectedBody": "Your application for \"{title}\" has been rejected.",
+      "profileMustBePublished": "Your profile must be published to apply",
+      "deadlineExpired": "The application deadline has expired",
+      "applicationNotFound": "Application not found"
+    },
+    "admin": {
+      "verificationApproved": "Verification approved!",
+      "verificationRejected": "Verification rejected",
+      "accountVerified": "Your account has been verified. You can now access all features.",
+      "verificationRejectedNotif": "Your verification request has been rejected."
+    },
+    "messages": {
+      "invalidMessage": "Invalid message",
+      "notInConversation": "You are not part of this conversation",
+      "newMessageTitle": "New message",
+      "userFallback": "User"
+    }
+  },
+  "metadata": {
+    "title": "Scoutica — The Italian platform for professional scouting",
+    "description": "The professional platform that connects models with verified scouts, agencies and brands in Italy."
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: April 13, 2026",
+    "intro": "Scoutica is committed to protecting your privacy. This policy describes how we collect, use, and protect your personal data in accordance with Regulation (EU) 2016/679 (GDPR).",
+    "sections": {
+      "dataController": {
+        "title": "Data Controller",
+        "content": "The data controller is Scoutica, based in Italy. For any request regarding personal data, contact: privacy@scoutica.it"
+      },
+      "dataCollected": {
+        "title": "Data Collected",
+        "content": "We collect the following personal data: full name, email address, date of birth, body measurements, physical characteristics, portfolio photographs, social media links, city and region of residence, payment data (processed via Stripe), browsing data and technical cookies."
+      },
+      "purpose": {
+        "title": "Purpose of Processing",
+        "content": "Your data is processed for: account creation and management, profile publication, connecting models with scouting professionals, managing casting and job applications, payment processing, service notifications, platform improvement and security."
+      },
+      "legalBasis": {
+        "title": "Legal Basis",
+        "content": "Processing is based on: your explicit consent (art. 6.1.a GDPR), performance of the service contract (art. 6.1.b GDPR), legitimate interest for platform security (art. 6.1.f GDPR)."
+      },
+      "rights": {
+        "title": "Your Rights",
+        "content": "You have the right to: access your personal data, rectify inaccurate data, delete your data (right to be forgotten), restrict processing, data portability, object to processing, withdraw consent at any time. To exercise these rights, contact privacy@scoutica.it or use the features available in your account settings."
+      },
+      "dataRetention": {
+        "title": "Data Retention",
+        "content": "Your personal data is retained for the duration of your account. After account deletion, data is removed within 30 days, except for data required for legal or contractual obligations."
+      },
+      "sharing": {
+        "title": "Data Sharing",
+        "content": "Your data may be shared with: Stripe Inc. for payment processing, Resend for transactional emails, Cloudflare for content delivery. We do not sell your data to third parties."
+      },
+      "security": {
+        "title": "Security",
+        "content": "We adopt appropriate technical and organizational measures to protect your data, including password encryption, HTTPS connections, and restricted data access."
+      },
+      "cookies": {
+        "title": "Cookies",
+        "content": "We use technical cookies necessary for site functionality (authentication session, language and theme preferences). We do not use profiling or third-party cookies for advertising purposes."
+      },
+      "contact": {
+        "title": "Contact",
+        "content": "For privacy questions, contact: privacy@scoutica.it"
+      }
+    }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated: April 13, 2026",
+    "intro": "Welcome to Scoutica. By using our platform, you agree to the following terms and conditions.",
+    "sections": {
+      "service": {
+        "title": "The Service",
+        "content": "Scoutica is an online platform connecting models with scouts, agencies, and brands for professional opportunities in the fashion industry."
+      },
+      "eligibility": {
+        "title": "Eligibility Requirements",
+        "content": "To use Scoutica you must: be at least 18 years old, provide truthful and accurate information, not have been previously suspended from the platform."
+      },
+      "accounts": {
+        "title": "Accounts and Profiles",
+        "content": "You are responsible for the security of your account and the accuracy of the information provided. It is forbidden to create fake accounts, use photos of other people without consent, or provide false information."
+      },
+      "conduct": {
+        "title": "Conduct",
+        "content": "It is forbidden to: harass, intimidate or discriminate against other users, publish offensive or violent content, use the platform for illegal purposes, contact users outside the platform to circumvent the payment system."
+      },
+      "ip": {
+        "title": "Intellectual Property",
+        "content": "You retain ownership of photos and content you upload to Scoutica. You grant Scoutica a non-exclusive license to display your content on the platform."
+      },
+      "payments": {
+        "title": "Payments and Subscriptions",
+        "content": "Payments are processed via Stripe. Subscriptions renew automatically. You can cancel at any time; premium access remains active until the end of the paid period. Boosts are non-refundable."
+      },
+      "liability": {
+        "title": "Limitation of Liability",
+        "content": "Scoutica is not responsible for: the accuracy of information provided by users, agreements made between users outside the platform, loss of data due to circumstances beyond our control."
+      },
+      "termination": {
+        "title": "Suspension and Closure",
+        "content": "Scoutica may suspend or close your account if you violate these terms. You can delete your account at any time from settings."
+      },
+      "changes": {
+        "title": "Changes to Terms",
+        "content": "We reserve the right to modify these terms. Significant changes will be communicated via email or in-platform notification."
+      },
+      "law": {
+        "title": "Applicable Law",
+        "content": "These terms are governed by Italian law. For any disputes, the Court of Milan has jurisdiction."
+      }
+    }
+  },
+  "cookie": {
+    "message": "This site uses technical cookies necessary for the service to function.",
+    "accept": "Accept",
+    "learnMore": "Learn more"
+  },
+  "deleteAccount": {
+    "title": "Delete Account",
+    "warning": "This action is irreversible. All your data, photos, messages, and applications will be permanently deleted.",
+    "confirm": "Type DELETE to confirm",
+    "placeholder": "DELETE",
+    "button": "Delete my account",
+    "success": "Account deleted successfully.",
+    "mismatch": "Confirmation does not match."
+  },
+  "dataExport": {
+    "title": "Export your data",
+    "description": "Download a copy of all your personal data in JSON format.",
+    "button": "Download my data",
+    "preparing": "Preparing..."
+  },
+  "resetPassword": {
+    "eyebrow": "Password reset",
+    "title": "Reset Password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "button": "Reset password",
+    "success": "Password reset successfully!",
+    "invalidToken": "The link is expired or invalid.",
+    "backToLogin": "Back to login"
+  },
+  "withdraw": {
+    "button": "Withdraw application",
+    "confirm": "Are you sure you want to withdraw this application?",
+    "success": "Application withdrawn.",
+    "cancel": "Cancel"
+  },
+  "onboarding": {
+    "welcome": "Welcome to Scoutica",
+    "subtitle": "Build your professional portfolio to be discovered by verified scouts and agencies.",
+    "steps": {
+      "photo": "Build your portfolio",
+      "photoDesc": "Upload at least 3 professional photos.",
+      "measurements": "Add your measurements",
+      "measurementsDesc": "Casting directors search by specific measurements.",
+      "info": "Complete your profile",
+      "infoDesc": "Name, city and professional category.",
+      "publish": "Go live",
+      "publishDesc": "Become visible to verified professionals."
+    },
+    "skip": "I'll do this later",
+    "goTo": "Go to",
+    "done": "Your portfolio is ready",
+    "doneDesc": "You are now visible to verified scouts and agencies."
+  },
+  "boostPurchase": {
+    "title": "Boost your profile",
+    "description": "Appear featured in search results and on the homepage for 7 days.",
+    "price": "€4.99 for 7 days",
+    "button": "Buy Boost",
+    "active": "Boost active",
+    "activeUntil": "Featured until",
+    "maxReached": "You have reached the maximum of 4 active boosts."
+  },
+  "report": {
+    "button": "Report",
+    "blockButton": "Block user",
+    "blockConfirm": "Are you sure you want to block this user? You will no longer be able to communicate.",
+    "blocked": "User blocked.",
+    "title": "Report content",
+    "reason": "Reason for reporting",
+    "details": "Additional details",
+    "submit": "Submit report",
+    "success": "Report submitted. Thank you for helping keep the platform safe.",
+    "cancel": "Cancel"
+  },
+  "opportunityFilters": {
+    "search": "Search castings and jobs...",
+    "city": "City",
+    "paidOnly": "Paid only",
+    "allTypes": "All types",
+    "clearFilters": "Clear filters"
+  },
+  "commandPalette": {
+    "title": "Quick commands",
+    "trigger": "Search or jump to…",
+    "placeholder": "Search pages, commands…",
+    "close": "Close",
+    "noResults": "No results for",
+    "navigate": "Navigate",
+    "select": "Open",
+    "groups": {
+      "navigate": "Go to",
+      "create": "Create",
+      "search": "Search"
+    }
+  }
+}

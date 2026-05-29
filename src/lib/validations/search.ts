@@ -1,0 +1,35 @@
+import { z } from "zod";
+
+export const searchFiltersSchema = z.object({
+  query: z.string().optional(),
+  city: z.string().optional(),
+  region: z.string().optional(),
+  gender: z.string().optional(),
+  ageMin: z.coerce.number().min(18).optional(),
+  ageMax: z.coerce.number().max(99).optional(),
+  heightMin: z.coerce.number().min(100).optional(),
+  heightMax: z.coerce.number().max(250).optional(),
+  bustMin: z.coerce.number().optional(),
+  bustMax: z.coerce.number().optional(),
+  waistMin: z.coerce.number().optional(),
+  waistMax: z.coerce.number().optional(),
+  hipsMin: z.coerce.number().optional(),
+  hipsMax: z.coerce.number().optional(),
+  eyeColor: z.string().optional(),
+  hairColor: z.string().optional(),
+  ethnicity: z.string().optional(),
+  categories: z.array(z.string()).optional(),
+  professionalStatus: z.string().optional(),
+  travelAvailability: z.coerce.boolean().optional(),
+  followerMin: z.coerce.number().optional(),
+  followerMax: z.coerce.number().optional(),
+  spokenLanguages: z.array(z.string()).optional(),
+  shoeSizeMin: z.coerce.number().min(30).optional(),
+  shoeSizeMax: z.coerce.number().max(55).optional(),
+  page: z.coerce.number().min(1).default(1),
+  pageSize: z.coerce.number().min(1).max(50).default(24),
+  sortBy: z.enum(["relevance", "recent", "completeness", "popular"]).default("relevance"),
+  cols: z.coerce.number().min(1).max(5).optional(),
+});
+
+export type SearchFiltersInput = z.infer<typeof searchFiltersSchema>;
