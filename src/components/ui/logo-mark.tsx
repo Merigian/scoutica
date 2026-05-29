@@ -23,6 +23,7 @@ interface LogoMarkProps {
    */
   variant?: "auto" | "light" | "dark";
   priority?: boolean;
+  style?: React.CSSProperties;
 }
 
 /**
@@ -37,6 +38,7 @@ export function LogoMark({
   title = "Scoutica",
   variant = "auto",
   priority: _priority,
+  style,
 }: LogoMarkProps) {
   const w = width ?? SIZE[size];
 
@@ -59,6 +61,7 @@ export function LogoMark({
           maskRepeat: "no-repeat",
           WebkitMaskPosition: "center 52.15%",
           maskPosition: "center 52.15%",
+          ...style,
         }}
       />
     );

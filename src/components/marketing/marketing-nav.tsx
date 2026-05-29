@@ -155,8 +155,14 @@ export function MarketingFooter() {
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
         <div className="py-20 grid gap-16 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <div className="flex items-start gap-3 sm:gap-5 -ml-1">
-              <LogoMark size="xl" className="mt-3 text-[var(--ink)] shrink-0" />
+            <div className="flex items-center gap-3 sm:gap-4 -ml-1">
+              <LogoMark
+                className="text-[var(--ink)] shrink-0"
+                style={{
+                  width: "clamp(44px, 11vw, 110px)",
+                  height: "clamp(44px, 11vw, 110px)",
+                }}
+              />
               <ScouticaWordmark
                 className="text-[var(--ink)] max-w-full"
                 style={{ fontSize: "clamp(56px, 14vw, 140px)" }}
