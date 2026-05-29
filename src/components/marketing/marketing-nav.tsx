@@ -112,7 +112,7 @@ export function MarketingNav() {
       </div>
 
       {open && (
-        <div className="md:hidden hairline-top bg-[var(--bg)] animate-fade-in">
+        <div className="md:hidden hairline-top bg-[var(--bg)] text-[var(--ink)] animate-fade-in">
           <nav className="mx-auto max-w-[1440px] px-6 py-8 flex flex-col gap-6">
             <NavLink href="/pricing" label={t("pricing")} onClick={() => setOpen(false)} />
             <NavLink href="/about" label={t("about")} onClick={() => setOpen(false)} />
