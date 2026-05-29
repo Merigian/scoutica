@@ -43,7 +43,8 @@ next-env.d.ts
 prisma/migrations/dev/
 
 # Uploads (user-generated content)
-public/uploads/
+# NOTE: For MVP we commit seed images. Move to R2/S3 when going production.
+# public/uploads/
 
 # OS
 Thumbs.db
