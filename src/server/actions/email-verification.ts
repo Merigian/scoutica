@@ -1,6 +1,7 @@
 "use server";
 
 import crypto from "crypto";
+import { z } from "zod";
 import { db } from "@/lib/db";
 import { resend, EMAIL_FROM } from "@/lib/email";
 import { SITE_CONFIG } from "@/config/site";
@@ -9,6 +10,17 @@ import type { ActionResponse } from "@/types";
 
 const TOKEN_EXPIRY_HOURS = 24;
 const RESEND_COOLDOWN_MS = 60_000; // 1 minute
+
+const sendVerificationSchema = z.object({
+  userId: z.string().min(1).max(64),
+  email: z.string().trim().email().max(200),
+  locale: z.enum(["it", "en"]).default("it"),
+});
+
+const verifyEmailSchema = z.object({
+  token: z.string().min(8).max(256),
+  email: z.string().trim().email().max(200),
+});
 
 /**
  * Send a verification email to a user.
@@ -19,6 +31,9 @@ export async function sendVerificationEmail(
   email: string,
   locale: "it" | "en" = "it"
 ): Promise<ActionResponse> {
+  const parsed = sendVerificationSchema.safeParse({ userId, email, locale });
+  if (!parsed.success) return { success: false, error: "invalidInput" };
+  ({ userId, email, locale } = parsed.data);
   try {
     const rawToken = crypto.randomUUID();
     const hashedToken = crypto
@@ -69,6 +84,9 @@ export async function verifyEmail(
   token: string,
   email: string
 ): Promise<ActionResponse> {
+  const parsed = verifyEmailSchema.safeParse({ token, email });
+  if (!parsed.success) return { success: false, error: "invalidToken" };
+  ({ token, email } = parsed.data);
   try {
     const hashedToken = crypto
       .createHash("sha256")

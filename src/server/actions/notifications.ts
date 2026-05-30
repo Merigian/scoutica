@@ -51,20 +51,3 @@ export async function markAllNotificationsRead(): Promise<ActionResponse> {
   return { success: true };
 }
 
-export async function createNotification(data: {
-  userId: string;
-  type: string;
-  title: string;
-  body: string;
-  link?: string;
-}) {
-  return db.notification.create({
-    data: {
-      userId: data.userId,
-      type: data.type as any,
-      title: data.title,
-      body: data.body,
-      link: data.link,
-    },
-  });
-}

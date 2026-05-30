@@ -48,9 +48,10 @@ export default {
       const isForgotPwd = path.includes("/forgot-password") || path.includes("/reset-password");
       const isCompleteSetup = path.includes("/complete-setup");
 
-      // Match any locale prefix (/it/model/..., /en/model/...) or bare (/model/...)
+      // Match dashboard paths only at the start of the path (after optional locale prefix).
+      // Avoids matching e.g. /it/register/scout as a "scout" dashboard.
       const isDashboard =
-        /\/(model|scout|studio|admin|dashboard)(\/|$)/.test(path);
+        /^(?:\/[a-z]{2})?\/(model|scout|studio|admin|dashboard)(?:\/|$)/.test(path);
 
       if (isDashboard) {
         if (!isLoggedIn) {

@@ -6,20 +6,23 @@ import { getTranslations } from "next-intl/server";
 import { revalidatePath } from "next/cache";
 import type { ActionResponse } from "@/types";
 import { eachDayOfInterval, format } from "date-fns";
+import { z } from "zod";
 
-interface CreateBookingInput {
-  studioId: string;
-  name: string;
-  email: string;
-  phone?: string;
-  message?: string;
-  startDate: string;
-  endDate: string;
-  startTime?: string;
-  endTime?: string;
-  totalDays: number;
-  totalPrice?: number;
-}
+const createBookingSchema = z.object({
+  studioId: z.string().min(1).max(64),
+  name: z.string().trim().min(1).max(120),
+  email: z.string().trim().email().max(200),
+  phone: z.string().trim().max(40).optional(),
+  message: z.string().trim().max(2000).optional(),
+  startDate: z.string().min(1),
+  endDate: z.string().min(1),
+  startTime: z.string().max(10).optional(),
+  endTime: z.string().max(10).optional(),
+  totalDays: z.number().int().min(1).max(365),
+  totalPrice: z.number().min(0).max(1_000_000).optional(),
+});
+
+type CreateBookingInput = z.infer<typeof createBookingSchema>;
 
 export async function createStudioBooking(
   data: CreateBookingInput
@@ -27,9 +30,16 @@ export async function createStudioBooking(
   const t = await getTranslations("serverErrors");
   const tb = await getTranslations("serverErrors.studioBookings");
   try {
+    const parsed = createBookingSchema.safeParse(data);
+    if (!parsed.success) return { success: false, error: t("invalidData") };
+    data = parsed.data;
+
     const session = await auth();
     const startDate = new Date(data.startDate);
     const endDate = new Date(data.endDate);
+    if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime()) || startDate > endDate) {
+      return { success: false, error: t("invalidData") };
+    }
 
     // Verify studio exists and is published
     const studio = await db.studio.findUnique({

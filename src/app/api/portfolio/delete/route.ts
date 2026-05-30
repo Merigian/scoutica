@@ -3,7 +3,7 @@ import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { calculateCompleteness } from "@/server/services/completeness";
 import { unlink } from "fs/promises";
-import { join } from "path";
+import { join, resolve, sep } from "path";
 
 export async function POST(req: NextRequest) {
   try {
@@ -29,10 +29,14 @@ export async function POST(req: NextRequest) {
     // Delete from DB
     await db.portfolioImage.delete({ where: { id: imageId } });
 
-    // Try to delete file from disk
-    if (image.url.startsWith("/uploads/")) {
+    // Try to delete file from disk (defensive path traversal check)
+    if (image.url.startsWith("/uploads/") && !image.url.includes("..")) {
       try {
-        await unlink(join(process.cwd(), "public", image.url));
+        const uploadsRoot = resolve(process.cwd(), "public", "uploads");
+        const resolved = resolve(process.cwd(), "public", image.url.replace(/^\//, ""));
+        if (resolved === uploadsRoot || resolved.startsWith(uploadsRoot + sep)) {
+          await unlink(resolved);
+        }
       } catch {
         // File may not exist, ignore
       }

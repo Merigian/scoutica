@@ -7,6 +7,12 @@ import type Stripe from "stripe";
 import type { SubscriptionStatus, PlanTier } from "@prisma/client";
 
 export async function POST(req: NextRequest) {
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  if (!webhookSecret) {
+    console.error("STRIPE_WEBHOOK_SECRET is not configured");
+    return NextResponse.json({ error: "Server misconfigured" }, { status: 500 });
+  }
+
   const body = await req.text();
   const headersList = await headers();
   const signature = headersList.get("stripe-signature");
@@ -21,7 +27,7 @@ export async function POST(req: NextRequest) {
     event = getStripe().webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
+      webhookSecret
     );
   } catch (err) {
     console.error("Webhook signature verification failed:", err);
@@ -88,6 +94,19 @@ export async function POST(req: NextRequest) {
         if (session.metadata?.type === "boost") {
           const modelProfileId = session.metadata?.modelProfileId;
           if (modelProfileId) {
+            // Ownership check: ensure the boost target profile belongs to the paying user.
+            const targetProfile = await db.modelProfile.findUnique({
+              where: { id: modelProfileId },
+              select: { userId: true },
+            });
+            if (!targetProfile || targetProfile.userId !== userId) {
+              console.error(
+                "Boost ownership mismatch",
+                { modelProfileId, userId, ownerId: targetProfile?.userId }
+              );
+              break;
+            }
+
             const now = new Date();
             const endsAt = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000); // 7 days
 
