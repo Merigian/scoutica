@@ -367,7 +367,15 @@
       "tokenExpired": "The verification link has expired. Please request a new one.",
       "alreadyVerified": "Your email is already verified.",
       "rateLimited": "Please wait a minute before requesting a new link.",
-      "error": "An error occurred during verification. Please try again."
+      "error": "An error occurred during verification. Please try again.",
+      "wrongEmail": "Wrong email? Change it",
+      "newEmailLabel": "New email address",
+      "saving": "Saving...",
+      "saveEmail": "Update email",
+      "cancel": "Cancel",
+      "emailTaken": "This email is already in use.",
+      "sameEmail": "You are already using this address.",
+      "invalidEmail": "Invalid email address."
     },
     "waitlist": {
       "eyebrow": "Waitlist",

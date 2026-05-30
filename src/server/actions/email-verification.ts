@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { resend, EMAIL_FROM } from "@/lib/email";
 import { SITE_CONFIG } from "@/config/site";
 import VerificationEmail from "@/../emails/verification-email";
+import { auth } from "@/lib/auth";
 import type { ActionResponse } from "@/types";
 
 const TOKEN_EXPIRY_HOURS = 24;
@@ -174,5 +175,52 @@ export async function resendVerificationEmail(
   } catch (error) {
     console.error("Resend verification email error:", error);
     return { success: false, error: "Failed to resend verification email" };
+  }
+}
+
+const changeEmailSchema = z.object({
+  newEmail: z.string().trim().toLowerCase().email().max(200),
+  locale: z.enum(["it", "en"]).default("it"),
+});
+
+/**
+ * Change the email of the currently signed-in user, only if it hasn't been
+ * verified yet. Sends a fresh verification email to the new address.
+ */
+export async function changeUnverifiedEmail(
+  newEmail: string,
+  locale: "it" | "en" = "it"
+): Promise<ActionResponse<{ email: string }>> {
+  const parsed = changeEmailSchema.safeParse({ newEmail, locale });
+  if (!parsed.success) return { success: false, error: "invalidEmail" };
+  ({ newEmail, locale } = parsed.data);
+
+  const session = await auth();
+  if (!session?.user?.id) return { success: false, error: "notAuthenticated" };
+
+  try {
+    const me = await db.user.findUnique({
+      where: { id: session.user.id },
+      select: { id: true, email: true, emailVerified: true },
+    });
+    if (!me) return { success: false, error: "userNotFound" };
+    if (me.emailVerified) return { success: false, error: "alreadyVerified" };
+    if (me.email === newEmail) return { success: false, error: "sameEmail" };
+
+    const taken = await db.user.findUnique({ where: { email: newEmail }, select: { id: true } });
+    if (taken) return { success: false, error: "emailTaken" };
+
+    await db.$transaction([
+      db.verificationToken.deleteMany({ where: { identifier: me.email } }),
+      db.user.update({ where: { id: me.id }, data: { email: newEmail } }),
+    ]);
+
+    const send = await sendVerificationEmail(me.id, newEmail, locale);
+    if (!send.success) return { success: false, error: "sendFailed" };
+
+    return { success: true, data: { email: newEmail } };
+  } catch (error) {
+    console.error("Change unverified email error:", error);
+    return { success: false, error: "changeFailed" };
   }
 }

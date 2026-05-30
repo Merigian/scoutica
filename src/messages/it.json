@@ -367,7 +367,15 @@
       "tokenExpired": "Il link di verifica è scaduto. Richiedi un nuovo link.",
       "alreadyVerified": "La tua email è già verificata.",
       "rateLimited": "Attendi un minuto prima di richiedere un nuovo link.",
-      "error": "Si è verificato un errore durante la verifica. Riprova."
+      "error": "Si è verificato un errore durante la verifica. Riprova.",
+      "wrongEmail": "Email sbagliata? Cambiala",
+      "newEmailLabel": "Nuovo indirizzo email",
+      "saving": "Aggiornamento...",
+      "saveEmail": "Aggiorna email",
+      "cancel": "Annulla",
+      "emailTaken": "Questo indirizzo email è già in uso.",
+      "sameEmail": "Stai usando già questo indirizzo.",
+      "invalidEmail": "Indirizzo email non valido."
     },
     "waitlist": {
       "eyebrow": "Lista d'attesa",
