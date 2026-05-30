@@ -60,7 +60,7 @@ export async function sendVerificationEmail(
 
     const verificationUrl = `${SITE_CONFIG.url}/${locale}/verify-email?token=${rawToken}&email=${encodeURIComponent(email)}`;
 
-    await resend.emails.send({
+    const sendResult = await resend.emails.send({
       from: EMAIL_FROM,
       to: email,
       subject:
@@ -70,10 +70,20 @@ export async function sendVerificationEmail(
       react: VerificationEmail({ verificationUrl, locale }),
     });
 
+    if (sendResult.error) {
+      console.error("[Resend] send failed:", {
+        from: EMAIL_FROM,
+        to: email,
+        error: sendResult.error,
+      });
+      return { success: false, error: `Resend: ${sendResult.error.message ?? sendResult.error.name ?? "unknown"}` };
+    }
+
+    console.log("[Resend] sent OK:", { to: email, id: sendResult.data?.id });
     return { success: true };
   } catch (error) {
     console.error("Send verification email error:", error);
-    return { success: false, error: "Failed to send verification email" };
+    return { success: false, error: error instanceof Error ? error.message : "Failed to send verification email" };
   }
 }
 
