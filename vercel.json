@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/cron/boost-expiry",
-      "schedule": "0 * * * *"
+      "schedule": "0 2 * * *"
     },
     {
       "path": "/api/cron/contact-request-expiry",
