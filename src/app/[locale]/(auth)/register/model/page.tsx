@@ -67,8 +67,8 @@ export default function RegisterModelPage() {
       });
 
       router.push("/verify-email?email=" + encodeURIComponent(data.email) as never);
-    } catch {
-      setError(t("registrationError"));
+    } catch (err) {
+      setError(err instanceof Error ? `${t("registrationError")} — ${err.message}` : t("registrationError"));
     } finally {
       setIsLoading(false);
     }
