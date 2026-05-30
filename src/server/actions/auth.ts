@@ -108,7 +108,8 @@ export async function registerModel(
     return { success: true, data: { userId: user.id } };
   } catch (error) {
     console.error("Register model error:", error);
-    return { success: false, error: t("registrationError") };
+    const detail = error instanceof Error ? error.message : String(error);
+    return { success: false, error: `${t("registrationError")} — ${detail}` };
   }
 }
 
@@ -159,7 +160,8 @@ export async function registerScout(
     return { success: true, data: { userId: user.id } };
   } catch (error) {
     console.error("Register scout error:", error);
-    return { success: false, error: t("registrationError") };
+    const detail = error instanceof Error ? error.message : String(error);
+    return { success: false, error: `${t("registrationError")} — ${detail}` };
   }
 }
 
