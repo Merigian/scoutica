@@ -12,12 +12,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
+import { Turnstile, turnstileSiteKey } from "@/components/shared/turnstile";
 
 export default function RegisterModelPage() {
   const t = useTranslations("auth.register");
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   const {
     register,
@@ -50,7 +52,7 @@ export default function RegisterModelPage() {
     setError(null);
 
     try {
-      const result = await registerModel(data);
+      const result = await registerModel({ ...data, turnstileToken } as RegisterModelInput);
 
       if (!result.success) {
         setError(result.error || t("registrationError"));
@@ -153,7 +155,14 @@ export default function RegisterModelPage() {
           )}
         </div>
 
-        <Button type="submit" className="w-full" isLoading={isLoading} disabled={isUnderage}>
+        <Turnstile onToken={setTurnstileToken} />
+
+        <Button
+          type="submit"
+          className="w-full"
+          isLoading={isLoading}
+          disabled={isUnderage || (!!turnstileSiteKey && !turnstileToken)}
+        >
           {t("submit")}
         </Button>
       </form>

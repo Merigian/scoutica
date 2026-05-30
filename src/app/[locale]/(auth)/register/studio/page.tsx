@@ -12,12 +12,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
+import { Turnstile, turnstileSiteKey } from "@/components/shared/turnstile";
 
 export default function RegisterStudioPage() {
   const t = useTranslations("auth.register");
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   const {
     register,
@@ -39,7 +41,8 @@ export default function RegisterStudioPage() {
         password: data.password,
         confirmPassword: data.confirmPassword,
         businessName: data.businessName,
-      });
+        turnstileToken,
+      } as RegisterStudioInput);
 
       if (!result.success) {
         setError(result.error || t("registrationError"));
@@ -142,7 +145,14 @@ export default function RegisterStudioPage() {
           />
         </div>
 
-        <Button type="submit" className="w-full" isLoading={isLoading}>
+        <Turnstile onToken={setTurnstileToken} />
+
+        <Button
+          type="submit"
+          className="w-full"
+          isLoading={isLoading}
+          disabled={!!turnstileSiteKey && !turnstileToken}
+        >
           {t("submit")}
         </Button>
 

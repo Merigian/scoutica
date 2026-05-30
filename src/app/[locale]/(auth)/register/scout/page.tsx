@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
+import { Turnstile, turnstileSiteKey } from "@/components/shared/turnstile";
 
 export default function RegisterScoutPage() {
   const t = useTranslations("auth.register");
@@ -25,6 +26,7 @@ export default function RegisterScoutPage() {
   ];
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   const {
     register,
@@ -43,7 +45,7 @@ export default function RegisterScoutPage() {
     setError(null);
 
     try {
-      const result = await registerScout(data);
+      const result = await registerScout({ ...data, turnstileToken } as RegisterScoutInput);
 
       if (!result.success) {
         setError(result.error || t("registrationError"));
@@ -124,7 +126,14 @@ export default function RegisterScoutPage() {
           <p className="text-sm text-[var(--accent)]">{t("termsRequired")}</p>
         )}
 
-        <Button type="submit" className="w-full" isLoading={isLoading}>
+        <Turnstile onToken={setTurnstileToken} />
+
+        <Button
+          type="submit"
+          className="w-full"
+          isLoading={isLoading}
+          disabled={!!turnstileSiteKey && !turnstileToken}
+        >
           {t("submit")}
         </Button>
       </form>
