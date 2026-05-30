@@ -30,8 +30,9 @@ const UNLIMITED: PlanLimits = {
 export const PLAN_LIMITS: Record<PlanTier, PlanLimits> = {
   FREE: UNLIMITED,
   MODEL_PRO: { ...UNLIMITED, prioritySupport: true },
-  STARTER: { ...UNLIMITED, prioritySupport: true },
-  PRO: { ...UNLIMITED, prioritySupport: true },
+  SCOUT_PRO: { ...UNLIMITED, prioritySupport: true },
+  AGENCY: { ...UNLIMITED, prioritySupport: true },
+  STUDIO: { ...UNLIMITED, prioritySupport: true },
 };
 
 // Revenue comes from promoted castings, not subscriptions

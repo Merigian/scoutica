@@ -3,11 +3,18 @@
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { getTranslations } from "next-intl/server";
-import { getStripe, PLANS } from "@/lib/stripe";
+import { getStripe, PLANS, TRIAL_DAYS, type SubscriptionPlanKey } from "@/lib/stripe";
 import type { ActionResponse } from "@/types";
 
+// Subscription path per role — used to build success/cancel URLs.
+function billingPathForRole(role: string | undefined): string {
+  if (role === "STUDIO") return "studio";
+  if (role === "MODEL") return "model";
+  return "scout";
+}
+
 export async function createCheckoutSession(
-  planKey: "MODEL_PRO" | "STARTER" | "PRO"
+  planKey: SubscriptionPlanKey
 ): Promise<ActionResponse<{ url: string }>> {
   const t = await getTranslations("serverErrors");
   const ts = await getTranslations("serverErrors.stripe");
@@ -16,16 +23,18 @@ export async function createCheckoutSession(
     return { success: false, error: t("unauthorized") };
   }
 
+  const plan = PLANS[planKey];
+  if (!plan) return { success: false, error: ts("invalidPlan") };
+
   // Validate plan-role compatibility
-  if (planKey === "MODEL_PRO" && session.user.role !== "MODEL") {
-    return { success: false, error: t("unauthorized") };
-  }
-  if ((planKey === "STARTER" || planKey === "PRO") && session.user.role !== "SCOUT") {
+  const role = session.user.role;
+  if (plan.role && plan.role !== role) {
     return { success: false, error: t("unauthorized") };
   }
 
-  const plan = PLANS[planKey];
-  if (!plan) return { success: false, error: ts("invalidPlan") };
+  if (!plan.priceId) {
+    return { success: false, error: ts("invalidPlan") };
+  }
 
   // Get or create Stripe customer
   let subscription = await db.subscription.findUnique({
@@ -48,29 +57,34 @@ export async function createCheckoutSession(
 
     stripeCustomerId = customer.id;
 
-    await db.subscription.update({
-      where: { userId: session.user.id },
-      data: { stripeCustomerId },
-    });
+    if (subscription) {
+      await db.subscription.update({
+        where: { userId: session.user.id },
+        data: { stripeCustomerId },
+      });
+    } else {
+      await db.subscription.create({
+        data: { userId: session.user.id, stripeCustomerId, plan: "FREE", status: "ACTIVE" },
+      });
+    }
   }
 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
   const locale = session.user.locale || "it";
+  const rolePath = billingPathForRole(role);
 
   const checkoutSession = await getStripe().checkout.sessions.create({
     customer: stripeCustomerId,
     mode: "subscription",
-    line_items: [
-      {
-        price: plan.priceId,
-        quantity: 1,
-      },
-    ],
-    success_url: `${baseUrl}/${locale}/${session.user.role === "MODEL" ? "model" : "scout"}/settings/billing?success=true`,
-    cancel_url: `${baseUrl}/${locale}/${session.user.role === "MODEL" ? "model" : "scout"}/settings/billing?canceled=true`,
+    line_items: [{ price: plan.priceId, quantity: 1 }],
+    subscription_data: { trial_period_days: TRIAL_DAYS },
+    allow_promotion_codes: true,
+    success_url: `${baseUrl}/${locale}/${rolePath}/settings/billing?success=true`,
+    cancel_url: `${baseUrl}/${locale}/${rolePath}/settings/billing?canceled=true`,
     metadata: {
       userId: session.user.id,
       planKey,
+      tier: plan.tier ?? "",
     },
   });
 
@@ -101,7 +115,7 @@ export async function createPortalSession(): Promise<ActionResponse<{ url: strin
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
   const locale = session.user.locale || "it";
 
-  const rolePath = session.user.role === "MODEL" ? "model" : "scout";
+  const rolePath = billingPathForRole(session.user.role);
   const portalSession = await getStripe().billingPortal.sessions.create({
     customer: subscription.stripeCustomerId,
     return_url: `${baseUrl}/${locale}/${rolePath}/settings/billing`,
@@ -127,6 +141,10 @@ export async function createBoostCheckout(): Promise<ActionResponse<{ url: strin
     return { success: false, error: ts("profileMustBePublished") };
   }
 
+  if (!PLANS.BOOST.priceId) {
+    return { success: false, error: ts("invalidPlan") };
+  }
+
   // Get or create Stripe customer
   let subscription = await db.subscription.findUnique({
     where: { userId: session.user.id },
@@ -148,10 +166,16 @@ export async function createBoostCheckout(): Promise<ActionResponse<{ url: strin
 
     stripeCustomerId = customer.id;
 
-    await db.subscription.update({
-      where: { userId: session.user.id },
-      data: { stripeCustomerId },
-    });
+    if (subscription) {
+      await db.subscription.update({
+        where: { userId: session.user.id },
+        data: { stripeCustomerId },
+      });
+    } else {
+      await db.subscription.create({
+        data: { userId: session.user.id, stripeCustomerId, plan: "FREE", status: "ACTIVE" },
+      });
+    }
   }
 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";

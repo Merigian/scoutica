@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
-import { getStripe } from "@/lib/stripe";
+import { getStripe, tierFromPriceId } from "@/lib/stripe";
 import { db } from "@/lib/db";
 import type Stripe from "stripe";
 
-import type { SubscriptionStatus } from "@prisma/client";
+import type { SubscriptionStatus, PlanTier } from "@prisma/client";
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
@@ -49,20 +49,35 @@ export async function POST(req: NextRequest) {
         if (!userId) break;
 
         if (session.mode === "subscription") {
-          const planKey = session.metadata?.planKey as "STARTER" | "PRO";
           const subscriptionId = session.subscription as string;
 
           const stripeSubscription = await getStripe().subscriptions.retrieve(subscriptionId);
           const firstItem = stripeSubscription.items.data[0];
+          // Source of truth = price ID → tier. Metadata is a hint only.
+          const tier: PlanTier =
+            tierFromPriceId(firstItem?.price.id) ??
+            (session.metadata?.tier as PlanTier | undefined) ??
+            "FREE";
 
-          await db.subscription.update({
+          await db.subscription.upsert({
             where: { userId },
-            data: {
+            create: {
+              userId,
               stripeSubscriptionId: subscriptionId,
               stripeCustomerId: session.customer as string,
               stripePriceId: firstItem?.price.id,
-              plan: planKey,
-              status: "ACTIVE",
+              plan: tier,
+              status: mapSubscriptionStatus(stripeSubscription.status),
+              currentPeriodStart: firstItem ? new Date(firstItem.current_period_start * 1000) : new Date(),
+              currentPeriodEnd: firstItem ? new Date(firstItem.current_period_end * 1000) : new Date(),
+              cancelAtPeriodEnd: false,
+            },
+            update: {
+              stripeSubscriptionId: subscriptionId,
+              stripeCustomerId: session.customer as string,
+              stripePriceId: firstItem?.price.id,
+              plan: tier,
+              status: mapSubscriptionStatus(stripeSubscription.status),
               currentPeriodStart: firstItem ? new Date(firstItem.current_period_start * 1000) : new Date(),
               currentPeriodEnd: firstItem ? new Date(firstItem.current_period_end * 1000) : new Date(),
               cancelAtPeriodEnd: false,
@@ -113,10 +128,14 @@ export async function POST(req: NextRequest) {
         if (dbSubscription) {
           const status = mapSubscriptionStatus(subscription.status);
           const firstItem = subscription.items.data[0];
+          // Reflect price changes (upgrade/downgrade between monthly/annual/tier).
+          const newTier = tierFromPriceId(firstItem?.price.id);
           await db.subscription.update({
             where: { stripeCustomerId: customerId },
             data: {
               status,
+              stripePriceId: firstItem?.price.id,
+              ...(newTier ? { plan: newTier } : {}),
               currentPeriodStart: firstItem ? new Date(firstItem.current_period_start * 1000) : undefined,
               currentPeriodEnd: firstItem ? new Date(firstItem.current_period_end * 1000) : undefined,
               cancelAtPeriodEnd: subscription.cancel_at_period_end,

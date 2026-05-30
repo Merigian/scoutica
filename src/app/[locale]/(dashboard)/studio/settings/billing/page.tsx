@@ -5,57 +5,37 @@ import { redirect } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle } from "lucide-react";
-import { BillingActions } from "@/components/settings/billing-actions";
+import { StudioBillingActions } from "@/components/settings/studio-billing-actions";
 
-export default async function ScoutBillingPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
+export default async function StudioBillingPage() {
   const session = await auth();
-  const t = await getTranslations("pages.scout.billing");
+  const t = await getTranslations("pages.studio.billing");
 
-  if (!session?.user?.id || session.user.role !== "SCOUT") redirect("/login");
+  if (!session?.user?.id || session.user.role !== "STUDIO") redirect("/login");
 
-  const [subscription, scoutProfile] = await Promise.all([
-    db.subscription.findUnique({
-      where: { userId: session.user.id },
-      select: { plan: true, status: true, currentPeriodEnd: true, cancelAtPeriodEnd: true },
-    }),
-    db.scoutProfile.findUnique({
-      where: { userId: session.user.id },
-      select: { subtype: true },
-    }),
-  ]);
+  const subscription = await db.subscription.findUnique({
+    where: { userId: session.user.id },
+    select: { plan: true, status: true, currentPeriodEnd: true, cancelAtPeriodEnd: true },
+  });
 
   const currentPlan = subscription?.plan ?? "FREE";
-  const subtype = (scoutProfile?.subtype ?? "SCOUT") as "SCOUT" | "AGENCY" | "BRAND";
 
   const features =
-    currentPlan === "AGENCY"
+    currentPlan === "STUDIO"
       ? [
-          "Multi-seat workspace (3 utenti)",
-          "Pubblicazione casting illimitati",
-          "Ricerca avanzata e analytics",
-          "Account manager dedicato",
-        ]
-      : currentPlan === "SCOUT_PRO"
-      ? [
-          "Contatti illimitati",
-          "Bacheche shortlist illimitate",
-          "Filtri avanzati e ricerche salvate",
-          "Casting e lavori illimitati",
+          "Casting illimitati",
+          "Gestione candidature avanzata",
+          "Ricerca talenti pro",
+          "Statistiche e analytics",
         ]
       : [
-          "3 richieste di contatto al mese",
-          "Ricerca base",
-          "Salvataggio fino a 10 modelli",
-          "Upgrade per funzionalità complete",
+          "1 casting al mese",
+          "Listing pubblico studio",
+          "Richieste di prenotazione",
+          "Upgrade per casting illimitati",
         ];
 
-  const planLabel =
-    currentPlan === "AGENCY" ? "Agency" : currentPlan === "SCOUT_PRO" ? "Scout Pro" : "Free";
+  const planLabel = currentPlan === "STUDIO" ? "Studio Pro" : "Free";
 
   return (
     <div className="space-y-6 max-w-2xl">
@@ -85,7 +65,7 @@ export default async function ScoutBillingPage({
               </li>
             ))}
           </ul>
-          <BillingActions currentPlan={currentPlan} scoutSubtype={subtype} locale={locale} />
+          <StudioBillingActions currentPlan={currentPlan} />
         </CardContent>
       </Card>
     </div>

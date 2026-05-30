@@ -169,9 +169,10 @@ enum PipelineStage {
 
 enum PlanTier {
   FREE
-  MODEL_PRO
-  STARTER
-  PRO
+  MODEL_PRO // legacy; models are free forever now
+  SCOUT_PRO
+  AGENCY
+  STUDIO
 }
 
 enum SubscriptionStatus {

@@ -7,14 +7,11 @@ import { CreditCard, ExternalLink, Zap } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { SubscriptionPlanKey } from "@/lib/stripe";
 
-interface BillingActionsProps {
+interface StudioBillingActionsProps {
   currentPlan: string;
-  /** "scout" → offer Scout Pro + Agency; "agency" → only Agency. */
-  scoutSubtype?: "SCOUT" | "AGENCY" | "BRAND";
-  locale: string;
 }
 
-export function BillingActions({ currentPlan, scoutSubtype = "SCOUT" }: BillingActionsProps) {
+export function StudioBillingActions({ currentPlan }: StudioBillingActionsProps) {
   const t = useTranslations("components.billing");
   const [loading, setLoading] = useState<string | null>(null);
   const [interval, setInterval] = useState<"month" | "year">("month");
@@ -37,10 +34,7 @@ export function BillingActions({ currentPlan, scoutSubtype = "SCOUT" }: BillingA
     setLoading(null);
   };
 
-  // Agencies see only Agency tier; individual scouts see both options.
-  const offerScoutPro = scoutSubtype === "SCOUT";
-  const scoutProKey: SubscriptionPlanKey = interval === "year" ? "SCOUT_PRO_ANNUAL" : "SCOUT_PRO_MONTHLY";
-  const agencyKey: SubscriptionPlanKey = interval === "year" ? "AGENCY_ANNUAL" : "AGENCY_MONTHLY";
+  const studioKey: SubscriptionPlanKey = interval === "year" ? "STUDIO_ANNUAL" : "STUDIO_MONTHLY";
 
   if (currentPlan === "FREE") {
     return (
@@ -61,34 +55,17 @@ export function BillingActions({ currentPlan, scoutSubtype = "SCOUT" }: BillingA
             {t("annual")} <span className="text-[10px] opacity-70 ml-1">-17%</span>
           </button>
         </div>
-        <div className="flex flex-wrap gap-2">
-          {offerScoutPro && (
-            <Button onClick={() => handleUpgrade(scoutProKey)} isLoading={loading === scoutProKey}>
-              <Zap className="h-4 w-4 mr-2" />
-              {interval === "year" ? t("upgradeStarterAnnual") : t("upgradeStarter")}
-            </Button>
-          )}
-          <Button
-            variant={offerScoutPro ? "outline" : "default"}
-            onClick={() => handleUpgrade(agencyKey)}
-            isLoading={loading === agencyKey}
-          >
-            {interval === "year" ? t("upgradeProAnnual") : t("upgradePro")}
-          </Button>
-        </div>
+        <Button onClick={() => handleUpgrade(studioKey)} isLoading={loading === studioKey}>
+          <Zap className="h-4 w-4 mr-2" />
+          {interval === "year" ? t("upgradeStudioAnnual") : t("upgradeStudio")}
+        </Button>
         <p className="text-xs text-[var(--ink-3)]">{t("trialNote")}</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-3 pt-2">
-      {currentPlan === "SCOUT_PRO" && (
-        <Button onClick={() => handleUpgrade("AGENCY_MONTHLY")} isLoading={loading === "AGENCY_MONTHLY"}>
-          <Zap className="h-4 w-4 mr-2" />
-          {t("upgradePro")}
-        </Button>
-      )}
+    <div className="pt-2">
       <Button
         variant="outline"
         onClick={handleManage}

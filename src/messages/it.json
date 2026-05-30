@@ -591,11 +591,14 @@
   "pricing": {
     "label": "Prezzi",
     "eyebrow": "Tariffario · Prezzi · 2026",
-    "transactionalNote": "Nessun costo nascosto. Paghi solo se la piattaforma porta risultati.",
+    "transactionalNote": "Nessuna commissione sui contratti. Paghi solo l'abbonamento.",
     "payTeaserEyebrow": "Pagamenti gestiti · In arrivo nel 2026",
     "payTeaserCta": "Resta aggiornato",
     "title": "Gratis per i talenti. Sostenibile per la filiera.",
-    "subtitle": "I modelli non pagano mai. Scout, agenzie e studi pagano solo quando la piattaforma porta valore reale: contatti, candidature, prenotazioni.",
+    "subtitle": "I modelli non pagano mai. Scout, agenzie e studi scelgono il piano che gli serve. Nessuna percentuale sui guadagni. 14 giorni di prova gratuita su tutti i piani.",
+    "intervalMonthly": "Mensile",
+    "intervalAnnual": "Annuale",
+    "annualDiscount": "-17%",
     "freeForever": "Free per i talenti",
     "freeDesc": "Le modelle e i modelli non pagano. Mai. Costruisci il portfolio, candidati ai casting, ricevi richieste — sempre.",
     "plans": {
@@ -615,42 +618,52 @@
       "scoutPro": {
         "name": "Scout Pro",
         "price": "€29",
-        "period": "al mese",
-        "desc": "Per scout freelance, casting director, piccoli brand.",
+        "period": "al mese · 14 giorni di prova gratuita",
+        "priceAnnual": "€290",
+        "periodAnnual": "all'anno · ~€24/mese · 14 giorni gratis",
+        "desc": "Per scout freelance e casting director.",
         "features": [
-          "50 richieste di contatto al mese",
+          "Contatti modelli illimitati",
           "Bacheche shortlist illimitate",
           "Ricerca avanzata e filtri pro",
-          "Salvataggio ricerche con notifiche settimanali"
+          "Ricerche salvate con notifiche settimanali",
+          "Pubblica casting illimitati"
         ],
         "cta": "Inizia come Scout Pro",
         "badge": "Più scelto"
       },
       "agency": {
         "name": "Agency",
-        "price": "€149",
-        "period": "al mese, 5 seat incluse",
+        "price": "€99",
+        "period": "al mese · founding price (poi €149)",
+        "priceAnnual": "€990",
+        "periodAnnual": "all'anno · founding (~€82/mese)",
         "desc": "Per agenzie strutturate con team di booker.",
         "features": [
-          "Workspace condiviso e cronologia attività",
-          "250 richieste di contatto al mese",
-          "Seat aggiuntive a €29/mese",
+          "Tutto Scout Pro, illimitato",
+          "Workspace condiviso multi-utente (3 seat)",
+          "Profilo agenzia pubblico con roster",
+          "Analytics avanzati",
           "Account manager dedicato"
         ],
-        "cta": "Parla con noi"
+        "foundingBadge": "Founding · primi 50",
+        "cta": "Registra agenzia"
       },
       "studio": {
-        "name": "Studio",
-        "price": "€0",
-        "period": "listing gratuito",
-        "desc": "Per studi fotografici e location di produzione.",
+        "name": "Studio Pro",
+        "price": "€49",
+        "period": "al mese · 14 giorni di prova gratuita",
+        "priceAnnual": "€490",
+        "periodAnnual": "all'anno · ~€41/mese · 14 giorni gratis",
+        "desc": "Per studi fotografici, location e casting director.",
         "features": [
-          "Listing pubblico con galleria e disponibilità",
-          "Richieste di prenotazione qualificate",
-          "Studio Pro (€15/mese) — promozione e analytics",
-          "Pagamenti gestiti in arrivo nel 2026"
+          "Casting illimitati",
+          "Gestione candidature avanzata",
+          "Ricerca talenti pro",
+          "Listing studio con galleria e disponibilità",
+          "Statistiche e analytics"
         ],
-        "cta": "Pubblica il tuo studio"
+        "cta": "Inizia come Studio"
       }
     },
     "transactional": {
@@ -1198,6 +1211,10 @@
       }
     },
     "studio": {
+      "billing": {
+        "title": "Abbonamento",
+        "currentPlan": "Piano attuale"
+      },
       "studios": {
         "title": "I miei studi",
         "description": "Gestisci i tuoi spazi e i relativi annunci",
@@ -2155,8 +2172,15 @@
       "counter": "{current}/{max}"
     },
     "billing": {
-      "upgradeStarter": "Passa a Scout Pro — 29€/mese",
-      "upgradePro": "Passa ad Agency — 149€/mese",
+      "monthly": "Mensile",
+      "annual": "Annuale",
+      "upgradeStarter": "Scout Pro — €29/mese",
+      "upgradeStarterAnnual": "Scout Pro Annuale — €290/anno",
+      "upgradePro": "Agency — €99/mese (founding)",
+      "upgradeProAnnual": "Agency Annuale — €990/anno (founding)",
+      "upgradeStudio": "Studio Pro — €49/mese",
+      "upgradeStudioAnnual": "Studio Pro Annuale — €490/anno",
+      "trialNote": "14 giorni di prova gratuita. Nessun addebito iniziale. Cancellabile in qualsiasi momento.",
       "manage": "Gestisci abbonamento"
     },
     "contactRequests": {

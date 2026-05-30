@@ -5,15 +5,23 @@ import { ArrowUpRight, Check } from "lucide-react";
 
 type PlanKey = "model" | "scoutPro" | "agency" | "studio";
 type Variant = "default" | "accent" | "outline";
+type Interval = "month" | "year";
 
-const PLANS: { key: PlanKey; href: string; variant: Variant; featured?: boolean }[] = [
-  { key: "model", href: "/register/model", variant: "outline" },
-  { key: "scoutPro", href: "/register/scout", variant: "accent", featured: true },
-  { key: "agency", href: "/contact", variant: "outline" },
-  { key: "studio", href: "/register/studio", variant: "outline" },
+const PLANS: { key: PlanKey; href: string; variant: Variant; featured?: boolean; intervalAware: boolean }[] = [
+  { key: "model", href: "/register/model", variant: "outline", intervalAware: false },
+  { key: "scoutPro", href: "/register/scout", variant: "accent", featured: true, intervalAware: true },
+  { key: "agency", href: "/register/scout?type=agency", variant: "outline", intervalAware: true },
+  { key: "studio", href: "/register/studio", variant: "outline", intervalAware: true },
 ];
 
-export default async function PricingPage() {
+export default async function PricingPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ interval?: string }>;
+}) {
+  const sp = await searchParams;
+  const interval: Interval = sp.interval === "year" ? "year" : "month";
+
   const t = await getTranslations("pricing");
   const tPlans = await getTranslations("pricing.plans");
   const tTx = await getTranslations("pricing.transactional");
@@ -26,9 +34,7 @@ export default async function PricingPage() {
       <header className="py-16 lg:py-24 hairline-b">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
           <div className="lg:col-span-8">
-            <p className="text-eyebrow mb-6">
-              {t("eyebrow")}
-            </p>
+            <p className="text-eyebrow mb-6">{t("eyebrow")}</p>
             <h1 className="text-display max-w-4xl">{t("title")}</h1>
           </div>
           <div className="lg:col-span-4">
@@ -36,6 +42,35 @@ export default async function PricingPage() {
           </div>
         </div>
       </header>
+
+      {/* ─── Interval toggle (server-side via searchParams) ─── */}
+      <div className="py-8 flex justify-center">
+        <div className="inline-flex rounded-md border p-1 text-sm">
+          <Link
+            href={{ pathname: "/pricing", query: { interval: "month" } } as never}
+            scroll={false}
+            className={`px-4 py-2 rounded-sm transition-colors ${
+              interval === "month"
+                ? "bg-[var(--ink)] text-[var(--bg-elevated)]"
+                : "text-[var(--ink-2)] hover:text-[var(--ink)]"
+            }`}
+          >
+            {t("intervalMonthly")}
+          </Link>
+          <Link
+            href={{ pathname: "/pricing", query: { interval: "year" } } as never}
+            scroll={false}
+            className={`px-4 py-2 rounded-sm transition-colors ${
+              interval === "year"
+                ? "bg-[var(--ink)] text-[var(--bg-elevated)]"
+                : "text-[var(--ink-2)] hover:text-[var(--ink)]"
+            }`}
+          >
+            {t("intervalAnnual")}{" "}
+            <span className="text-xs opacity-70 ml-1">{t("annualDiscount")}</span>
+          </Link>
+        </div>
+      </div>
 
       {/* ─── Plans grid · 4 equal columns ─── */}
       <section className="hairline-b">
@@ -45,10 +80,14 @@ export default async function PricingPage() {
               (tPlans.raw(`${plan.key}.features`) as string[]) ?? [];
             const isFeatured = plan.featured;
             const name = tPlans(`${plan.key}.name` as never) as string;
-            const price = tPlans(`${plan.key}.price` as never) as string;
-            const period = tPlans(`${plan.key}.period` as never) as string;
+            // For interval-aware plans, pick annual or monthly price/period keys.
+            const priceKey = plan.intervalAware && interval === "year" ? "priceAnnual" : "price";
+            const periodKey = plan.intervalAware && interval === "year" ? "periodAnnual" : "period";
+            const price = tPlans(`${plan.key}.${priceKey}` as never) as string;
+            const period = tPlans(`${plan.key}.${periodKey}` as never) as string;
             const desc = tPlans(`${plan.key}.desc` as never) as string;
             const cta = tPlans(`${plan.key}.cta` as never) as string;
+            const showFounding = plan.key === "agency";
 
             return (
               <article
@@ -60,6 +99,11 @@ export default async function PricingPage() {
                 {isFeatured && (
                   <div className="absolute top-0 left-8 lg:left-10 -translate-y-1/2 bg-[var(--ink)] text-[var(--bg-elevated)] px-3 py-1 text-[12px] font-medium whitespace-nowrap">
                     {tPlans("scoutPro.badge")}
+                  </div>
+                )}
+                {showFounding && (
+                  <div className="absolute top-0 right-8 lg:right-10 -translate-y-1/2 bg-[var(--accent)] text-[var(--bg-elevated)] px-3 py-1 text-[11px] font-medium whitespace-nowrap">
+                    {tPlans("agency.foundingBadge")}
                   </div>
                 )}
 

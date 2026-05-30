@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Zap, CheckCircle } from "lucide-react";
-import { createCheckoutSession } from "@/server/actions/stripe";
+import { createBoostCheckout } from "@/server/actions/stripe";
 import { formatDate } from "@/lib/utils";
 
 interface BoostCardProps {
@@ -26,7 +26,7 @@ export function BoostCard({ activeBoosts, locale }: BoostCardProps) {
   const handleBuyBoost = async () => {
     setLoading(true);
     try {
-      const result = await createCheckoutSession("MODEL_PRO");
+      const result = await createBoostCheckout();
       if (result.success && result.data?.url) {
         window.location.href = result.data.url;
       }

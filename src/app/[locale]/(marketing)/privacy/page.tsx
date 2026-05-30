@@ -34,7 +34,7 @@ export default function PrivacyPage() {
     },
     {
       h: "Fornitori terzi (responsabili del trattamento)",
-      p: "Hosting applicazione: Vercel Inc. (USA) — Standard Contractual Clauses UE. Database: Neon, Inc. (USA, region EU-West). Storage immagini: Cloudflare R2 (EU). Pagamenti: Stripe Payments Europe Ltd. (Irlanda). Email transazionali: Resend, Inc. (USA). Mappe: Mapbox Inc. (USA). Tutti i fornitori dispongono di DPA conformi al GDPR.",
+      p: "Hosting applicazione: Vercel Inc. (USA) — Standard Contractual Clauses UE. Database: Neon, Inc. (USA, region EU-West). Storage immagini: Cloudflare R2 (EU). Pagamenti: Stripe Payments Europe Ltd. (Irlanda). Email transazionali: Resend, Inc. (USA). Mappe: Mapbox Inc. (USA). Protezione anti-bot: Cloudflare Turnstile (modalità invisibile) — soggetta al Cloudflare Turnstile Privacy Addendum (https://www.cloudflare.com/application-services/terms/turnstile-privacy-addendum/). Tutti i fornitori dispongono di DPA conformi al GDPR.",
     },
     {
       h: "Trasferimenti internazionali",
