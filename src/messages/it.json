@@ -1921,8 +1921,8 @@
     "saved": "Salvato!"
   },
   "billingActions": {
-    "upgradeStarter": "Passa a Starter — 39€/mese",
-    "upgradePro": "Passa a Pro — 99€/mese",
+    "upgradeStarter": "Passa a Scout Pro — 29€/mese",
+    "upgradePro": "Passa ad Agency — 149€/mese",
     "manageSubscription": "Gestisci abbonamento",
     "upgradeModelPro": "Passa a Model Pro — €14,99/mese"
   },
@@ -2155,8 +2155,8 @@
       "counter": "{current}/{max}"
     },
     "billing": {
-      "upgradeStarter": "Passa a Starter — 39€/mese",
-      "upgradePro": "Passa a Pro — 99€/mese",
+      "upgradeStarter": "Passa a Scout Pro — 29€/mese",
+      "upgradePro": "Passa ad Agency — 149€/mese",
       "manage": "Gestisci abbonamento"
     },
     "contactRequests": {

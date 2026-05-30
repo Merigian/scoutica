@@ -1921,8 +1921,8 @@
     "saved": "Saved!"
   },
   "billingActions": {
-    "upgradeStarter": "Upgrade to Starter — €39/mo",
-    "upgradePro": "Upgrade to Pro — €99/mo",
+    "upgradeStarter": "Upgrade to Scout Pro — €29/mo",
+    "upgradePro": "Upgrade to Agency — €149/mo",
     "manageSubscription": "Manage subscription",
     "upgradeModelPro": "Upgrade to Model Pro — €14.99/mo"
   },
@@ -2155,8 +2155,8 @@
       "counter": "{current}/{max}"
     },
     "billing": {
-      "upgradeStarter": "Upgrade to Starter — €39/mo",
-      "upgradePro": "Upgrade to Pro — €99/mo",
+      "upgradeStarter": "Upgrade to Scout Pro — €29/mo",
+      "upgradePro": "Upgrade to Agency — €149/mo",
       "manage": "Manage subscription"
     },
     "contactRequests": {

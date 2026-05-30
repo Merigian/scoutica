@@ -21,27 +21,32 @@ export const stripe = typeof process !== "undefined" && process.env.STRIPE_SECRE
   : (null as unknown as Stripe);
 
 export const PLANS = {
+  // Deprecated: marketing now positions Model as free forever.
+  // Kept for legacy data + Stripe customer migration. No UI exposes upgrade.
   MODEL_PRO: {
-    name: "Model Pro",
+    name: "Model Pro (legacy)",
     priceId: process.env.STRIPE_MODEL_PRO_PRICE_ID!,
     price: 14.99,
     currency: "eur",
     interval: "month" as const,
   },
+  // Scout Pro — marketing displays as "€29 / month"
   STARTER: {
-    name: "Starter",
+    name: "Scout Pro",
     priceId: process.env.STRIPE_STARTER_PRICE_ID!,
-    price: 39,
+    price: 29,
     currency: "eur",
     interval: "month" as const,
   },
+  // Agency — marketing displays as "€149 / month, 5 seats included"
   PRO: {
-    name: "Pro",
+    name: "Agency",
     priceId: process.env.STRIPE_PRO_PRICE_ID!,
-    price: 99,
+    price: 149,
     currency: "eur",
     interval: "month" as const,
   },
+  // One-shot model profile boost — €4.99 for 7 days
   BOOST: {
     name: "Profile Boost",
     priceId: process.env.STRIPE_BOOST_PRICE_ID!,

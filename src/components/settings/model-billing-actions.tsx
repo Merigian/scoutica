@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { createCheckoutSession, createPortalSession } from "@/server/actions/stripe";
+import { createPortalSession } from "@/server/actions/stripe";
 import { Button } from "@/components/ui/button";
-import { CreditCard, ExternalLink, Zap } from "lucide-react";
+import { CreditCard, ExternalLink } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 interface ModelBillingActionsProps {
@@ -11,19 +11,9 @@ interface ModelBillingActionsProps {
   locale: string;
 }
 
-export function ModelBillingActions({ currentPlan, locale }: ModelBillingActionsProps) {
-  const lang = locale === "en" ? "en" : "it";
+export function ModelBillingActions({ currentPlan }: ModelBillingActionsProps) {
   const t = useTranslations("components.modelBilling");
   const [loading, setLoading] = useState<string | null>(null);
-
-  const handleUpgrade = async () => {
-    setLoading("MODEL_PRO");
-    const result = await createCheckoutSession("MODEL_PRO");
-    if (result.success && result.data?.url) {
-      window.location.href = result.data.url;
-    }
-    setLoading(null);
-  };
 
   const handleManage = async () => {
     setLoading("portal");
@@ -34,15 +24,10 @@ export function ModelBillingActions({ currentPlan, locale }: ModelBillingActions
     setLoading(null);
   };
 
+  // Model plan is free forever per marketing. No upgrade path.
+  // Only show the billing portal link for legacy customers with an existing subscription.
   if (currentPlan === "FREE") {
-    return (
-      <div className="pt-2">
-        <Button onClick={handleUpgrade} isLoading={loading === "MODEL_PRO"} variant="gold">
-          <Zap className="h-4 w-4 mr-2" />
-          {t("upgrade")}
-        </Button>
-      </div>
-    );
+    return null;
   }
 
   return (
