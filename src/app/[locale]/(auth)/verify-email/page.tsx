@@ -60,7 +60,10 @@ export default function VerifyEmailPage() {
       setNewEmail("");
       setShowChange(false);
       setChangeStatus("done");
-      setResendStatus("sent");
+      setResendStatus(result.error === "sendFailed" ? "error" : "sent");
+      if (result.error === "sendFailed") {
+        setErrorMessage(t("emailChangedButSendFailed"));
+      }
     } else {
       setChangeStatus("error");
       setChangeError(
@@ -72,7 +75,9 @@ export default function VerifyEmailPage() {
               ? t("sameEmail")
               : result.error === "invalidEmail"
                 ? t("invalidEmail")
-                : t("error")
+                : result.error === "notAuthenticated"
+                  ? t("notAuthenticated")
+                  : t("error")
       );
     }
   };

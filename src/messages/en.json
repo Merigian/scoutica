@@ -375,7 +375,9 @@
       "cancel": "Cancel",
       "emailTaken": "This email is already in use.",
       "sameEmail": "You are already using this address.",
-      "invalidEmail": "Invalid email address."
+      "invalidEmail": "Invalid email address.",
+      "notAuthenticated": "Your session has expired. Please sign in again.",
+      "emailChangedButSendFailed": "Email updated, but we couldn't send the verification. Please try again later."
     },
     "waitlist": {
       "eyebrow": "Waitlist",

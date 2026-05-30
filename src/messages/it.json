@@ -375,7 +375,9 @@
       "cancel": "Annulla",
       "emailTaken": "Questo indirizzo email è già in uso.",
       "sameEmail": "Stai usando già questo indirizzo.",
-      "invalidEmail": "Indirizzo email non valido."
+      "invalidEmail": "Indirizzo email non valido.",
+      "notAuthenticated": "Sessione scaduta. Effettua di nuovo l'accesso.",
+      "emailChangedButSendFailed": "Email aggiornata, ma non siamo riusciti a inviarti la verifica. Riprova più tardi."
     },
     "waitlist": {
       "eyebrow": "Lista d'attesa",

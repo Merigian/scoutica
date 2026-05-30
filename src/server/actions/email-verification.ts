@@ -216,9 +216,11 @@ export async function changeUnverifiedEmail(
     ]);
 
     const send = await sendVerificationEmail(me.id, newEmail, locale);
-    if (!send.success) return { success: false, error: "sendFailed" };
-
-    return { success: true, data: { email: newEmail } };
+    return {
+      success: true,
+      data: { email: newEmail },
+      ...(send.success ? {} : { error: "sendFailed" }),
+    } as ActionResponse<{ email: string }>;
   } catch (error) {
     console.error("Change unverified email error:", error);
     return { success: false, error: "changeFailed" };
