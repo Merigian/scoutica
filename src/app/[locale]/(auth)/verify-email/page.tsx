@@ -64,6 +64,7 @@ export default function VerifyEmailPage() {
       if (result.error === "sendFailed") {
         setErrorMessage(t("emailChangedButSendFailed"));
       }
+      router.replace(`/verify-email?email=${encodeURIComponent(result.data.email)}`);
     } else {
       setChangeStatus("error");
       setChangeError(
