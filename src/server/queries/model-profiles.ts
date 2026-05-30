@@ -44,13 +44,26 @@ export type SearchResult = {
 
 export async function searchModelProfiles(
   filters: SearchFilters,
-  scoutUserId?: string
+  verifiedScoutUserId?: string
 ): Promise<SearchResult> {
   const page = filters.page ?? 1;
   const pageSize = filters.pageSize ?? 24;
   const skip = (page - 1) * pageSize;
 
-  const where = buildWhereClause(filters, scoutUserId);
+  // Defense in depth: re-verify the caller is actually an APPROVED scout
+  // before granting access to VERIFIED_SCOUTS_ONLY profiles.
+  let trustedScoutUserId: string | undefined;
+  if (verifiedScoutUserId) {
+    const scout = await db.scoutProfile.findUnique({
+      where: { userId: verifiedScoutUserId },
+      select: { verificationStatus: true },
+    });
+    if (scout?.verificationStatus === "APPROVED") {
+      trustedScoutUserId = verifiedScoutUserId;
+    }
+  }
+
+  const where = buildWhereClause(filters, trustedScoutUserId);
 
   const [profiles, total] = await Promise.all([
     db.modelProfile.findMany({

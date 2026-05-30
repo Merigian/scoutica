@@ -8,7 +8,6 @@ import authConfig from "@/lib/auth.config";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(db) as any,
-  session: { strategy: "jwt" },
   ...authConfig,
   providers: [
     // Only register Google OAuth when credentials are configured
@@ -53,35 +52,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
-  callbacks: {
-    ...authConfig.callbacks,
-    async jwt({ token, user, trigger, session }) {
-      if (user) {
-        token.id = user.id!;
-        token.role = user.role;
-        token.locale = user.locale;
-        token.emailVerified = !!user.emailVerified;
-      }
-
-      // Handle session updates (e.g., locale change, email verification)
-      if (trigger === "update" && session) {
-        if (session.locale) token.locale = session.locale;
-        if (session.role) token.role = session.role;
-        if (session.emailVerified !== undefined) token.emailVerified = session.emailVerified;
-      }
-
-      return token;
-    },
-    async session({ session, token }) {
-      if (token) {
-        session.user.id = token.id as string;
-        session.user.role = token.role as any;
-        session.user.locale = token.locale as string;
-        (session.user as any).emailVerified = token.emailVerified as boolean;
-      }
-      return session;
-    },
-  },
   events: {
     async signIn({ user }) {
       if (user.id) {

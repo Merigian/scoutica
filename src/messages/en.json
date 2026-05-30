@@ -144,8 +144,8 @@
         "description": "Scouts, agencies and brands pass a human and document check before they may contact a face."
       },
       "safe": {
-        "title": "Releases and payments protected",
-        "description": "Ready-made releases, Stripe escrow, guaranteed payouts. Italian fashion, finally in good order."
+        "title": "Transparency and protection",
+        "description": "Model release templates ready to download, verified scout profiles, managed reports. Italian fashion, finally in good order."
       },
       "castings": {
         "title": "Castings and studios in concert",
@@ -591,9 +591,9 @@
   "pricing": {
     "label": "Pricing",
     "eyebrow": "Pricing · Plans · 2026",
-    "transactionalNote": "No hidden costs. Commissions apply only to transactions completed through Scoutica Pay.",
-    "payTeaserEyebrow": "Scoutica Pay · Coming",
-    "payTeaserCta": "Learn more",
+    "transactionalNote": "No hidden costs. You pay only when the platform delivers results.",
+    "payTeaserEyebrow": "Managed payments · Coming in 2026",
+    "payTeaserCta": "Stay tuned",
     "title": "Free for talent. Sustainable for the industry.",
     "subtitle": "Models never pay. Scouts, agencies and studios pay only when the platform delivers real value: contacts, applications, bookings.",
     "freeForever": "Free for talent",
@@ -605,10 +605,10 @@
         "period": "forever",
         "desc": "For those who want to be discovered in Italian fashion.",
         "features": [
-          "Portfolio with 6 photos + 1 self-tape",
+          "Portfolio up to 12 photos + 1 self-tape",
           "Unlimited casting applications",
           "Receive requests from verified scouts",
-          "Payments protected via Scoutica Pay"
+          "Editorial public profile with custom URL"
         ],
         "cta": "Sign up as model"
       },
@@ -619,9 +619,9 @@
         "desc": "For freelance scouts, casting directors, small brands.",
         "features": [
           "50 contact requests per month",
-          "Unlimited shortlist boards and saved searches",
+          "Unlimited shortlist boards",
           "Advanced search and pro filters",
-          "AI look-alike search"
+          "Saved searches with weekly alerts"
         ],
         "cta": "Start as Scout Pro",
         "badge": "Most chosen"
@@ -632,7 +632,7 @@
         "period": "per month, 5 seats included",
         "desc": "For structured agencies with booker teams.",
         "features": [
-          "Shared workspace and audit log",
+          "Shared workspace and activity history",
           "250 contact requests per month",
           "Extra seats at €29/month",
           "Dedicated account manager"
@@ -642,46 +642,36 @@
       "studio": {
         "name": "Studio",
         "price": "€0",
-        "period": "12% commission on bookings",
+        "period": "free listing",
         "desc": "For photo studios and production locations.",
         "features": [
-          "Public listing and synced calendar",
-          "Guaranteed payments via Stripe escrow",
-          "Studio Pro at €15/month → 10% commission",
-          "Reporting and analytics included"
+          "Public listing with gallery and availability",
+          "Qualified booking requests",
+          "Studio Pro (€15/month) — promotion and analytics",
+          "Managed payments coming in 2026"
         ],
         "cta": "List your studio"
       }
     },
     "transactional": {
-      "label": "Transactional take-rate",
-      "title": "We earn only when you earn.",
+      "label": "Promotion and visibility",
+      "title": "On-demand boosters, no subscription.",
       "items": [
         {
-          "name": "Studio booking",
-          "rate": "12%",
-          "desc": "On confirmed bookings. 10% for Studio Pro subscribers."
-        },
-        {
-          "name": "Model engagement",
-          "rate": "8%",
-          "desc": "On payments managed via Scoutica Pay (5% scout, 3% model)."
+          "name": "Profile Boost",
+          "rate": "€4.99 / 7 days",
+          "desc": "Model profile featured in discovery. Available also on the free plan."
         },
         {
           "name": "Promoted casting",
-          "rate": "€69 / 14 days",
-          "desc": "Your casting at the top of discovery. Featured €149."
-        },
-        {
-          "name": "Profile Spotlight",
-          "rate": "from €7",
-          "desc": "Visibility on homepage or by city/category. One week or one month."
+          "rate": "€49 / 14 days",
+          "desc": "Your casting at the top of discovery for two weeks."
         }
       ]
     },
     "ctaModel": "Sign up as Model",
     "ctaScout": "Sign up as Scout",
-    "promotedTeaser": "Managed payments, standard contracts and guaranteed payouts arrive together with Scoutica Pay. Releasing before public launch.",
+    "promotedTeaser": "Managed payments and guaranteed payouts arrive in the second half of 2026. For now the platform facilitates discovery: payment happens off-platform under direct agreements.",
     "feature1": {
       "title": "Editorial portfolio",
       "desc": "6 photos + self-tape, always free for models."

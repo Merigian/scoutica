@@ -28,6 +28,18 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
+  // ─── Idempotency: Stripe may deliver the same event multiple times.
+  // We insert the event id with a unique constraint; if it already exists,
+  // we short-circuit and return 200 so Stripe stops retrying.
+  try {
+    await db.stripeWebhookEvent.create({
+      data: { id: event.id, type: event.type },
+    });
+  } catch {
+    // P2002 unique constraint violation = already processed.
+    return NextResponse.json({ received: true, duplicate: true });
+  }
+
   try {
     switch (event.type) {
       case "checkout.session.completed": {
@@ -144,6 +156,8 @@ export async function POST(req: NextRequest) {
     }
   } catch (error) {
     console.error("Webhook handler error:", error);
+    // Roll back idempotency record so Stripe retry can re-process the event.
+    await db.stripeWebhookEvent.delete({ where: { id: event.id } }).catch(() => {});
     return NextResponse.json({ error: "Webhook handler failed" }, { status: 500 });
   }
 

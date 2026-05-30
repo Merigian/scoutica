@@ -6,11 +6,11 @@ export default function PrivacyPage() {
     },
     {
       h: "Dati raccolti",
-      p: "Raccogliamo dati di registrazione (nome, email), dati di profilo (foto, misure, biografia per i modelli; dati professionali per scout e agenzie), dati di utilizzo della piattaforma e dati di pagamento gestiti tramite Stripe.",
+      p: "Raccogliamo dati di registrazione (nome, email, password cifrata), dati di profilo (foto, misure, biografia per i modelli; dati professionali per scout e agenzie), dati di utilizzo della piattaforma (visualizzazioni, ricerche, messaggi) e dati di pagamento gestiti da Stripe (noi non memorizziamo dati di carta).",
     },
     {
       h: "Finalità del trattamento",
-      p: "I dati vengono trattati per fornire e migliorare il servizio, gestire la verifica degli utenti professionali, abilitare comunicazioni tra le parti e adempiere agli obblighi di legge.",
+      p: "I dati vengono trattati per fornire e migliorare il servizio, gestire la verifica degli utenti professionali, abilitare comunicazioni tra le parti, prevenire abusi e adempiere agli obblighi di legge.",
     },
     {
       h: "Base giuridica",
@@ -18,19 +18,31 @@ export default function PrivacyPage() {
     },
     {
       h: "Conservazione dei dati",
-      p: "I dati vengono conservati per la durata del rapporto contrattuale e per i periodi richiesti dalla normativa fiscale e civile italiana.",
+      p: "I dati vengono conservati per la durata del rapporto contrattuale e per i periodi richiesti dalla normativa fiscale e civile italiana. In caso di cancellazione dell'account, i dati personali sono rimossi entro 30 giorni; i dati anonimizzati possono essere conservati per finalità statistiche.",
     },
     {
       h: "Diritti dell'interessato",
-      p: "Hai diritto di accesso, rettifica, cancellazione, limitazione, portabilità e opposizione. Scrivi a privacy@scoutica.it per esercitare questi diritti.",
+      p: "Hai diritto di accesso, rettifica, cancellazione, limitazione, portabilità e opposizione. Puoi richiedere l'esportazione dei tuoi dati o la cancellazione dell'account scrivendo a privacy@scoutica.it.",
     },
     {
       h: "Cookie",
-      p: "Utilizziamo cookie tecnici necessari al funzionamento della piattaforma e, previo consenso, cookie analitici e di terze parti. Puoi gestire le preferenze dalle impostazioni del browser.",
+      p: "Utilizziamo cookie tecnici necessari al funzionamento della piattaforma (autenticazione, preferenze) e, previo consenso, cookie analitici aggregati. Puoi gestire le preferenze dal banner cookie o dalle impostazioni del browser.",
+    },
+    {
+      h: "Sicurezza",
+      p: "Le password sono cifrate con bcrypt. Le connessioni avvengono via HTTPS/TLS 1.2+. Gli accessi di terze parti (scout, agenzie) sono soggetti a verifica documentale manuale. Anomalie e segnalazioni sono gestite da un team di moderazione.",
+    },
+    {
+      h: "Fornitori terzi (responsabili del trattamento)",
+      p: "Hosting applicazione: Vercel Inc. (USA) — Standard Contractual Clauses UE. Database: Neon, Inc. (USA, region EU-West). Storage immagini: Cloudflare R2 (EU). Pagamenti: Stripe Payments Europe Ltd. (Irlanda). Email transazionali: Resend, Inc. (USA). Mappe: Mapbox Inc. (USA). Tutti i fornitori dispongono di DPA conformi al GDPR.",
     },
     {
       h: "Trasferimenti internazionali",
-      p: "Alcuni fornitori (es. Stripe, AWS) possono trattare dati al di fuori dell'UE con garanzie contrattuali adeguate ai sensi del GDPR.",
+      p: "Alcuni fornitori (Vercel, Stripe, Resend, Mapbox) possono trattare dati al di fuori dell'UE con garanzie contrattuali adeguate (Standard Contractual Clauses) ai sensi del Capo V del GDPR.",
+    },
+    {
+      h: "Minori",
+      p: "Scoutica non accetta utenti di età inferiore ai 18 anni. La data di nascita è obbligatoria in fase di registrazione come modello e viene bloccata una volta inserita. Eventuali profili di minori segnalati vengono rimossi immediatamente.",
     },
   ];
 

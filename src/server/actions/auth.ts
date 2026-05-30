@@ -1,6 +1,7 @@
 "use server";
 
 import bcrypt from "bcryptjs";
+import { headers } from "next/headers";
 import { db } from "@/lib/db";
 import { getTranslations } from "next-intl/server";
 import {
@@ -14,12 +15,49 @@ import {
 import { generateTempSlug } from "@/lib/utils";
 import { calculateAge } from "@/lib/utils";
 import { sendVerificationEmail } from "@/server/actions/email-verification";
+import { rateLimit, getClientIp, RATE_LIMITS } from "@/lib/rate-limit";
+import { verifyTurnstile, turnstileEnabled } from "@/lib/turnstile";
 import type { ActionResponse } from "@/types";
+
+async function rateLimitByIp(
+  bucket: "register" | "login" | "passwordReset"
+): Promise<{ ok: true } | { ok: false; error: string }> {
+  const hdrs = await headers();
+  const ip = getClientIp(hdrs);
+  const cfg = RATE_LIMITS[bucket];
+  const result = await rateLimit(`${bucket}:${ip}`, cfg.limit, cfg.windowMs);
+  if (!result.success) {
+    return {
+      ok: false,
+      error: "Troppi tentativi. Riprova tra qualche minuto.",
+    };
+  }
+  return { ok: true };
+}
+
+async function verifyCaptcha(
+  data: unknown
+): Promise<{ ok: true } | { ok: false; error: string }> {
+  if (!turnstileEnabled()) return { ok: true };
+  const token =
+    typeof data === "object" && data !== null && "turnstileToken" in data
+      ? (data as { turnstileToken?: unknown }).turnstileToken
+      : undefined;
+  const hdrs = await headers();
+  const ip = getClientIp(hdrs);
+  const ok = await verifyTurnstile(typeof token === "string" ? token : null, ip);
+  if (!ok) return { ok: false, error: "Verifica anti-bot fallita. Riprova." };
+  return { ok: true };
+}
 
 export async function registerModel(
   data: RegisterModelInput
 ): Promise<ActionResponse<{ userId: string }>> {
   const t = await getTranslations("serverErrors");
+  const rl = await rateLimitByIp("register");
+  if (!rl.ok) return { success: false, error: rl.error };
+  const cap = await verifyCaptcha(data);
+  if (!cap.ok) return { success: false, error: cap.error };
   try {
     const validated = registerModelSchema.parse(data);
 
@@ -78,6 +116,10 @@ export async function registerScout(
   data: RegisterScoutInput
 ): Promise<ActionResponse<{ userId: string }>> {
   const t = await getTranslations("serverErrors");
+  const rl = await rateLimitByIp("register");
+  if (!rl.ok) return { success: false, error: rl.error };
+  const cap = await verifyCaptcha(data);
+  if (!cap.ok) return { success: false, error: cap.error };
   try {
     const validated = registerScoutSchema.parse(data);
 
@@ -125,6 +167,10 @@ export async function registerStudio(
   data: RegisterInput & { businessName: string }
 ): Promise<ActionResponse<{ userId: string }>> {
   const t = await getTranslations("serverErrors");
+  const rl = await rateLimitByIp("register");
+  if (!rl.ok) return { success: false, error: rl.error };
+  const cap = await verifyCaptcha(data);
+  if (!cap.ok) return { success: false, error: cap.error };
   try {
     const validated = registerSchema.parse(data);
 
@@ -240,6 +286,8 @@ export async function completeOAuthSetup(
 
 export async function requestPasswordReset(email: string): Promise<ActionResponse> {
   const t = await getTranslations("serverErrors");
+  const rl = await rateLimitByIp("passwordReset");
+  if (!rl.ok) return { success: false, error: rl.error };
   try {
     // Always return success to prevent email enumeration
     const user = await db.user.findUnique({ where: { email } });

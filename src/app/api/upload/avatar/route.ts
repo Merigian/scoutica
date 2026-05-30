@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { writeFile, mkdir } from "fs/promises";
-import { join } from "path";
+import { putObject, extFromMime } from "@/lib/storage";
 
 export async function POST(req: NextRequest) {
   try {
@@ -26,16 +25,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: "File too large (max 5MB)" }, { status: 400 });
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    const ext = file.type.split("/")[1] === "jpeg" ? "jpg" : file.type.split("/")[1];
-    const filename = `${session.user.id}-${Date.now()}.${ext}`;
-
-    const uploadDir = join(process.cwd(), "public", "uploads", "avatars");
-    await mkdir(uploadDir, { recursive: true });
-    await writeFile(join(uploadDir, filename), buffer);
-
-    const url = `/uploads/avatars/${filename}`;
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const key = `avatars/${session.user.id}-${Date.now()}.${extFromMime(file.type)}`;
+    const { url } = await putObject(key, buffer, file.type);
 
     await db.user.update({
       where: { id: session.user.id },

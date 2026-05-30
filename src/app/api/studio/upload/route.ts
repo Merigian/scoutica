@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { writeFile, mkdir } from "fs/promises";
-import { join } from "path";
+import { putObject, extFromMime } from "@/lib/storage";
 
 const MAX_STUDIO_IMAGES = 10;
 
@@ -53,18 +52,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Save file
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    const ext = file.type.split("/")[1] === "jpeg" ? "jpg" : file.type.split("/")[1];
-    const filename = `${studioId}-${Date.now()}.${ext}`;
-
-    const uploadDir = join(process.cwd(), "public", "uploads", "studios");
-    await mkdir(uploadDir, { recursive: true });
-    await writeFile(join(uploadDir, filename), buffer);
-
-    const url = `/uploads/studios/${filename}`;
-    const key = `studios/${filename}`;
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const key = `studios/${studioId}-${Date.now()}.${extFromMime(file.type)}`;
+    const { url } = await putObject(key, buffer, file.type);
 
     const maxOrder = await db.studioImage.findFirst({
       where: { studioId },

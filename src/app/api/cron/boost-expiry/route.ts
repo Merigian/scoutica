@@ -1,15 +1,11 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { verifyCronAuth, unauthorizedCron } from "@/lib/cron-auth";
 
 // This can be called by a cron job (e.g., Vercel Cron) every hour
-// GET /api/cron/boost-expiry?secret=CRON_SECRET
+// GET /api/cron/boost-expiry
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const secret = searchParams.get("secret");
-
-  if (secret !== process.env.CRON_SECRET) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  if (!verifyCronAuth(request)) return unauthorizedCron();
 
   try {
     // Find boosts that expired in the last 2 hours (to not send duplicate notifications)

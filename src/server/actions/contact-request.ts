@@ -5,6 +5,7 @@ import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { contactRequestSchema } from "@/lib/validations/contact";
 import { PLAN_LIMITS } from "@/config/plans";
+import { rateLimit, RATE_LIMITS } from "@/lib/rate-limit";
 import type { ActionResponse } from "@/types";
 
 export async function sendContactRequest(
@@ -15,6 +16,12 @@ export async function sendContactRequest(
   const session = await auth();
   if (!session?.user?.id || session.user.role !== "SCOUT") {
     return { success: false, error: t("unauthorized") };
+  }
+
+  const cfg = RATE_LIMITS.contactRequest;
+  const rl = await rateLimit(`contact:${session.user.id}`, cfg.limit, cfg.windowMs);
+  if (!rl.success) {
+    return { success: false, error: "Hai inviato troppe richieste. Riprova tra un'ora." };
   }
 
   const parsed = contactRequestSchema.safeParse(data);

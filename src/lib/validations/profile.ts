@@ -1,10 +1,34 @@
 import { z } from "zod";
 
+// Calculate age from date string (YYYY-MM-DD)
+function calculateAge(dateString: string): number {
+  const birth = new Date(dateString);
+  if (isNaN(birth.getTime())) return -1;
+  const now = new Date();
+  let age = now.getFullYear() - birth.getFullYear();
+  const m = now.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && now.getDate() < birth.getDate())) age--;
+  return age;
+}
+
+const dateOfBirthSchema = z
+  .string()
+  .optional()
+  .nullable()
+  .refine(
+    (v) => {
+      if (!v) return true;
+      const age = calculateAge(v);
+      return age >= 18 && age <= 99;
+    },
+    { message: "Devi avere almeno 18 anni" }
+  );
+
 export const modelProfileSchema = z.object({
   firstName: z.string().min(2, "Il nome deve contenere almeno 2 caratteri"),
   lastName: z.string().min(2, "Il cognome deve contenere almeno 2 caratteri"),
   bio: z.string().max(2000, "La bio non può superare 2000 caratteri").optional().nullable(),
-  dateOfBirth: z.string().optional().nullable(),
+  dateOfBirth: dateOfBirthSchema,
   gender: z.enum(["MALE", "FEMALE", "NON_BINARY", "OTHER"]).optional().nullable(),
   city: z.string().optional().nullable(),
   region: z.string().optional().nullable(),

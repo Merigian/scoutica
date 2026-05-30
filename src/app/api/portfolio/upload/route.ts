@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { writeFile, mkdir } from "fs/promises";
-import { join } from "path";
+import { putObject, extFromMime } from "@/lib/storage";
 import { calculateCompleteness } from "@/server/services/completeness";
 import { PLAN_LIMITS } from "@/config/plans";
 import type { PlanTier } from "@prisma/client";
@@ -51,18 +50,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: `Massimo ${maxPhotos} immagini` }, { status: 400 });
     }
 
-    // Save file locally (in production, upload to R2/S3)
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    const ext = file.type.split("/")[1] === "jpeg" ? "jpg" : file.type.split("/")[1];
-    const filename = `${profile.id}-${Date.now()}.${ext}`;
-
-    const uploadDir = join(process.cwd(), "public", "uploads", "portfolio");
-    await mkdir(uploadDir, { recursive: true });
-    await writeFile(join(uploadDir, filename), buffer);
-
-    const url = `/uploads/portfolio/${filename}`;
-    const key = `portfolio/${filename}`;
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const key = `portfolio/${profile.id}-${Date.now()}.${extFromMime(file.type)}`;
+    const { url } = await putObject(key, buffer, file.type);
 
     const maxOrder = await db.portfolioImage.findFirst({
       where: { modelProfileId: profile.id },

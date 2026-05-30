@@ -33,11 +33,19 @@ export async function updateModelProfile(data: ModelProfileInput): Promise<Actio
       return { success: false, error: t("profileNotFound") };
     }
 
+    // Once dateOfBirth is set, it is LOCKED — minor-protection invariant.
+    // User must contact support to change it (audit trail). Silently ignore client attempts to clear/change.
+    const effectiveDateOfBirth = profile.dateOfBirth
+      ? profile.dateOfBirth
+      : validated.dateOfBirth
+        ? new Date(validated.dateOfBirth)
+        : null;
+
     // Calculate new completeness score
     const updatedData = { ...profile, ...profileData, fullName };
     const completenessScore = calculateCompleteness({
       ...updatedData,
-      dateOfBirth: validated.dateOfBirth ? new Date(validated.dateOfBirth) : profile.dateOfBirth,
+      dateOfBirth: effectiveDateOfBirth,
       portfolioImageCount: profile._count.portfolioImages,
     });
 
@@ -64,7 +72,7 @@ export async function updateModelProfile(data: ModelProfileInput): Promise<Actio
     // Check activation requirements
     const activationData = {
       ...updatedData,
-      dateOfBirth: validated.dateOfBirth ? new Date(validated.dateOfBirth) : profile.dateOfBirth,
+      dateOfBirth: effectiveDateOfBirth,
       portfolioImageCount: profile._count.portfolioImages,
     };
     const { canActivate } = checkActivationRequirements(activationData);
@@ -93,7 +101,7 @@ export async function updateModelProfile(data: ModelProfileInput): Promise<Actio
       data: {
         ...profileData,
         fullName,
-        dateOfBirth: validated.dateOfBirth ? new Date(validated.dateOfBirth) : null,
+        dateOfBirth: effectiveDateOfBirth,
         instagramUrl: toUrl(validated.instagramUrl, "https://instagram.com/"),
         tiktokUrl: toUrl(validated.tiktokUrl, "https://tiktok.com/@"),
         youtubeUrl: toUrl(validated.youtubeUrl, "https://youtube.com/@"),

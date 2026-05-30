@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { castingSchema, castingApplicationSchema } from "@/lib/validations/casting";
+import { rateLimit, RATE_LIMITS } from "@/lib/rate-limit";
 import type { ActionResponse } from "@/types";
 
 export async function createCasting(data: unknown): Promise<ActionResponse<{ castingId: string }>> {
@@ -165,6 +166,12 @@ export async function applyToCasting(data: unknown): Promise<ActionResponse> {
   const session = await auth();
   if (!session?.user?.id || session.user.role !== "MODEL") {
     return { success: false, error: t("unauthorized") };
+  }
+
+  const cfg = RATE_LIMITS.application;
+  const rl = await rateLimit(`apply:${session.user.id}`, cfg.limit, cfg.windowMs);
+  if (!rl.success) {
+    return { success: false, error: "Hai inviato troppe candidature. Riprova tra un'ora." };
   }
 
   const parsed = castingApplicationSchema.safeParse(data);

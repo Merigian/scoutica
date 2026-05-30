@@ -38,12 +38,23 @@ export default async function DiscoverPage({
   }
 
   const advancedFilters = PLAN_LIMITS[planTier].advancedFilters;
-  const isVerifiedScout = session?.user?.role === "SCOUT";
+
+  // Pass userId only when scout is APPROVED — query layer re-verifies as defense in depth.
+  let approvedScoutUserId: string | undefined;
+  if (session?.user?.id && session.user.role === "SCOUT") {
+    const scoutProfile = await db.scoutProfile.findUnique({
+      where: { userId: session.user.id },
+      select: { verificationStatus: true },
+    });
+    if (scoutProfile?.verificationStatus === "APPROVED") {
+      approvedScoutUserId = session.user.id;
+    }
+  }
 
   const cols = Math.min(6, Math.max(2, Number(resolvedParams.cols) || 4));
 
   // Fetch results
-  const results = await searchModelProfiles(filters, isVerifiedScout ? session.user.id : undefined);
+  const results = await searchModelProfiles(filters, approvedScoutUserId);
 
   const profileIds = results.profiles.map((p) => p.id);
   const viewerUserId = session?.user?.id;
