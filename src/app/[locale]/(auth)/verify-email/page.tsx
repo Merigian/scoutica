@@ -3,11 +3,13 @@
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { useRouter } from "@/i18n/routing";
 import {
   verifyEmail,
   resendVerificationEmail,
   changeUnverifiedEmail,
+  getMyEmailVerificationStatus,
 } from "@/server/actions/email-verification";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,6 +20,7 @@ export default function VerifyEmailPage() {
   const t = useTranslations("auth.verifyEmail");
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { update: updateSession } = useSession();
   const token = searchParams.get("token");
   const initialEmail = searchParams.get("email");
   const [email, setEmail] = useState<string | null>(initialEmail);
@@ -33,8 +36,9 @@ export default function VerifyEmailPage() {
 
   useEffect(() => {
     if (token && initialEmail && status === "verifying") {
-      verifyEmail(token, initialEmail).then((result) => {
+      verifyEmail(token, initialEmail).then(async (result) => {
         if (result.success) {
+          await updateSession({ emailVerified: true });
           setStatus("success");
         } else {
           setStatus("error");
@@ -48,7 +52,19 @@ export default function VerifyEmailPage() {
         }
       });
     }
-  }, [token, initialEmail, status, t]);
+  }, [token, initialEmail, status, t, updateSession]);
+
+  // If user is already verified in DB but JWT is stale, refresh the session
+  // and bounce them to login so they can continue.
+  useEffect(() => {
+    if (status !== "idle") return;
+    getMyEmailVerificationStatus().then(async (result) => {
+      if (result.success && result.data?.verified) {
+        await updateSession({ emailVerified: true });
+        router.replace("/login" as never);
+      }
+    });
+  }, [status, updateSession, router]);
 
   const handleChangeEmail = async () => {
     if (!newEmail.trim()) return;

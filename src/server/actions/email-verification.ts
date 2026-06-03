@@ -236,3 +236,19 @@ export async function changeUnverifiedEmail(
     return { success: false, error: "changeFailed" };
   }
 }
+
+/**
+ * Check whether the signed-in user is verified in the DB.
+ * Used by the verify-email page to detect stale JWTs and refresh the session.
+ */
+export async function getMyEmailVerificationStatus(): Promise<
+  ActionResponse<{ verified: boolean }>
+> {
+  const session = await auth();
+  if (!session?.user?.id) return { success: false, error: "notAuthenticated" };
+  const me = await db.user.findUnique({
+    where: { id: session.user.id },
+    select: { emailVerified: true },
+  });
+  return { success: true, data: { verified: !!me?.emailVerified } };
+}
