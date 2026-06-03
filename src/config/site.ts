@@ -24,6 +24,7 @@ export const NAV_ITEMS = {
     { key: "requests", href: "/model/contacts", icon: "Inbox" },
     { key: "messages", href: "/model/messages", icon: "MessageSquare" },
     { key: "notifications", href: "/model/notifications", icon: "Bell" },
+    { key: "billing", href: "/model/settings/billing", icon: "CreditCard" },
     { key: "settings", href: "/model/settings", icon: "Settings" },
   ],
   scout: [
@@ -33,6 +34,7 @@ export const NAV_ITEMS = {
     { key: "boards", href: "/scout/boards", icon: "Kanban" },
     { key: "postings", href: "/scout/castings", icon: "Megaphone" },
     { key: "messages", href: "/scout/messages", icon: "MessageSquare" },
+    { key: "billing", href: "/scout/settings/billing", icon: "CreditCard" },
     { key: "settings", href: "/scout/settings", icon: "Settings" },
   ],
   admin: [
@@ -50,6 +52,7 @@ export const NAV_ITEMS = {
     { key: "inquiries", href: "/studio/inquiries", icon: "Inbox" },
     { key: "messages", href: "/studio/messages", icon: "MessageSquare" },
     { key: "notifications", href: "/studio/notifications", icon: "Bell" },
+    { key: "billing", href: "/studio/settings/billing", icon: "CreditCard" },
     { key: "settings", href: "/studio/settings", icon: "Settings" },
   ],
 };
