@@ -55,13 +55,13 @@ export default function VerifyEmailPage() {
   }, [token, initialEmail, status, t, updateSession]);
 
   // If user is already verified in DB but JWT is stale, refresh the session
-  // and bounce them to login so they can continue.
+  // and bounce them to dashboard so they can continue.
   useEffect(() => {
     if (status !== "idle") return;
     getMyEmailVerificationStatus().then(async (result) => {
       if (result.success && result.data?.verified) {
         await updateSession({ emailVerified: true });
-        router.replace("/login" as never);
+        router.replace("/dashboard" as never);
       }
     });
   }, [status, updateSession, router]);
