@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { Link, useRouter } from "@/i18n/routing";
+import { useRouter } from "@/i18n/routing";
 import {
   verifyEmail,
   resendVerificationEmail,
@@ -120,7 +120,7 @@ export default function VerifyEmailPage() {
             <p className="text-eyebrow mb-3">{t("eyebrowSuccess")}</p>
             <h1 className="text-h2">{t("success")}</h1>
             <p className="mt-4 text-body text-[var(--ink-2)]">{t("successDesc")}</p>
-            <Button variant="default" size="lg" className="mt-8 w-full" onClick={() => router.push("/dashboard" as never)}>
+            <Button variant="default" size="lg" className="mt-8 w-full" onClick={() => router.push("/login" as never)}>
               {t("continue")}
             </Button>
           </>
@@ -225,12 +225,6 @@ export default function VerifyEmailPage() {
           </>
         )}
       </div>
-
-      <p className="mt-10 text-center text-sm text-[var(--ink-3)]">
-        <Link href="/login" className="link-underline text-[var(--ink)]">
-          {t("continue")}
-        </Link>
-      </p>
     </>
   );
 }
