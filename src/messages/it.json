@@ -2675,6 +2675,11 @@
       "setCoverError": "Errore durante l'impostazione",
       "reorderError": "Errore durante il riordinamento"
     },
+    "savedSearch": {
+      "planRequired": "Le ricerche salvate sono disponibili con un piano a pagamento",
+      "nameRequired": "Inserisci un nome per la ricerca",
+      "limitReached": "Hai raggiunto il numero massimo di ricerche salvate"
+    },
     "stripe": {
       "invalidPlan": "Piano non valido",
       "paymentSessionError": "Errore nella creazione della sessione di pagamento",
@@ -2970,6 +2975,15 @@
     "save": "Salva nota",
     "saved": "Salvata",
     "private": "Solo tu puoi vederla"
+  },
+  "savedSearch": {
+    "title": "Ricerche salvate",
+    "saveCurrent": "Salva ricerca",
+    "namePlaceholder": "Nome della ricerca",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "delete": "Elimina",
+    "locked": "Salva le tue ricerche con un piano a pagamento"
   },
   "report": {
     "button": "Segnala",

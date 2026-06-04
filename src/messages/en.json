@@ -2675,6 +2675,11 @@
       "setCoverError": "Error during setting",
       "reorderError": "Error during reordering"
     },
+    "savedSearch": {
+      "planRequired": "Saved searches are available on a paid plan",
+      "nameRequired": "Enter a name for the search",
+      "limitReached": "You have reached the maximum number of saved searches"
+    },
     "stripe": {
       "invalidPlan": "Invalid plan",
       "paymentSessionError": "Error creating payment session",
@@ -2970,6 +2975,15 @@
     "save": "Save note",
     "saved": "Saved",
     "private": "Only you can see this"
+  },
+  "savedSearch": {
+    "title": "Saved searches",
+    "saveCurrent": "Save search",
+    "namePlaceholder": "Search name",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "locked": "Save your searches with a paid plan"
   },
   "report": {
     "button": "Report",

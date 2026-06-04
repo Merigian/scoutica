@@ -6,6 +6,7 @@ import { searchModelProfiles } from "@/server/queries/model-profiles";
 import { searchFiltersSchema } from "@/lib/validations/search";
 import { PLAN_LIMITS } from "@/config/plans";
 import { SearchFiltersPanel } from "@/components/discover/search-filters";
+import { SavedSearchBar } from "@/components/discover/saved-search-bar";
 import { ModelCard } from "@/components/discover/model-card";
 import { Pagination } from "@/components/discover/pagination";
 import { DiscoverGrid, GridDensitySelector } from "@/components/discover/grid-density-selector";
@@ -76,6 +77,15 @@ export default async function DiscoverPage({
 
   const savedSet = new Set(savedRows.map((r) => r.modelProfileId));
 
+  const savedSearchesEnabled = PLAN_LIMITS[planTier].savedSearches;
+  const savedSearches = scoutProfile
+    ? await db.savedSearch.findMany({
+        where: { scoutProfileId: scoutProfile.id },
+        orderBy: { createdAt: "desc" },
+        select: { id: true, name: true, filters: true },
+      })
+    : [];
+
   const contactRows =
     scoutProfile && profileIds.length > 0
       ? await db.contactRequest.findMany({
@@ -121,6 +131,20 @@ export default async function DiscoverPage({
       <Suspense fallback={<div className="h-32 animate-pulse bg-[var(--bg-soft)] " />}>
         <SearchFiltersPanel locale={locale} advancedFilters={advancedFilters} />
       </Suspense>
+
+      {/* Saved searches */}
+      {canContact && (
+        <Suspense fallback={null}>
+          <SavedSearchBar
+            enabled={savedSearchesEnabled}
+            savedSearches={savedSearches.map((s) => ({
+              id: s.id,
+              name: s.name,
+              filters: (s.filters ?? {}) as Record<string, string>,
+            }))}
+          />
+        </Suspense>
+      )}
 
       {/* Sort bar */}
       <div className="flex items-center justify-between gap-3">
