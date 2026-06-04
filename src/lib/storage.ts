@@ -8,7 +8,7 @@
  *   R2_ACCOUNT_ID          — Cloudflare account ID
  *   R2_ACCESS_KEY_ID       — R2 API token access key
  *   R2_SECRET_ACCESS_KEY   — R2 API token secret
- *   R2_BUCKET              — bucket name
+ *   R2_BUCKET_NAME         — bucket name
  *   R2_PUBLIC_URL          — public base URL (e.g. https://media.scoutica.it)
  *
  * When any are missing, falls back to local fs.writeFile and warns once.
@@ -22,7 +22,7 @@ const {
   R2_ACCOUNT_ID,
   R2_ACCESS_KEY_ID,
   R2_SECRET_ACCESS_KEY,
-  R2_BUCKET,
+  R2_BUCKET_NAME,
   R2_PUBLIC_URL,
 } = process.env;
 
@@ -30,7 +30,7 @@ const HAS_R2 = !!(
   R2_ACCOUNT_ID &&
   R2_ACCESS_KEY_ID &&
   R2_SECRET_ACCESS_KEY &&
-  R2_BUCKET &&
+  R2_BUCKET_NAME &&
   R2_PUBLIC_URL
 );
 
@@ -77,7 +77,7 @@ export async function putObject(
   if (HAS_R2) {
     await getR2().send(
       new PutObjectCommand({
-        Bucket: R2_BUCKET,
+        Bucket: R2_BUCKET_NAME,
         Key: key,
         Body: buffer,
         ContentType: contentType,
@@ -108,7 +108,7 @@ export async function putObject(
 export async function deleteObject(key: string): Promise<void> {
   if (HAS_R2) {
     try {
-      await getR2().send(new DeleteObjectCommand({ Bucket: R2_BUCKET, Key: key }));
+      await getR2().send(new DeleteObjectCommand({ Bucket: R2_BUCKET_NAME, Key: key }));
     } catch (err) {
       console.warn(`[storage] R2 delete failed for ${key}:`, err);
     }
