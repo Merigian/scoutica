@@ -27,6 +27,7 @@ import { calculateAge, formatRelativeTime, formatDate } from "@/lib/utils";
 import {
   MapPin,
   ShieldCheck,
+  BadgeCheck,
   User,
   ChevronLeft,
   ChevronRight,
@@ -60,6 +61,8 @@ interface ProfileImageProps {
   alt: string;
   sizes: string;
   isBoosted: boolean;
+  isVerified: boolean;
+  featuredLabel: string;
   verifiedLabel: string;
   showGradient: boolean;
 }
@@ -69,6 +72,8 @@ function ProfileImage({
   alt,
   sizes,
   isBoosted,
+  isVerified,
+  featuredLabel,
   verifiedLabel,
   showGradient,
 }: ProfileImageProps) {
@@ -136,12 +141,20 @@ function ProfileImage({
         </>
       )}
 
-      {isBoosted && (
-        <div className="absolute left-2 top-2 z-10">
-          <Badge variant="gold" className="gap-1 text-[10px]">
-            <ShieldCheck className="h-3 w-3" />
-            {verifiedLabel}
-          </Badge>
+      {(isBoosted || isVerified) && (
+        <div className="absolute left-2 top-2 z-10 flex flex-col items-start gap-1">
+          {isBoosted && (
+            <Badge variant="gold" className="gap-1 text-[10px]">
+              <ShieldCheck className="h-3 w-3" />
+              {featuredLabel}
+            </Badge>
+          )}
+          {isVerified && (
+            <Badge variant="outline" className="gap-1 bg-[var(--bg)]/90 text-[10px]">
+              <BadgeCheck className="h-3 w-3 text-[var(--accent)]" />
+              {verifiedLabel}
+            </Badge>
+          )}
         </div>
       )}
 
@@ -354,6 +367,7 @@ export function ModelCard({
         ? [profile.coverImage]
         : [];
   const verifiedLabel = t("featured");
+  const verifiedRealLabel = t("verified");
   const name = profile.fullName || t("unnamed");
   const statusLabel = profile.professionalStatus
     ? PROFESSIONAL_STATUS_LABELS[profile.professionalStatus as ProfessionalStatus]?.[lang]
@@ -394,7 +408,9 @@ export function ModelCard({
               alt={name}
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 18rem, (max-width: 1280px) 20rem, 24rem"
               isBoosted={profile.isBoosted}
-              verifiedLabel={verifiedLabel}
+              isVerified={profile.isVerified}
+              featuredLabel={verifiedLabel}
+              verifiedLabel={verifiedRealLabel}
               showGradient={false}
             />
           </div>
@@ -615,7 +631,9 @@ export function ModelCard({
             alt={name}
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             isBoosted={profile.isBoosted}
-            verifiedLabel={verifiedLabel}
+            isVerified={profile.isVerified}
+            featuredLabel={verifiedLabel}
+            verifiedLabel={verifiedRealLabel}
             showGradient
           />
           <GridBookmarkButton

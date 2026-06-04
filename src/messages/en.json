@@ -85,7 +85,8 @@
     "accountSection": "Account",
     "newCasting": "New casting",
     "newJob": "New job",
-    "newStudio": "New studio"
+    "newStudio": "New studio",
+    "modelVerifications": "Model verifications"
   },
   "landing": {
     "cover": {
@@ -1115,6 +1116,19 @@
         "deadline": "Deadline:",
         "noJobs": "No jobs available",
         "noJobsDesc": "No jobs are currently published. Check back later!"
+      },
+      "verification": {
+        "title": "Identity verification",
+        "description": "Get the verified badge with a live selfie. It's optional.",
+        "approvedTitle": "Profile verified",
+        "approvedDesc": "Your verified badge is active.",
+        "submittedTitle": "Selfie under review",
+        "submittedDesc": "We're reviewing your selfie. We'll notify you once it's done.",
+        "rejectedTitle": "Verification not approved",
+        "step1": "Center your face.",
+        "step2": "Take a live selfie (not from your gallery).",
+        "step3": "Submit and wait for review.",
+        "privacyNote": "The selfie is used only for verification and is deleted after the decision."
       }
     },
     "scout": {
@@ -1531,6 +1545,14 @@
         "noUsers": "No users found",
         "usersLatest": "users (latest 100)",
         "suspended": "Suspended"
+      },
+      "modelVerifications": {
+        "title": "Model verifications",
+        "requestsToReview": "requests to review",
+        "submitted": "Submitted",
+        "submittedAt": "Submitted",
+        "noVerifications": "No pending verifications",
+        "noVerificationsDesc": "Model verification requests will appear here."
       }
     },
     "marketing": {
@@ -1664,6 +1686,12 @@
       "website": "Website",
       "activeCastings": "Active castings",
       "activeJobs": "Active jobs"
+    },
+    "verifySelfie": {
+      "title": "Identity verification",
+      "description": "Take a live selfie to complete verification.",
+      "missingToken": "Invalid or expired link. Reopen the QR code from your account.",
+      "privacyNote": "The selfie is used only for verification and is deleted after the decision."
     }
   },
   "forms": {
@@ -2800,13 +2828,17 @@
       "verificationApproved": "Verification approved!",
       "verificationRejected": "Verification rejected",
       "accountVerified": "Your account has been verified. You can now access all features.",
-      "verificationRejectedNotif": "Your verification request has been rejected."
+      "verificationRejectedNotif": "Your verification request has been rejected.",
+      "notFound": "Profile not found"
     },
     "messages": {
       "invalidMessage": "Invalid message",
       "notInConversation": "You are not part of this conversation",
       "newMessageTitle": "New message",
       "userFallback": "User"
+    },
+    "verification": {
+      "alreadyVerified": "Your profile is already verified"
     }
   },
   "metadata": {
@@ -3018,6 +3050,24 @@
       "navigate": "Go to",
       "create": "Create",
       "search": "Search"
+    }
+  },
+  "verification": {
+    "capture": {
+      "take": "Capture",
+      "retake": "Retake",
+      "confirm": "Confirm and send",
+      "sending": "Sending…",
+      "hint": "Center your face with good lighting.",
+      "noCamera": "Camera not available on this device.",
+      "uploadError": "Upload failed. Please try again.",
+      "doneTitle": "Selfie sent",
+      "doneDesc": "We'll review it shortly."
+    },
+    "qr": {
+      "title": "Continue on your phone",
+      "desc": "Scan the QR code with your phone to take the selfie with its camera.",
+      "done": "I finished on my phone"
     }
   }
 }

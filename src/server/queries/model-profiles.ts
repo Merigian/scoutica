@@ -28,6 +28,7 @@ export type ModelProfileCard = {
   images: string[];
   imageCount: number;
   isBoosted: boolean;
+  isVerified: boolean;
   viewCount: number;
   likeCount: number;
   createdAt: Date;
@@ -119,6 +120,7 @@ export async function searchModelProfiles(
     images: p.portfolioImages.map((img) => img.url),
     imageCount: p._count.portfolioImages,
     isBoosted: p.boosts.length > 0,
+    isVerified: p.verificationStatus === "APPROVED",
     viewCount: p.viewCount,
     likeCount: p.likeCount,
     createdAt: p.createdAt,
@@ -322,6 +324,7 @@ export async function getFeaturedProfiles(): Promise<ModelProfileCard[]> {
     images: p.portfolioImages.map((img) => img.url),
     imageCount: p._count.portfolioImages,
     isBoosted: false,
+    isVerified: p.verificationStatus === "APPROVED",
     viewCount: p.viewCount,
     likeCount: p.likeCount,
     createdAt: p.createdAt,
@@ -391,6 +394,7 @@ export async function getPopularProfiles(limit = 10): Promise<ModelProfileCard[]
     images: p.portfolioImages.map((img) => img.url),
     imageCount: p._count.portfolioImages,
     isBoosted: false,
+    isVerified: p.verificationStatus === "APPROVED",
     viewCount: p.viewCount,
     likeCount: p.likeCount,
     createdAt: p.createdAt,
@@ -458,6 +462,7 @@ export async function getFavoriteProfiles(userId: string): Promise<ModelProfileC
     images: p.portfolioImages.map((img) => img.url),
     imageCount: p._count.portfolioImages,
     isBoosted: p.boosts.length > 0,
+    isVerified: p.verificationStatus === "APPROVED",
     viewCount: p.viewCount,
     likeCount: p.likeCount,
     createdAt: p.createdAt,

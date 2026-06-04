@@ -32,6 +32,7 @@ import {
   Plane,
   User,
   ShieldCheck,
+  BadgeCheck,
 } from "lucide-react";
 import { PublicProfileContactButton } from "@/components/profile/public-profile-contact-button";
 import { recordProfileView } from "@/server/actions/profile-engagement";
@@ -86,6 +87,7 @@ export default async function PublicProfilePage({
 
   const age = profile.dateOfBirth ? calculateAge(profile.dateOfBirth) : null;
   const isBoosted = profile.boosts.length > 0;
+  const isVerified = profile.verificationStatus === "APPROVED";
   const isScout = session?.user?.role === "SCOUT";
 
   // Check existing contact request status for scouts
@@ -203,6 +205,12 @@ export default async function PublicProfilePage({
                 <Badge variant="gold" className="gap-1">
                   <ShieldCheck className="h-3 w-3" />
                   {t("featured")}
+                </Badge>
+              )}
+              {isVerified && (
+                <Badge variant="outline" className="gap-1">
+                  <BadgeCheck className="h-3 w-3 text-[var(--accent)]" />
+                  {t("verified")}
                 </Badge>
               )}
             </div>

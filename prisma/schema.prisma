@@ -380,6 +380,16 @@ model ModelProfile {
   publishedAt     DateTime?
   completenessScore Int             @default(0)
 
+  // Identity verification (live selfie reviewed by admin)
+  verificationStatus      VerificationStatus @default(PENDING)
+  verifiedAt              DateTime?
+  verificationNotes       String?
+  verificationSubmittedAt DateTime?
+  selfieUrl               String?
+  selfieKey               String?
+  verificationToken       String?  @unique
+  verificationTokenExpiry DateTime?
+
   // Engagement counters (denormalized for sort performance)
   viewCount Int @default(0)
   likeCount Int @default(0)
@@ -403,6 +413,7 @@ model ModelProfile {
   @@index([completenessScore])
   @@index([viewCount])
   @@index([likeCount])
+  @@index([verificationStatus])
 }
 
 // ─── PORTFOLIO IMAGE ───────────────────────────────────────────────

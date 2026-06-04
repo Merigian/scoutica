@@ -85,7 +85,8 @@
     "accountSection": "Account",
     "newCasting": "Nuovo casting",
     "newJob": "Nuovo lavoro",
-    "newStudio": "Nuovo studio"
+    "newStudio": "Nuovo studio",
+    "modelVerifications": "Verifiche modelle"
   },
   "landing": {
     "cover": {
@@ -1115,6 +1116,19 @@
         "deadline": "Scadenza:",
         "noJobs": "Nessun lavoro disponibile",
         "noJobsDesc": "Al momento non ci sono lavori pubblicati. Torna più tardi!"
+      },
+      "verification": {
+        "title": "Verifica identità",
+        "description": "Ottieni il badge verificato con un selfie scattato al momento. È facoltativo.",
+        "approvedTitle": "Profilo verificato",
+        "approvedDesc": "Il tuo badge verificato è attivo.",
+        "submittedTitle": "Selfie in revisione",
+        "submittedDesc": "Stiamo controllando il tuo selfie. Ti avviseremo appena pronto.",
+        "rejectedTitle": "Verifica non approvata",
+        "step1": "Inquadra il viso al centro.",
+        "step2": "Scatta un selfie dal vivo (non dalla galleria).",
+        "step3": "Invia e attendi la revisione.",
+        "privacyNote": "Il selfie è usato solo per la verifica e viene eliminato dopo la decisione."
       }
     },
     "scout": {
@@ -1531,6 +1545,14 @@
         "noUsers": "Nessun utente trovato",
         "usersLatest": "utenti (ultimi 100)",
         "suspended": "Sospeso"
+      },
+      "modelVerifications": {
+        "title": "Verifiche modelle",
+        "requestsToReview": "richieste da revisionare",
+        "submitted": "Inviata",
+        "submittedAt": "Inviata",
+        "noVerifications": "Nessuna verifica in sospeso",
+        "noVerificationsDesc": "Le richieste di verifica delle modelle appariranno qui."
       }
     },
     "marketing": {
@@ -1664,6 +1686,12 @@
       "website": "Sito web",
       "activeCastings": "Casting attivi",
       "activeJobs": "Lavori attivi"
+    },
+    "verifySelfie": {
+      "title": "Verifica identità",
+      "description": "Scatta un selfie dal vivo per completare la verifica.",
+      "missingToken": "Link non valido o scaduto. Riapri il QR code dal tuo account.",
+      "privacyNote": "Il selfie è usato solo per la verifica e viene eliminato dopo la decisione."
     }
   },
   "forms": {
@@ -2800,13 +2828,17 @@
       "verificationApproved": "Verifica approvata!",
       "verificationRejected": "Verifica rifiutata",
       "accountVerified": "Il tuo account è stato verificato. Ora puoi accedere a tutte le funzionalità.",
-      "verificationRejectedNotif": "La tua richiesta di verifica è stata rifiutata."
+      "verificationRejectedNotif": "La tua richiesta di verifica è stata rifiutata.",
+      "notFound": "Profilo non trovato"
     },
     "messages": {
       "invalidMessage": "Messaggio non valido",
       "notInConversation": "Non fai parte di questa conversazione",
       "newMessageTitle": "Nuovo messaggio",
       "userFallback": "Utente"
+    },
+    "verification": {
+      "alreadyVerified": "Il tuo profilo è già verificato"
     }
   },
   "metadata": {
@@ -3018,6 +3050,24 @@
       "navigate": "Vai a",
       "create": "Crea",
       "search": "Cerca"
+    }
+  },
+  "verification": {
+    "capture": {
+      "take": "Scatta",
+      "retake": "Ripeti",
+      "confirm": "Conferma e invia",
+      "sending": "Invio…",
+      "hint": "Inquadra il viso al centro, con buona illuminazione.",
+      "noCamera": "Fotocamera non disponibile su questo dispositivo.",
+      "uploadError": "Errore durante l'invio. Riprova.",
+      "doneTitle": "Selfie inviato",
+      "doneDesc": "Lo verificheremo a breve."
+    },
+    "qr": {
+      "title": "Continua dal telefono",
+      "desc": "Inquadra il QR code con il tuo telefono per scattare il selfie dalla fotocamera.",
+      "done": "Ho completato dal telefono"
     }
   }
 }
