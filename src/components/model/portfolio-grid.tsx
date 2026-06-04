@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/shared/empty-state";
-import { deletePortfolioImage, setCoverImage, addPortfolioImage } from "@/server/actions/portfolio";
+import { deletePortfolioImage, setCoverImage } from "@/server/actions/portfolio";
 import { Star, Trash2, Upload, Images } from "lucide-react";
 
 interface PortfolioImage {
@@ -22,20 +22,44 @@ interface PortfolioImage {
 export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImage[]; maxPhotos?: number }) {
   const router = useRouter();
   const t = useTranslations("components.portfolio");
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
 
-  const handleUpload = async () => {
-    // For MVP, we'll create a placeholder image (in production, this would use presigned URLs)
+  const openPicker = () => {
+    if (uploading || images.length >= maxPhotos) return;
+    fileInputRef.current?.click();
+  };
+
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (fileInputRef.current) fileInputRef.current.value = "";
+    if (!file) return;
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+    if (!allowedTypes.includes(file.type)) {
+      alert(t("formatError"));
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      alert(t("sizeError"));
+      return;
+    }
+
     setUploading(true);
-    const placeholderUrl = `https://images.unsplash.com/photo-${Date.now()}?w=400&h=600&fit=crop`;
-    await addPortfolioImage({
-      url: placeholderUrl,
-      key: `portfolio/${Date.now()}.jpg`,
-      width: 400,
-      height: 600,
-    });
-    setUploading(false);
-    router.refresh();
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await fetch("/api/portfolio/upload", { method: "POST", body: formData });
+      const data = await res.json();
+      if (!data.success) {
+        alert(data.error || t("uploadError"));
+      }
+      router.refresh();
+    } catch {
+      alert(t("uploadError"));
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleDelete = async (imageId: string) => {
@@ -49,26 +73,40 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
     router.refresh();
   };
 
+  const fileInput = (
+    <input
+      ref={fileInputRef}
+      type="file"
+      accept="image/jpeg,image/png,image/webp"
+      className="hidden"
+      onChange={handleFileSelect}
+    />
+  );
+
   if (images.length === 0) {
     return (
-      <EmptyState
-        icon={Images}
-        title={t("noImages")}
-        description={t("noImagesDesc")}
-        action={
-          <Button onClick={handleUpload} isLoading={uploading}>
-            <Upload className="h-4 w-4 mr-2" />
-            {t("upload")}
-          </Button>
-        }
-      />
+      <>
+        {fileInput}
+        <EmptyState
+          icon={Images}
+          title={t("noImages")}
+          description={t("noImagesDesc")}
+          action={
+            <Button onClick={openPicker} isLoading={uploading}>
+              <Upload className="h-4 w-4 mr-2" />
+              {t("upload")}
+            </Button>
+          }
+        />
+      </>
     );
   }
 
   return (
     <div className="space-y-6">
+      {fileInput}
       <div className="flex justify-end">
-        <Button onClick={handleUpload} isLoading={uploading} disabled={images.length >= maxPhotos}>
+        <Button onClick={openPicker} isLoading={uploading} disabled={images.length >= maxPhotos}>
           <Upload className="h-4 w-4 mr-2" />
           {t("upload")}
         </Button>
