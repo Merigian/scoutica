@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/shared/empty-state";
 import { deletePortfolioImage, setCoverImage } from "@/server/actions/portfolio";
+import { compressImage } from "@/lib/compress-image";
 import { Star, Trash2, Upload, Images } from "lucide-react";
 
 interface PortfolioImage {
@@ -47,8 +48,9 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
 
     setUploading(true);
     try {
+      const compressed = await compressImage(file, { maxLongSide: 2000, quality: 0.85 });
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", compressed);
       const res = await fetch("/api/portfolio/upload", { method: "POST", body: formData });
       const data = await res.json();
       if (!data.success) {
