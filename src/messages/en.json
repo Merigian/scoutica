@@ -787,6 +787,80 @@
     "links": {
       "studios": "Studios",
       "register": "Sign up"
+    },
+    "faq": "FAQ & Safety"
+  },
+  "faq": {
+    "eyebrow": "Support · FAQ",
+    "title": "Questions, trust and safety",
+    "lead": "Everything you need to use Scoutica with confidence, on both sides of the lens.",
+    "safety": {
+      "eyebrow": "Safety",
+      "title": "Our commitment",
+      "items": [
+        "Scouts, agencies and brands are vetted before they can contact models: no anonymous profiles.",
+        "Contact details stay private. Requests go through the platform and you decide what to accept.",
+        "No commission on bookings and no payment required from models to be visible.",
+        "You can report a profile or message at any time: the team reviews every report.",
+        "Minors require the consent of a parent or guardian, with additional protections applied."
+      ]
+    },
+    "groups": [
+      {
+        "title": "For models",
+        "items": [
+          {
+            "q": "Is Scoutica free for models?",
+            "a": "Yes, and it stays that way forever. You can build your profile, upload your portfolio, receive requests and apply to castings at no cost."
+          },
+          {
+            "q": "Who can contact me?",
+            "a": "Only vetted scouts, agencies, brands and studios. You always see who is reaching out and can accept or decline each contact request."
+          },
+          {
+            "q": "How do I make my profile stand out?",
+            "a": "Complete your profile and publish at least three photos. You can also activate a Boost to rank higher in searches for a limited time."
+          },
+          {
+            "q": "Can I use Scoutica if I'm a minor?",
+            "a": "Yes, with the consent of a parent or guardian. We apply additional protections to the visibility and contact of minors' profiles."
+          }
+        ]
+      },
+      {
+        "title": "For scouts and agencies",
+        "items": [
+          {
+            "q": "Why do I have to get verified?",
+            "a": "Verification protects models and keeps the environment professional. Once vetted you can search talent, contact them and launch castings."
+          },
+          {
+            "q": "What does the free plan include?",
+            "a": "You can browse profiles and send a limited number of contact requests per month. Paid plans unlock unlimited contacts, advanced filters and saved searches."
+          },
+          {
+            "q": "How does the free trial work?",
+            "a": "All paid plans include a 14-day trial. You can cancel anytime before renewal with no charge."
+          }
+        ]
+      },
+      {
+        "title": "For studios",
+        "items": [
+          {
+            "q": "How do I list my studio?",
+            "a": "Create a listing with photos, services and availability. Vetted users can send you booking requests directly through the platform."
+          },
+          {
+            "q": "How much does it cost?",
+            "a": "Studio is a dedicated plan with a 14-day free trial. You'll find up-to-date details on the pricing page."
+          }
+        ]
+      }
+    ],
+    "contactCta": {
+      "title": "Didn't find the answer you were looking for?",
+      "link": "Get in touch"
     }
   },
   "about": {

@@ -787,6 +787,80 @@
     "links": {
       "studios": "Studi",
       "register": "Registrati"
+    },
+    "faq": "FAQ & Sicurezza"
+  },
+  "faq": {
+    "eyebrow": "Assistenza · FAQ",
+    "title": "Domande, fiducia e sicurezza",
+    "lead": "Tutto ciò che serve sapere per usare Scoutica con serenità, da entrambi i lati dell'obiettivo.",
+    "safety": {
+      "eyebrow": "Sicurezza",
+      "title": "Il nostro impegno",
+      "items": [
+        "Scout, agenzie e brand sono accreditati prima di poter contattare i modelli: nessun profilo anonimo.",
+        "I dati di contatto restano privati. Le richieste passano dalla piattaforma e tu decidi cosa accettare.",
+        "Nessuna commissione sugli ingaggi e nessun pagamento richiesto ai modelli per essere visibili.",
+        "Puoi segnalare un profilo o un messaggio in qualsiasi momento: il team revisiona ogni segnalazione.",
+        "Per i minori è richiesto il consenso di un genitore o tutore e si applicano tutele aggiuntive."
+      ]
+    },
+    "groups": [
+      {
+        "title": "Per i modelli",
+        "items": [
+          {
+            "q": "Scoutica è gratis per i modelli?",
+            "a": "Sì, e lo resta per sempre. Puoi creare il profilo, caricare il portfolio, ricevere richieste e candidarti ai casting senza alcun costo."
+          },
+          {
+            "q": "Chi può contattarmi?",
+            "a": "Solo scout, agenzie, brand e studi accreditati. Vedi sempre chi ti scrive e puoi accettare o rifiutare ogni richiesta di contatto."
+          },
+          {
+            "q": "Come metto in evidenza il mio profilo?",
+            "a": "Completa il profilo e pubblica almeno tre foto. Puoi anche attivare un Boost per comparire più in alto nelle ricerche per un periodo limitato."
+          },
+          {
+            "q": "Posso usare Scoutica se sono minorenne?",
+            "a": "Sì, con il consenso di un genitore o tutore. Applichiamo tutele aggiuntive sulla visibilità e sui contatti per i profili di minori."
+          }
+        ]
+      },
+      {
+        "title": "Per scout e agenzie",
+        "items": [
+          {
+            "q": "Perché devo verificarmi?",
+            "a": "La verifica protegge i modelli e garantisce un ambiente professionale. Una volta accreditato puoi cercare talenti, contattarli e lanciare casting."
+          },
+          {
+            "q": "Cosa include il piano gratuito?",
+            "a": "Puoi sfogliare i profili e inviare un numero limitato di richieste di contatto al mese. I piani a pagamento sbloccano contatti illimitati, filtri avanzati e ricerche salvate."
+          },
+          {
+            "q": "Come funziona la prova gratuita?",
+            "a": "Tutti i piani a pagamento includono 14 giorni di prova. Puoi annullare in qualsiasi momento prima del rinnovo senza addebiti."
+          }
+        ]
+      },
+      {
+        "title": "Per gli studi",
+        "items": [
+          {
+            "q": "Come pubblico il mio studio?",
+            "a": "Crea una scheda con foto, servizi e disponibilità. Gli utenti accreditati potranno inviarti richieste di prenotazione direttamente dalla piattaforma."
+          },
+          {
+            "q": "Quanto costa?",
+            "a": "Lo Studio è un piano dedicato con prova gratuita di 14 giorni. Trovi i dettagli aggiornati nella pagina dei prezzi."
+          }
+        ]
+      }
+    ],
+    "contactCta": {
+      "title": "Non hai trovato la risposta che cercavi?",
+      "link": "Scrivici"
     }
   },
   "about": {

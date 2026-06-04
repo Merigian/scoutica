@@ -188,6 +188,7 @@ export function MarketingFooter() {
               <p className="text-eyebrow mb-5">{t("sections.company")}</p>
               <ul className="space-y-3 text-sm">
                 <li><Link href="/about" className="link-underline">{t("about")}</Link></li>
+                <li><Link href="/safety" className="link-underline">{t("faq")}</Link></li>
                 <li><Link href="/contact" className="link-underline">{t("contact")}</Link></li>
               </ul>
             </div>
