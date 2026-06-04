@@ -4,8 +4,6 @@ import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { PortfolioGrid } from "@/components/model/portfolio-grid";
 import { PLAN_LIMITS } from "@/config/plans";
-import { Link } from "@/i18n/routing";
-import { ArrowUpRight } from "lucide-react";
 import type { PlanTier } from "@prisma/client";
 
 export default async function PortfolioPage() {
@@ -27,7 +25,6 @@ export default async function PortfolioPage() {
   });
   const planTier: PlanTier = subscription?.plan ?? "FREE";
   const maxPhotos = PLAN_LIMITS[planTier].maxPhotos;
-  const isModelPro = planTier === "MODEL_PRO";
   const t = await getTranslations("pages.model.portfolio");
 
   return (
@@ -43,26 +40,6 @@ export default async function PortfolioPage() {
         </p>
       </header>
 
-      {/* Upgrade banner */}
-      {!isModelPro && (
-        <div className="hairline-t hairline-b py-6 mb-12 lg:mb-16">
-          <Link
-            href={"/model/settings/billing" as never}
-            className="group flex items-center justify-between gap-6"
-          >
-            <div className="flex flex-col gap-1">
-              <p className="text-eyebrow">Upgrade</p>
-              <p className="text-h3 text-[var(--ink)]">{t("upgradeTitle")}</p>
-              <p className="text-meta">{t("upgradeDesc")}</p>
-            </div>
-            <span className="inline-flex items-center gap-2 text-[15px] text-[var(--ink)] whitespace-nowrap">
-              {t("upgrade")}
-              <ArrowUpRight className="h-4 w-4 group-arrow" />
-            </span>
-          </Link>
-        </div>
-      )}
-
       {/* Grid */}
       <section>
         <div className="hairline-b pb-4 mb-8 flex items-baseline justify-between gap-4">
@@ -75,9 +52,6 @@ export default async function PortfolioPage() {
               })}
             </h2>
           </div>
-          {isModelPro && (
-            <span className="text-eyebrow italic !text-[var(--ink)]">Pro</span>
-          )}
         </div>
         <PortfolioGrid
           images={profile.portfolioImages}
