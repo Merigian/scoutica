@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/shared/empty-state";
 import { deletePortfolioImage, setCoverImage } from "@/server/actions/portfolio";
-import { compressImage } from "@/lib/compress-image";
+import { ImageCropper } from "@/components/ui/image-cropper";
 import { Star, Trash2, Upload, Images } from "lucide-react";
 
 interface PortfolioImage {
@@ -25,6 +25,7 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
   const t = useTranslations("components.portfolio");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+  const [cropFile, setCropFile] = useState<File | null>(null);
 
   const openPicker = () => {
     if (uploading || images.length >= maxPhotos) return;
@@ -46,11 +47,23 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
       return;
     }
 
+    // Open the cropper so the user can frame the photo before uploading
+    setCropFile(file);
+  };
+
+  const handleCropCancel = () => {
+    setCropFile(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const handleCropConfirm = async (blob: Blob) => {
+    setCropFile(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+
     setUploading(true);
     try {
-      const compressed = await compressImage(file, "portfolio");
       const formData = new FormData();
-      formData.append("file", compressed);
+      formData.append("file", new File([blob], "photo.jpg", { type: "image/jpeg" }));
       const res = await fetch("/api/portfolio/upload", { method: "POST", body: formData });
       const data = await res.json();
       if (!data.success) {
@@ -99,6 +112,13 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
               {t("upload")}
             </Button>
           }
+        />
+        <ImageCropper
+          file={cropFile}
+          onCrop={handleCropConfirm}
+          onCancel={handleCropCancel}
+          aspectRatio={3 / 4}
+          outputWidth={600}
         />
       </>
     );
@@ -156,6 +176,14 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
           </div>
         ))}
       </div>
+
+      <ImageCropper
+        file={cropFile}
+        onCrop={handleCropConfirm}
+        onCancel={handleCropCancel}
+        aspectRatio={3 / 4}
+        outputWidth={600}
+      />
     </div>
   );
 }
