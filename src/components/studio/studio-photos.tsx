@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { deleteStudioImage, setStudioCoverImage } from "@/server/actions/studios";
+import { compressImage } from "@/lib/compress-image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -43,8 +44,9 @@ export function StudioPhotos({ studioId, images }: StudioPhotosProps) {
 
     setUploading(true);
     try {
+      const compressed = await compressImage(file, "studio");
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", compressed);
       formData.append("studioId", studioId);
 
       const res = await fetch("/api/studio/upload", { method: "POST", body: formData });

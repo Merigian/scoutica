@@ -48,7 +48,7 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
 
     setUploading(true);
     try {
-      const compressed = await compressImage(file, { maxLongSide: 2000, quality: 0.85 });
+      const compressed = await compressImage(file, "portfolio");
       const formData = new FormData();
       formData.append("file", compressed);
       const res = await fetch("/api/portfolio/upload", { method: "POST", body: formData });

@@ -12,6 +12,7 @@ import { CheckCircle, Camera, Loader2, Download, Trash2, AlertTriangle } from "l
 import { useTranslations } from "next-intl";
 import { signOut } from "next-auth/react";
 import { deleteAccount, exportUserData } from "@/server/actions/account";
+import { compressImage } from "@/lib/compress-image";
 
 interface SettingsFormProps {
   user: {
@@ -95,8 +96,9 @@ export function SettingsForm({ user, locale }: SettingsFormProps) {
                     if (!file) return;
                     setUploading(true);
                     try {
+                      const compressed = await compressImage(file, "avatar");
                       const formData = new FormData();
-                      formData.append("file", file);
+                      formData.append("file", compressed);
                       const res = await fetch("/api/upload/avatar", { method: "POST", body: formData });
                       const data = await res.json();
                       if (data.success && data.url) {
