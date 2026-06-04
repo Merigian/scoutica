@@ -57,10 +57,7 @@ export function VerificationPanel() {
     <div className="space-y-6">
       {!showQr ? (
         <>
-          <SelfieCapture
-            onSubmitted={() => router.refresh()}
-            onNoCamera={openQr}
-          />
+          <SelfieCapture onSubmitted={() => router.refresh()} />
 
           <div className="text-center">
             <button
