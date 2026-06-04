@@ -130,9 +130,9 @@ export function checkPublishRequirements(
     missing.push("fullName");
   }
 
-  // Check at least 1 image
-  if (!profile.portfolioImageCount || profile.portfolioImageCount < 1) {
-    missing.push("image");
+  // Check at least 3 portfolio photos (needed to verify identity vs selfie)
+  if (!profile.portfolioImageCount || profile.portfolioImageCount < 3) {
+    missing.push("photos");
   }
 
   // Check cover image

@@ -1552,7 +1552,10 @@
         "submitted": "Inviata",
         "submittedAt": "Inviata",
         "noVerifications": "Nessuna verifica in sospeso",
-        "noVerificationsDesc": "Le richieste di verifica delle modelle appariranno qui."
+        "noVerificationsDesc": "Le richieste di verifica delle modelle appariranno qui.",
+        "viewProfile": "Vedi profilo",
+        "profilePhotos": "Foto del profilo",
+        "noPhotos": "Nessuna foto caricata"
       }
     },
     "marketing": {
@@ -2643,7 +2646,7 @@
       "reqActive": "Profilo attivato (completa i campi richiesti)",
       "reqAge": "Età 18+",
       "reqName": "Nome completo",
-      "reqImage": "Almeno 1 immagine",
+      "reqImage": "Almeno 3 foto",
       "reqCover": "Immagine di copertina",
       "published": "Profilo pubblicato",
       "notPublished": "Profilo non pubblicato",

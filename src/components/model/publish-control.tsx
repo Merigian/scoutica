@@ -39,7 +39,7 @@ export function PublishControl({
     { key: "active", met: !isIncomplete, tKey: "reqActive" as const },
     { key: "age", met: dateOfBirth ? calculateAge(dateOfBirth) >= 18 : false, tKey: "reqAge" as const },
     { key: "name", met: !!fullName && fullName.trim().length >= 2, tKey: "reqName" as const },
-    { key: "image", met: imageCount >= 1, tKey: "reqImage" as const },
+    { key: "image", met: imageCount >= 3, tKey: "reqImage" as const },
     { key: "cover", met: hasCover, tKey: "reqCover" as const },
   ];
 

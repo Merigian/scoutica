@@ -1552,7 +1552,10 @@
         "submitted": "Submitted",
         "submittedAt": "Submitted",
         "noVerifications": "No pending verifications",
-        "noVerificationsDesc": "Model verification requests will appear here."
+        "noVerificationsDesc": "Model verification requests will appear here.",
+        "viewProfile": "View profile",
+        "profilePhotos": "Profile photos",
+        "noPhotos": "No photos uploaded"
       }
     },
     "marketing": {
@@ -2643,7 +2646,7 @@
       "reqActive": "Profile activated (complete required fields)",
       "reqAge": "Age 18+",
       "reqName": "Full name",
-      "reqImage": "At least 1 image",
+      "reqImage": "At least 3 photos",
       "reqCover": "Cover image set",
       "published": "Profile published",
       "notPublished": "Profile not published",
