@@ -1,7 +1,9 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 import { getModelDashboardData } from "@/server/queries/model-dashboard";
+import { db } from "@/lib/db";
+import { BoostCard } from "@/components/model/boost-card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,6 +27,15 @@ export default async function ModelHomePage() {
   if (!data) redirect("/model/profile");
 
   const { profile, metrics, opportunities, recentActivity } = data;
+  const locale = await getLocale();
+  const activeBoosts = await db.boost.findMany({
+    where: {
+      modelProfile: { userId: session.user.id },
+      endsAt: { gt: new Date() },
+    },
+    select: { endsAt: true },
+    orderBy: { endsAt: "desc" },
+  });
   const firstName =
     profile.fullName?.split(" ")[0] ?? session.user.name?.split(" ")[0] ?? "";
 
@@ -282,6 +293,16 @@ export default async function ModelHomePage() {
               </li>
             </ul>
           </div>
+
+          {/* Visibilità — Boost */}
+          {profile.isPublished && (
+            <div>
+              <p className="text-eyebrow hairline-b pb-4 mb-6">
+                06 — {t("visibility")}
+              </p>
+              <BoostCard activeBoosts={activeBoosts} locale={locale} />
+            </div>
+          )}
         </aside>
       </div>
     </div>
