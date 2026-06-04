@@ -802,7 +802,7 @@
         "Contact details stay private. Requests go through the platform and you decide what to accept.",
         "No commission on bookings and no payment required from models to be visible.",
         "You can report a profile or message at any time: the team reviews every report.",
-        "Minors require the consent of a parent or guardian, with additional protections applied."
+        "The platform is for adults only: date of birth is verified at registration."
       ]
     },
     "groups": [
@@ -822,8 +822,8 @@
             "a": "Complete your profile and publish at least three photos. You can also activate a Boost to rank higher in searches for a limited time."
           },
           {
-            "q": "Can I use Scoutica if I'm a minor?",
-            "a": "Yes, with the consent of a parent or guardian. We apply additional protections to the visibility and contact of minors' profiles."
+            "q": "Do I need to be 18 to use Scoutica?",
+            "a": "Yes. Scoutica is reserved for users aged 18 and over, and date of birth is verified at registration."
           }
         ]
       },
@@ -1630,6 +1630,7 @@
       "like": "Like",
       "share": "Share",
       "verified": "Verified",
+      "featured": "Featured",
       "available": "Available",
       "unavailable": "Unavailable",
       "skills": "Skills",
@@ -2051,6 +2052,7 @@
       "activeThisWeek": "Active this week",
       "activeThisMonth": "Active this month",
       "verified": "Verified",
+      "featured": "Featured",
       "gridDensity": "Grid density",
       "density1": "1 column",
       "density2": "2 columns",

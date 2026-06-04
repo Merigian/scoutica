@@ -802,7 +802,7 @@
         "I dati di contatto restano privati. Le richieste passano dalla piattaforma e tu decidi cosa accettare.",
         "Nessuna commissione sugli ingaggi e nessun pagamento richiesto ai modelli per essere visibili.",
         "Puoi segnalare un profilo o un messaggio in qualsiasi momento: il team revisiona ogni segnalazione.",
-        "Per i minori è richiesto il consenso di un genitore o tutore e si applicano tutele aggiuntive."
+        "La piattaforma è riservata ai maggiorenni: la data di nascita viene verificata alla registrazione."
       ]
     },
     "groups": [
@@ -822,8 +822,8 @@
             "a": "Completa il profilo e pubblica almeno tre foto. Puoi anche attivare un Boost per comparire più in alto nelle ricerche per un periodo limitato."
           },
           {
-            "q": "Posso usare Scoutica se sono minorenne?",
-            "a": "Sì, con il consenso di un genitore o tutore. Applichiamo tutele aggiuntive sulla visibilità e sui contatti per i profili di minori."
+            "q": "Devo essere maggiorenne per usare Scoutica?",
+            "a": "Sì. Scoutica è riservata a chi ha almeno 18 anni e la data di nascita viene verificata al momento della registrazione."
           }
         ]
       },
@@ -1630,6 +1630,7 @@
       "like": "Mi piace",
       "share": "Condividi",
       "verified": "Verificato",
+      "featured": "In evidenza",
       "available": "Disponibile",
       "unavailable": "Non disponibile",
       "skills": "Abilità",
@@ -2051,6 +2052,7 @@
       "activeThisWeek": "Attivo questa settimana",
       "activeThisMonth": "Attivo questo mese",
       "verified": "Verificato",
+      "featured": "In evidenza",
       "gridDensity": "Densità griglia",
       "density1": "1 colonna",
       "density2": "2 colonne",

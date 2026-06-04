@@ -186,7 +186,7 @@ export default async function PublicProfilePage({
           {isBoosted && (
             <div className="absolute top-3 left-3">
               <Badge variant="gold" className="gap-1">
-                <ShieldCheck className="h-3 w-3" /> {t("verified")}
+                <ShieldCheck className="h-3 w-3" /> {t("featured")}
               </Badge>
             </div>
           )}
@@ -202,7 +202,7 @@ export default async function PublicProfilePage({
               {isBoosted && (
                 <Badge variant="gold" className="gap-1">
                   <ShieldCheck className="h-3 w-3" />
-                  {t("verified")}
+                  {t("featured")}
                 </Badge>
               )}
             </div>

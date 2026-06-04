@@ -353,7 +353,7 @@ export function ModelCard({
       : profile.coverImage
         ? [profile.coverImage]
         : [];
-  const verifiedLabel = t("verified");
+  const verifiedLabel = t("featured");
   const name = profile.fullName || t("unnamed");
   const statusLabel = profile.professionalStatus
     ? PROFESSIONAL_STATUS_LABELS[profile.professionalStatus as ProfessionalStatus]?.[lang]
