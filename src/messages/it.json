@@ -2963,6 +2963,14 @@
     "activeUntil": "In evidenza fino al",
     "maxReached": "Hai raggiunto il massimo di 4 boost attivi."
   },
+  "privateNote": {
+    "title": "Nota privata",
+    "description": "Appunti visibili solo a te su questo profilo.",
+    "placeholder": "Es. Perfetta per il casting editoriale di settembre…",
+    "save": "Salva nota",
+    "saved": "Salvata",
+    "private": "Solo tu puoi vederla"
+  },
   "report": {
     "button": "Segnala",
     "blockButton": "Blocca utente",

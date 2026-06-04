@@ -2963,6 +2963,14 @@
     "activeUntil": "Featured until",
     "maxReached": "You have reached the maximum of 4 active boosts."
   },
+  "privateNote": {
+    "title": "Private note",
+    "description": "Notes about this profile, visible only to you.",
+    "placeholder": "e.g. Great fit for the September editorial casting…",
+    "save": "Save note",
+    "saved": "Saved",
+    "private": "Only you can see this"
+  },
   "report": {
     "button": "Report",
     "blockButton": "Block user",

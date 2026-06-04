@@ -37,6 +37,7 @@ import { PublicProfileContactButton } from "@/components/profile/public-profile-
 import { recordProfileView } from "@/server/actions/profile-engagement";
 import { BackLink } from "@/components/shared/back-link";
 import { ReportBlockMenu } from "@/components/shared/report-block-menu";
+import { PrivateNoteCard } from "@/components/scout/private-note-card";
 
 export async function generateMetadata({
   params,
@@ -90,6 +91,7 @@ export default async function PublicProfilePage({
   // Check existing contact request status for scouts
   let existingConversationId: string | null = null;
   let contactRequestStatus: string | null = null;
+  let privateNoteContent: string | null = null;
   if (isScout && session?.user?.id) {
     const scoutProfile = await db.scoutProfile.findUnique({
       where: { userId: session.user.id },
@@ -109,6 +111,17 @@ export default async function PublicProfilePage({
         contactRequestStatus = existing.status;
         existingConversationId = existing.conversationId;
       }
+
+      const note = await db.privateNote.findUnique({
+        where: {
+          scoutProfileId_modelProfileId: {
+            scoutProfileId: scoutProfile.id,
+            modelProfileId: profile.id,
+          },
+        },
+        select: { content: true },
+      });
+      privateNoteContent = note?.content ?? "";
     }
 
     // Also check for a direct conversation (not created via contact request)
@@ -251,6 +264,14 @@ export default async function PublicProfilePage({
               locale={locale}
               existingConversationId={existingConversationId}
               contactRequestStatus={contactRequestStatus}
+            />
+          )}
+
+          {/* Private note for scouts */}
+          {isScout && privateNoteContent !== null && (
+            <PrivateNoteCard
+              modelProfileId={profile.id}
+              initialContent={privateNoteContent}
             />
           )}
         </div>
