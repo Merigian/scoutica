@@ -3059,15 +3059,18 @@
       "confirm": "Confirm and send",
       "sending": "Sending…",
       "hint": "Center your face with good lighting.",
-      "noCamera": "Camera not available on this device.",
+      "noCamera": "Camera unavailable or access denied. Check your browser permissions and try again.",
       "uploadError": "Upload failed. Please try again.",
       "doneTitle": "Selfie sent",
-      "doneDesc": "We'll review it shortly."
+      "doneDesc": "We'll review it shortly.",
+      "retryCamera": "Retry camera"
     },
     "qr": {
       "title": "Continue on your phone",
       "desc": "Scan the QR code with your phone to take the selfie with its camera.",
-      "done": "I finished on my phone"
+      "done": "I finished on my phone",
+      "useInstead": "Prefer your phone? Show QR code",
+      "useCamera": "Use this device camera"
     }
   }
 }

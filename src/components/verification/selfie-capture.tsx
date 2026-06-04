@@ -121,9 +121,21 @@ export function SelfieCapture({ token, onSubmitted, onNoCamera }: SelfieCaptureP
 
   if (error === "no-camera") {
     return (
-      <div className="border border-[var(--rule)] p-6 text-center space-y-3">
+      <div className="border border-[var(--rule)] p-6 text-center space-y-4">
         <AlertCircle className="mx-auto h-6 w-6 text-[var(--ink-3)]" />
         <p className="text-body text-[var(--ink-2)]">{t("noCamera")}</p>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            setError(null);
+            setPhase("init");
+            startCamera();
+          }}
+        >
+          <RefreshCw className="h-4 w-4 mr-1" />
+          {t("retryCamera")}
+        </Button>
       </div>
     );
   }

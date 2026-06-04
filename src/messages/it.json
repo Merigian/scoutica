@@ -3059,15 +3059,18 @@
       "confirm": "Conferma e invia",
       "sending": "Invio…",
       "hint": "Inquadra il viso al centro, con buona illuminazione.",
-      "noCamera": "Fotocamera non disponibile su questo dispositivo.",
+      "noCamera": "Fotocamera non disponibile o accesso negato. Controlla i permessi del browser e riprova.",
       "uploadError": "Errore durante l'invio. Riprova.",
       "doneTitle": "Selfie inviato",
-      "doneDesc": "Lo verificheremo a breve."
+      "doneDesc": "Lo verificheremo a breve.",
+      "retryCamera": "Riprova con la fotocamera"
     },
     "qr": {
       "title": "Continua dal telefono",
       "desc": "Inquadra il QR code con il tuo telefono per scattare il selfie dalla fotocamera.",
-      "done": "Ho completato dal telefono"
+      "done": "Ho completato dal telefono",
+      "useInstead": "Preferisci usare il telefono? Mostra QR code",
+      "useCamera": "Usa la fotocamera del PC"
     }
   }
 }

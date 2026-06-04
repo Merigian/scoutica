@@ -6,13 +6,13 @@ import { useTranslations } from "next-intl";
 import { SelfieCapture } from "@/components/verification/selfie-capture";
 import { QrImage } from "@/components/verification/qr-image";
 import { Button } from "@/components/ui/button";
-import { Smartphone } from "lucide-react";
+import { Smartphone, Camera } from "lucide-react";
 import { requestVerificationToken } from "@/server/actions/model-verification";
 
 export function VerificationPanel() {
   const t = useTranslations("verification");
   const router = useRouter();
-  const [noCamera, setNoCamera] = useState(false);
+  const [showQr, setShowQr] = useState(false);
   const [token, setToken] = useState<string | null>(null);
   const [waiting, setWaiting] = useState(false);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -23,8 +23,9 @@ export function VerificationPanel() {
     if (res.success && res.data) setToken(res.data.token);
   }, [token]);
 
-  const handleNoCamera = useCallback(() => {
-    setNoCamera(true);
+  const openQr = useCallback(() => {
+    setShowQr(true);
+    setWaiting(true);
     ensureToken();
   }, [ensureToken]);
 
@@ -53,31 +54,47 @@ export function VerificationPanel() {
       : null;
 
   return (
-    <div className="space-y-8">
-      {!noCamera ? (
-        <SelfieCapture
-          onSubmitted={() => router.refresh()}
-          onNoCamera={handleNoCamera}
-        />
+    <div className="space-y-6">
+      {!showQr ? (
+        <>
+          <SelfieCapture
+            onSubmitted={() => router.refresh()}
+            onNoCamera={openQr}
+          />
+
+          <div className="text-center">
+            <button
+              type="button"
+              onClick={openQr}
+              className="text-meta text-[var(--ink-3)] underline underline-offset-4 hover:text-[var(--ink-2)]"
+            >
+              {t("qr.useInstead")}
+            </button>
+          </div>
+        </>
       ) : (
         <div className="border border-[var(--rule)] p-6 text-center space-y-5">
           <Smartphone className="mx-auto h-6 w-6 text-[var(--ink-2)]" />
           <div className="space-y-1">
             <p className="text-h3 text-[var(--ink)]">{t("qr.title")}</p>
-            <p className="text-meta text-[var(--ink-3)] max-w-sm mx-auto">
-              {t("qr.desc")}
-            </p>
+            <p className="text-meta text-[var(--ink-3)] max-w-sm mx-auto">{t("qr.desc")}</p>
           </div>
-          <div className="flex justify-center" onClick={() => setWaiting(true)}>
+          <div className="flex justify-center">
             {phoneUrl ? (
               <QrImage value={phoneUrl} size={200} />
             ) : (
               <div className="h-[200px] w-[200px] bg-[var(--bg-soft)] animate-pulse" />
             )}
           </div>
-          <Button variant="outline" size="sm" onClick={() => router.refresh()}>
-            {t("qr.done")}
-          </Button>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Button variant="outline" size="sm" onClick={() => setShowQr(false)}>
+              <Camera className="h-4 w-4 mr-1" />
+              {t("qr.useCamera")}
+            </Button>
+            <Button variant="default" size="sm" onClick={() => router.refresh()}>
+              {t("qr.done")}
+            </Button>
+          </div>
         </div>
       )}
     </div>
