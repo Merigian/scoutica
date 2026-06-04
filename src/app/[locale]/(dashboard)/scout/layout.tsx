@@ -1,8 +1,7 @@
 import { redirect } from "next/navigation";
-import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { isScoutGateOpen } from "@/server/queries/settings";
+import { ReadOnlyBanner } from "@/components/scout/read-only-banner";
 
 export default async function ScoutLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
@@ -19,39 +18,22 @@ export default async function ScoutLayout({ children }: { children: React.ReactN
     redirect("/login");
   }
 
-  // Handle PENDING status: check scout gate and update status
+  // New scouts enter immediately in read-only mode (no waitlist, no gate).
   if (profile.verificationStatus === "PENDING") {
-    const gateOpen = await isScoutGateOpen();
-    if (gateOpen) {
-      await db.scoutProfile.update({
-        where: { userId: session.user.id },
-        data: { verificationStatus: "VERIFICATION_REQUIRED" },
-      });
-      redirect("/scout/verification");
-    } else {
-      await db.scoutProfile.update({
-        where: { userId: session.user.id },
-        data: { verificationStatus: "WAITLISTED" },
-      });
-      redirect("/waitlist");
-    }
+    await db.scoutProfile.update({
+      where: { userId: session.user.id },
+      data: { verificationStatus: "VERIFICATION_REQUIRED" },
+    });
   }
 
-  // Waitlisted scouts get redirected to waitlist
-  if (profile.verificationStatus === "WAITLISTED") {
-    redirect("/waitlist");
-  }
+  // Unverified scouts can browse the platform read-only. Sensitive actions
+  // (contacting models, creating castings/jobs, messaging) are gated server-side.
+  const isVerified = profile.verificationStatus === "APPROVED";
 
-  // Allow access to verification and profile pages for unverified scouts
-  // Block all other scout routes until APPROVED
-  const headersList = await headers();
-  const pathname = headersList.get("x-pathname") || "";
-  const allowedPaths = ["/scout/verification", "/scout/profile", "/scout/settings"];
-  const isAllowedPath = allowedPaths.some((p) => pathname.includes(p));
-
-  if (profile.verificationStatus !== "APPROVED" && !isAllowedPath) {
-    redirect("/scout/verification");
-  }
-
-  return <>{children}</>;
+  return (
+    <>
+      {!isVerified && <ReadOnlyBanner />}
+      {children}
+    </>
+  );
 }

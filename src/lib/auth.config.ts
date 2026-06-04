@@ -44,7 +44,6 @@ export default {
 
       const isAuthPage = path.includes("/login") || path.includes("/register");
       const isVerifyPage = path.includes("/verify-email");
-      const isWaitlistPage = path.includes("/waitlist");
       const isForgotPwd = path.includes("/forgot-password") || path.includes("/reset-password");
       const isCompleteSetup = path.includes("/complete-setup");
 
@@ -87,7 +86,7 @@ export default {
       }
 
       // Public auxiliary pages: always allowed
-      if (isVerifyPage || isWaitlistPage || isForgotPwd || isCompleteSetup) {
+      if (isVerifyPage || isForgotPwd || isCompleteSetup) {
         return true;
       }
 

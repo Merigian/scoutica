@@ -20,6 +20,17 @@ export async function sendMessage(
     return { success: false, error: tm("invalidMessage") };
   }
 
+  // Unverified scouts have read-only access: block messaging until approved.
+  if (session.user.role === "SCOUT") {
+    const scoutProfile = await db.scoutProfile.findUnique({
+      where: { userId: session.user.id },
+      select: { verificationStatus: true },
+    });
+    if (scoutProfile?.verificationStatus !== "APPROVED") {
+      return { success: false, error: tm("mustBeVerified") };
+    }
+  }
+
   // Verify user is a participant
   const participant = await db.conversationParticipant.findUnique({
     where: {

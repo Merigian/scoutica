@@ -380,20 +380,6 @@
       "notAuthenticated": "Sessione scaduta. Effettua di nuovo l'accesso.",
       "emailChangedButSendFailed": "Email aggiornata, ma non siamo riusciti a inviarti la verifica. Riprova più tardi."
     },
-    "waitlist": {
-      "eyebrow": "Lista d'attesa",
-      "title": "Sei in lista d'attesa",
-      "subtitle": "La piattaforma non è ancora aperta ai talent buyer. Ti avviseremo appena sarà disponibile.",
-      "formTitle": "Aiutaci a conoscerti",
-      "fullName": "Nome completo",
-      "businessName": "Azienda / Agenzia / Brand",
-      "city": "Città",
-      "professionalLink": "Sito web o link professionale",
-      "talentTypesNeeded": "Che tipo di talenti stai cercando?",
-      "submit": "Salva informazioni",
-      "saved": "Informazioni salvate! Ti contatteremo presto.",
-      "error": "Errore nel salvataggio. Riprova."
-    },
     "registrationError": "Errore durante la registrazione",
     "sendResetLink": "Invia link di reset",
     "scoutLabel": "Scout",
@@ -1523,21 +1509,7 @@
         "maintenanceMode": "Modalità Manutenzione",
         "maintenanceDesc": "Abilita la modalità manutenzione per disabilitare temporaneamente la piattaforma",
         "generalSettings": "Impostazioni generali",
-        "comingSoon": "Le impostazioni della piattaforma saranno disponibili a breve.",
-        "scoutGate": {
-          "title": "Scout Gate",
-          "description": "Controlla se i nuovi talent buyer possono procedere alla verifica o vengono messi in lista d'attesa.",
-          "statusOpen": "Gate aperto",
-          "statusClosed": "Gate chiuso",
-          "statusOpenDesc": "I nuovi talent buyer possono procedere direttamente alla verifica.",
-          "statusClosedDesc": "I nuovi talent buyer vengono messi in lista d'attesa.",
-          "open": "Apri gate",
-          "close": "Chiudi gate",
-          "openConfirm": "Aprendo il gate, {count} scout in lista d'attesa verranno spostati alla verifica. Continuare?",
-          "closeConfirm": "Sei sicuro di voler chiudere il gate? I nuovi talent buyer verranno messi in lista d'attesa.",
-          "waitlistedCount": "{count} scout attualmente in lista d'attesa",
-          "waitlistTitle": "Scout in lista d'attesa"
-        }
+        "comingSoon": "Le impostazioni della piattaforma saranno disponibili a breve."
       },
       "users": {
         "title": "Gestione Utenti",
@@ -2075,6 +2047,11 @@
     "descriptionMinChars": "La descrizione deve contenere almeno 20 caratteri"
   },
   "components": {
+    "readOnlyBanner": {
+      "title": "Stai navigando in modalità lettura",
+      "description": "Verifica il tuo account per contattare le modelle, creare casting e annunci di lavoro.",
+      "cta": "Verifica account"
+    },
     "discover": {
       "unnamed": "Senza nome",
       "profilesFound": "{count} profilo trovato",
@@ -2768,8 +2745,7 @@
       "resetEmailSent": "Email inviata",
       "underageRegistration": "Devi avere almeno 18 anni per registrarti come modello",
       "termsNotAccepted": "Devi accettare i Termini di servizio e la Privacy Policy",
-      "profileNotActive": "Completa il tuo profilo per sbloccare questa funzionalità",
-      "scoutGateClosed": "La piattaforma non è ancora aperta ai talent buyer"
+      "profileNotActive": "Completa il tuo profilo per sbloccare questa funzionalità"
     },
     "contactRequest": {
       "alreadySent": "Hai già inviato una richiesta a questo modello/a",
@@ -2838,6 +2814,7 @@
       "invalidMessage": "Messaggio non valido",
       "notInConversation": "Non fai parte di questa conversazione",
       "newMessageTitle": "Nuovo messaggio",
+      "mustBeVerified": "Il tuo account deve essere verificato per inviare messaggi",
       "userFallback": "Utente"
     },
     "verification": {

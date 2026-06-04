@@ -380,20 +380,6 @@
       "notAuthenticated": "Your session has expired. Please sign in again.",
       "emailChangedButSendFailed": "Email updated, but we couldn't send the verification. Please try again later."
     },
-    "waitlist": {
-      "eyebrow": "Waitlist",
-      "title": "You're on the waitlist",
-      "subtitle": "The platform is not yet open to talent buyers. We'll notify you as soon as it opens.",
-      "formTitle": "Help us get to know you",
-      "fullName": "Full name",
-      "businessName": "Company / Agency / Brand",
-      "city": "City",
-      "professionalLink": "Website or professional link",
-      "talentTypesNeeded": "What type of talent are you looking for?",
-      "submit": "Save information",
-      "saved": "Information saved! We'll be in touch.",
-      "error": "Error saving information. Please try again."
-    },
     "registrationError": "Error during registration",
     "sendResetLink": "Send reset link",
     "scoutLabel": "Scout",
@@ -1523,21 +1509,7 @@
         "maintenanceMode": "Maintenance Mode",
         "maintenanceDesc": "Enable maintenance mode to temporarily disable the platform",
         "generalSettings": "General settings",
-        "comingSoon": "Platform settings will be available soon.",
-        "scoutGate": {
-          "title": "Scout Gate",
-          "description": "Control whether new talent buyers can proceed to verification or are placed on a waitlist.",
-          "statusOpen": "Gate is open",
-          "statusClosed": "Gate is closed",
-          "statusOpenDesc": "New talent buyers can proceed directly to verification.",
-          "statusClosedDesc": "New talent buyers are placed on a waitlist.",
-          "open": "Open gate",
-          "close": "Close gate",
-          "openConfirm": "Opening the gate will move {count} waitlisted scout(s) to verification. Continue?",
-          "closeConfirm": "Are you sure you want to close the gate? New talent buyers will be placed on a waitlist.",
-          "waitlistedCount": "{count} scout(s) currently on the waitlist",
-          "waitlistTitle": "Waitlisted Scouts"
-        }
+        "comingSoon": "Platform settings will be available soon."
       },
       "users": {
         "title": "Users Management",
@@ -2075,6 +2047,11 @@
     "descriptionMinChars": "Description must be at least 20 characters"
   },
   "components": {
+    "readOnlyBanner": {
+      "title": "You're browsing in read-only mode",
+      "description": "Verify your account to contact models, create castings and job posts.",
+      "cta": "Verify account"
+    },
     "discover": {
       "unnamed": "Unnamed",
       "profilesFound": "{count} profile found",
@@ -2768,8 +2745,7 @@
       "resetEmailSent": "Success",
       "underageRegistration": "You must be at least 18 years old to register as a model",
       "termsNotAccepted": "You must accept the Terms of Service and Privacy Policy",
-      "profileNotActive": "Complete your profile to unlock this feature",
-      "scoutGateClosed": "The platform is not yet open to talent buyers"
+      "profileNotActive": "Complete your profile to unlock this feature"
     },
     "contactRequest": {
       "alreadySent": "You have already sent a request to this model",
@@ -2838,6 +2814,7 @@
       "invalidMessage": "Invalid message",
       "notInConversation": "You are not part of this conversation",
       "newMessageTitle": "New message",
+      "mustBeVerified": "Your account must be verified to send messages",
       "userFallback": "User"
     },
     "verification": {

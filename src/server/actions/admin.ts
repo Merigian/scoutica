@@ -126,43 +126,4 @@ export async function dismissReport(reportId: string, adminNotes: string): Promi
   return { success: true };
 }
 
-/**
- * Toggle the Scout Gate (open/close access for new talent buyers).
- */
-export async function toggleScoutGate(open: boolean): Promise<ActionResponse> {
-  await requireAdmin();
 
-  await db.siteSettings.upsert({
-    where: { key: "scout_gate_open" },
-    create: { key: "scout_gate_open", value: open ? "true" : "false" },
-    update: { value: open ? "true" : "false" },
-  });
-
-  // If opening the gate, move all WAITLISTED scouts to VERIFICATION_REQUIRED
-  if (open) {
-    const waitlistedProfiles = await db.scoutProfile.findMany({
-      where: { verificationStatus: "WAITLISTED" },
-      select: { id: true, userId: true },
-    });
-
-    if (waitlistedProfiles.length > 0) {
-      await db.scoutProfile.updateMany({
-        where: { verificationStatus: "WAITLISTED" },
-        data: { verificationStatus: "VERIFICATION_REQUIRED" },
-      });
-
-      // Notify all waitlisted scouts
-      await db.notification.createMany({
-        data: waitlistedProfiles.map((p) => ({
-          userId: p.userId,
-          type: "SYSTEM" as const,
-          title: "Scoutica is now open!",
-          body: "You can now complete your verification to access the platform.",
-          link: "/scout/verification",
-        })),
-      });
-    }
-  }
-
-  return { success: true };
-}

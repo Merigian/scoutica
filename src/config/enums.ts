@@ -107,7 +107,6 @@ export const VERIFICATION_STATUS_LABELS: Record<VerificationStatus, Labels> = {
   PENDING: { it: "In attesa", en: "Pending" },
   APPROVED: { it: "Approvato", en: "Approved" },
   REJECTED: { it: "Rifiutato", en: "Rejected" },
-  WAITLISTED: { it: "In lista d'attesa", en: "Waitlisted" },
   VERIFICATION_REQUIRED: { it: "Verifica richiesta", en: "Verification required" },
   VERIFICATION_SUBMITTED: { it: "Verifica inviata", en: "Verification submitted" },
 };
