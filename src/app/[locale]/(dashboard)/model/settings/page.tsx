@@ -2,10 +2,9 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { SettingsForm } from "@/components/settings/settings-form";
-import { Settings } from "lucide-react";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 
 export default async function ModelSettingsPage() {
   const session = await auth();
@@ -22,16 +21,14 @@ export default async function ModelSettingsPage() {
   if (!user) redirect(`/${locale}/login`);
 
   return (
-    <div className="space-y-6 max-w-2xl">
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">
-          {t("title")}
-        </h1>
+    <PageContainer>
+      <PageHeader title={t("title")} description={t("description")} />
+      <div className="max-w-2xl">
+        <SettingsForm
+          user={{ name: user.name ?? "", email: user.email, locale: user.locale, image: user.image }}
+          locale={locale}
+        />
       </div>
-      <SettingsForm
-        user={{ name: user.name ?? "", email: user.email, locale: user.locale, image: user.image }}
-        locale={locale}
-      />
-    </div>
+    </PageContainer>
   );
 }

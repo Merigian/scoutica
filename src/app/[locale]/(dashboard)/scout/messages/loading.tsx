@@ -1,6 +1,6 @@
 export default function MessagesLoading() {
   return (
-    <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+    <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
       <div className="hairline-b pb-8 mb-8 space-y-3">
         <div className="h-3 w-24 animate-shimmer rounded" />
         <div className="h-10 w-56 animate-shimmer rounded" />

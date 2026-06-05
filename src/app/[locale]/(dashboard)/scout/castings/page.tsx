@@ -41,7 +41,7 @@ export default async function ScoutCastingsPage() {
   };
 
   return (
-    <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8 py-8 lg:py-12 animate-fade-in">
+    <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-8 lg:py-12 animate-fade-in">
       {/* Header */}
       <header className="hairline-b pb-8 lg:pb-10 mb-10 lg:mb-14 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
         <div className="space-y-3">

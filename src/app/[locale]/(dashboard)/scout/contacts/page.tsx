@@ -38,7 +38,7 @@ export default async function ScoutContactsPage() {
   });
 
   return (
-    <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8 py-8 lg:py-12 animate-fade-in">
+    <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-8 lg:py-12 animate-fade-in">
       <header className="hairline-b pb-8 lg:pb-10 mb-10 lg:mb-14 space-y-3">
         <p className="text-eyebrow">Contatti</p>
         <h1 className="font-[var(--font-display)] font-light text-[clamp(2rem,3.4vw,3rem)] leading-[1.05] tracking-[-0.015em] text-[var(--ink)]">

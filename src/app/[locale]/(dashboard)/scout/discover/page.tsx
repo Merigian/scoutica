@@ -11,6 +11,7 @@ import { ModelCard } from "@/components/discover/model-card";
 import { Pagination } from "@/components/discover/pagination";
 import { DiscoverGrid, GridDensitySelector } from "@/components/discover/grid-density-selector";
 import { EmptyState } from "@/components/shared/empty-state";
+import { PageHeader } from "@/components/layout/page-header";
 import { Search } from "lucide-react";
 import type { PlanTier, ContactRequestStatus } from "@prisma/client";
 
@@ -117,15 +118,7 @@ export default async function DiscoverPage({
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">
-          {t("title")}
-        </h1>
-        <p className="text-[var(--ink-3)] text-sm mt-1">
-          {t("description")}
-        </p>
-      </div>
+      <PageHeader title={t("title")} description={t("description")} className="mb-0" />
 
       {/* Filters */}
       <Suspense fallback={<div className="h-32 animate-pulse bg-[var(--bg-soft)] " />}>

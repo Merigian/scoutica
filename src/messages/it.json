@@ -1020,7 +1020,8 @@
       "notifications": {
         "noNotifications": "Nessuna notifica",
         "noNotificationsDesc": "Le tue notifiche appariranno qui.",
-        "title": "Notifiche"
+        "title": "Notifiche",
+        "description": "Aggiornamenti sulla tua attività su Scoutica."
       },
       "discover": {
         "title": "Scopri i Modelli",
@@ -1092,7 +1093,8 @@
         "description": "Completa il tuo profilo per farti scoprire dagli scout."
       },
       "settings": {
-        "title": "Impostazioni"
+        "title": "Impostazioni",
+        "description": "Gestisci il tuo account e le preferenze."
       },
       "lavori": {
         "title": "Lavori Disponibili",
