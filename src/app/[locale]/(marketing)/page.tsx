@@ -51,54 +51,56 @@ export default async function LandingPage() {
   return (
     <>
       {/* ───────── HERO — editorial cover, asymmetric split ───────── */}
-      <section className="relative flex flex-col lg:grid lg:grid-cols-12 min-h-[88vh] lg:min-h-screen bg-[var(--bg)]">
-        {/* Type column */}
-        <div className="order-2 lg:order-1 lg:col-span-5 relative z-10 flex flex-col px-6 sm:px-10 lg:px-14 xl:px-20 pt-12 lg:pt-32 pb-14 lg:pb-16">
-          <div className="hidden lg:flex items-center justify-end hairline-b pb-6">
-            <p className="text-meta text-[var(--ink-3)]">{issueDate}</p>
-          </div>
+      <section className="relative bg-[var(--bg)]">
+        <div className="mx-auto max-w-[1440px] flex flex-col lg:grid lg:grid-cols-12 min-h-[88vh] lg:min-h-screen">
+          {/* Type column */}
+          <div className="order-2 lg:order-1 lg:col-span-5 relative z-10 flex flex-col px-6 sm:px-10 lg:px-14 xl:px-20 pt-12 lg:pt-32 pb-14 lg:pb-16">
+            <div className="hidden lg:flex items-center justify-end hairline-b pb-6">
+              <p className="text-meta text-[var(--ink-3)]">{issueDate}</p>
+            </div>
 
-          <div className="mt-auto pt-10 lg:pt-24">
-            <h1 className="font-[var(--font-display)] font-light text-[clamp(2.25rem,4.8vw,4.5rem)] leading-[1.02] tracking-[-0.02em] text-[var(--ink)] max-w-[16ch]">
-              {t("hero.title")}
-            </h1>
-            <p className="mt-7 lg:mt-9 text-lead max-w-[38ch]">
-              {t("hero.subtitle")}
-            </p>
-            <div className="mt-9 lg:mt-11 flex flex-col sm:flex-row gap-3">
-              <Button variant="default" size="lg" asChild>
-                <Link href="/register/model" className="group">
-                  {t("hero.ctaModel")}
-                  <ArrowUpRight className="h-4 w-4 group-arrow" />
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg" asChild>
-                <Link href="/register/scout">{t("hero.ctaScout")}</Link>
-              </Button>
+            <div className="mt-auto pt-10 lg:pt-24">
+              <h1 className="font-[var(--font-display)] font-light text-[clamp(2.25rem,4.8vw,4.5rem)] leading-[1.02] tracking-[-0.02em] text-[var(--ink)] max-w-[16ch]">
+                {t("hero.title")}
+              </h1>
+              <p className="mt-7 lg:mt-9 text-lead max-w-[38ch]">
+                {t("hero.subtitle")}
+              </p>
+              <div className="mt-9 lg:mt-11 flex flex-col sm:flex-row gap-3">
+                <Button variant="default" size="lg" asChild>
+                  <Link href="/register/model" className="group">
+                    {t("hero.ctaModel")}
+                    <ArrowUpRight className="h-4 w-4 group-arrow" />
+                  </Link>
+                </Button>
+                <Button variant="outline" size="lg" asChild>
+                  <Link href="/register/scout">{t("hero.ctaScout")}</Link>
+                </Button>
+              </div>
+            </div>
+
+            <div className="mt-12 lg:mt-16 pt-6 hairline-t flex items-baseline justify-between gap-6">
+              <p className="text-eyebrow">{t("cover.manifestoBottom")}</p>
+              <p className="text-meta text-[var(--ink-3)]">Milano · Roma · Firenze</p>
             </div>
           </div>
 
-          <div className="mt-12 lg:mt-16 pt-6 hairline-t flex items-baseline justify-between gap-6">
-            <p className="text-eyebrow">{t("cover.manifestoBottom")}</p>
-            <p className="text-meta text-[var(--ink-3)]">Milano · Roma · Firenze</p>
-          </div>
-        </div>
-
-        {/* Photo column */}
-        <div className="order-1 lg:order-2 lg:col-span-7 relative min-h-[60vh] lg:min-h-screen overflow-hidden bg-[var(--ink)]">
-          <Image
-            src={heroSrc}
-            alt=""
-            fill
-            priority
-            quality={92}
-            sizes="(min-width: 1024px) 58vw, 100vw"
-            className="object-cover object-[62%_28%]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-bl from-transparent via-transparent to-[var(--ink)]/35" />
-          <div className="absolute right-6 lg:right-12 bottom-6 lg:bottom-10 text-right">
-            <p className="text-meta text-white/85">N° 01 · {issueDate}</p>
-            <p className="text-eyebrow text-white/90 mt-2">{t("cover.manifestoTop")}</p>
+          {/* Photo column */}
+          <div className="order-1 lg:order-2 lg:col-span-7 relative min-h-[60vh] lg:min-h-screen overflow-hidden bg-[var(--ink)]">
+            <Image
+              src={heroSrc}
+              alt=""
+              fill
+              priority
+              quality={92}
+              sizes="(min-width: 1024px) 58vw, 100vw"
+              className="object-cover object-[62%_28%]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-bl from-transparent via-transparent to-[var(--ink)]/35" />
+            <div className="absolute right-6 lg:right-12 bottom-6 lg:bottom-10 text-right">
+              <p className="text-meta text-white/85">N° 01 · {issueDate}</p>
+              <p className="text-eyebrow text-white/90 mt-2">{t("cover.manifestoTop")}</p>
+            </div>
           </div>
         </div>
       </section>

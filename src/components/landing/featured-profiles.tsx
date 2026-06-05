@@ -41,7 +41,7 @@ export async function FeaturedProfiles() {
         </div>
       </div>
 
-      <div className="relative overflow-hidden">
+      <div className="relative mx-auto max-w-[1440px] overflow-hidden">
         <FeaturedMarquee>
           {cast.map((p) => (
             <div
