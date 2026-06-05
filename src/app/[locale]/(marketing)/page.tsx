@@ -5,7 +5,6 @@ import { getTranslations, getLocale } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { FeaturedProfiles } from "@/components/landing/featured-profiles";
-import { HeroToneSetter } from "@/components/landing/hero-tone-setter";
 import { db } from "@/lib/db";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
 
@@ -51,8 +50,6 @@ export default async function LandingPage() {
 
   return (
     <>
-      <HeroToneSetter tone="dark" />
-
       {/* ───────── HERO — editorial cover, asymmetric split ───────── */}
       <section className="relative flex flex-col lg:grid lg:grid-cols-12 min-h-[88vh] lg:min-h-screen bg-[var(--bg)]">
         {/* Type column */}
