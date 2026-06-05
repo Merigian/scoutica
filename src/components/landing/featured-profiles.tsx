@@ -8,7 +8,7 @@ import { ModelCard } from "@/components/discover/model-card";
 
 export async function FeaturedProfiles() {
   const [profiles, locale, t] = await Promise.all([
-    getFeaturedProfiles(),
+    getFeaturedProfiles().catch(() => []),
     getLocale(),
     getTranslations("landing.featured"),
   ]);

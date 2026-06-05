@@ -5,6 +5,7 @@ import { getTranslations, getLocale } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { FeaturedProfiles } from "@/components/landing/featured-profiles";
+import { HeroToneSetter } from "@/components/landing/hero-tone-setter";
 import { db } from "@/lib/db";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
 
@@ -39,7 +40,7 @@ export default async function LandingPage() {
   const [modelCount, scoutCount] = await Promise.all([
     db.modelProfile.count({ where: { isPublished: true } }),
     db.scoutProfile.count({ where: { verificationStatus: "APPROVED" } }),
-  ]);
+  ]).catch(() => [0, 0] as const);
 
   const issueDate = new Date()
     .toLocaleDateString(locale === "en" ? "en-US" : "it-IT", {
@@ -50,56 +51,69 @@ export default async function LandingPage() {
 
   return (
     <>
-      {/* ───────── HERO — editorial cover, asymmetric split ───────── */}
-      <section className="relative bg-[var(--bg)]">
-        <div className="mx-auto max-w-[1440px] flex flex-col lg:grid lg:grid-cols-12 min-h-[88vh] lg:min-h-screen">
-          {/* Type column */}
-          <div className="order-2 lg:order-1 lg:col-span-5 relative z-10 flex flex-col px-6 sm:px-10 lg:px-14 xl:px-20 pt-12 lg:pt-32 pb-14 lg:pb-16">
-            <div className="hidden lg:flex items-center justify-end hairline-b pb-6">
-              <p className="text-meta text-[var(--ink-3)]">{issueDate}</p>
-            </div>
+      <HeroToneSetter tone="dark" />
 
-            <div className="mt-auto pt-10 lg:pt-24">
-              <h1 className="font-[var(--font-display)] font-light text-[clamp(2.25rem,4.8vw,4.5rem)] leading-[1.02] tracking-[-0.02em] text-[var(--ink)] max-w-[16ch]">
-                {t("hero.title")}
-              </h1>
-              <p className="mt-7 lg:mt-9 text-lead max-w-[38ch]">
-                {t("hero.subtitle")}
-              </p>
-              <div className="mt-9 lg:mt-11 flex flex-col sm:flex-row gap-3">
-                <Button variant="default" size="lg" asChild>
-                  <Link href="/register/model" className="group">
-                    {t("hero.ctaModel")}
-                    <ArrowUpRight className="h-4 w-4 group-arrow" />
-                  </Link>
-                </Button>
-                <Button variant="outline" size="lg" asChild>
-                  <Link href="/register/scout">{t("hero.ctaScout")}</Link>
-                </Button>
-              </div>
-            </div>
+      {/* ───────── HERO — immersive editorial cover, full-bleed ───────── */}
+      <section className="relative w-full min-h-[92vh] lg:min-h-screen overflow-hidden bg-[#15120E]">
+        {/* Full-bleed cover photo */}
+        <Image
+          src={heroSrc}
+          alt=""
+          fill
+          priority
+          quality={92}
+          sizes="100vw"
+          className="object-cover object-[68%_22%] lg:object-[62%_28%]"
+        />
 
-            <div className="mt-12 lg:mt-16 pt-6 hairline-t flex items-baseline justify-between gap-6">
-              <p className="text-eyebrow">{t("cover.manifestoBottom")}</p>
-              <p className="text-meta text-[var(--ink-3)]">Milano · Roma · Firenze</p>
-            </div>
+        {/* Scrims — fixed dark in both themes (the cover reads like a magazine
+            front, not theme-flipped). Top for nav, bottom + left for content. */}
+        <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-[#15120E]/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#15120E]/90 via-[#15120E]/35 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#15120E]/55 via-[#15120E]/10 to-transparent" />
+
+        {/* Content rail — aligned to the 1440px grid */}
+        <div className="relative z-10 mx-auto flex min-h-[92vh] lg:min-h-screen max-w-[1440px] flex-col px-6 sm:px-10 lg:px-12">
+          {/* Masthead row under the nav */}
+          <div className="flex items-center justify-between pt-24 lg:pt-28 text-meta !text-white/70">
+            <span>N° 01</span>
+            <span>{issueDate}</span>
           </div>
 
-          {/* Photo column */}
-          <div className="order-1 lg:order-2 lg:col-span-7 relative min-h-[60vh] lg:min-h-screen overflow-hidden bg-[var(--ink)]">
-            <Image
-              src={heroSrc}
-              alt=""
-              fill
-              priority
-              quality={92}
-              sizes="(min-width: 1024px) 58vw, 100vw"
-              className="object-cover object-[62%_28%]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-bl from-transparent via-transparent to-[var(--ink)]/35" />
-            <div className="absolute right-6 lg:right-12 bottom-6 lg:bottom-10 text-right">
-              <p className="text-meta text-white/85">N° 01 · {issueDate}</p>
-              <p className="text-eyebrow text-white/90 mt-2">{t("cover.manifestoTop")}</p>
+          {/* Cover statement — anchored bottom-left */}
+          <div className="mt-auto pb-14 lg:pb-20 max-w-[44rem]">
+            <p className="text-eyebrow !text-white/80 mb-6">{t("cover.manifestoTop")}</p>
+            <h1 className="font-[var(--font-display)] font-light text-[clamp(2.5rem,5.4vw,5rem)] leading-[1.02] tracking-[-0.02em] text-white max-w-[18ch]">
+              {t("hero.title")}
+            </h1>
+            <p className="mt-7 text-[clamp(1rem,1.3vw,1.25rem)] leading-relaxed text-white/80 max-w-[42ch]">
+              {t("hero.subtitle")}
+            </p>
+            <div className="mt-9 lg:mt-11 flex flex-col sm:flex-row gap-3">
+              <Button
+                size="lg"
+                asChild
+                className="!bg-[#FBF7EF] !text-[#1A1814] hover:!bg-white !border-0"
+              >
+                <Link href="/register/model" className="group whitespace-nowrap">
+                  {t("hero.ctaModel")}
+                  <ArrowUpRight className="h-4 w-4 group-arrow" />
+                </Link>
+              </Button>
+              <Button
+                size="lg"
+                asChild
+                className="bg-transparent !border-white/70 !text-white hover:!bg-white hover:!text-[var(--ink)]"
+              >
+                <Link href="/register/scout" className="whitespace-nowrap">
+                  {t("hero.ctaScout")}
+                </Link>
+              </Button>
+            </div>
+
+            <div className="mt-12 lg:mt-14 pt-6 border-t border-white/15 flex items-baseline justify-between gap-6 max-w-[42rem]">
+              <p className="text-eyebrow !text-white/70">{t("cover.manifestoBottom")}</p>
+              <p className="text-meta !text-white/60">Milano · Roma · Firenze</p>
             </div>
           </div>
         </div>

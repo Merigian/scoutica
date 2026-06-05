@@ -276,7 +276,8 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--ink);
 }
 [data-hero-tone="dark"] .nav-shell:not([data-scrolled="true"]) {
-  color: var(--bg-elevated);
+  /* Nav sits over the dark, scrimmed cover photo in BOTH themes → keep it light. */
+  color: #FBF7EF;
 }
 
 /* Photo carousel tap-zones — visible-low on touch, hover-only on desktop */
