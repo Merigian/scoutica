@@ -5,6 +5,7 @@ import { Link } from "@/i18n/routing";
 import { ArrowUpRight } from "lucide-react";
 import { FeaturedMarquee } from "@/components/landing/featured-marquee";
 import { ModelCard } from "@/components/discover/model-card";
+import { SectionIndex } from "@/components/landing/section-index";
 
 export async function FeaturedProfiles() {
   const [profiles, locale, t] = await Promise.all([
@@ -16,17 +17,13 @@ export async function FeaturedProfiles() {
   if (profiles.length === 0) return null;
 
   const cast = profiles.slice(0, 12);
-  const stamp = new Date().toLocaleDateString(locale === "en" ? "en-US" : "it-IT", {
-    month: "long",
-    year: "numeric",
-  });
 
   return (
     <section className="hairline-t bg-[var(--bg-soft)] py-24 lg:py-32 overflow-hidden">
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
         <div className="mb-14 grid lg:grid-cols-12 gap-12 items-end">
           <div className="lg:col-span-7">
-            <p className="text-eyebrow mb-6">01 — Cast</p>
+            <SectionIndex n="01" className="mb-6">{t("eyebrow")}</SectionIndex>
             <h2 className="text-h1">{t("title")}</h2>
             <p className="mt-6 text-lead max-w-xl">{t("subtitle")}</p>
           </div>
@@ -60,7 +57,7 @@ export async function FeaturedProfiles() {
 
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
         <div className="mt-14 hairline-t pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-eyebrow">
-          <span>{cast.length} {t("selectedLabel")} · {stamp}</span>
+          <span>{cast.length} {t("selectedLabel")}</span>
           <Link href="/register" className="link-underline">
             {t("viewAll")}
           </Link>

@@ -6,8 +6,11 @@ import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { FeaturedProfiles } from "@/components/landing/featured-profiles";
 import { HeroToneSetter } from "@/components/landing/hero-tone-setter";
+import { Reveal } from "@/components/landing/reveal";
+import { SectionIndex } from "@/components/landing/section-index";
+import { cn } from "@/lib/utils";
 import { db } from "@/lib/db";
-import { ArrowUpRight, ArrowRight } from "lucide-react";
+import { ArrowUpRight, ArrowRight, ArrowDown } from "lucide-react";
 
 const LOCAL_HERO = "/images/hero-cover.webp";
 const HERO_FALLBACK =
@@ -42,12 +45,20 @@ export default async function LandingPage() {
     db.scoutProfile.count({ where: { verificationStatus: "APPROVED" } }),
   ]).catch(() => [0, 0] as const);
 
-  const issueDate = new Date()
-    .toLocaleDateString(locale === "en" ? "en-US" : "it-IT", {
-      month: "long",
-      year: "numeric",
-    })
-    .toUpperCase();
+  // Hero headline → split the two sentences so the second renders as an
+  // italic editorial sub-statement (works for both it/en: "Sentence. Sentence.").
+  const heroSentences = t("hero.title").split(/(?<=\.)\s+/);
+  const heroLead = heroSentences[0];
+  const heroEmph = heroSentences.slice(1).join(" ");
+
+  const nf = new Intl.NumberFormat(locale === "en" ? "en-US" : "it-IT");
+
+  const stats = [
+    { label: t("statsStrip.modelsPublished"), value: nf.format(modelCount) },
+    { label: t("statsStrip.scoutsVerified"), value: nf.format(scoutCount) },
+    { label: t("statsStrip.regionsCovered"), value: "20" },
+    { label: t("statsStrip.studiosPartner"), value: "50" },
+  ];
 
   return (
     <>
@@ -74,19 +85,28 @@ export default async function LandingPage() {
 
         {/* Content rail — aligned to the 1440px grid */}
         <div className="relative z-10 mx-auto flex min-h-[92vh] lg:min-h-screen max-w-[1440px] flex-col px-6 sm:px-10 lg:px-12">
-          {/* Masthead row under the nav */}
-          <div className="flex items-center justify-between pt-24 lg:pt-28 text-meta !text-white/70">
-            <span>N° 01</span>
-            <span>{issueDate}</span>
+          {/* Brand slug under the nav */}
+          <div className="flex items-baseline justify-between gap-4 pt-24 lg:pt-28 pb-5 text-meta !text-white/70">
+            <span className="uppercase tracking-[0.18em] text-[11px] !text-white/55">
+              {t("cover.masthead")}
+            </span>
+            <span className="!text-white/60">Milano · Roma · Firenze</span>
           </div>
 
           {/* Cover statement — anchored bottom-left */}
-          <div className="mt-auto pb-14 lg:pb-20 max-w-[44rem]">
-            <p className="text-eyebrow !text-white/80 mb-6">{t("cover.manifestoTop")}</p>
-            <h1 className="font-[var(--font-display)] font-light text-[clamp(2.5rem,5.4vw,5rem)] leading-[1.02] tracking-[-0.02em] text-white max-w-[18ch]">
-              {t("hero.title")}
+          <div className="mt-auto pb-16 lg:pb-24 max-w-[46rem]">
+            <p className="text-eyebrow !text-white/80 mb-7">{t("cover.manifestoTop")}</p>
+            <h1 className="font-display font-light text-white tracking-[-0.025em]">
+              <span className="block text-[clamp(2.6rem,5.6vw,5.25rem)] leading-[0.98]">
+                {heroLead}
+              </span>
+              {heroEmph && (
+                <span className="mt-2 lg:mt-3 block italic font-[300] text-white/80 text-[clamp(1.6rem,3.4vw,3.1rem)] leading-[1.05] tracking-[-0.02em]">
+                  {heroEmph}
+                </span>
+              )}
             </h1>
-            <p className="mt-7 text-[clamp(1rem,1.3vw,1.25rem)] leading-relaxed text-white/80 max-w-[42ch]">
+            <p className="mt-8 text-[clamp(1rem,1.3vw,1.25rem)] leading-relaxed text-white/80 max-w-[44ch]">
               {t("hero.subtitle")}
             </p>
             <div className="mt-9 lg:mt-11 flex flex-col sm:flex-row gap-3">
@@ -111,29 +131,42 @@ export default async function LandingPage() {
               </Button>
             </div>
 
-            <div className="mt-12 lg:mt-14 pt-6 border-t border-white/15 flex items-baseline justify-between gap-6 max-w-[42rem]">
+            <div className="mt-12 lg:mt-14 pt-6 border-t border-white/15 max-w-[42rem]">
               <p className="text-eyebrow !text-white/70">{t("cover.manifestoBottom")}</p>
-              <p className="text-meta !text-white/60">Milano · Roma · Firenze</p>
             </div>
           </div>
         </div>
+
+        {/* Scroll cue */}
+        <a
+          href="#cast"
+          aria-label={t("cover.scroll")}
+          className="group absolute bottom-7 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 lg:flex"
+        >
+          <span className="text-meta !text-white/60 group-hover:!text-white/90 transition-colors">
+            {t("cover.scroll")}
+          </span>
+          <ArrowDown className="h-4 w-4 text-white/60 animate-bounce group-hover:text-white" />
+        </a>
       </section>
 
       {/* ───────── FEATURED — marquee of real models ───────── */}
-      <FeaturedProfiles />
+      <div id="cast" className="scroll-mt-24">
+        <FeaturedProfiles />
+      </div>
 
       {/* ───────── TRE VIE — 3 paths with editorial photos ───────── */}
-      <section className="hairline-t bg-[var(--bg)] py-24 lg:py-32">
+      <section id="vie" className="scroll-mt-24 hairline-t bg-[var(--bg)] py-24 lg:py-32">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
-          <div className="mb-14 lg:mb-20 grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
+          <Reveal className="mb-14 lg:mb-20 grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
             <div className="lg:col-span-7">
-              <p className="text-eyebrow mb-6">02 — Vie</p>
-              <h2 className="text-h1 max-w-[20ch]">{t("features.title")}</h2>
+              <SectionIndex n="02" className="mb-6">{t("sections.paths")}</SectionIndex>
+              <h2 className="text-display max-w-[16ch]">{t("features.title")}</h2>
             </div>
             <p className="lg:col-span-4 lg:col-start-9 text-lead">
-              {t("howItWorks.subtitle")}
+              {t("features.subtitle")}
             </p>
-          </div>
+          </Reveal>
 
           <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
             {(
@@ -172,7 +205,7 @@ export default async function LandingPage() {
                     alt=""
                     fill
                     sizes="(min-width: 768px) 33vw, 100vw"
-                    className="object-cover transition-[filter] duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:brightness-[0.94]"
+                    className="object-cover grayscale transition-[filter] duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:grayscale-0 group-hover:brightness-[0.97]"
                   />
                 </div>
                 <div className="p-8 lg:p-10 flex flex-col gap-4 grow">
@@ -198,55 +231,60 @@ export default async function LandingPage() {
       <BandiSection t={t} />
 
       {/* ───────── MANIFESTO + NUMERI ───────── */}
-      <section className="hairline-t bg-[var(--bg-soft)] py-24 lg:py-32">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 grid lg:grid-cols-12 gap-12 lg:gap-20">
-          <div className="lg:col-span-7">
-            <p className="text-eyebrow mb-6">04 — Manifesto</p>
-            <h2 className="text-h1 mb-10 max-w-[22ch]">{t("cta.title")}</h2>
-            <div className="space-y-6 max-w-2xl">
-              <p className="text-lead">{t("hero.subtitle")}</p>
-              <p className="text-lead">{t("pricingTeaser.lead")}</p>
+      <section
+        id="manifesto"
+        className="scroll-mt-24 hairline-t bg-[var(--bg-soft)] py-24 lg:py-32"
+      >
+        <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
+          <Reveal className="grid lg:grid-cols-12 gap-10 lg:gap-20 items-end">
+            <div className="lg:col-span-7">
+              <SectionIndex n="04" className="mb-6">{t("sections.manifesto")}</SectionIndex>
+              <h2 className="font-display font-light text-[clamp(2.25rem,5vw,4.5rem)] leading-[1.02] tracking-[-0.025em] text-[var(--ink)] max-w-[18ch]">
+                {t("cta.title")}
+              </h2>
             </div>
-          </div>
-          <div className="lg:col-span-4 lg:col-start-9 flex flex-col">
-            {(
-              [
-                { label: t("statsStrip.modelsPublished"), value: modelCount },
-                { label: t("statsStrip.scoutsVerified"), value: scoutCount },
-                { label: t("statsStrip.regionsCovered"), value: 20 },
-                { label: t("statsStrip.studiosPartner"), value: 50 },
-              ] as const
-            ).map((s, i) => (
-              <div
+            <p className="lg:col-span-5 lg:col-start-8 text-lead max-w-[42ch]">
+              {t("pricingTeaser.lead")}
+            </p>
+          </Reveal>
+
+          {/* Numbers — the review in figures */}
+          <Reveal
+            as="ol"
+            className="mt-16 lg:mt-24 grid grid-cols-2 lg:grid-cols-4 border-t border-l border-[var(--rule)]"
+          >
+            {stats.map((s) => (
+              <li
                 key={s.label}
-                className={`flex items-baseline justify-between gap-6 py-5 ${
-                  i > 0 ? "hairline-t" : ""
-                }`}
+                className="border-r border-b border-[var(--rule)] px-6 lg:px-8 py-10 lg:py-14"
               >
-                <p className="text-body text-[var(--ink-2)]">{s.label}</p>
-                <p className="font-[var(--font-display)] tabular-nums text-4xl lg:text-5xl font-light text-[var(--ink)] leading-none">
+                <p className="font-display font-light tabular-nums text-[clamp(2.75rem,5.5vw,4.75rem)] leading-[0.92] text-[var(--ink)]">
                   {s.value}
                 </p>
-              </div>
+                <p className="mt-4 text-meta max-w-[16ch]">{s.label}</p>
+              </li>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ───────── METODO — 3 steps ───────── */}
-      <section className="hairline-t bg-[var(--bg)] py-24 lg:py-32">
+      <section
+        id="metodo"
+        className="scroll-mt-24 hairline-t bg-[var(--bg)] py-24 lg:py-32"
+      >
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
-          <div className="mb-14 lg:mb-20 grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
+          <Reveal className="mb-14 lg:mb-20 grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
             <div className="lg:col-span-5">
-              <p className="text-eyebrow mb-6">05 — Metodo</p>
-              <h2 className="text-h1">{t("howItWorks.title")}</h2>
+              <SectionIndex n="05" className="mb-6">{t("sections.method")}</SectionIndex>
+              <h2 className="text-display">{t("howItWorks.title")}</h2>
             </div>
             <p className="lg:col-span-6 lg:col-start-7 text-lead self-end">
               {t("howItWorks.subtitle")}
             </p>
-          </div>
+          </Reveal>
 
-          <ol className="grid md:grid-cols-3 hairline-t">
+          <Reveal as="ol" className="grid md:grid-cols-3 hairline-t">
             {(["step1", "step2", "step3"] as const).map((k, i) => (
               <li
                 key={k}
@@ -254,8 +292,8 @@ export default async function LandingPage() {
                   i > 0 ? "md:hairline-l" : ""
                 }`}
               >
-                <p className="text-eyebrow mb-8">
-                  {String(i + 1).padStart(2, "0")} / 03
+                <p className="font-display font-light tabular-nums text-[clamp(2rem,3vw,2.75rem)] leading-none text-[var(--ink-3)] mb-6">
+                  0{i + 1}
                 </p>
                 <h3 className="text-h2 mb-5 text-[var(--ink)]">
                   {t(`howItWorks.${k}.title`)}
@@ -265,7 +303,7 @@ export default async function LandingPage() {
                 </p>
               </li>
             ))}
-          </ol>
+          </Reveal>
         </div>
       </section>
 
@@ -273,11 +311,10 @@ export default async function LandingPage() {
       <section className="bg-[var(--ink)] text-[var(--bg)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-24 lg:py-32 grid lg:grid-cols-12 gap-12 lg:gap-16 items-end">
           <div className="lg:col-span-7">
-            <p className="text-eyebrow mb-6 !text-[var(--bg)]/65">06 — Coda</p>
-            <h2 className="font-[var(--font-display)] font-light text-[clamp(2.25rem,5vw,4.5rem)] leading-[1.05] tracking-[-0.02em] text-[var(--bg)] max-w-[22ch]">
-              {t("cta.title")}
+            <h2 className="font-display font-light text-[clamp(2.25rem,5vw,4.5rem)] leading-[1.05] tracking-[-0.02em] text-[var(--bg)] max-w-[22ch]">
+              {t("socialProof.title")}
             </h2>
-            <p className="mt-8 max-w-2xl font-[var(--font-display)] text-[clamp(1.125rem,1.4vw,1.375rem)] leading-[1.45] text-[var(--bg)]/75">
+            <p className="mt-8 max-w-2xl font-display text-[clamp(1.125rem,1.4vw,1.375rem)] leading-[1.45] text-[var(--bg)]/75">
               {t("cta.subtitle")}
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-3 items-start sm:items-center">
@@ -301,7 +338,7 @@ export default async function LandingPage() {
             <p className="text-meta !text-[var(--bg)]/65">
               {t("pricingTeaser.startingFrom")}
             </p>
-            <p className="mt-3 font-[var(--font-display)] tabular-nums text-6xl lg:text-7xl font-light text-[var(--bg)] leading-none">
+            <p className="mt-3 font-display tabular-nums text-6xl lg:text-7xl font-light text-[var(--bg)] leading-none">
               €0
             </p>
             <p className="mt-3 text-body !text-[var(--bg)]/70">
@@ -316,7 +353,7 @@ export default async function LandingPage() {
         <div className="hairline-t border-[var(--bg)]/20">
           <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-8 lg:py-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <p className="text-meta !text-[var(--bg)]/60">
-              {t("cover.masthead")} — {issueDate}
+              {t("cover.masthead")}
             </p>
             <p className="text-eyebrow !text-[var(--bg)]/55 italic">
               {t("cover.manifestoBottom")}
@@ -351,17 +388,20 @@ function BandiSection({
   const items = (t.raw("bandi.items") as Bando[]).slice(0, 3);
 
   return (
-    <section className="hairline-t bg-[var(--bg-soft)]/40 py-24 lg:py-32">
+    <section
+      id="bandi"
+      className="scroll-mt-24 hairline-t bg-[var(--bg-soft)]/40 py-24 lg:py-32"
+    >
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
-        <div className="mb-14 lg:mb-20 grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
+        <Reveal className="mb-14 lg:mb-20 grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
           <div className="lg:col-span-7">
-            <p className="text-eyebrow mb-6">{t("bandi.eyebrow")}</p>
-            <h2 className="text-h1 max-w-[22ch]">{t("bandi.title")}</h2>
+            <SectionIndex n="03" className="mb-6">{t("bandi.eyebrow")}</SectionIndex>
+            <h2 className="text-display max-w-[16ch]">{t("bandi.title")}</h2>
           </div>
           <p className="lg:col-span-4 lg:col-start-9 text-lead">
             {t("bandi.subtitle")}
           </p>
-        </div>
+        </Reveal>
 
         <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
           {items.map((b, i) => {
@@ -419,7 +459,7 @@ function BandiSection({
                   <span className="text-eyebrow">
                     {t("bandi.compensoLabel")}
                   </span>
-                  <p className="mt-2 font-[var(--font-display)] text-[clamp(1.75rem,2.6vw,2.5rem)] leading-[1] tabular-nums text-[var(--ink)] whitespace-nowrap">
+                  <p className="mt-2 font-display text-[clamp(1.75rem,2.6vw,2.5rem)] leading-[1] tabular-nums text-[var(--ink)] whitespace-nowrap">
                     {b.fee}
                   </p>
                 </div>

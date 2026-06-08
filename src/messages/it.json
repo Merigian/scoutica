@@ -90,13 +90,15 @@
   },
   "landing": {
     "cover": {
-      "masthead": "Edizione I · Italia",
-      "manifestoTop": "Pubblicazione · 2026",
-      "manifestoBottom": "Una rivista di volti italiani",
-      "scroll": "Sfoglia"
+      "masthead": "Scoutica · Italia",
+      "manifestoTop": "Scouting professionale",
+      "manifestoBottom": "Nuovi volti per la moda italiana",
+      "scroll": "Scopri"
     },
     "sections": {
+      "paths": "Le tre vie",
       "manifesto": "Manifesto",
+      "method": "Metodo",
       "process": "Il processo",
       "platform": "La piattaforma",
       "pricing": "Tariffario",
@@ -117,15 +119,15 @@
       "cta": "Vedi i piani"
     },
     "hero": {
-      "title": "Volti italiani. Selezionati con cura, presentati con metodo.",
-      "subtitle": "Una rivista digitale che riunisce modelli, scout, agenzie e studi fotografici sotto un'unica firma editoriale.",
+      "title": "Nuovi volti per la moda italiana. Selezionati con cura, presentati con metodo.",
+      "subtitle": "La piattaforma che riunisce modelli, scout, agenzie e studi fotografici sotto un'unica firma editoriale.",
       "ctaModel": "Sono un modello",
       "ctaModelDesc": "Costruisci il tuo portfolio e fatti notare",
       "ctaScout": "Sono uno scout o un'agenzia",
       "ctaScoutDesc": "Trova modelle e lancia casting",
       "ctaStudio": "Affitta il tuo studio",
       "ctaStudioDesc": "Metti a disposizione il tuo spazio",
-      "browseStudios": "Sfoglia gli studi",
+      "browseStudios": "Esplora gli studi",
       "trustVerified": "Scout e agenzie accreditate",
       "trustSafe": "Pagamenti e contratti tutelati",
       "trustProfessional": "Solo professionisti del settore",
@@ -133,12 +135,13 @@
     },
     "features": {
       "title": "Tutta la filiera, sotto un'unica firma editoriale",
+      "subtitle": "Modelli, scout e studi: tre ingressi, lo stesso standard.",
       "forModel": "Per modelli",
       "forScout": "Per scout & agenzie",
       "forStudio": "Per studi fotografici",
       "profiles": {
         "title": "Portfolio editoriale",
-        "description": "Un profilo costruito come una rivista. Foto, self-tape e misure, sempre puntuali."
+        "description": "Un profilo costruito con cura editoriale. Foto, self-tape e misure, sempre puntuali."
       },
       "verified": {
         "title": "Verifica documentale",
@@ -154,11 +157,12 @@
       }
     },
     "featured": {
-      "title": "Cast del mese",
+      "eyebrow": "Cast",
+      "title": "Volti in evidenza",
       "subtitle": "Una selezione dei volti più cercati",
-      "cta": "Registrati per leggere il resto",
-      "selectedLabel": "volti in evidenza",
-      "viewAll": "Sfoglia tutti i volti registrati →"
+      "cta": "Registrati per vedere tutti i profili",
+      "selectedLabel": "volti selezionati",
+      "viewAll": "Vedi tutti i profili →"
     },
     "popular": {
       "label": "In luce",
@@ -196,7 +200,7 @@
       }
     },
     "bandi": {
-      "eyebrow": "03 — Anteprima",
+      "eyebrow": "Anteprima",
       "title": "Esempi di bandi",
       "subtitle": "Una selezione tipica di casting, campagne ed editoriali che gli scout pubblicano su Scoutica. Iscriviti per accedere ai bandi reali, aggiornati ogni giorno.",
       "viewAll": "Iscriviti per vedere tutti",
@@ -252,7 +256,7 @@
       ]
     },
     "socialProof": {
-      "title": "Una rivista in crescita",
+      "title": "Una rete in crescita",
       "models": "Modelli pubblicati",
       "scouts": "Scout accreditati",
       "regions": "Regioni italiane"

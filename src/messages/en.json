@@ -90,13 +90,15 @@
   },
   "landing": {
     "cover": {
-      "masthead": "Issue I · Italy",
-      "manifestoTop": "Publication · 2026",
-      "manifestoBottom": "An editorial register of Italian faces",
-      "scroll": "Read on"
+      "masthead": "Scoutica · Italy",
+      "manifestoTop": "Professional scouting",
+      "manifestoBottom": "New faces for Italian fashion",
+      "scroll": "Explore"
     },
     "sections": {
+      "paths": "Three paths",
       "manifesto": "Manifesto",
+      "method": "Method",
       "process": "The process",
       "platform": "The platform",
       "pricing": "Pricing",
@@ -117,8 +119,8 @@
       "cta": "See the plans"
     },
     "hero": {
-      "title": "Italian faces. Selected with care, presented with method.",
-      "subtitle": "A digital review bringing models, scouts, agencies and photo studios together under one editorial signature.",
+      "title": "New faces for Italian fashion. Selected with care, presented with method.",
+      "subtitle": "The platform bringing models, scouts, agencies and photo studios together under one editorial signature.",
       "ctaModel": "I am a model",
       "ctaModelDesc": "Build your portfolio and get noticed",
       "ctaScout": "I am a scout or agency",
@@ -133,12 +135,13 @@
     },
     "features": {
       "title": "The full fashion supply chain, under one editorial signature",
+      "subtitle": "Models, scouts and studios: three entrances, one standard.",
       "forModel": "For models",
       "forScout": "For scouts & agencies",
       "forStudio": "For studios",
       "profiles": {
         "title": "Editorial portfolio",
-        "description": "A profile composed like a magazine. Photographs, self-tapes and measurements, always current."
+        "description": "A profile composed with editorial care. Photographs, self-tapes and measurements, always current."
       },
       "verified": {
         "title": "Document verification",
@@ -154,11 +157,12 @@
       }
     },
     "featured": {
-      "title": "Cast of the month",
+      "eyebrow": "Cast",
+      "title": "Featured faces",
       "subtitle": "A selection of the most sought-after faces",
-      "cta": "Sign up to read the rest",
-      "selectedLabel": "featured faces",
-      "viewAll": "Browse all registered faces →"
+      "cta": "Sign up to see every profile",
+      "selectedLabel": "selected faces",
+      "viewAll": "See all profiles →"
     },
     "popular": {
       "label": "In the light",
@@ -196,7 +200,7 @@
       }
     },
     "bandi": {
-      "eyebrow": "03 — Preview",
+      "eyebrow": "Preview",
       "title": "Sample openings",
       "subtitle": "A typical selection of castings, campaigns and editorials scouts publish on Scoutica. Sign up to access the real listings, updated daily.",
       "viewAll": "Sign up to see them all",
@@ -252,7 +256,7 @@
       ]
     },
     "socialProof": {
-      "title": "A review in growth",
+      "title": "A growing network",
       "models": "Published model profiles",
       "scouts": "Accredited scouts and agencies",
       "regions": "Italian regions covered"
