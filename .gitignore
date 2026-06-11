@@ -56,3 +56,7 @@ Thumbs.db
 # Memory / session files
 /memories/
 .env*
+
+# Python artifacts (installed prompt tooling)
+__pycache__/
+*.pyc

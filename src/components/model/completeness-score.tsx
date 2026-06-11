@@ -9,7 +9,7 @@ import { Star, TrendingUp, CheckCircle } from "lucide-react";
 
 const levelConfig = {
   basic: { icon: Star, color: "text-[var(--ink-3)]", key: "basic" as const },
-  almost_complete: { icon: TrendingUp, color: "text-gold", key: "almostComplete" as const },
+  almost_complete: { icon: TrendingUp, color: "text-[var(--ink)]", key: "almostComplete" as const },
   ready: { icon: CheckCircle, color: "text-success", key: "ready" as const },
 };
 
@@ -27,7 +27,7 @@ export function CompletenessScore({ score }: { score: number }) {
           <div>
             <p className="font-medium">{t(config.key)}</p>
           </div>
-          <span className="ml-auto text-2xl font-[var(--font-display)] font-bold">{score}%</span>
+          <span className="ml-auto text-2xl font-display font-bold">{score}%</span>
         </div>
         <Progress value={score} showLabel={false} />
         {score < 71 && (

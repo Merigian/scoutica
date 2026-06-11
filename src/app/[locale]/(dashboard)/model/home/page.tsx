@@ -60,7 +60,7 @@ export default async function ModelHomePage() {
       {/* ─── Sommario (header) ─── */}
       <header className="hairline-b pb-8 lg:pb-10 mb-10 lg:mb-14 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
         <div className="space-y-3">
-          <p className="text-eyebrow">01 — {t("sommario")}</p>
+          <p className="text-eyebrow">{t("sommario")}</p>
           <h1 className="font-[var(--font-display)] font-light text-[clamp(2rem,3.4vw,3rem)] leading-[1.05] tracking-[-0.015em] text-[var(--ink)] max-w-[22ch]">
             {t("greeting", { name: firstName })}
           </h1>
@@ -111,7 +111,7 @@ export default async function ModelHomePage() {
       {/* ─── Numeri (stats grid) ─── */}
       <section className="mb-14 lg:mb-20">
         <div className="hairline-b pb-4 mb-8 flex items-baseline justify-between">
-          <p className="text-eyebrow">02 — {t("numeri")}</p>
+          <p className="text-eyebrow">{t("numeri")}</p>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 hairline-t hairline-l">
           <Metric
@@ -150,7 +150,7 @@ export default async function ModelHomePage() {
         <section className="lg:col-span-8">
           <div className="hairline-b pb-4 mb-6 flex items-baseline justify-between gap-4">
             <div>
-              <p className="text-eyebrow">03 — {t("avvisi")}</p>
+              <p className="text-eyebrow">{t("avvisi")}</p>
               <h2 className="mt-1 text-h2">{t("opportunities")}</h2>
               <p className="mt-1 text-body text-[var(--ink-3)]">
                 {t("opportunitiesDesc")}
@@ -175,7 +175,7 @@ export default async function ModelHomePage() {
             </div>
           ) : (
             <ul className="hairline-t">
-              {opportunities.map((opp, i) => (
+              {opportunities.map((opp) => (
                 <li key={`${opp.type}-${opp.id}`}>
                   <Link
                     href={
@@ -187,7 +187,6 @@ export default async function ModelHomePage() {
                   >
                     <div className="min-w-0 flex-1 space-y-2">
                       <p className="text-eyebrow">
-                        {String(i + 1).padStart(2, "0")} ·{" "}
                         {opp.type === "casting" ? t("casting") : t("job")}
                         {opp.isPaid && <span> · {t("paid")}</span>}
                       </p>
@@ -215,7 +214,7 @@ export default async function ModelHomePage() {
           {/* Movimenti (activity) */}
           <div>
             <div className="hairline-b pb-4 mb-6 flex items-baseline justify-between gap-4">
-              <p className="text-eyebrow">04 — {t("movimenti")}</p>
+              <p className="text-eyebrow">{t("movimenti")}</p>
               <Link
                 href="/model/notifications"
                 className="text-meta hover:text-[var(--ink)] transition-colors"
@@ -264,7 +263,7 @@ export default async function ModelHomePage() {
           {/* Azioni rapide */}
           <div>
             <p className="text-eyebrow hairline-b pb-4 mb-6">
-              05 — {t("quickActions")}
+              {t("quickActions")}
             </p>
             <ul className="hairline-t">
               <li>
@@ -298,7 +297,7 @@ export default async function ModelHomePage() {
           {profile.isPublished && (
             <div>
               <p className="text-eyebrow hairline-b pb-4 mb-6">
-                06 — {t("visibility")}
+                {t("visibility")}
               </p>
               <BoostCard activeBoosts={activeBoosts} locale={locale} />
             </div>
@@ -337,7 +336,7 @@ function Metric({
         <span className="text-eyebrow">{label}</span>
         {icon}
       </div>
-      <p className="mt-6 font-[var(--font-display)] font-light tabular-nums text-[clamp(2.25rem,3vw,3rem)] leading-none text-[var(--ink)]">
+      <p className="mt-6 font-display font-light tabular-nums text-[clamp(2.25rem,3vw,3rem)] leading-none text-[var(--ink)]">
         {value}
       </p>
       {trendCopy && (
@@ -385,7 +384,7 @@ function StrengthMetric({
         <span className="text-eyebrow">{label}</span>
         <span className="text-meta tabular-nums">{score}%</span>
       </div>
-      <p className="mt-6 font-[var(--font-display)] font-light text-[clamp(1.5rem,2.1vw,2rem)] leading-none text-[var(--ink)]">
+      <p className="mt-6 font-display font-light text-[clamp(1.5rem,2.1vw,2rem)] leading-none text-[var(--ink)]">
         {tier}
       </p>
       <div className="mt-auto pt-6">

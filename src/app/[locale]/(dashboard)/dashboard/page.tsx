@@ -14,7 +14,7 @@ export default async function DashboardPage() {
     case "SCOUT":
       redirect("/scout/home");
     case "STUDIO":
-      redirect("/studio/studios");
+      redirect("/studio/home");
     case "ADMIN":
       redirect("/admin");
     default:

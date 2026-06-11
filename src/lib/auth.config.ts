@@ -4,6 +4,9 @@ import type { NextAuthConfig } from "next-auth";
 // Used both by the full server-side NextAuth instance (`src/lib/auth.ts`)
 // AND by the edge middleware (`src/middleware.ts`).
 export default {
+  // Trust the deployment host (and localhost in dev). Required by AuthJS v5
+  // when AUTH_URL is not resolvable; silences the UntrustedHost error.
+  trustHost: true,
   session: { strategy: "jwt" },
   pages: {
     signIn: "/login",

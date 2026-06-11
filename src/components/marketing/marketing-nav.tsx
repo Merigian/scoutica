@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ScouticaWordmark } from "@/components/ui/wordmark";
 import { LogoMark } from "@/components/ui/logo-mark";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { cn } from "@/lib/utils";
 import { LayoutDashboard, Menu, X, ArrowUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -37,6 +38,7 @@ export function MarketingNav() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -58,9 +60,13 @@ export function MarketingNav() {
       data-scrolled={scrolled ? "true" : "false"}
     >
       <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-6 lg:px-12">
-        <Link href="/" aria-label="Scoutica" className="flex items-center gap-3">
-          <LogoMark size="lg" />
-          <ScouticaWordmark size="lg" />
+        <Link
+          href="/"
+          aria-label="Scoutica"
+          className={cn("flex items-center gap-3", isHome && "brand-intro")}
+        >
+          <LogoMark size="lg" className="brand-intro-mark" />
+          <ScouticaWordmark size="lg" className="brand-intro-word" />
         </Link>
 
         <nav className="hidden md:flex items-center gap-10">

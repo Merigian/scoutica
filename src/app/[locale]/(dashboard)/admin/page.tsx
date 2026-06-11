@@ -162,7 +162,7 @@ export default async function AdminDashboardPage() {
               <span className="text-eyebrow">MRR</span>
               <TrendingUp className="h-4 w-4" />
             </div>
-            <p className="mt-6 font-[var(--font-display)] font-light tabular-nums text-[clamp(2.25rem,3vw,3rem)] leading-none text-[var(--ink)]">
+            <p className="mt-6 font-display font-light tabular-nums text-[clamp(2.25rem,3vw,3rem)] leading-none text-[var(--ink)]">
               {currencyFmt.format(mrr)}
             </p>
             <p className="mt-2 text-xs text-[var(--ink-3)]">
@@ -174,7 +174,7 @@ export default async function AdminDashboardPage() {
               <span className="text-eyebrow">Paganti attivi</span>
               <DollarSign className="h-4 w-4" />
             </div>
-            <p className="mt-6 font-[var(--font-display)] font-light tabular-nums text-[clamp(2.25rem,3vw,3rem)] leading-none text-[var(--ink)]">
+            <p className="mt-6 font-display font-light tabular-nums text-[clamp(2.25rem,3vw,3rem)] leading-none text-[var(--ink)]">
               {activeSubscriptions}
             </p>
           </div>
@@ -183,7 +183,7 @@ export default async function AdminDashboardPage() {
               <span className="text-eyebrow">In trial</span>
               <Clock className="h-4 w-4" />
             </div>
-            <p className="mt-6 font-[var(--font-display)] font-light tabular-nums text-[clamp(2.25rem,3vw,3rem)] leading-none text-[var(--ink)]">
+            <p className="mt-6 font-display font-light tabular-nums text-[clamp(2.25rem,3vw,3rem)] leading-none text-[var(--ink)]">
               {trialingCount}
             </p>
             <p className="mt-2 text-xs text-[var(--ink-3)]">
@@ -202,7 +202,7 @@ export default async function AdminDashboardPage() {
                     {planLabels[plan] ?? plan}
                   </p>
                   <div className="mt-3 flex items-baseline gap-3">
-                    <span className="font-[var(--font-display)] text-2xl tabular-nums">
+                    <span className="font-display text-2xl tabular-nums">
                       {b.count}
                     </span>
                     <span className="text-xs text-[var(--ink-3)]">paganti</span>
@@ -237,7 +237,7 @@ export default async function AdminDashboardPage() {
                   }`}
                 />
               </div>
-              <p className="mt-6 font-[var(--font-display)] font-light tabular-nums text-[clamp(2.25rem,3vw,3rem)] leading-none text-[var(--ink)]">
+              <p className="mt-6 font-display font-light tabular-nums text-[clamp(2.25rem,3vw,3rem)] leading-none text-[var(--ink)]">
                 {stat.value}
               </p>
             </div>

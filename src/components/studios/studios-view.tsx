@@ -30,7 +30,7 @@ export function StudiosView({ studios, locale, totalLabel }: StudiosViewProps) {
             onClick={() => setView("grid")}
             className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium tracking-wide uppercase transition-colors rounded-sm ${
               view === "grid"
-                ? "bg-[var(--bg-soft)] text-[var(--ink)] shadow-sm"
+                ? "bg-[var(--bg-elevated)] text-[var(--ink)] shadow-sm"
                 : "text-[var(--ink-3)] hover:text-[var(--ink)]"
             }`}
           >
@@ -41,7 +41,7 @@ export function StudiosView({ studios, locale, totalLabel }: StudiosViewProps) {
             onClick={() => setView("map")}
             className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium tracking-wide uppercase transition-colors rounded-sm ${
               view === "map"
-                ? "bg-[var(--bg-soft)] text-[var(--ink)] shadow-sm"
+                ? "bg-[var(--bg-elevated)] text-[var(--ink)] shadow-sm"
                 : "text-[var(--ink-3)] hover:text-[var(--ink)]"
             }`}
           >

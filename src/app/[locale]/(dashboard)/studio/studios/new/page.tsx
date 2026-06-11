@@ -243,8 +243,8 @@ export default function NewStudioPage() {
                   key={amenity.key}
                   className={`flex items-center gap-2  border p-3 cursor-pointer text-sm transition-colors ${
                     amenities.includes(amenity.key)
-                      ? "border-gold bg-gold/5 text-[var(--ink)]"
-                      : "border-border text-[var(--ink-3)] hover:border-[var(--accent)]/30"
+                      ? "border-[var(--ink)] bg-[var(--ink)]/5 text-[var(--ink)]"
+                      : "border-[var(--rule)] text-[var(--ink-3)] hover:border-[var(--accent)]/30"
                   }`}
                 >
                   <input
@@ -254,7 +254,7 @@ export default function NewStudioPage() {
                     className="sr-only"
                   />
                   <span className={`h-4 w-4 rounded border flex items-center justify-center text-[10px] ${
-                    amenities.includes(amenity.key) ? "bg-gold border-gold text-white" : "border-muted-foreground/30"
+                    amenities.includes(amenity.key) ? "bg-[var(--ink)] border-[var(--ink)] text-[var(--bg-elevated)]" : "border-[var(--ink-3)]/30"
                   }`}>
                     {amenities.includes(amenity.key) && "✓"}
                   </span>

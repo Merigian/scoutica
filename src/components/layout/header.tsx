@@ -6,11 +6,11 @@ import { Link, useRouter, usePathname } from "@/i18n/routing";
 import { Bell, LogOut, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScouticaWordmark } from "@/components/ui/wordmark";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { LogoMark } from "@/components/ui/logo-mark";
 import { useState } from "react";
 import { NAV_ITEMS } from "@/config/site";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 export function Header() {
   const { data: session } = useSession();

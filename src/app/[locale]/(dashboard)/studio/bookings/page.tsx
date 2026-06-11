@@ -70,7 +70,7 @@ export default async function StudioBookingsPage() {
 
                 {/* Dates & price */}
                 <div className="flex flex-wrap items-center gap-3 mb-3 text-sm">
-                  <span className="flex items-center gap-1.5 text-gold font-medium">
+                  <span className="flex items-center gap-1.5 text-[var(--ink)] font-medium">
                     <CalendarDays className="h-3.5 w-3.5" />
                     {format(new Date(booking.startDate), "d MMM", { locale: dateFnsLocale })}
                     {" → "}

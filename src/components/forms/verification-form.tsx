@@ -107,7 +107,7 @@ export function VerificationForm({ profile, status, notes }: VerificationFormPro
         <Card>
           <CardHeader>
             <CardTitle className="text-xl flex items-center gap-2">
-              <AlertCircle className="h-5 w-5 text-gold" />
+              <AlertCircle className="h-5 w-5 text-[var(--ink)]" />
               {t("dataSection")}
             </CardTitle>
           </CardHeader>

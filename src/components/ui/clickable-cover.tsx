@@ -62,7 +62,7 @@ export function ClickableCover({
               type="button"
               aria-label="Previous photo"
               onClick={(e) => go(e, "prev")}
-              className="nav-zone absolute inset-y-0 left-0 z-10 flex w-1/3 items-center justify-start pl-4 focus:outline-none"
+              className="nav-zone absolute inset-y-0 left-0 z-10 flex w-1/3 items-center justify-start pl-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/90 focus-visible:ring-inset"
             >
               <ChevronLeft className="nav-arrow h-9 w-9 text-white" strokeWidth={1.5} />
             </button>
@@ -71,7 +71,7 @@ export function ClickableCover({
               type="button"
               aria-label="Next photo"
               onClick={(e) => go(e, "next")}
-              className="nav-zone absolute inset-y-0 right-0 z-10 flex w-1/3 items-center justify-end pr-4 focus:outline-none"
+              className="nav-zone absolute inset-y-0 right-0 z-10 flex w-1/3 items-center justify-end pr-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/90 focus-visible:ring-inset"
             >
               <ChevronRight className="nav-arrow h-9 w-9 text-white" strokeWidth={1.5} />
             </button>

@@ -26,7 +26,7 @@ export function Providers({
   );
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+    <ThemeProvider attribute="data-theme" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
       <SessionProvider
         session={session}
         refetchInterval={0}

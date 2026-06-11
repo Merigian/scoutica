@@ -47,7 +47,7 @@ export default async function StudioBillingPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             {t("currentPlan")}
-            <Badge variant={currentPlan === "FREE" ? "outline" : "gold"}>{planLabel}</Badge>
+            <Badge variant={currentPlan === "FREE" ? "outline" : "default"}>{planLabel}</Badge>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">

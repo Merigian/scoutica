@@ -28,9 +28,6 @@ export default async function ContactPage() {
           <ul>
             {items.map((it, i) => (
               <li key={i} className="p-8 lg:p-12 hairline-b last:border-b-0 flex gap-8">
-                <span className="text-eyebrow text-[var(--ink-3)] shrink-0 w-10 pt-2 tabular-nums">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
                 <div>
                   <p className="text-eyebrow mb-3">{it.eyebrow}</p>
                   {it.href ? (

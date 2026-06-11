@@ -14,6 +14,7 @@ interface StudioFiltersProps {
   initialQuery?: string;
   initialRegion?: string;
   initialType?: string;
+  initialSort?: string;
 }
 
 export function StudioFilters({
@@ -23,10 +24,12 @@ export function StudioFilters({
   initialQuery = "",
   initialRegion = "",
   initialType = "",
+  initialSort = "newest",
 }: StudioFiltersProps) {
   const [query, setQuery] = useState(initialQuery);
   const [region, setRegion] = useState(initialRegion);
   const [type, setType] = useState(initialType);
+  const [sort, setSort] = useState(initialSort);
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations("components.studioFilters");
@@ -36,6 +39,7 @@ export function StudioFilters({
     if (query.trim()) params.set("q", query.trim());
     if (region) params.set("region", region);
     if (type) params.set("type", type);
+    if (sort && sort !== "newest") params.set("sort", sort);
     const qs = params.toString();
     router.push(`/${locale}/studios${qs ? `?${qs}` : ""}`);
   };
@@ -44,10 +48,11 @@ export function StudioFilters({
     setQuery("");
     setRegion("");
     setType("");
+    setSort("newest");
     router.push(`/${locale}/studios`);
   };
 
-  const hasFilters = query.trim() || region || type;
+  const hasFilters = query.trim() || region || type || (sort && sort !== "newest");
 
   return (
     <div className="mb-8 space-y-4">
@@ -81,6 +86,16 @@ export function StudioFilters({
           {studioTypes.map((t) => (
             <option key={t.value} value={t.value}>{t.label}</option>
           ))}
+        </select>
+        <select
+          value={sort}
+          onChange={(e) => setSort(e.target.value)}
+          aria-label={t("sortLabel")}
+          className="h-9 rounded-md border border-[var(--rule)] bg-[var(--bg)] px-3 text-sm text-[var(--ink)] focus:outline-none focus:ring-2 focus:ring-ring"
+        >
+          <option value="newest">{t("sortNewest")}</option>
+          <option value="priceAsc">{t("sortPriceAsc")}</option>
+          <option value="priceDesc">{t("sortPriceDesc")}</option>
         </select>
         <Button onClick={applyFilters} size="sm" className="whitespace-nowrap">
           <Search className="h-4 w-4 mr-2" />

@@ -32,9 +32,9 @@ import {
   LogOut,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { UnreadBadge } from "@/components/shared/unread-badge";
 import { LogoMark } from "@/components/ui/logo-mark";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const iconMap: Record<string, React.ElementType> = {
   User,

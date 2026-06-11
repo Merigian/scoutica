@@ -1,20 +1,18 @@
 import { cn } from "@/lib/utils";
 
 interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: "default" | "secondary" | "outline" | "success" | "warning" | "destructive" | "gold";
+  variant?: "default" | "secondary" | "outline" | "success" | "warning" | "destructive";
 }
 
-/* Galleria badges — sharp edges, no uppercase, sentence case kicker style.
-   `gold` is a back-compat alias of `default`. */
+/* Galleria badges — sharp edges, no uppercase, sentence case kicker style. */
 export function Badge({ className, variant = "default", ...props }: BadgeProps) {
   const variants = {
     default:     "bg-[var(--ink)] text-[var(--bg-elevated)]",
     secondary:   "bg-[var(--bg-soft)] text-[var(--ink)] border border-[var(--rule)]",
     outline:     "border border-[var(--rule-strong)] text-[var(--ink)]",
     success:     "border border-[var(--success)] text-[var(--success)]",
-    warning:     "border border-[#8C5A0F] text-[#8C5A0F]",
+    warning:     "border border-[var(--color-warning)] text-[var(--color-warning)]",
     destructive: "border border-[var(--danger)] text-[var(--danger)]",
-    gold:        "bg-[var(--ink)] text-[var(--bg-elevated)]",
   };
 
   return (

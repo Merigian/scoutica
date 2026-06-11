@@ -29,7 +29,7 @@ export default async function ModelBillingPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             {t("currentPlan")}
-            <Badge variant="gold">Free — Tutto incluso</Badge>
+            <Badge variant="default">Free — Tutto incluso</Badge>
           </CardTitle>
         </CardHeader>
         <CardContent>

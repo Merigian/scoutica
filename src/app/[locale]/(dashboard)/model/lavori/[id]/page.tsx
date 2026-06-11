@@ -71,7 +71,7 @@ export default async function JobDetailPage({
             {JOB_TYPE_LABELS[job.jobType as keyof typeof JOB_TYPE_LABELS]?.[locale === "en" ? "en" : "it"] ?? job.jobType}
           </Badge>
           {job.isPaid && (
-            <Badge variant="gold" className="text-xs">
+            <Badge variant="default" className="text-xs">
               <DollarSign className="h-3 w-3 mr-0.5" />
               {t("paid")}
             </Badge>
@@ -95,7 +95,7 @@ export default async function JobDetailPage({
             {job.scoutProfile.businessName ?? "Scout"}
           </span>
           {job.scoutProfile.verificationStatus === "APPROVED" && (
-            <Badge variant="gold" className="ml-1 text-[10px]">✓</Badge>
+            <Badge variant="default" className="ml-1 text-[10px]">✓</Badge>
           )}
         </p>
       </div>

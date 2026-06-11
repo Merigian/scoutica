@@ -50,11 +50,11 @@ export default async function BoardDetailPage({
     redirect(`/${locale}/scout/boards`);
   }
 
-  const stageVariants: Record<string, "default" | "secondary" | "warning" | "success" | "gold"> = {
+  const stageVariants: Record<string, "default" | "secondary" | "warning" | "success"> = {
     SAVED: "default",
     CONTACTED: "secondary",
     REPLIED: "warning",
-    SHORTLISTED: "gold",
+    SHORTLISTED: "default",
     BOOKED: "success",
   };
 

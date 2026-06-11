@@ -25,10 +25,10 @@ export default async function AdminUsersPage() {
     take: 100,
   });
 
-  const roleVariants: Record<string, "default" | "secondary" | "gold"> = {
+  const roleVariants: Record<string, "default" | "secondary"> = {
     MODEL: "default",
     SCOUT: "secondary",
-    ADMIN: "gold",
+    ADMIN: "default",
   };
 
   return (
@@ -61,7 +61,7 @@ export default async function AdminUsersPage() {
                   </Badge>
                 )}
                 {user.subscription?.plan !== "FREE" && (
-                  <Badge variant="gold" className="text-[10px]">
+                  <Badge variant="default" className="text-[10px]">
                     {user.subscription?.plan}
                   </Badge>
                 )}

@@ -11,6 +11,7 @@ import { registerModel } from "@/server/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
+import { PasswordStrength } from "@/components/forms/password-strength";
 import { Label } from "@/components/ui/label";
 import { Turnstile, turnstileSiteKey } from "@/components/shared/turnstile";
 
@@ -36,6 +37,7 @@ export default function RegisterModelPage() {
 
   // Client-side age check from dateOfBirth
   const dateOfBirth = watch("dateOfBirth");
+  const password = watch("password");
   const isUnderage = (() => {
     if (!dateOfBirth) return false;
     const birth = new Date(dateOfBirth);
@@ -84,7 +86,7 @@ export default function RegisterModelPage() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {error && (
-          <div className="hairline border-[var(--accent)] bg-[var(--accent)]/5 px-4 py-3 text-sm text-[var(--accent)]">
+          <div className="hairline border-[var(--danger)] bg-[var(--danger)]/5 px-4 py-3 text-sm text-[var(--danger)]">
             {error}
           </div>
         )}
@@ -94,7 +96,7 @@ export default function RegisterModelPage() {
           <Input
             id="email"
             type="email"
-            placeholder="nome@esempio.it"
+            placeholder={t("emailPlaceholder")}
             {...register("email")}
             error={errors.email?.message}
           />
@@ -107,6 +109,7 @@ export default function RegisterModelPage() {
             {...register("password")}
             error={errors.password?.message}
           />
+          <PasswordStrength value={password || ""} />
         </div>
 
         <div className="space-y-2">
@@ -119,7 +122,7 @@ export default function RegisterModelPage() {
             error={errors.dateOfBirth?.message}
           />
           {isUnderage && (
-            <p className="text-sm text-[var(--accent)]">{t("underageError")}</p>
+            <p className="text-sm text-[var(--danger)]">{t("underageError")}</p>
           )}
         </div>
 
@@ -136,7 +139,7 @@ export default function RegisterModelPage() {
             </Label>
           </div>
           {errors.ageConfirmation && (
-            <p className="text-sm text-[var(--accent)]">{t("ageConfirmRequired")}</p>
+            <p className="text-sm text-[var(--danger)]">{t("ageConfirmRequired")}</p>
           )}
 
           <div className="flex items-start gap-2">
@@ -151,7 +154,7 @@ export default function RegisterModelPage() {
             </Label>
           </div>
           {errors.termsAccepted && (
-            <p className="text-sm text-[var(--accent)]">{t("termsRequired")}</p>
+            <p className="text-sm text-[var(--danger)]">{t("termsRequired")}</p>
           )}
         </div>
 

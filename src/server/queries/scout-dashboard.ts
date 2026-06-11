@@ -7,6 +7,7 @@ import type { PlanTier } from "@prisma/client";
 export async function getScoutDashboardData(userId: string) {
   const now = new Date();
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const startOfPrevMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
 
   const scoutProfile = await db.scoutProfile.findUnique({
     where: { userId },
@@ -24,11 +25,13 @@ export async function getScoutDashboardData(userId: string) {
   const limits = PLAN_LIMITS[plan];
 
   const [
-    contactsSentThisMonth, contactsPending, contactsAccepted,
+    contactsSentThisMonth, contactsSentPrevMonth, contactsPending, contactsAccepted,
     activeCastings, activeJobs, pendingApplications,
+    applicationsThisMonth, applicationsPrevMonth,
     shortlistBoards, recentApplications, recentNotifications, totalModelsLiked,
   ] = await Promise.all([
     db.contactRequest.count({ where: { scoutProfileId: scoutProfile.id, createdAt: { gte: startOfMonth } } }),
+    db.contactRequest.count({ where: { scoutProfileId: scoutProfile.id, createdAt: { gte: startOfPrevMonth, lt: startOfMonth } } }),
     db.contactRequest.count({ where: { scoutProfileId: scoutProfile.id, status: "PENDING" } }),
     db.contactRequest.count({ where: { scoutProfileId: scoutProfile.id, status: "ACCEPTED" } }),
     db.casting.count({ where: { scoutProfileId: scoutProfile.id, status: "PUBLISHED" } }),
@@ -36,6 +39,14 @@ export async function getScoutDashboardData(userId: string) {
     Promise.all([
       db.castingApplication.count({ where: { casting: { scoutProfileId: scoutProfile.id }, status: "PENDING" } }),
       db.jobApplication.count({ where: { job: { scoutProfileId: scoutProfile.id }, status: "PENDING" } }),
+    ]).then(([c, j]) => c + j),
+    Promise.all([
+      db.castingApplication.count({ where: { casting: { scoutProfileId: scoutProfile.id }, createdAt: { gte: startOfMonth } } }),
+      db.jobApplication.count({ where: { job: { scoutProfileId: scoutProfile.id }, createdAt: { gte: startOfMonth } } }),
+    ]).then(([c, j]) => c + j),
+    Promise.all([
+      db.castingApplication.count({ where: { casting: { scoutProfileId: scoutProfile.id }, createdAt: { gte: startOfPrevMonth, lt: startOfMonth } } }),
+      db.jobApplication.count({ where: { job: { scoutProfileId: scoutProfile.id }, createdAt: { gte: startOfPrevMonth, lt: startOfMonth } } }),
     ]).then(([c, j]) => c + j),
     db.shortlistBoard.count({ where: { scoutProfileId: scoutProfile.id } }),
     db.castingApplication.findMany({
@@ -68,9 +79,11 @@ export async function getScoutDashboardData(userId: string) {
     limits,
     metrics: {
       contactsSentThisMonth,
+      contactsSentPrevMonth,
       contactsRemaining: Math.max(0, limits.contactRequestsPerMonth - contactsSentThisMonth),
       contactsPending, contactsAccepted, activeCastings, activeJobs,
-      pendingApplications, shortlistBoards, totalModelsLiked,
+      pendingApplications, applicationsThisMonth, applicationsPrevMonth,
+      shortlistBoards, totalModelsLiked,
     },
     recentApplications,
     recentNotifications,

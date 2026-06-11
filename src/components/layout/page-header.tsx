@@ -1,10 +1,8 @@
 import { cn } from "@/lib/utils";
 
 interface PageHeaderProps {
-  /** Eyebrow label (e.g. section name). Rendered with the numbered prefix if `index` is set. */
+  /** Eyebrow label (e.g. section name). */
   eyebrow?: string;
-  /** Optional two-digit section index shown before the eyebrow (e.g. "01 — Sommario"). */
-  index?: number;
   title: string;
   /** Lead paragraph below the title. */
   description?: string;
@@ -15,14 +13,9 @@ interface PageHeaderProps {
 
 /**
  * Standard dashboard page header — Galleria editorial system.
- * eyebrow (numbered) + display H1 (fluid clamp) + lead, with optional actions.
+ * eyebrow + display H1 (fluid clamp) + lead, with optional actions.
  */
-export function PageHeader({ eyebrow, index, title, description, actions, className }: PageHeaderProps) {
-  const eyebrowText =
-    eyebrow && typeof index === "number"
-      ? `${String(index).padStart(2, "0")} — ${eyebrow}`
-      : eyebrow;
-
+export function PageHeader({ eyebrow, title, description, actions, className }: PageHeaderProps) {
   return (
     <header
       className={cn(
@@ -32,7 +25,7 @@ export function PageHeader({ eyebrow, index, title, description, actions, classN
       )}
     >
       <div className="space-y-3">
-        {eyebrowText && <p className="text-eyebrow">{eyebrowText}</p>}
+        {eyebrow && <p className="text-eyebrow">{eyebrow}</p>}
         <h1 className="font-[var(--font-display)] font-light text-[clamp(2rem,3.4vw,3rem)] leading-[1.05] tracking-[-0.015em] text-[var(--ink)] max-w-[22ch]">
           {title}
         </h1>

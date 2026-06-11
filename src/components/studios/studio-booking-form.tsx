@@ -141,7 +141,7 @@ export function StudioBookingForm({
       <Card>
         <CardHeader className="pb-2">
           <CardTitle className="text-base flex items-center gap-2">
-            <CalendarDays className="h-4 w-4 text-gold" />
+            <CalendarDays className="h-4 w-4 text-[var(--ink)]" />
             {t("selectDates")}
           </CardTitle>
           <p className="text-[11px] text-[var(--ink-3)] mt-1">
@@ -179,7 +179,7 @@ export function StudioBookingForm({
 
       {/* Price summary */}
       {selectedRange && (
-        <Card className="border-[var(--accent)]/30 bg-gold/5">
+        <Card className="border-[var(--accent)]/30 bg-[var(--ink)]/5">
           <CardContent className="py-4 space-y-2">
             <div className="flex items-center justify-between text-sm">
               <span className="text-[var(--ink-3)]">

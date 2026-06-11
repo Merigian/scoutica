@@ -61,15 +61,12 @@ export default async function ScoutCastingsPage() {
 
       {castings.length > 0 ? (
         <ul className="hairline-t">
-          {castings.map((casting, i) => (
+          {castings.map((casting) => (
             <li key={casting.id}>
               <Link
                 href={`/${locale}/scout/castings/${casting.id}/applications`}
                 className="group flex items-start gap-5 py-6 hairline-b hover:bg-[var(--bg-soft)]/50 -mx-4 px-4 transition-colors"
               >
-                <span className="text-eyebrow shrink-0 w-8 tabular-nums pt-1">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
                 <div className="min-w-0 flex-1 space-y-2">
                   <div className="flex items-center gap-3 flex-wrap">
                     <h3 className="text-h3 text-[var(--ink)]">

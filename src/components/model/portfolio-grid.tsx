@@ -148,7 +148,7 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
 
             {image.isCover && (
               <div className="absolute top-2 left-2">
-                <Badge variant="gold">
+                <Badge variant="default">
                   <Star className="h-3 w-3 mr-1" />
                   {t("cover")}
                 </Badge>

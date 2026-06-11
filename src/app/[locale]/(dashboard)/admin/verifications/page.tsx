@@ -88,7 +88,7 @@ export default async function AdminVerificationsPage() {
                       {profile.websiteUrl && (
                         <div>
                           <span className="text-[var(--ink-3)]">Web:</span>{" "}
-                          <a href={profile.websiteUrl} target="_blank" rel="noopener noreferrer" className="text-gold hover:underline">
+                          <a href={profile.websiteUrl} target="_blank" rel="noopener noreferrer" className="text-[var(--ink)] hover:underline">
                             {profile.websiteUrl}
                           </a>
                         </div>
@@ -96,7 +96,7 @@ export default async function AdminVerificationsPage() {
                       {profile.socialProfileUrl && (
                         <div>
                           <span className="text-[var(--ink-3)]">Social:</span>{" "}
-                          <a href={profile.socialProfileUrl} target="_blank" rel="noopener noreferrer" className="text-gold hover:underline">
+                          <a href={profile.socialProfileUrl} target="_blank" rel="noopener noreferrer" className="text-[var(--ink)] hover:underline">
                             {profile.socialProfileUrl}
                           </a>
                         </div>

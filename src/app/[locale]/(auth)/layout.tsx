@@ -9,7 +9,7 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
   const year = new Date().getFullYear();
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-[var(--bg)] text-[var(--ink)]">
       {/* Form column */}
       <div className="flex flex-1 flex-col px-6 py-8 lg:flex-none lg:px-16 xl:px-24 lg:w-[44rem]">
         <header className="flex items-center justify-between">
@@ -38,29 +38,29 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
       </div>
 
       {/* Editorial column — full-bleed monochrome */}
-      <aside className="relative hidden lg:flex flex-1 hairline-l overflow-hidden bg-[var(--ink)]">
+      <aside className="relative hidden lg:flex flex-1 hairline-l overflow-hidden bg-[var(--bg-soft)]">
         <div
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover bg-center grayscale"
           style={{
             backgroundImage:
-              "linear-gradient(180deg, rgba(26,24,20,0.20) 0%, rgba(26,24,20,0.55) 100%), url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1400&q=85')",
+              "linear-gradient(180deg, rgba(10,10,11,0.35) 0%, rgba(10,10,11,0.80) 100%), url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1400&q=85')",
           }}
         />
-        <div className="relative z-10 flex flex-col justify-between p-16 w-full text-[var(--bg)]">
-          <p className="text-meta text-white/80">
+        <div className="relative z-10 flex flex-col justify-between p-16 w-full text-[#F4F1EA]">
+          <p className="text-meta text-[#F4F1EA]/80">
             {t("cover.masthead")}
           </p>
 
           <div className="max-w-md">
-            <h2 className="font-[var(--font-display)] font-light text-5xl leading-[1.0] tracking-[-0.015em] text-white">
+            <h2 className="font-display font-light text-5xl leading-[1.0] tracking-[-0.015em] text-[#F4F1EA]">
               {t("cover.headline")}
             </h2>
-            <p className="mt-6 text-eyebrow text-white/75">
+            <p className="mt-6 text-eyebrow text-[#F4F1EA]/75">
               {t("cover.attribution")}
             </p>
           </div>
 
-          <p className="text-meta text-white/75">
+          <p className="text-meta text-[#F4F1EA]/75">
             {t("cover.cities")}
           </p>
         </div>

@@ -83,7 +83,7 @@ export default async function StudioDetailPage({
                   <Maximize className="h-3.5 w-3.5 text-[var(--accent)]" />
                   Size
                 </p>
-                <p className="font-[var(--font-display)] text-2xl tabular-nums text-[var(--ink)]">
+                <p className="font-display text-2xl tabular-nums text-[var(--ink)]">
                   {studio.sizeSqm} m²
                 </p>
               </div>
@@ -94,7 +94,7 @@ export default async function StudioDetailPage({
                   <Users className="h-3.5 w-3.5 text-[var(--accent)]" />
                   Capacity
                 </p>
-                <p className="font-[var(--font-display)] text-2xl tabular-nums text-[var(--ink)]">
+                <p className="font-display text-2xl tabular-nums text-[var(--ink)]">
                   {studio.maxCapacity} {t("people")}
                 </p>
               </div>
@@ -105,7 +105,7 @@ export default async function StudioDetailPage({
                   <Clock className="h-3.5 w-3.5 text-[var(--accent)]" />
                   Min booking
                 </p>
-                <p className="font-[var(--font-display)] text-2xl tabular-nums text-[var(--ink)]">
+                <p className="font-display text-2xl tabular-nums text-[var(--ink)]">
                   {studio.minHours}h
                 </p>
               </div>
@@ -179,7 +179,7 @@ export default async function StudioDetailPage({
               {studio.hourlyRate && (
                 <div className="flex items-baseline justify-between hairline-b pb-3">
                   <span className="text-eyebrow text-[var(--ink-3)]">{t("hourlyRate")}</span>
-                  <span className="font-[var(--font-display)] text-xl tabular-nums text-[var(--ink)]">
+                  <span className="font-display text-xl tabular-nums text-[var(--ink)]">
                     €{studio.hourlyRate}
                   </span>
                 </div>
@@ -187,7 +187,7 @@ export default async function StudioDetailPage({
               {studio.dailyRate && (
                 <div className="flex items-baseline justify-between hairline-b pb-3">
                   <span className="text-eyebrow text-[var(--ink-3)]">{t("dailyRate")}</span>
-                  <span className="font-[var(--font-display)] text-xl tabular-nums text-[var(--ink)]">
+                  <span className="font-display text-xl tabular-nums text-[var(--ink)]">
                     €{studio.dailyRate}
                   </span>
                 </div>
@@ -195,7 +195,7 @@ export default async function StudioDetailPage({
               {studio.weeklyRate && (
                 <div className="flex items-baseline justify-between">
                   <span className="text-eyebrow text-[var(--ink-3)]">{t("weeklyRate")}</span>
-                  <span className="font-[var(--font-display)] text-xl tabular-nums text-[var(--ink)]">
+                  <span className="font-display text-xl tabular-nums text-[var(--ink)]">
                     €{studio.weeklyRate}
                   </span>
                 </div>

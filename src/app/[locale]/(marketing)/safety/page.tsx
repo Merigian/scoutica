@@ -35,7 +35,7 @@ export default async function FaqPage() {
       <section className="py-20 lg:py-28 hairline-b">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-12">
           <div className="lg:col-span-4 lg:sticky lg:top-28 self-start">
-            <p className="text-eyebrow mb-4">01 — {t("safety.eyebrow")}</p>
+            <p className="text-eyebrow mb-4">{t("safety.eyebrow")}</p>
             <h2 className="text-h1 max-w-[12ch]">{t("safety.title")}</h2>
           </div>
           <ul className="lg:col-span-8 hairline-t">
@@ -44,9 +44,6 @@ export default async function FaqPage() {
                 key={i}
                 className="py-6 hairline-b flex gap-6 items-start"
               >
-                <span className="text-eyebrow text-[var(--ink-3)] pt-1 shrink-0">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
                 <p className="text-body text-[var(--ink-2)] text-[1.0625rem] leading-[1.7] max-w-2xl">
                   {item}
                 </p>
@@ -61,9 +58,7 @@ export default async function FaqPage() {
         <section key={gi} className="py-20 lg:py-28 hairline-b">
           <div className="grid lg:grid-cols-12 gap-10 lg:gap-12">
             <div className="lg:col-span-4 lg:sticky lg:top-28 self-start">
-              <p className="text-eyebrow mb-4">
-                {String(gi + 2).padStart(2, "0")} — {group.title}
-              </p>
+              <p className="text-eyebrow mb-4">{group.title}</p>
             </div>
             <div className="lg:col-span-8 hairline-t">
               {group.items.map((item, ii) => (

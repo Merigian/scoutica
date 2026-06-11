@@ -20,6 +20,8 @@ import {
 } from "lucide-react";
 import { formatRelativeTime } from "@/lib/utils";
 import { SCOUT_SUBTYPE_LABELS } from "@/config/enums";
+import { ScoutOnboardingChecklist } from "@/components/scout/onboarding-checklist";
+import { TrendStat } from "@/components/dashboard/trend-stat";
 
 type ScoutDashboardData = NonNullable<
   Awaited<ReturnType<typeof getScoutDashboardData>>
@@ -50,7 +52,7 @@ export default async function ScoutHomePage() {
       {/* ─── Sommario ─── */}
       <header className="hairline-b pb-8 lg:pb-10 mb-10 lg:mb-14 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
         <div className="space-y-3">
-          <p className="text-eyebrow">01 — {t("sommario")}</p>
+          <p className="text-eyebrow">{t("sommario")}</p>
           <h1 className="font-[var(--font-display)] font-light text-[clamp(2rem,3.4vw,3rem)] leading-[1.05] tracking-[-0.015em] text-[var(--ink)] max-w-[24ch]">
             {t("greeting", { name: businessName })}
           </h1>
@@ -75,10 +77,18 @@ export default async function ScoutHomePage() {
         </div>
       </header>
 
+      {/* ─── Onboarding checklist ─── */}
+      <ScoutOnboardingChecklist
+        isVerified={profile.verificationStatus === "APPROVED"}
+        hasSaved={metrics.totalModelsLiked > 0}
+        hasBoard={metrics.shortlistBoards > 0}
+        hasCasting={metrics.activeCastings > 0}
+      />
+
       {/* ─── Numeri ─── */}
       <section className="mb-14 lg:mb-20">
         <div className="hairline-b pb-4 mb-8 flex items-baseline justify-between">
-          <p className="text-eyebrow">02 — {t("numeri")}</p>
+          <p className="text-eyebrow">{t("numeri")}</p>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 hairline-t hairline-l">
           <Metric
@@ -122,13 +132,34 @@ export default async function ScoutHomePage() {
         </div>
       </section>
 
+      {/* ─── Andamento (trends) ─── */}
+      <section className="mb-14 lg:mb-20">
+        <div className="hairline-b pb-4 mb-8">
+          <p className="text-eyebrow">{t("andamento")}</p>
+        </div>
+        <div className="grid grid-cols-2 hairline-t hairline-l">
+          <TrendStat
+            icon={<Send className="h-4 w-4" />}
+            label={t("contacts30")}
+            value={metrics.contactsSentThisMonth}
+            previous={metrics.contactsSentPrevMonth}
+          />
+          <TrendStat
+            icon={<Mail className="h-4 w-4" />}
+            label={t("applications30")}
+            value={metrics.applicationsThisMonth}
+            previous={metrics.applicationsPrevMonth}
+          />
+        </div>
+      </section>
+
       {/* ─── Avvisi + Movimenti ─── */}
       <div className="grid gap-12 lg:gap-16 lg:grid-cols-12 mb-14 lg:mb-20">
         {/* Avvisi (applications) — 8 col */}
         <section className="lg:col-span-8">
           <div className="hairline-b pb-4 mb-6 flex items-baseline justify-between gap-4">
             <div>
-              <p className="text-eyebrow">03 — {t("avvisi")}</p>
+              <p className="text-eyebrow">{t("avvisi")}</p>
               <h2 className="mt-1 text-h2">{t("recentApplications")}</h2>
               <p className="mt-1 text-body text-[var(--ink-3)]">
                 {t("recentApplicationsDesc")}
@@ -152,15 +183,12 @@ export default async function ScoutHomePage() {
             </div>
           ) : (
             <ul className="hairline-t">
-              {recentApplications.map((app: Application, i: number) => (
+              {recentApplications.map((app: Application) => (
                 <li key={app.id}>
                   <Link
                     href={`/scout/castings/${app.casting.id}/applications`}
                     className="group flex items-center gap-5 py-5 hairline-b hover:bg-[var(--bg-soft)]/50 -mx-4 px-4 transition-colors"
                   >
-                    <span className="text-eyebrow shrink-0 w-8 tabular-nums">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
                     <div className="h-14 w-14 shrink-0 overflow-hidden bg-[var(--bg-soft)]">
                       {app.modelProfile.portfolioImages[0]?.url ? (
                         <Image
@@ -209,7 +237,7 @@ export default async function ScoutHomePage() {
         {/* Movimenti — 4 col */}
         <aside className="lg:col-span-4">
           <div className="hairline-b pb-4 mb-6 flex items-baseline justify-between gap-4">
-            <p className="text-eyebrow">04 — {t("movimenti")}</p>
+            <p className="text-eyebrow">{t("movimenti")}</p>
             <Link
               href="/scout/notifications"
               className="text-meta hover:text-[var(--ink)] transition-colors"
@@ -261,7 +289,7 @@ export default async function ScoutHomePage() {
       {/* ─── Azioni rapide ─── */}
       <section>
         <div className="hairline-b pb-4 mb-8">
-          <p className="text-eyebrow">05 — {t("quickActions")}</p>
+          <p className="text-eyebrow">{t("quickActions")}</p>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 hairline-t hairline-l">
           <QuickAction
@@ -314,7 +342,7 @@ function Metric({
         <span className="text-eyebrow">{label}</span>
         {icon}
       </div>
-      <p className="mt-6 font-[var(--font-display)] font-light tabular-nums text-[clamp(2.25rem,3vw,3rem)] leading-none text-[var(--ink)]">
+      <p className="mt-6 font-display font-light tabular-nums text-[clamp(2.25rem,3vw,3rem)] leading-none text-[var(--ink)]">
         {value}
       </p>
     </div>

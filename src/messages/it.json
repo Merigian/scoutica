@@ -86,11 +86,14 @@
     "newCasting": "Nuovo casting",
     "newJob": "Nuovo lavoro",
     "newStudio": "Nuovo studio",
-    "modelVerifications": "Verifiche modelle"
+    "modelVerifications": "Verifiche modelle",
+    "more": "Altro",
+    "close": "Chiudi"
   },
   "landing": {
     "cover": {
       "masthead": "Scoutica · Italia",
+      "reach": "In tutta Italia",
       "manifestoTop": "Scouting professionale",
       "manifestoBottom": "Nuovi volti per la moda italiana",
       "scroll": "Scopri"
@@ -116,7 +119,9 @@
       "lead": "Nessuna commissione sugli ingaggi, nessun costo nascosto. Strumenti professionali, dove servono.",
       "startingFrom": "A partire da",
       "period": "al mese, per sempre",
-      "cta": "Vedi i piani"
+      "cta": "Vedi i piani",
+      "proPrice": "da €39",
+      "proPeriod": "al mese, per chi cerca"
     },
     "hero": {
       "title": "Nuovi volti per la moda italiana. Selezionati con cura, presentati con metodo.",
@@ -141,7 +146,7 @@
       "forStudio": "Per studi fotografici",
       "profiles": {
         "title": "Portfolio editoriale",
-        "description": "Un profilo costruito con cura editoriale. Foto, self-tape e misure, sempre puntuali."
+        "description": "Un profilo costruito con cura editoriale. Foto e misure, sempre puntuali."
       },
       "verified": {
         "title": "Verifica documentale",
@@ -260,6 +265,52 @@
       "models": "Modelli pubblicati",
       "scouts": "Scout accreditati",
       "regions": "Regioni italiane"
+    },
+    "audience": {
+      "eyebrow": "Per chi è",
+      "title": "Tre ingressi, lo stesso standard.",
+      "subtitle": "Modelli, scout e studi: ognuno con il proprio percorso, sotto un'unica firma editoriale.",
+      "discover": "Scopri"
+    },
+    "verification": {
+      "eyebrow": "Verifica",
+      "marketContext": "L'Italia è il quarto mercato della moda al mondo. Lo scouting, fino a oggi, viaggiava ancora sui DM.",
+      "title": "Ogni contatto passa da una verifica.",
+      "subtitle": "Niente profili anonimi, niente sorprese. Solo professionisti accreditati, con identità verificata.",
+      "pillars": {
+        "documental": {
+          "title": "Verifica documentale",
+          "description": "Scout, agenzie e brand passano da una verifica umana e cartacea prima di poterti contattare.",
+          "detail": "Revisione umana in 24–48 ore"
+        },
+        "transparency": {
+          "title": "Trasparenza e tutele",
+          "description": "Liberatorie pronte da scaricare, profili verificati, segnalazioni gestite. La moda italiana, finalmente in regola.",
+          "detail": "Liberatorie PDF incluse"
+        },
+        "professionals": {
+          "title": "Solo professionisti",
+          "description": "Nessun anonimo. Ogni scout, agenzia o brand è accreditato prima di entrare nella community.",
+          "detail": "Zero account anonimi"
+        }
+      }
+    },
+    "quote": {
+      "eyebrow": "Manifesto",
+      "text": "Una moda che sa chi ha davanti: selezionata con cura, presentata con metodo.",
+      "attribution": "Scoutica · Italia"
+    },
+    "studios": {
+      "eyebrow": "Studi",
+      "title": "Studi fotografici, su prenotazione",
+      "subtitle": "Spazi attrezzati in tutta Italia, prenotabili direttamente. Luce, set e backstage inclusi.",
+      "viewAll": "Esplora gli studi",
+      "fromPrice": "da",
+      "perHour": "/ ora",
+      "addPrompt": "Hai uno studio fotografico? Aggiungilo e inizia a guadagnare →",
+      "emptyTitle": "Studi fotografici, presto su Scoutica",
+      "emptyBody": "Spazi professionali in tutta Italia, prenotabili in pochi clic. Sei uno studio? Inizia ora.",
+      "addCta": "Aggiungi il tuo studio"
     }
   },
   "auth": {
@@ -278,6 +329,7 @@
       "title": "Accedi a Scoutica",
       "subtitle": "Bentornato! Accedi al tuo account.",
       "email": "Email",
+      "emailPlaceholder": "nome@esempio.it",
       "password": "Password",
       "forgotPassword": "Password dimenticata?",
       "submit": "Accedi",
@@ -319,6 +371,8 @@
       "firstName": "Nome",
       "lastName": "Cognome",
       "email": "Email",
+      "emailPlaceholder": "nome@esempio.it",
+      "emailPlaceholderBusiness": "nome@azienda.it",
       "password": "Password",
       "confirmPassword": "Conferma password",
       "scoutType": "Tipo di attività",
@@ -342,6 +396,13 @@
       "completeEyebrow": "Finalizza profilo",
       "selectRole": "Scegli il tuo ruolo per continuare.",
       "continue": "Continua",
+      "pwStrength": {
+        "label": "Sicurezza",
+        "weak": "debole",
+        "fair": "discreta",
+        "good": "buona",
+        "strong": "forte"
+      },
       "roles": {
         "model": "Modello/a",
         "scout": "Scout",
@@ -591,12 +652,13 @@
   },
   "pricing": {
     "label": "Prezzi",
-    "eyebrow": "Tariffario · Prezzi · 2026",
+    "eyebrow": "Tariffario · Prezzi",
     "transactionalNote": "Nessuna commissione sui contratti. Paghi solo l'abbonamento.",
     "payTeaserEyebrow": "Pagamenti gestiti · In arrivo nel 2026",
     "payTeaserCta": "Resta aggiornato",
     "title": "Gratis per i talenti. Sostenibile per la filiera.",
     "subtitle": "I modelli non pagano mai. Scout, agenzie e studi scelgono il piano che gli serve. Nessuna percentuale sui guadagni. 14 giorni di prova gratuita su tutti i piani.",
+    "afterTrial": "Dopo la prova di 14 giorni l'abbonamento si rinnova automaticamente al prezzo indicato. Puoi disdire quando vuoi, in un clic.",
     "intervalMonthly": "Mensile",
     "intervalAnnual": "Annuale",
     "annualDiscount": "-17%",
@@ -609,7 +671,7 @@
         "period": "per sempre",
         "desc": "Per chi vuole farsi notare nella moda italiana.",
         "features": [
-          "Portfolio fino a 12 foto + 1 self-tape",
+          "Portfolio fino a 12 foto + self-tape (in arrivo)",
           "Candidature illimitate ai casting",
           "Riceve richieste da scout verificati",
           "Profilo editoriale pubblico con URL personalizzato"
@@ -622,12 +684,13 @@
         "period": "al mese · 14 giorni di prova gratuita",
         "priceAnnual": "€290",
         "periodAnnual": "all'anno · ~€24/mese · 14 giorni gratis",
+        "priceAnnualSaving": "Risparmi €58 all'anno",
         "desc": "Per scout freelance e casting director.",
         "features": [
           "Contatti modelli illimitati",
           "Bacheche shortlist illimitate",
-          "Ricerca avanzata e filtri pro",
-          "Ricerche salvate con notifiche settimanali",
+          "Ricerca avanzata: misure, città, categoria, disponibilità",
+          "Ricerche salvate (notifiche in arrivo)",
           "Pubblica casting illimitati"
         ],
         "cta": "Inizia come Scout Pro",
@@ -639,13 +702,14 @@
         "period": "al mese · founding price (poi €149)",
         "priceAnnual": "€990",
         "periodAnnual": "all'anno · founding (~€82/mese)",
+        "priceAnnualSaving": "Risparmi €198 all'anno",
         "desc": "Per agenzie strutturate con team di booker.",
         "features": [
           "Tutto Scout Pro, illimitato",
-          "Workspace condiviso multi-utente (3 seat)",
-          "Profilo agenzia pubblico con roster",
-          "Analytics avanzati",
-          "Account manager dedicato"
+          "Supporto prioritario dedicato",
+          "Workspace multi-utente · 3 seat (in arrivo)",
+          "Profilo agenzia pubblico con roster (in arrivo)",
+          "Analytics avanzati (in arrivo)"
         ],
         "foundingBadge": "Founding · primi 50",
         "cta": "Registra agenzia"
@@ -656,13 +720,14 @@
         "period": "al mese · 14 giorni di prova gratuita",
         "priceAnnual": "€490",
         "periodAnnual": "all'anno · ~€41/mese · 14 giorni gratis",
+        "priceAnnualSaving": "Risparmi €98 all'anno",
         "desc": "Per studi fotografici, location e casting director.",
         "features": [
           "Casting illimitati",
           "Gestione candidature avanzata",
           "Ricerca talenti pro",
           "Listing studio con galleria e disponibilità",
-          "Statistiche e analytics"
+          "Statistiche e andamento prenotazioni"
         ],
         "cta": "Inizia come Studio"
       }
@@ -683,12 +748,37 @@
         }
       ]
     },
+    "comparison": {
+      "eyebrow": "Confronto",
+      "title": "Cosa include ogni piano",
+      "subtitle": "I piani per la domanda a confronto. I modelli restano sempre gratis.",
+      "featureCol": "Funzione",
+      "cols": { "scoutPro": "Scout Pro", "agency": "Agency", "studio": "Studio" },
+      "no": "—",
+      "yesLabel": "Incluso",
+      "noLabel": "Non incluso",
+      "soonLabel": "In arrivo",
+      "rows": [
+        { "label": "Contatti modelli", "scoutPro": "Illimitati", "agency": "Illimitati", "studio": "Illimitati" },
+        { "label": "Bacheche shortlist", "scoutPro": "Illimitate", "agency": "Illimitate", "studio": "Illimitate" },
+        { "label": "Ricerca avanzata e filtri pro", "scoutPro": "yes", "agency": "yes", "studio": "yes" },
+        { "label": "Ricerche salvate", "scoutPro": "yes", "agency": "yes", "studio": "yes" },
+        { "label": "Pubblica casting", "scoutPro": "Illimitati", "agency": "Illimitati", "studio": "Illimitati" },
+        { "label": "Pubblica lavori e campagne", "scoutPro": "yes", "agency": "yes", "studio": "yes" },
+        { "label": "Listing studio con galleria", "scoutPro": "no", "agency": "no", "studio": "yes" },
+        { "label": "Supporto prioritario", "scoutPro": "yes", "agency": "yes", "studio": "yes" },
+        { "label": "Workspace multi-utente", "scoutPro": "no", "agency": "soon", "studio": "no" },
+        { "label": "Profilo pubblico con roster", "scoutPro": "no", "agency": "soon", "studio": "no" },
+        { "label": "Analytics avanzati", "scoutPro": "no", "agency": "soon", "studio": "soon" },
+        { "label": "Prova gratuita", "scoutPro": "14 giorni", "agency": "14 giorni", "studio": "14 giorni" }
+      ]
+    },
     "ctaModel": "Registrati come Modello",
     "ctaScout": "Registrati come Scout",
     "promotedTeaser": "I pagamenti gestiti e i payout garantiti arrivano nella seconda metà del 2026. Per ora la piattaforma facilita l'incontro: il pagamento avviene fuori piattaforma con accordi diretti.",
     "feature1": {
       "title": "Portfolio editoriale",
-      "desc": "6 foto + self-tape, sempre gratis per i modelli."
+      "desc": "12 foto, sempre gratis per i modelli."
     },
     "feature2": {
       "title": "Ricerca pro",
@@ -827,7 +917,7 @@
           },
           {
             "q": "Cosa include il piano gratuito?",
-            "a": "Puoi sfogliare i profili e inviare un numero limitato di richieste di contatto al mese. I piani a pagamento sbloccano contatti illimitati, filtri avanzati e ricerche salvate."
+            "a": "Puoi consultare i profili e inviare un numero limitato di richieste di contatto al mese. I piani a pagamento sbloccano contatti illimitati, filtri avanzati e ricerche salvate."
           },
           {
             "q": "Come funziona la prova gratuita?",
@@ -861,7 +951,7 @@
     "intro1": "<strong>Scoutica</strong> nasce dall'esigenza di modernizzare il mondo dello scouting nella moda italiana. Troppo spesso, il contatto tra modelli e professionisti del settore avviene attraverso canali informali, DM su Instagram e processi manuali poco strutturati.",
     "intro2": "La nostra missione è creare uno spazio professionale, sicuro e trasparente dove i modelli possano presentarsi al meglio e dove scout, agenzie e brand verificati possano scoprire nuovi talenti in modo efficiente e rispettoso.",
     "whyNow": {
-      "eyebrow": "02 — Perché adesso",
+      "eyebrow": "Perché adesso",
       "title": "Il fashion italiano merita la sua piattaforma.",
       "body": "L'Italia è il quarto mercato moda al mondo per ricavi, ma il suo scouting vive ancora sui DM, sugli screenshot di IG e su rubriche di numeri privati. Nel 2026 questo non è più accettabile — né per i talenti, né per chi li cerca, né per i brand che vogliono lavorare in regola."
     },
@@ -875,7 +965,7 @@
     "italyFirst": "Italia prima",
     "italyFirstDesc": "Scoutica è progettata per il mercato italiano. Conosciamo il territorio, le agenzie e le esigenze del settore.",
     "principles": {
-      "eyebrow": "04 — Princìpi non negoziabili",
+      "eyebrow": "Princìpi non negoziabili",
       "title": "Cinque regole che non cambiano.",
       "items": [
         {
@@ -896,7 +986,7 @@
         {
           "n": "04",
           "k": "Editorial first",
-          "d": "Un profilo curato come una rivista, non come un curriculum."
+          "d": "Un profilo curato con criterio editoriale, non come un curriculum."
         },
         {
           "n": "05",
@@ -909,6 +999,15 @@
       "eyebrow": "·",
       "line1": "Scoutica è progettata, sviluppata e mantenuta a Milano.",
       "line2": "Sede legale, Italia."
+    },
+    "closing": {
+      "eyebrow": "Inizia",
+      "title": "Pronto a entrare in Scoutica?",
+      "body": "Unisciti ai professionisti che stanno riscrivendo lo standard dello scouting italiano. Creare un account richiede pochi minuti.",
+      "ctaPrimary": "Crea il tuo account",
+      "ctaSecondary": "Vedi i piani",
+      "contactLabel": "Domande prima di iniziare?",
+      "contactCta": "Scrivici"
     }
   },
   "errors": {
@@ -964,7 +1063,7 @@
         "strengthProfessional": "Professionale",
         "strengthGood": "Solido",
         "strengthBasic": "Iniziale",
-        "sommario": "Sommario",
+        "sommario": "Panoramica",
         "numeri": "Numeri",
         "avvisi": "Avvisi",
         "movimenti": "Movimenti",
@@ -1010,7 +1109,7 @@
         "agency": "Agenzia"
       },
       "contacts": {
-        "title": "Richieste di Contatto",
+        "title": "Richieste ricevute",
         "description": "Gestisci le richieste ricevute da scout, agenzie e brand",
         "noRequests": "Nessuna richiesta",
         "noRequestsDesc": "Quando un professionista ti contatterà, vedrai la richiesta qui."
@@ -1102,7 +1201,7 @@
       },
       "lavori": {
         "title": "Lavori Disponibili",
-        "description": "Sfoglia i lavori disponibili e candidati",
+        "description": "Esplora i lavori disponibili e candidati",
         "applied": "Candidato",
         "paid": "Retribuito",
         "deadline": "Scadenza:",
@@ -1124,6 +1223,20 @@
       }
     },
     "scout": {
+      "onboarding": {
+        "welcome": "Inizia da qui",
+        "subtitle": "Completa questi passi per sfruttare Scoutica al meglio.",
+        "steps": {
+          "verify": "Verifica il tuo profilo",
+          "verifyDesc": "Sblocca contatti, casting e messaggi.",
+          "search": "Esplora i talenti",
+          "searchDesc": "Cerca e salva i primi profili.",
+          "board": "Crea una bacheca",
+          "boardDesc": "Organizza i preferiti in shortlist.",
+          "casting": "Pubblica un casting",
+          "castingDesc": "Ricevi candidature dai modelli giusti."
+        }
+      },
       "jobs": {
         "title": "I Miei Lavori",
         "description": "Gestisci i tuoi lavori e le candidature",
@@ -1290,10 +1403,13 @@
         "verificationRequired": "Verifica richiesta",
         "verificationRequiredDesc": "Completa la verifica per pubblicare casting e contattare i talent.",
         "quickActions": "Azioni rapide",
-        "sommario": "Sommario",
+        "sommario": "Panoramica",
         "numeri": "Numeri",
         "avvisi": "Avvisi",
         "movimenti": "Movimenti",
+        "andamento": "Andamento (mese)",
+        "contacts30": "Contatti inviati",
+        "applications30": "Candidature ricevute",
         "applicationStatus": {
           "PENDING": "In attesa",
           "ACCEPTED": "Accettata",
@@ -1302,6 +1418,42 @@
       }
     },
     "studio": {
+      "home": {
+        "sommario": "Riepilogo",
+        "greeting": "Ciao, {name}",
+        "numeri": "Numeri",
+        "avvisi": "Avvisi",
+        "movimenti": "Movimenti",
+        "quickActions": "Azioni rapide",
+        "andamento": "Andamento (mese)",
+        "bookings30": "Prenotazioni",
+        "inquiries30": "Richieste",
+        "viewAll": "Vedi tutti",
+        "noActivity": "Ancora nessuna attività.",
+        "newStudio": "Nuovo studio",
+        "manageStudios": "Gestisci studi",
+        "publishedStudios": "Studi pubblicati",
+        "pendingBookings": "Prenotazioni da confermare",
+        "upcomingBookings": "Prenotazioni in arrivo",
+        "pendingInquiries": "Richieste da gestire",
+        "bookingsThisMonth": "Prenotazioni questo mese",
+        "totalStudios": "Studi totali",
+        "recentInquiries": "Richieste recenti",
+        "recentInquiriesDesc": "Le ultime richieste ricevute per i tuoi studi.",
+        "noInquiriesYet": "Ancora nessuna richiesta.",
+        "quickNewStudio": "Aggiungi studio",
+        "quickBookings": "Prenotazioni",
+        "quickInquiries": "Richieste",
+        "quickMessages": "Messaggi",
+        "onboardingTitle": "Pubblica il tuo primo studio",
+        "onboardingBody": "Aggiungi uno spazio per iniziare a ricevere richieste e prenotazioni dai professionisti della moda.",
+        "onboardingCta": "Aggiungi studio",
+        "inquiryStatus": {
+          "PENDING": "Da gestire",
+          "REPLIED": "Risposta inviata",
+          "CLOSED": "Chiusa"
+        }
+      },
       "billing": {
         "title": "Abbonamento",
         "currentPlan": "Piano attuale"
@@ -1656,6 +1808,8 @@
       "ethnicity": "Etnia",
       "dressSize": "Taglia",
       "website": "Sito web",
+      "activeRecently": "Attivo di recente",
+      "socialTitle": "Social",
       "memberSince": "Membro dal",
       "backToSearch": "Torna alla ricerca",
       "back": "Indietro"
@@ -2053,6 +2207,10 @@
     "descriptionMinChars": "La descrizione deve contenere almeno 20 caratteri"
   },
   "components": {
+    "trend": {
+      "vsLastMonth": "vs mese scorso",
+      "flat": "Invariato"
+    },
     "readOnlyBanner": {
       "title": "Stai navigando in modalità lettura",
       "description": "Verifica il tuo account per contattare le modelle, creare casting e annunci di lavoro.",
@@ -2331,6 +2489,10 @@
       "searchPlaceholder": "Cerca per nome, città...",
       "allRegions": "Tutte le regioni",
       "allTypes": "Tutti i tipi",
+      "sortLabel": "Ordina",
+      "sortNewest": "Più recenti",
+      "sortPriceAsc": "Prezzo crescente",
+      "sortPriceDesc": "Prezzo decrescente",
       "search": "Cerca",
       "clear": "Pulisci"
     },

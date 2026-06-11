@@ -31,7 +31,7 @@ export default async function PortfolioPage() {
     <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-8 lg:py-12 animate-fade-in">
       {/* Header */}
       <header className="hairline-b pb-8 lg:pb-10 mb-10 lg:mb-14">
-        <p className="text-eyebrow">01 — Portfolio</p>
+        <p className="text-eyebrow">Portfolio</p>
         <h1 className="mt-3 font-[var(--font-display)] font-light text-[clamp(2rem,3.4vw,3rem)] leading-[1.05] tracking-[-0.015em] text-[var(--ink)]">
           {t("title")}
         </h1>
@@ -44,7 +44,7 @@ export default async function PortfolioPage() {
       <section>
         <div className="hairline-b pb-4 mb-8 flex items-baseline justify-between gap-4">
           <div>
-            <p className="text-eyebrow">02 — Cast</p>
+            <p className="text-eyebrow">Cast</p>
             <h2 className="mt-1 text-h2">
               {t("yourImages", {
                 count: profile.portfolioImages.length,

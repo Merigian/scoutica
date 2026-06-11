@@ -31,7 +31,7 @@ export function OnboardingChecklist(props: OnboardingChecklistProps) {
       <Card className="border-success/30 bg-success/5">
         <CardContent className="p-6 text-center space-y-2">
           <CheckCircle className="h-10 w-10 text-success mx-auto" />
-          <h3 className="font-[var(--font-display)] font-semibold">{t("done")}</h3>
+          <h3 className="font-display font-semibold">{t("done")}</h3>
           <p className="text-sm text-[var(--ink-3)]">{t("doneDesc")}</p>
         </CardContent>
       </Card>
@@ -42,11 +42,11 @@ export function OnboardingChecklist(props: OnboardingChecklistProps) {
     <Card>
       <CardContent className="p-6 space-y-4">
         <div>
-          <h3 className="font-[var(--font-display)] font-semibold">{t("welcome")}</h3>
+          <h3 className="font-display font-semibold">{t("welcome")}</h3>
           <p className="text-sm text-[var(--ink-3)] mt-1">{t("subtitle")}</p>
           <div className="mt-3 h-1.5 bg-[var(--bg-soft)] rounded-full overflow-hidden">
             <div
-              className="h-full bg-gold transition-all duration-500"
+              className="h-full bg-[var(--ink)] transition-all duration-500"
               style={{ width: `${(completedCount / STEPS.length) * 100}%` }}
             />
           </div>
@@ -72,7 +72,7 @@ export function OnboardingChecklist(props: OnboardingChecklistProps) {
               >
                 <div className={cn(
                   "flex h-8 w-8 items-center justify-center rounded-full shrink-0",
-                  done ? "bg-success/10 text-success" : "bg-gold/10 text-gold"
+                  done ? "bg-success/10 text-success" : "bg-[var(--ink)]/10 text-[var(--ink)]"
                 )}>
                   {done ? <CheckCircle className="h-4 w-4" /> : <Icon className="h-4 w-4" />}
                 </div>

@@ -1,30 +1,24 @@
-import Image from "next/image";
 import { existsSync } from "fs";
 import path from "path";
 import { getTranslations, getLocale } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
+import { CinematicHero } from "@/components/landing/cinematic-hero";
 import { FeaturedProfiles } from "@/components/landing/featured-profiles";
+import { AudienceRouter } from "@/components/landing/audience-router";
+import { TrustSection } from "@/components/landing/trust-section";
+import { EditorialQuote } from "@/components/landing/editorial-quote";
+import { StudiosShowcase } from "@/components/landing/studios-showcase";
 import { HeroToneSetter } from "@/components/landing/hero-tone-setter";
 import { Reveal } from "@/components/landing/reveal";
+import { CountUp } from "@/components/landing/count-up";
 import { SectionIndex } from "@/components/landing/section-index";
-import { cn } from "@/lib/utils";
 import { db } from "@/lib/db";
-import { ArrowUpRight, ArrowRight, ArrowDown } from "lucide-react";
+import { ArrowUpRight, ArrowRight } from "lucide-react";
 
 const LOCAL_HERO = "/images/hero-cover.webp";
 const HERO_FALLBACK =
   "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=2400&q=88&auto=format&fit=crop";
-
-const PATH_IMAGES = {
-  model:
-    "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=1400&q=85&auto=format&fit=crop",
-  // Behind-the-scenes: photographer shooting a model in studio — reads as "agency/casting".
-  scout:
-    "https://plus.unsplash.com/premium_photo-1663054300534-3be5c4c61ae3?w=1400&q=85&auto=format&fit=crop",
-  studio:
-    "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1400&q=85&auto=format&fit=crop",
-};
 
 function resolveHeroSrc(): string {
   try {
@@ -45,190 +39,39 @@ export default async function LandingPage() {
     db.scoutProfile.count({ where: { verificationStatus: "APPROVED" } }),
   ]).catch(() => [0, 0] as const);
 
-  // Hero headline → split the two sentences so the second renders as an
-  // italic editorial sub-statement (works for both it/en: "Sentence. Sentence.").
-  const heroSentences = t("hero.title").split(/(?<=\.)\s+/);
-  const heroLead = heroSentences[0];
-  const heroEmph = heroSentences.slice(1).join(" ");
-
-  const nf = new Intl.NumberFormat(locale === "en" ? "en-US" : "it-IT");
-
   const stats = [
-    { label: t("statsStrip.modelsPublished"), value: nf.format(modelCount) },
-    { label: t("statsStrip.scoutsVerified"), value: nf.format(scoutCount) },
-    { label: t("statsStrip.regionsCovered"), value: "20" },
-    { label: t("statsStrip.studiosPartner"), value: "50" },
+    { label: t("statsStrip.modelsPublished"), value: modelCount },
+    { label: t("statsStrip.scoutsVerified"), value: scoutCount },
+    { label: t("statsStrip.regionsCovered"), value: 20 },
+    { label: t("statsStrip.studiosPartner"), value: 50 },
   ];
 
   return (
     <>
       <HeroToneSetter tone="dark" />
 
-      {/* ───────── HERO — immersive editorial cover, full-bleed ───────── */}
-      <section className="relative w-full min-h-[92vh] lg:min-h-screen overflow-hidden bg-[#15120E]">
-        {/* Full-bleed cover photo */}
-        <Image
-          src={heroSrc}
-          alt=""
-          fill
-          priority
-          quality={92}
-          sizes="100vw"
-          className="object-cover object-[68%_22%] lg:object-[62%_28%]"
-        />
+      {/* ───────── HERO — cinematic Atelier Noir cover ───────── */}
+      <CinematicHero heroSrc={heroSrc} />
 
-        {/* Scrims — fixed dark in both themes (the cover reads like a magazine
-            front, not theme-flipped). Top for nav, bottom + left for content. */}
-        <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-[#15120E]/60 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#15120E]/90 via-[#15120E]/35 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#15120E]/55 via-[#15120E]/10 to-transparent" />
+      {/* ───────── 01 — PER CHI È — audience router ───────── */}
+      <AudienceRouter />
 
-        {/* Content rail — aligned to the 1440px grid */}
-        <div className="relative z-10 mx-auto flex min-h-[92vh] lg:min-h-screen max-w-[1440px] flex-col px-6 sm:px-10 lg:px-12">
-          {/* Brand slug under the nav */}
-          <div className="flex items-baseline justify-between gap-4 pt-24 lg:pt-28 pb-5 text-meta !text-white/70">
-            <span className="uppercase tracking-[0.18em] text-[11px] !text-white/55">
-              {t("cover.masthead")}
-            </span>
-            <span className="!text-white/60">Milano · Roma · Firenze</span>
-          </div>
-
-          {/* Cover statement — anchored bottom-left */}
-          <div className="mt-auto pb-16 lg:pb-24 max-w-[46rem]">
-            <p className="text-eyebrow !text-white/80 mb-7">{t("cover.manifestoTop")}</p>
-            <h1 className="font-display font-light text-white tracking-[-0.025em]">
-              <span className="block text-[clamp(2.6rem,5.6vw,5.25rem)] leading-[0.98]">
-                {heroLead}
-              </span>
-              {heroEmph && (
-                <span className="mt-2 lg:mt-3 block italic font-[300] text-white/80 text-[clamp(1.6rem,3.4vw,3.1rem)] leading-[1.05] tracking-[-0.02em]">
-                  {heroEmph}
-                </span>
-              )}
-            </h1>
-            <p className="mt-8 text-[clamp(1rem,1.3vw,1.25rem)] leading-relaxed text-white/80 max-w-[44ch]">
-              {t("hero.subtitle")}
-            </p>
-            <div className="mt-9 lg:mt-11 flex flex-col sm:flex-row gap-3">
-              <Button
-                size="lg"
-                asChild
-                className="!bg-[#FBF7EF] !text-[#1A1814] hover:!bg-white !border-0"
-              >
-                <Link href="/register/model" className="group whitespace-nowrap">
-                  {t("hero.ctaModel")}
-                  <ArrowUpRight className="h-4 w-4 group-arrow" />
-                </Link>
-              </Button>
-              <Button
-                size="lg"
-                asChild
-                className="bg-transparent !border-white/70 !text-white hover:!bg-white hover:!text-[var(--ink)]"
-              >
-                <Link href="/register/scout" className="whitespace-nowrap">
-                  {t("hero.ctaScout")}
-                </Link>
-              </Button>
-            </div>
-
-            <div className="mt-12 lg:mt-14 pt-6 border-t border-white/15 max-w-[42rem]">
-              <p className="text-eyebrow !text-white/70">{t("cover.manifestoBottom")}</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Scroll cue */}
-        <a
-          href="#cast"
-          aria-label={t("cover.scroll")}
-          className="group absolute bottom-7 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 lg:flex"
-        >
-          <span className="text-meta !text-white/60 group-hover:!text-white/90 transition-colors">
-            {t("cover.scroll")}
-          </span>
-          <ArrowDown className="h-4 w-4 text-white/60 animate-bounce group-hover:text-white" />
-        </a>
-      </section>
-
-      {/* ───────── FEATURED — marquee of real models ───────── */}
+      {/* ───────── 02 — CAST — marquee of real models ───────── */}
       <div id="cast" className="scroll-mt-24">
         <FeaturedProfiles />
       </div>
 
-      {/* ───────── TRE VIE — 3 paths with editorial photos ───────── */}
-      <section id="vie" className="scroll-mt-24 hairline-t bg-[var(--bg)] py-24 lg:py-32">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
-          <Reveal className="mb-14 lg:mb-20 grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
-            <div className="lg:col-span-7">
-              <SectionIndex n="02" className="mb-6">{t("sections.paths")}</SectionIndex>
-              <h2 className="text-display max-w-[16ch]">{t("features.title")}</h2>
-            </div>
-            <p className="lg:col-span-4 lg:col-start-9 text-lead">
-              {t("features.subtitle")}
-            </p>
-          </Reveal>
+      {/* ───────── 03 — VERIFICA — trust differentiator (dark) ───────── */}
+      <TrustSection />
 
-          <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
-            {(
-              [
-                {
-                  href: "/register/model",
-                  img: PATH_IMAGES.model,
-                  label: t("features.forModel"),
-                  title: t("hero.ctaModel"),
-                  desc: t("hero.ctaModelDesc"),
-                },
-                {
-                  href: "/register/scout",
-                  img: PATH_IMAGES.scout,
-                  label: t("features.forScout"),
-                  title: t("hero.ctaScout"),
-                  desc: t("hero.ctaScoutDesc"),
-                },
-                {
-                  href: "/register/studio",
-                  img: PATH_IMAGES.studio,
-                  label: t("features.forStudio"),
-                  title: t("hero.ctaStudio"),
-                  desc: t("hero.ctaStudioDesc"),
-                },
-              ] as const
-            ).map((p) => (
-              <Link
-                key={p.href}
-                href={p.href as never}
-                className="group relative flex flex-col bg-[var(--bg-elevated)] hairline overflow-hidden transition-colors duration-500 hover:bg-[var(--bg)]"
-              >
-                <div className="relative aspect-[4/5] overflow-hidden bg-[var(--bg-soft)]">
-                  <Image
-                    src={p.img}
-                    alt=""
-                    fill
-                    sizes="(min-width: 768px) 33vw, 100vw"
-                    className="object-cover grayscale transition-[filter] duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:grayscale-0 group-hover:brightness-[0.97]"
-                  />
-                </div>
-                <div className="p-8 lg:p-10 flex flex-col gap-4 grow">
-                  <div className="flex items-baseline justify-between">
-                    <p className="text-eyebrow italic">
-                      {p.label}
-                    </p>
-                    <ArrowUpRight
-                      className="h-4 w-4 text-[var(--ink-3)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--ink)]"
-                      aria-hidden="true"
-                    />
-                  </div>
-                  <h3 className="text-h2 text-[var(--ink)]">{p.title}</h3>
-                  <p className="text-body text-[var(--ink-2)]">{p.desc}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ───────── BANDI — 3 mock open calls in 3-up grid ───────── */}
+      {/* ───────── 04 — BANDI — 3 mock open calls in 3-up grid ───────── */}
       <BandiSection t={t} />
+
+      {/* ───────── PULL-QUOTE — manifesto voice ───────── */}
+      <EditorialQuote />
+
+      {/* ───────── STUDI — bookable studios showcase ───────── */}
+      <StudiosShowcase />
 
       {/* ───────── MANIFESTO + NUMERI ───────── */}
       <section
@@ -238,7 +81,7 @@ export default async function LandingPage() {
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
           <Reveal className="grid lg:grid-cols-12 gap-10 lg:gap-20 items-end">
             <div className="lg:col-span-7">
-              <SectionIndex n="04" className="mb-6">{t("sections.manifesto")}</SectionIndex>
+              <SectionIndex n="06" className="mb-6">{t("sections.manifesto")}</SectionIndex>
               <h2 className="font-display font-light text-[clamp(2.25rem,5vw,4.5rem)] leading-[1.02] tracking-[-0.025em] text-[var(--ink)] max-w-[18ch]">
                 {t("cta.title")}
               </h2>
@@ -249,22 +92,21 @@ export default async function LandingPage() {
           </Reveal>
 
           {/* Numbers — the review in figures */}
-          <Reveal
-            as="ol"
-            className="mt-16 lg:mt-24 grid grid-cols-2 lg:grid-cols-4 border-t border-l border-[var(--rule)]"
-          >
-            {stats.map((s) => (
-              <li
+          <ol className="mt-16 lg:mt-24 grid grid-cols-2 lg:grid-cols-4 border-t border-l border-[var(--rule)]">
+            {stats.map((s, i) => (
+              <Reveal
+                as="li"
                 key={s.label}
+                delay={i * 70}
                 className="border-r border-b border-[var(--rule)] px-6 lg:px-8 py-10 lg:py-14"
               >
                 <p className="font-display font-light tabular-nums text-[clamp(2.75rem,5.5vw,4.75rem)] leading-[0.92] text-[var(--ink)]">
-                  {s.value}
+                  <CountUp value={s.value} locale={locale} />
                 </p>
                 <p className="mt-4 text-meta max-w-[16ch]">{s.label}</p>
-              </li>
+              </Reveal>
             ))}
-          </Reveal>
+          </ol>
         </div>
       </section>
 
@@ -276,7 +118,7 @@ export default async function LandingPage() {
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
           <Reveal className="mb-14 lg:mb-20 grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
             <div className="lg:col-span-5">
-              <SectionIndex n="05" className="mb-6">{t("sections.method")}</SectionIndex>
+              <SectionIndex n="07" className="mb-6">{t("sections.method")}</SectionIndex>
               <h2 className="text-display">{t("howItWorks.title")}</h2>
             </div>
             <p className="lg:col-span-6 lg:col-start-7 text-lead self-end">
@@ -284,10 +126,12 @@ export default async function LandingPage() {
             </p>
           </Reveal>
 
-          <Reveal as="ol" className="grid md:grid-cols-3 hairline-t">
+          <ol className="grid md:grid-cols-3 hairline-t">
             {(["step1", "step2", "step3"] as const).map((k, i) => (
-              <li
+              <Reveal
+                as="li"
                 key={k}
+                delay={i * 90}
                 className={`p-8 lg:p-10 hairline-b md:border-b-0 ${
                   i > 0 ? "md:hairline-l" : ""
                 }`}
@@ -301,9 +145,9 @@ export default async function LandingPage() {
                 <p className="text-body text-[var(--ink-2)] max-w-md">
                   {t(`howItWorks.${k}.description`)}
                 </p>
-              </li>
+              </Reveal>
             ))}
-          </Reveal>
+          </ol>
         </div>
       </section>
 
@@ -318,7 +162,11 @@ export default async function LandingPage() {
               {t("cta.subtitle")}
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-              <Button variant="accent" size="lg" asChild>
+              <Button
+                size="lg"
+                asChild
+                className="!bg-[var(--bg)] !text-[var(--ink)] hover:!opacity-90 !border-0"
+              >
                 <Link href="/register" className="group">
                   {t("cta.button")}
                   <ArrowUpRight className="h-4 w-4 group-arrow" />
@@ -341,12 +189,17 @@ export default async function LandingPage() {
             <p className="mt-3 font-display tabular-nums text-6xl lg:text-7xl font-light text-[var(--bg)] leading-none">
               €0
             </p>
-            <p className="mt-3 text-body !text-[var(--bg)]/70">
-              {t("pricingTeaser.period")}
-            </p>
-            <p className="mt-7 pt-5 border-t border-[var(--bg)]/20 text-eyebrow !text-[var(--bg)]/75">
+            <p className="mt-3 text-eyebrow italic !text-[var(--bg)]/75">
               {t("pricingTeaser.titleLine1")}
             </p>
+            <div className="mt-7 pt-5 border-t border-[var(--bg)]/20 flex items-baseline justify-between gap-4">
+              <p className="font-display tabular-nums text-3xl lg:text-4xl font-light text-[var(--bg)] leading-none whitespace-nowrap">
+                {t("pricingTeaser.proPrice")}
+              </p>
+              <p className="text-eyebrow italic !text-[var(--bg)]/60 text-right max-w-[14ch]">
+                {t("pricingTeaser.proPeriod")}
+              </p>
+            </div>
           </div>
         </div>
 
@@ -395,7 +248,7 @@ function BandiSection({
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
         <Reveal className="mb-14 lg:mb-20 grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
           <div className="lg:col-span-7">
-            <SectionIndex n="03" className="mb-6">{t("bandi.eyebrow")}</SectionIndex>
+            <SectionIndex n="04" className="mb-6">{t("bandi.eyebrow")}</SectionIndex>
             <h2 className="text-display max-w-[16ch]">{t("bandi.title")}</h2>
           </div>
           <p className="lg:col-span-4 lg:col-start-9 text-lead">
@@ -407,11 +260,11 @@ function BandiSection({
           {items.map((b, i) => {
             const isClosing = b.status === "closingSoon";
             return (
-              <Link
-                key={i}
-                href={"/register" as never}
-                className="group relative flex flex-col bg-[var(--bg-elevated)] hairline transition-colors duration-500 hover:bg-[var(--bg)]"
-              >
+              <Reveal key={i} delay={i * 90} className="flex flex-col">
+                <Link
+                  href={"/register" as never}
+                  className="group relative flex grow flex-col bg-[var(--bg-elevated)] hairline transition-colors duration-500 hover:bg-[var(--bg)]"
+                >
                 {/* Tipo */}
                 <div className="flex items-center justify-between px-7 lg:px-9 pt-7 lg:pt-8 pb-4 hairline-b border-dashed">
                   <span className="text-eyebrow italic">
@@ -492,7 +345,8 @@ function BandiSection({
                     />
                   </span>
                 </div>
-              </Link>
+                </Link>
+              </Reveal>
             );
           })}
         </div>

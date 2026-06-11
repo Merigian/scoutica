@@ -61,7 +61,7 @@ export default async function PublicScoutProfilePage({
               <h1 className="text-2xl font-[var(--font-display)] font-bold">
                 {scoutProfile.businessName || scoutProfile.user.name}
               </h1>
-              <Badge variant="gold" className="gap-1">
+              <Badge variant="default" className="gap-1">
                 <ShieldCheck className="h-3 w-3" />
                 {t("verified")}
               </Badge>

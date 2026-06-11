@@ -37,6 +37,7 @@ interface StudioFilters {
   studioType?: StudioType;
   priceMax?: number;
   query?: string;
+  sort?: "newest" | "priceAsc" | "priceDesc";
 }
 
 export async function searchStudios(filters: StudioFilters = {}): Promise<StudioSearchResult> {
@@ -87,7 +88,12 @@ export async function searchStudios(filters: StudioFilters = {}): Promise<Studio
           select: { businessName: true },
         },
       },
-      orderBy: { createdAt: "desc" },
+      orderBy:
+        filters.sort === "priceAsc"
+          ? { hourlyRate: { sort: "asc", nulls: "last" } }
+          : filters.sort === "priceDesc"
+            ? { hourlyRate: { sort: "desc", nulls: "last" } }
+            : { createdAt: "desc" },
       skip,
       take: pageSize,
     }),

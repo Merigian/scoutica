@@ -86,11 +86,14 @@
     "newCasting": "New casting",
     "newJob": "New job",
     "newStudio": "New studio",
-    "modelVerifications": "Model verifications"
+    "modelVerifications": "Model verifications",
+    "more": "More",
+    "close": "Close"
   },
   "landing": {
     "cover": {
       "masthead": "Scoutica · Italy",
+      "reach": "Across Italy",
       "manifestoTop": "Professional scouting",
       "manifestoBottom": "New faces for Italian fashion",
       "scroll": "Explore"
@@ -116,7 +119,9 @@
       "lead": "No commission on your bookings, no hidden fees. Professional tooling, where it is needed.",
       "startingFrom": "From",
       "period": "per month, forever",
-      "cta": "See the plans"
+      "cta": "See the plans",
+      "proPrice": "from €39",
+      "proPeriod": "per month, for those who scout"
     },
     "hero": {
       "title": "New faces for Italian fashion. Selected with care, presented with method.",
@@ -141,7 +146,7 @@
       "forStudio": "For studios",
       "profiles": {
         "title": "Editorial portfolio",
-        "description": "A profile composed with editorial care. Photographs, self-tapes and measurements, always current."
+        "description": "A profile composed with editorial care. Photographs and measurements, always current."
       },
       "verified": {
         "title": "Document verification",
@@ -260,6 +265,52 @@
       "models": "Published model profiles",
       "scouts": "Accredited scouts and agencies",
       "regions": "Italian regions covered"
+    },
+    "audience": {
+      "eyebrow": "Who it's for",
+      "title": "Three entrances, one standard.",
+      "subtitle": "Models, scouts and studios: each with their own path, under one editorial signature.",
+      "discover": "Discover"
+    },
+    "verification": {
+      "eyebrow": "Verification",
+      "marketContext": "Italy is the world's fourth-largest fashion market. Its scouting, until now, still ran on DMs.",
+      "title": "Every contact passes a check.",
+      "subtitle": "No anonymous profiles, no surprises. Only accredited professionals, with verified identity.",
+      "pillars": {
+        "documental": {
+          "title": "Document verification",
+          "description": "Scouts, agencies and brands pass a human and document check before they may contact you.",
+          "detail": "Human review in 24–48 hours"
+        },
+        "transparency": {
+          "title": "Transparency and protection",
+          "description": "Model releases ready to download, verified profiles, managed reports. Italian fashion, finally in good order.",
+          "detail": "Model-release PDFs included"
+        },
+        "professionals": {
+          "title": "Professionals only",
+          "description": "No anonymous accounts. Every scout, agency or brand is accredited before joining the community.",
+          "detail": "Zero anonymous accounts"
+        }
+      }
+    },
+    "quote": {
+      "eyebrow": "Manifesto",
+      "text": "A fashion that knows who it's dealing with: selected with care, presented with method.",
+      "attribution": "Scoutica · Italy"
+    },
+    "studios": {
+      "eyebrow": "Studios",
+      "title": "Photo studios, on booking",
+      "subtitle": "Equipped spaces across Italy, bookable directly. Light, set and backstage included.",
+      "viewAll": "Browse studios",
+      "fromPrice": "from",
+      "perHour": "/ hour",
+      "addPrompt": "Run a photo studio? Add it and start earning →",
+      "emptyTitle": "Photo studios, soon on Scoutica",
+      "emptyBody": "Professional spaces across Italy, bookable in a few clicks. Run a studio? Start now.",
+      "addCta": "Add your studio"
     }
   },
   "auth": {
@@ -278,6 +329,7 @@
       "title": "Sign in to Scoutica",
       "subtitle": "Welcome back! Sign in to your account.",
       "email": "Email",
+      "emailPlaceholder": "name@example.com",
       "password": "Password",
       "forgotPassword": "Forgot password?",
       "submit": "Sign in",
@@ -319,6 +371,8 @@
       "firstName": "First name",
       "lastName": "Last name",
       "email": "Email",
+      "emailPlaceholder": "name@example.com",
+      "emailPlaceholderBusiness": "name@company.com",
       "password": "Password",
       "confirmPassword": "Confirm password",
       "scoutType": "Business type",
@@ -342,6 +396,13 @@
       "completeEyebrow": "Finalize profile",
       "selectRole": "Choose your role to continue.",
       "continue": "Continue",
+      "pwStrength": {
+        "label": "Strength",
+        "weak": "weak",
+        "fair": "fair",
+        "good": "good",
+        "strong": "strong"
+      },
       "roles": {
         "model": "Model",
         "scout": "Scout",
@@ -591,12 +652,13 @@
   },
   "pricing": {
     "label": "Pricing",
-    "eyebrow": "Pricing · Plans · 2026",
+    "eyebrow": "Pricing · Plans",
     "transactionalNote": "No commission on contracts. You pay only the subscription.",
     "payTeaserEyebrow": "Managed payments · Coming in 2026",
     "payTeaserCta": "Stay tuned",
     "title": "Free for talent. Sustainable for the industry.",
     "subtitle": "Models never pay. Scouts, agencies and studios pick the plan they need. No percentage on earnings. 14-day free trial on all plans.",
+    "afterTrial": "After the 14-day trial your subscription renews automatically at the listed price. Cancel anytime, in one click.",
     "intervalMonthly": "Monthly",
     "intervalAnnual": "Annual",
     "annualDiscount": "-17%",
@@ -609,7 +671,7 @@
         "period": "forever",
         "desc": "For those who want to be discovered in Italian fashion.",
         "features": [
-          "Portfolio up to 12 photos + 1 self-tape",
+          "Portfolio up to 12 photos + self-tape (coming soon)",
           "Unlimited casting applications",
           "Receive requests from verified scouts",
           "Editorial public profile with custom URL"
@@ -622,12 +684,13 @@
         "period": "per month · 14-day free trial",
         "priceAnnual": "€290",
         "periodAnnual": "per year · ~€24/mo · 14 days free",
+        "priceAnnualSaving": "Save €58 a year",
         "desc": "For freelance scouts and casting directors.",
         "features": [
           "Unlimited model contacts",
           "Unlimited shortlist boards",
-          "Advanced search and pro filters",
-          "Saved searches with weekly alerts",
+          "Advanced search: measurements, city, category, availability",
+          "Saved searches (alerts coming soon)",
           "Post unlimited castings"
         ],
         "cta": "Start as Scout Pro",
@@ -639,13 +702,14 @@
         "period": "per month · founding price (then €149)",
         "priceAnnual": "€990",
         "periodAnnual": "per year · founding (~€82/mo)",
+        "priceAnnualSaving": "Save €198 a year",
         "desc": "For structured agencies with booker teams.",
         "features": [
           "Everything in Scout Pro, unlimited",
-          "Shared multi-user workspace (3 seats)",
-          "Public agency profile with roster",
-          "Advanced analytics",
-          "Dedicated account manager"
+          "Dedicated priority support",
+          "Multi-user workspace · 3 seats (coming soon)",
+          "Public agency profile with roster (coming soon)",
+          "Advanced analytics (coming soon)"
         ],
         "foundingBadge": "Founding · first 50",
         "cta": "Register agency"
@@ -656,13 +720,14 @@
         "period": "per month · 14-day free trial",
         "priceAnnual": "€490",
         "periodAnnual": "per year · ~€41/mo · 14 days free",
+        "priceAnnualSaving": "Save €98 a year",
         "desc": "For photo studios, locations and casting directors.",
         "features": [
           "Unlimited castings",
           "Advanced application management",
           "Pro talent search",
           "Studio listing with gallery and availability",
-          "Statistics and analytics"
+          "Booking stats and trends"
         ],
         "cta": "Start as Studio"
       }
@@ -683,12 +748,37 @@
         }
       ]
     },
+    "comparison": {
+      "eyebrow": "Compare",
+      "title": "What each plan includes",
+      "subtitle": "The demand-side plans, side by side. Models always stay free.",
+      "featureCol": "Feature",
+      "cols": { "scoutPro": "Scout Pro", "agency": "Agency", "studio": "Studio" },
+      "no": "—",
+      "yesLabel": "Included",
+      "noLabel": "Not included",
+      "soonLabel": "Coming soon",
+      "rows": [
+        { "label": "Model contacts", "scoutPro": "Unlimited", "agency": "Unlimited", "studio": "Unlimited" },
+        { "label": "Shortlist boards", "scoutPro": "Unlimited", "agency": "Unlimited", "studio": "Unlimited" },
+        { "label": "Advanced search and pro filters", "scoutPro": "yes", "agency": "yes", "studio": "yes" },
+        { "label": "Saved searches", "scoutPro": "yes", "agency": "yes", "studio": "yes" },
+        { "label": "Post castings", "scoutPro": "Unlimited", "agency": "Unlimited", "studio": "Unlimited" },
+        { "label": "Post jobs and campaigns", "scoutPro": "yes", "agency": "yes", "studio": "yes" },
+        { "label": "Studio listing with gallery", "scoutPro": "no", "agency": "no", "studio": "yes" },
+        { "label": "Priority support", "scoutPro": "yes", "agency": "yes", "studio": "yes" },
+        { "label": "Multi-user workspace", "scoutPro": "no", "agency": "soon", "studio": "no" },
+        { "label": "Public profile with roster", "scoutPro": "no", "agency": "soon", "studio": "no" },
+        { "label": "Advanced analytics", "scoutPro": "no", "agency": "soon", "studio": "soon" },
+        { "label": "Free trial", "scoutPro": "14 days", "agency": "14 days", "studio": "14 days" }
+      ]
+    },
     "ctaModel": "Sign up as Model",
     "ctaScout": "Sign up as Scout",
     "promotedTeaser": "Managed payments and guaranteed payouts arrive in the second half of 2026. For now the platform facilitates discovery: payment happens off-platform under direct agreements.",
     "feature1": {
       "title": "Editorial portfolio",
-      "desc": "6 photos + self-tape, always free for models."
+      "desc": "12 photos, always free for models."
     },
     "feature2": {
       "title": "Pro search",
@@ -861,7 +951,7 @@
     "intro1": "<strong>Scoutica</strong> was born from the need to modernize the world of scouting in Italian fashion. Too often, contact between models and industry professionals happens through informal channels, Instagram DMs, and unstructured manual processes.",
     "intro2": "Our mission is to create a professional, safe, and transparent space where models can present themselves at their best and where verified scouts, agencies, and brands can discover new talent efficiently and respectfully.",
     "whyNow": {
-      "eyebrow": "02 — Why now",
+      "eyebrow": "Why now",
       "title": "Italian fashion deserves its own platform.",
       "body": "Italy is the fourth fashion market in the world by revenue, yet its scouting still lives on DMs, IG screenshots, and private phone rubrics. In 2026 this is no longer acceptable — not for the talent, not for those searching, not for the brands who want to work properly."
     },
@@ -875,7 +965,7 @@
     "italyFirst": "Italy first",
     "italyFirstDesc": "Scoutica is designed for the Italian market. We know the territory, the agencies, and the needs of the industry.",
     "principles": {
-      "eyebrow": "04 — Non-negotiable principles",
+      "eyebrow": "Non-negotiable principles",
       "title": "Five rules that don't change.",
       "items": [
         {
@@ -896,7 +986,7 @@
         {
           "n": "04",
           "k": "Editorial first",
-          "d": "A profile curated like a magazine, not like a CV."
+          "d": "A profile curated with editorial care, not like a CV."
         },
         {
           "n": "05",
@@ -909,6 +999,15 @@
       "eyebrow": "·",
       "line1": "Scoutica is designed, built and maintained in Milan.",
       "line2": "Legal seat, Italy."
+    },
+    "closing": {
+      "eyebrow": "Get started",
+      "title": "Ready to join Scoutica?",
+      "body": "Join the professionals rewriting the standard of Italian scouting. Creating an account takes a few minutes.",
+      "ctaPrimary": "Create your account",
+      "ctaSecondary": "See the plans",
+      "contactLabel": "Questions before you start?",
+      "contactCta": "Write to us"
     }
   },
   "errors": {
@@ -964,7 +1063,7 @@
         "strengthProfessional": "Professional",
         "strengthGood": "Established",
         "strengthBasic": "Starting",
-        "sommario": "Summary",
+        "sommario": "Overview",
         "numeri": "Numbers",
         "avvisi": "Notices",
         "movimenti": "Activity",
@@ -1010,7 +1109,7 @@
         "agency": "Agency"
       },
       "contacts": {
-        "title": "Contact Requests",
+        "title": "Received Requests",
         "description": "Manage requests received from scouts, agencies and brands",
         "noRequests": "No requests yet",
         "noRequestsDesc": "When a professional contacts you, you'll see the request here."
@@ -1124,6 +1223,20 @@
       }
     },
     "scout": {
+      "onboarding": {
+        "welcome": "Start here",
+        "subtitle": "Complete these steps to get the most out of Scoutica.",
+        "steps": {
+          "verify": "Verify your profile",
+          "verifyDesc": "Unlock contacts, castings and messages.",
+          "search": "Explore talent",
+          "searchDesc": "Search and save your first profiles.",
+          "board": "Create a board",
+          "boardDesc": "Organize favorites into shortlists.",
+          "casting": "Post a casting",
+          "castingDesc": "Receive applications from the right models."
+        }
+      },
       "jobs": {
         "title": "My Jobs",
         "description": "Manage your jobs and applications",
@@ -1290,10 +1403,13 @@
         "verificationRequired": "Verification required",
         "verificationRequiredDesc": "Complete verification to publish castings and contact talent.",
         "quickActions": "Quick actions",
-        "sommario": "Summary",
+        "sommario": "Overview",
         "numeri": "Numbers",
         "avvisi": "Notices",
         "movimenti": "Activity",
+        "andamento": "Trend (month)",
+        "contacts30": "Contacts sent",
+        "applications30": "Applications received",
         "applicationStatus": {
           "PENDING": "Pending",
           "ACCEPTED": "Accepted",
@@ -1302,6 +1418,42 @@
       }
     },
     "studio": {
+      "home": {
+        "sommario": "Overview",
+        "greeting": "Hi, {name}",
+        "numeri": "Numbers",
+        "avvisi": "Alerts",
+        "movimenti": "Activity",
+        "quickActions": "Quick actions",
+        "andamento": "Trend (month)",
+        "bookings30": "Bookings",
+        "inquiries30": "Inquiries",
+        "viewAll": "View all",
+        "noActivity": "No activity yet.",
+        "newStudio": "New studio",
+        "manageStudios": "Manage studios",
+        "publishedStudios": "Published studios",
+        "pendingBookings": "Bookings to confirm",
+        "upcomingBookings": "Upcoming bookings",
+        "pendingInquiries": "Inquiries to handle",
+        "bookingsThisMonth": "Bookings this month",
+        "totalStudios": "Total studios",
+        "recentInquiries": "Recent inquiries",
+        "recentInquiriesDesc": "The latest inquiries for your studios.",
+        "noInquiriesYet": "No inquiries yet.",
+        "quickNewStudio": "Add studio",
+        "quickBookings": "Bookings",
+        "quickInquiries": "Inquiries",
+        "quickMessages": "Messages",
+        "onboardingTitle": "Publish your first studio",
+        "onboardingBody": "Add a space to start receiving inquiries and bookings from fashion professionals.",
+        "onboardingCta": "Add studio",
+        "inquiryStatus": {
+          "PENDING": "To handle",
+          "REPLIED": "Replied",
+          "CLOSED": "Closed"
+        }
+      },
       "billing": {
         "title": "Subscription",
         "currentPlan": "Current plan"
@@ -1656,6 +1808,8 @@
       "ethnicity": "Ethnicity",
       "dressSize": "Dress size",
       "website": "Website",
+      "activeRecently": "Recently active",
+      "socialTitle": "Social",
       "memberSince": "Member since",
       "backToSearch": "Back to search",
       "back": "Back"
@@ -2053,6 +2207,10 @@
     "descriptionMinChars": "Description must be at least 20 characters"
   },
   "components": {
+    "trend": {
+      "vsLastMonth": "vs last month",
+      "flat": "No change"
+    },
     "readOnlyBanner": {
       "title": "You're browsing in read-only mode",
       "description": "Verify your account to contact models, create castings and job posts.",
@@ -2331,6 +2489,10 @@
       "searchPlaceholder": "Search by name, city...",
       "allRegions": "All regions",
       "allTypes": "All types",
+      "sortLabel": "Sort",
+      "sortNewest": "Newest",
+      "sortPriceAsc": "Price: low to high",
+      "sortPriceDesc": "Price: high to low",
       "search": "Search",
       "clear": "Clear"
     },

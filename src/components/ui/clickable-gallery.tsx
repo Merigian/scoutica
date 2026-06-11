@@ -35,7 +35,7 @@ export function ClickableGallery({
           <button
             key={img.id}
             type="button"
-            className={`${aspectRatio} overflow-hidden bg-muted relative cursor-pointer group`}
+            className={`${aspectRatio} overflow-hidden bg-[var(--bg-soft)] relative cursor-pointer group`}
             onClick={() => {
               setLightboxIndex(i);
               setLightboxOpen(true);

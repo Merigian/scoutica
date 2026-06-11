@@ -92,7 +92,7 @@ export default async function ModelSavedPage() {
                                 </Badge>
                               )}
                               {c.isPaid && (
-                                <Badge variant="gold" className="text-[10px]">
+                                <Badge variant="default" className="text-[10px]">
                                   <DollarSign className="h-3 w-3 mr-0.5" />
                                   {t("paid")}
                                 </Badge>
@@ -188,7 +188,7 @@ export default async function ModelSavedPage() {
                                 </Badge>
                               )}
                               {j.isPaid && (
-                                <Badge variant="gold" className="text-[10px]">
+                                <Badge variant="default" className="text-[10px]">
                                   <DollarSign className="h-3 w-3 mr-0.5" />
                                   {t("paid")}
                                 </Badge>

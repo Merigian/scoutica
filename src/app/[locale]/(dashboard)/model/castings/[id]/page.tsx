@@ -67,7 +67,7 @@ export default async function CastingDetailPage({
       <div>
         <div className="flex items-center gap-2 flex-wrap mb-2">
           {casting.isPaid && (
-            <Badge variant="gold" className="text-xs">
+            <Badge variant="default" className="text-xs">
               <DollarSign className="h-3 w-3 mr-0.5" />
               {t("paid")}
             </Badge>
@@ -91,7 +91,7 @@ export default async function CastingDetailPage({
             {casting.scoutProfile.businessName ?? "Scout"}
           </span>
           {casting.scoutProfile.verificationStatus === "APPROVED" && (
-            <Badge variant="gold" className="ml-1 text-[10px]">✓</Badge>
+            <Badge variant="default" className="ml-1 text-[10px]">✓</Badge>
           )}
         </p>
       </div>

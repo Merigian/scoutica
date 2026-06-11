@@ -78,7 +78,7 @@ export default async function ScoutBoardsPage() {
                           style={{ zIndex: 4 - i }}
                         >
                           {img ? (
-                            <img src={img} alt="" className="h-full w-full object-cover" />
+                            <img src={img} alt={item.modelProfile.fullName ?? ""} className="h-full w-full object-cover" />
                           ) : (
                             <div className="h-full w-full flex items-center justify-center text-[10px] text-[var(--ink-3)]">
                               {item.modelProfile.fullName?.[0] ?? "?"}

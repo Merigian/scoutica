@@ -153,7 +153,7 @@ export function Calendar({
         {weekDays.map((d) => (
           <div
             key={d}
-            className="text-center text-[10px] font-medium text-muted-foreground py-1"
+            className="text-center text-[10px] font-medium text-[var(--ink-3)] py-1"
           >
             {d}
           </div>
@@ -180,7 +180,7 @@ export function Calendar({
               className={cn(
                 "relative h-9 w-full text-xs font-medium transition-all",
                 // Base
-                !sameMonth && "text-muted-foreground/25",
+                !sameMonth && "text-[var(--ink-3)]/25",
                 sameMonth &&
                   !disabled &&
                   !selected &&
@@ -207,7 +207,7 @@ export function Calendar({
                   rangeEndDay &&
                   "rounded-md",
                 // Today indicator
-                today && !selected && "ring-1 ring-gold ring-inset rounded-md"
+                today && !selected && "ring-1 ring-[var(--ink)] ring-inset rounded-md"
               )}
             >
               {format(day, "d")}
@@ -217,7 +217,7 @@ export function Calendar({
       </div>
 
       {/* Legend */}
-      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-4 pt-3 border-t text-[10px] text-muted-foreground">
+      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-4 pt-3 border-t text-[10px] text-[var(--ink-3)]">
         <span className="flex items-center gap-1.5">
           <span className="h-2.5 w-2.5 rounded-sm bg-primary" />
           {t("selected")}
@@ -227,7 +227,7 @@ export function Calendar({
           {t("unavailable")}
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-sm ring-1 ring-gold" />
+          <span className="h-2.5 w-2.5 rounded-sm ring-1 ring-[var(--ink)]" />
           {t("today")}
         </span>
       </div>

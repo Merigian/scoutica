@@ -514,7 +514,7 @@ export async function getModelProfileBySlug(slug: string) {
     where: { slug, isPublished: true },
     include: {
       user: {
-        select: { id: true, name: true, image: true, createdAt: true },
+        select: { id: true, name: true, image: true, createdAt: true, lastActiveAt: true },
       },
       portfolioImages: {
         orderBy: { order: "asc" },

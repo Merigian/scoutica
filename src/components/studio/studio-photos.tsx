@@ -118,7 +118,7 @@ export function StudioPhotos({ studioId, images }: StudioPhotosProps) {
                   className="object-cover"
                 />
                 {image.isCover && (
-                  <Badge className="absolute top-1 left-1 text-[9px]" variant="gold">
+                  <Badge className="absolute top-1 left-1 text-[9px]" variant="default">
                     Cover
                   </Badge>
                 )}

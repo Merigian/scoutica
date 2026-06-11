@@ -11,6 +11,7 @@ import { registerScout } from "@/server/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
+import { PasswordStrength } from "@/components/forms/password-strength";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
 import { Turnstile, turnstileSiteKey } from "@/components/shared/turnstile";
@@ -32,6 +33,7 @@ export default function RegisterScoutPage() {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<RegisterScoutInput>({
     resolver: zodResolver(registerScoutSchema),
     defaultValues: {
@@ -39,6 +41,8 @@ export default function RegisterScoutPage() {
       termsAccepted: false as unknown as true,
     },
   });
+
+  const password = watch("password");
 
   const onSubmit = async (data: RegisterScoutInput) => {
     setIsLoading(true);
@@ -76,7 +80,7 @@ export default function RegisterScoutPage() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {error && (
-          <div className="hairline border-[var(--accent)] bg-[var(--accent)]/5 px-4 py-3 text-sm text-[var(--accent)]">
+          <div className="hairline border-[var(--danger)] bg-[var(--danger)]/5 px-4 py-3 text-sm text-[var(--danger)]">
             {error}
           </div>
         )}
@@ -96,7 +100,7 @@ export default function RegisterScoutPage() {
           <Input
             id="email"
             type="email"
-            placeholder="nome@azienda.it"
+            placeholder={t("emailPlaceholderBusiness")}
             {...register("email")}
             error={errors.email?.message}
           />
@@ -109,6 +113,7 @@ export default function RegisterScoutPage() {
             {...register("password")}
             error={errors.password?.message}
           />
+          <PasswordStrength value={password || ""} />
         </div>
 
         <div className="flex items-start gap-2">
@@ -123,7 +128,7 @@ export default function RegisterScoutPage() {
           </Label>
         </div>
         {errors.termsAccepted && (
-          <p className="text-sm text-[var(--accent)]">{t("termsRequired")}</p>
+          <p className="text-sm text-[var(--danger)]">{t("termsRequired")}</p>
         )}
 
         <Turnstile onToken={setTurnstileToken} />

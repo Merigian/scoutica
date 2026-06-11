@@ -76,7 +76,7 @@ export function StudioAvailability({
       <Card>
         <CardHeader className="pb-2">
           <CardTitle className="text-base flex items-center gap-2">
-            <CalendarDays className="h-4 w-4 text-gold" />
+            <CalendarDays className="h-4 w-4 text-[var(--ink)]" />
             {t("title")}
           </CardTitle>
           <p className="text-xs text-[var(--ink-3)] mt-1">
@@ -113,7 +113,7 @@ export function StudioAvailability({
               </div>
               <Button
                 size="sm"
-                variant="gold"
+                variant="default"
                 className="w-full"
                 onClick={handleBlock}
                 disabled={isPending}

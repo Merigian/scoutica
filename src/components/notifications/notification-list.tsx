@@ -87,12 +87,12 @@ export function NotificationList({ notifications, locale }: NotificationListProp
             <Card
               key={notification.id}
               className={`cursor-pointer transition-colors hover:bg-[var(--bg-soft)]/50 ${
-                !notification.isRead ? "border-[var(--accent)]/30 bg-gold/5" : ""
+                !notification.isRead ? "border-[var(--accent)]/30 bg-[var(--ink)]/5" : ""
               }`}
               onClick={() => handleClick(notification)}
             >
               <CardContent className="p-3 flex items-start gap-3">
-                <div className={`mt-0.5 ${!notification.isRead ? "text-gold" : "text-[var(--ink-3)]"}`}>
+                <div className={`mt-0.5 ${!notification.isRead ? "text-[var(--ink)]" : "text-[var(--ink-3)]"}`}>
                   <Icon className="h-4 w-4" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -101,7 +101,7 @@ export function NotificationList({ notifications, locale }: NotificationListProp
                       {notification.title}
                     </span>
                     {!notification.isRead && (
-                      <div className="h-2 w-2 rounded-full bg-gold shrink-0" />
+                      <div className="h-2 w-2 rounded-full bg-[var(--ink)] shrink-0" />
                     )}
                   </div>
                   <p className="text-xs text-[var(--ink-3)] mt-0.5">{notification.body}</p>

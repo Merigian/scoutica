@@ -39,7 +39,7 @@ export function BoostCard({ activeBoosts, locale }: BoostCardProps) {
     <Card className="border-[var(--accent)]/30">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Zap className="h-5 w-5 text-gold" />
+          <Zap className="h-5 w-5 text-[var(--ink)]" />
           {t("title")}
         </CardTitle>
       </CardHeader>
@@ -48,7 +48,7 @@ export function BoostCard({ activeBoosts, locale }: BoostCardProps) {
 
         {activeBoosts.length > 0 && (
           <div className="flex items-center gap-2">
-            <Badge variant="gold" className="gap-1">
+            <Badge variant="default" className="gap-1">
               <CheckCircle className="h-3 w-3" />
               {t("active")}
             </Badge>
@@ -61,7 +61,7 @@ export function BoostCard({ activeBoosts, locale }: BoostCardProps) {
         )}
 
         {canBuyMore ? (
-          <Button variant="gold" isLoading={loading} onClick={handleBuyBoost}>
+          <Button variant="default" isLoading={loading} onClick={handleBuyBoost}>
             <Zap className="h-4 w-4 mr-1" />
             {t("button")} — {t("price")}
           </Button>

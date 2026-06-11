@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter_Tight } from "next/font/google";
+import { Fraunces, Inter_Tight, Bodoni_Moda, Archivo } from "next/font/google";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -14,6 +14,22 @@ const interTight = Inter_Tight({
   subsets: ["latin", "latin-ext"],
   variable: "--font-inter-tight",
   weight: ["400", "500", "600"],
+  display: "swap",
+});
+
+// ── Atelier Noir redesign — display Didone + grotesque body ──
+const bodoni = Bodoni_Moda({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-bodoni",
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const archivo = Archivo({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-archivo",
+  weight: ["300", "400", "500", "600"],
   display: "swap",
 });
 
@@ -60,7 +76,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html suppressHydrationWarning className={`${fraunces.variable} ${interTight.variable}`}>
+    <html suppressHydrationWarning className={`theme-noir ${fraunces.variable} ${interTight.variable} ${bodoni.variable} ${archivo.variable}`}>
       <body className="min-h-screen antialiased">
         <a href="#main" className="skip-link">Skip to content</a>
         {children}

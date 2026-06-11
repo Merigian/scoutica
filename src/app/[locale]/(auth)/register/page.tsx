@@ -20,15 +20,12 @@ export default function RegisterPage() {
           href="/register/model"
           className="block group hairline-t py-6 hover:bg-[var(--bg-soft)] transition-colors px-2 -mx-2"
         >
-          <div className="flex items-start gap-5">
-            <span className="font-[var(--font-display)] italic text-[var(--ink-3)] text-lg tabular-nums w-10 pt-1">01</span>
-            <div className="flex-1 flex items-start justify-between gap-4">
-              <div>
-                <p className="text-h3">{t("asModel")}</p>
-                <p className="mt-2 text-body text-[var(--ink-2)]">{t("asModelDesc")}</p>
-              </div>
-              <Camera className="h-5 w-5 text-[var(--ink-3)] group-hover:text-[var(--ink)] transition-colors" />
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-h3">{t("asModel")}</p>
+              <p className="mt-2 text-body text-[var(--ink-2)]">{t("asModelDesc")}</p>
             </div>
+            <Camera className="h-5 w-5 text-[var(--ink-3)] group-hover:text-[var(--ink)] transition-colors" />
           </div>
         </Link>
 
@@ -36,15 +33,12 @@ export default function RegisterPage() {
           href="/register/scout"
           className="block group hairline-t py-6 hover:bg-[var(--bg-soft)] transition-colors px-2 -mx-2"
         >
-          <div className="flex items-start gap-5">
-            <span className="font-[var(--font-display)] italic text-[var(--ink-3)] text-lg tabular-nums w-10 pt-1">02</span>
-            <div className="flex-1 flex items-start justify-between gap-4">
-              <div>
-                <p className="text-h3">{t("asScout")}</p>
-                <p className="mt-2 text-body text-[var(--ink-2)]">{t("asScoutDesc")}</p>
-              </div>
-              <Briefcase className="h-5 w-5 text-[var(--ink-3)] group-hover:text-[var(--ink)] transition-colors" />
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-h3">{t("asScout")}</p>
+              <p className="mt-2 text-body text-[var(--ink-2)]">{t("asScoutDesc")}</p>
             </div>
+            <Briefcase className="h-5 w-5 text-[var(--ink-3)] group-hover:text-[var(--ink)] transition-colors" />
           </div>
         </Link>
 
@@ -52,15 +46,12 @@ export default function RegisterPage() {
           href="/register/studio"
           className="block group hairline-t hairline-b py-6 hover:bg-[var(--bg-soft)] transition-colors px-2 -mx-2"
         >
-          <div className="flex items-start gap-5">
-            <span className="font-[var(--font-display)] italic text-[var(--ink-3)] text-lg tabular-nums w-10 pt-1">03</span>
-            <div className="flex-1 flex items-start justify-between gap-4">
-              <div>
-                <p className="text-h3">{t("asStudio")}</p>
-                <p className="mt-2 text-body text-[var(--ink-2)]">{t("asStudioDesc")}</p>
-              </div>
-              <Building2 className="h-5 w-5 text-[var(--ink-3)] group-hover:text-[var(--ink)] transition-colors" />
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-h3">{t("asStudio")}</p>
+              <p className="mt-2 text-body text-[var(--ink-2)]">{t("asStudioDesc")}</p>
             </div>
+            <Building2 className="h-5 w-5 text-[var(--ink-3)] group-hover:text-[var(--ink)] transition-colors" />
           </div>
         </Link>
       </div>

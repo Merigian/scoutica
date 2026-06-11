@@ -1,7 +1,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-type Variant = "default" | "secondary" | "outline" | "ghost" | "accent" | "destructive" | "gold" | "link";
+type Variant = "default" | "secondary" | "outline" | "ghost" | "accent" | "destructive" | "link";
 type Size = "sm" | "default" | "lg" | "icon";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -12,7 +12,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 /* Galleria buttons — ink-on-cream, no chromatic accent.
-   `accent` / `gold` are back-compat aliases of `default`. */
+   `accent` is a back-compat alias of `default`. */
 const variants: Record<Variant, string> = {
   default:     "bg-[var(--ink)] text-[var(--bg-elevated)] hover:bg-[var(--ink-2)]",
   secondary:   "bg-[var(--bg-soft)] text-[var(--ink)] hover:bg-[var(--bg-elevated)] border border-[var(--rule)]",
@@ -20,7 +20,6 @@ const variants: Record<Variant, string> = {
   ghost:       "bg-transparent text-[var(--ink)] hover:bg-[var(--bg-soft)]",
   accent:      "bg-[var(--ink)] text-[var(--bg-elevated)] hover:bg-[var(--ink-2)]",
   destructive: "bg-[var(--danger)] text-[var(--bg-elevated)] hover:opacity-90",
-  gold:        "bg-[var(--ink)] text-[var(--bg-elevated)] hover:bg-[var(--ink-2)]",
   link:        "text-[var(--ink)] underline underline-offset-4 hover:opacity-70 bg-transparent",
 };
 

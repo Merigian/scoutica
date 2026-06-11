@@ -29,6 +29,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   images: {
+    qualities: [70, 75, 92],
     remotePatterns: [
       {
         protocol: "https",
@@ -48,6 +49,10 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "plus.unsplash.com",
+      },
+      {
+        protocol: "https",
+        hostname: "pub-3976d61a0e514e65a71749bc1ca7d366.r2.dev",
       },
     ],
   },

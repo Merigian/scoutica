@@ -141,8 +141,8 @@ export function ProfilePhotos({ photos, maxPhotos = 3 }: ProfilePhotosProps) {
           {photos.map((photo) => (
             <div
               key={photo.id}
-              className="group relative aspect-[3/4] overflow-hidden bg-[var(--bg-soft)] border-2 border-transparent transition-colors hover:border-muted-foreground/20"
-              style={photo.isCover ? { borderColor: "var(--color-gold)" } : undefined}
+              className="group relative aspect-[3/4] overflow-hidden bg-[var(--bg-soft)] border-2 border-transparent transition-colors hover:border-[var(--ink-3)]/20"
+              style={photo.isCover ? { borderColor: "var(--ink)" } : undefined}
             >
               <img
                 src={photo.url}
@@ -152,7 +152,7 @@ export function ProfilePhotos({ photos, maxPhotos = 3 }: ProfilePhotosProps) {
 
               {photo.isCover && (
                 <div className="absolute top-1.5 left-1.5">
-                  <Badge variant="gold" className="text-[10px] px-1.5 py-0.5">
+                  <Badge variant="default" className="text-[10px] px-1.5 py-0.5">
                     <Star className="h-2.5 w-2.5 mr-0.5" />
                     {t("cover")}
                   </Badge>
@@ -198,7 +198,7 @@ export function ProfilePhotos({ photos, maxPhotos = 3 }: ProfilePhotosProps) {
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={uploading}
-              className="aspect-[3/4] border-2 border-dashed border-[var(--rule)] hover:border-muted-foreground/40 transition-colors flex flex-col items-center justify-center gap-2 text-[var(--ink-3)] hover:text-[var(--ink)] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              className="aspect-[3/4] border-2 border-dashed border-[var(--rule)] hover:border-[var(--ink-3)]/40 transition-colors flex flex-col items-center justify-center gap-2 text-[var(--ink-3)] hover:text-[var(--ink)] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {uploading && i === 0 ? (
                 <Loader2 className="h-6 w-6 animate-spin" />

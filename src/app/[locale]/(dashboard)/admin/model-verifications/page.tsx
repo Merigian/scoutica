@@ -53,7 +53,7 @@ export default async function AdminModelVerificationsPage() {
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
                           src={profile.selfieUrl}
-                          alt=""
+                          alt={profile.fullName ? `Selfie — ${profile.fullName}` : "Selfie"}
                           className="h-28 w-24 shrink-0 rounded-sm object-cover"
                         />
                       ) : (
@@ -107,7 +107,7 @@ export default async function AdminModelVerificationsPage() {
                           <img
                             key={i}
                             src={img.url}
-                            alt=""
+                            alt={`${profile.fullName ?? "Portfolio"} ${i + 1}`}
                             className="h-20 w-16 rounded-sm object-cover"
                           />
                         ))}

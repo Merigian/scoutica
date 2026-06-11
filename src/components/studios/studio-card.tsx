@@ -46,7 +46,7 @@ export function StudioCard({ studio, locale }: StudioCardProps) {
 
   return (
     <Link href={`/${locale}/studios/${studio.slug}`}>
-      <Card className="group overflow-hidden hover:ring-1 hover:ring-gold/30 transition-all duration-300  h-full">
+      <Card className="group overflow-hidden hover:ring-1 hover:ring-[var(--ink)]/30 transition-all duration-300  h-full">
         {/* Image Carousel */}
         <div className="relative aspect-video bg-[var(--bg-soft)] overflow-hidden">
           {images.length > 0 ? (
@@ -69,7 +69,7 @@ export function StudioCard({ studio, locale }: StudioCardProps) {
                 type="button"
                 aria-label="Previous photo"
                 onClick={(e) => goTo(e, "prev")}
-                className="nav-zone absolute inset-y-0 left-0 z-10 flex w-1/3 items-center justify-start pl-3 focus:outline-none"
+                className="nav-zone absolute inset-y-0 left-0 z-10 flex w-1/3 items-center justify-start pl-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/90 focus-visible:ring-inset"
               >
                 <ChevronLeft className="nav-arrow h-6 w-6 text-white" strokeWidth={1.5} />
               </button>
@@ -77,7 +77,7 @@ export function StudioCard({ studio, locale }: StudioCardProps) {
                 type="button"
                 aria-label="Next photo"
                 onClick={(e) => goTo(e, "next")}
-                className="nav-zone absolute inset-y-0 right-0 z-10 flex w-1/3 items-center justify-end pr-3 focus:outline-none"
+                className="nav-zone absolute inset-y-0 right-0 z-10 flex w-1/3 items-center justify-end pr-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/90 focus-visible:ring-inset"
               >
                 <ChevronRight className="nav-arrow h-6 w-6 text-white" strokeWidth={1.5} />
               </button>
@@ -115,7 +115,7 @@ export function StudioCard({ studio, locale }: StudioCardProps) {
 
         {/* Info */}
         <CardContent className="p-4 space-y-2">
-          <h3 className="font-[var(--font-display)] font-semibold text-sm truncate group-hover:text-gold transition-colors">
+          <h3 className="font-display font-semibold text-sm truncate group-hover:text-[var(--ink)] transition-colors">
             {studio.name}
           </h3>
 
@@ -128,7 +128,7 @@ export function StudioCard({ studio, locale }: StudioCardProps) {
 
           {/* Price */}
           {cheapest && (
-            <p className="text-sm font-semibold text-gold">
+            <p className="text-sm font-semibold text-[var(--ink)]">
               €{cheapest.value}{cheapest.label}
             </p>
           )}

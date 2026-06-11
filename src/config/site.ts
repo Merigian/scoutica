@@ -49,6 +49,7 @@ export const NAV_ITEMS = {
     { key: "settings", href: "/admin/settings", icon: "Settings" },
   ],
   studio: [
+    { key: "dashboard", href: "/studio/home", icon: "LayoutDashboard" },
     { key: "studios", href: "/studio/studios", icon: "Building2" },
     { key: "bookings", href: "/studio/bookings", icon: "CalendarDays" },
     { key: "inquiries", href: "/studio/inquiries", icon: "Inbox" },

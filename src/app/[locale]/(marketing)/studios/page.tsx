@@ -19,6 +19,7 @@ function buildPaginationHref(
   if (params.region) qs.set("region", String(params.region));
   if (params.type) qs.set("type", String(params.type));
   if (params.city) qs.set("city", String(params.city));
+  if (params.sort) qs.set("sort", String(params.sort));
   qs.set("page", String(page));
   return `/studios?${qs.toString()}`;
 }
@@ -40,6 +41,7 @@ export default async function StudiosPage({
     region: resolvedParams.region as string | undefined,
     studioType: resolvedParams.type as StudioType | undefined,
     query: resolvedParams.q as string | undefined,
+    sort: resolvedParams.sort as "newest" | "priceAsc" | "priceDesc" | undefined,
   };
 
   const results = await searchStudios(filters);
@@ -69,6 +71,7 @@ export default async function StudiosPage({
           initialQuery={(resolvedParams.q as string) || ""}
           initialRegion={(resolvedParams.region as string) || ""}
           initialType={(resolvedParams.type as string) || ""}
+          initialSort={(resolvedParams.sort as string) || "newest"}
         />
 
         {results.studios.length > 0 ? (

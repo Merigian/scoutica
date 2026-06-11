@@ -23,7 +23,7 @@ export async function FeaturedProfiles() {
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
         <div className="mb-14 grid lg:grid-cols-12 gap-12 items-end">
           <div className="lg:col-span-7">
-            <SectionIndex n="01" className="mb-6">{t("eyebrow")}</SectionIndex>
+            <SectionIndex n="02" className="mb-6">{t("eyebrow")}</SectionIndex>
             <h2 className="text-h1">{t("title")}</h2>
             <p className="mt-6 text-lead max-w-xl">{t("subtitle")}</p>
           </div>

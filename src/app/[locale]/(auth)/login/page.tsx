@@ -64,7 +64,7 @@ export default function LoginPage() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {error && (
-          <div className="hairline border-[var(--accent)] bg-[var(--accent)]/5 px-4 py-3 text-sm text-[var(--accent)]">
+          <div className="hairline border-[var(--danger)] bg-[var(--danger)]/5 px-4 py-3 text-sm text-[var(--danger)]">
             {error}
           </div>
         )}
@@ -74,7 +74,7 @@ export default function LoginPage() {
           <Input
             id="email"
             type="email"
-            placeholder="nome@esempio.it"
+            placeholder={t("emailPlaceholder")}
             {...register("email")}
             error={errors.email?.message}
           />

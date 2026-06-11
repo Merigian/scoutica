@@ -1,4 +1,14 @@
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/routing";
+import { Button } from "@/components/ui/button";
+import { SITE_CONFIG } from "@/config/site";
+import { RevealText } from "@/components/motion/reveal-text";
+import { FadeIn } from "@/components/motion/fade-in";
+import { ImageReveal } from "@/components/motion/image-reveal";
+import { ArrowUpRight } from "lucide-react";
+
+const ABOUT_IMG =
+  "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=2000&q=85";
 
 type PrincipleItem = { n: string; k: string; d: string };
 
@@ -18,18 +28,36 @@ export default async function AboutPage() {
     <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
       {/* ─── Masthead ─── */}
       <header className="py-20 lg:py-32 hairline-b">
-        <p className="text-eyebrow mb-6">{t("eyebrow")}</p>
+        <FadeIn onMount>
+          <p className="text-eyebrow mb-6">{t("eyebrow")}</p>
+        </FadeIn>
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-end">
-          <h1 className="lg:col-span-8 text-display max-w-[14ch]">{t("title")}</h1>
-          <p className="lg:col-span-4 text-lead">{t("lead")}</p>
+          <RevealText
+            as="h1"
+            text={t("title")}
+            className="lg:col-span-8 text-display max-w-[14ch]"
+            delay={0.1}
+          />
+          <FadeIn onMount delay={0.3} className="lg:col-span-4">
+            <p className="text-lead">{t("lead")}</p>
+          </FadeIn>
         </div>
       </header>
 
-      {/* ─── 01 — Manifesto ─── */}
+      {/* ─── Editorial image band ─── */}
+      <ImageReveal
+        src={ABOUT_IMG}
+        alt=""
+        className="aspect-[21/9] w-full"
+        sizes="100vw"
+        priority
+      />
+
+      {/* ─── Manifesto ─── */}
       <section className="py-20 lg:py-28 hairline-b">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-12">
           <p className="lg:col-span-4 text-eyebrow lg:sticky lg:top-28 self-start">
-            01 — Manifesto
+            Manifesto
           </p>
           <div className="lg:col-span-8">
             <p
@@ -43,7 +71,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* ─── 02 — Perché adesso ─── */}
+      {/* ─── Perché adesso ─── */}
       <section className="py-20 lg:py-28 hairline-b">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-12">
           <p className="lg:col-span-4 text-eyebrow lg:sticky lg:top-28 self-start">
@@ -58,10 +86,10 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* ─── 03 — Valori ─── */}
+      {/* ─── Valori ─── */}
       <section className="py-20 lg:py-28 hairline-b">
         <div className="mb-14 grid lg:grid-cols-12 gap-10">
-          <p className="lg:col-span-4 text-eyebrow">03 — {t("valuesTitle")}</p>
+          <p className="lg:col-span-4 text-eyebrow">{t("valuesTitle")}</p>
           <h2 className="lg:col-span-8 text-h1 max-w-2xl">{t("valuesTitle")}</h2>
         </div>
         <div className="grid md:grid-cols-2 hairline-t">
@@ -70,10 +98,7 @@ export default async function AboutPage() {
               key={v.key}
               className={`p-10 lg:p-12 hairline-b ${i % 2 === 0 ? "md:hairline-r" : ""}`}
             >
-              <p className="text-eyebrow text-[var(--ink-3)] mb-6">
-                {String(i + 1).padStart(2, "0")} / {String(values.length).padStart(2, "0")}
-              </p>
-              <h3 className="font-[var(--font-display)] text-2xl lg:text-[28px] leading-tight tracking-tight mb-5 text-[var(--ink)]">
+              <h3 className="font-display text-2xl lg:text-[28px] leading-tight tracking-tight mb-5 text-[var(--ink)]">
                 {v.title}
               </h3>
               <p className="text-body text-[var(--ink-2)] max-w-md">{v.desc}</p>
@@ -82,7 +107,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* ─── 04 — Principi ─── */}
+      {/* ─── Principi ─── */}
       <section className="py-20 lg:py-28 hairline-b">
         <div className="mb-14 grid lg:grid-cols-12 gap-10">
           <p className="lg:col-span-4 text-eyebrow">{t("principles.eyebrow")}</p>
@@ -94,10 +119,7 @@ export default async function AboutPage() {
               key={p.n}
               className="grid grid-cols-12 gap-6 lg:gap-10 py-8 lg:py-10 hairline-b items-start"
             >
-              <span className="col-span-2 lg:col-span-1 text-eyebrow text-[var(--ink-3)] pt-1 tabular-nums">
-                {p.n}
-              </span>
-              <h3 className="col-span-10 lg:col-span-4 font-[var(--font-display)] text-xl lg:text-2xl leading-tight tracking-tight text-[var(--ink)]">
+              <h3 className="col-span-12 lg:col-span-5 font-display text-xl lg:text-2xl leading-tight tracking-tight text-[var(--ink)]">
                 {p.k}
               </h3>
               <p className="col-span-12 lg:col-span-7 text-body text-[var(--ink-2)] max-w-xl">
@@ -108,9 +130,40 @@ export default async function AboutPage() {
         </ol>
       </section>
 
+      {/* ─── Closing CTA ─── */}
+      <section className="-mx-6 lg:-mx-12 hairline-b bg-[var(--bg-soft)] px-6 lg:px-12 py-20 lg:py-28">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-end">
+          <div className="lg:col-span-8">
+            <p className="text-eyebrow mb-6">{t("closing.eyebrow")}</p>
+            <h2 className="text-display max-w-[16ch]">{t("closing.title")}</h2>
+            <p className="mt-6 text-lead max-w-2xl">{t("closing.body")}</p>
+          </div>
+          <div className="lg:col-span-4 lg:justify-self-end flex w-full flex-col gap-4 sm:max-w-xs">
+            <Button size="lg" className="w-full group" asChild>
+              <Link href="/register">
+                {t("closing.ctaPrimary")}
+                <ArrowUpRight className="h-4 w-4 ml-2 group-arrow" />
+              </Link>
+            </Button>
+            <Button variant="outline" size="lg" className="w-full" asChild>
+              <Link href="/pricing">{t("closing.ctaSecondary")}</Link>
+            </Button>
+            <p className="mt-2 text-meta text-[var(--ink-3)] leading-relaxed">
+              {t("closing.contactLabel")}{" "}
+              <a
+                href={`mailto:${SITE_CONFIG.links.email}`}
+                className="link-underline text-[var(--ink)]"
+              >
+                {t("closing.contactCta")} — {SITE_CONFIG.links.email}
+              </a>
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ─── Made in Milano ─── */}
       <footer className="py-16 lg:py-20 text-center">
-        <p className="font-[var(--font-display)] text-2xl lg:text-[28px] leading-tight tracking-tight text-[var(--ink)]">
+        <p className="font-display text-2xl lg:text-[28px] leading-tight tracking-tight text-[var(--ink)]">
           {t("madeIn.line1")}
         </p>
         <p className="mt-3 text-eyebrow text-[var(--ink-3)]">{t("madeIn.line2")}</p>

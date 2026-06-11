@@ -33,6 +33,7 @@ import {
   User,
   ShieldCheck,
   BadgeCheck,
+  Music2,
 } from "lucide-react";
 import { PublicProfileContactButton } from "@/components/profile/public-profile-contact-button";
 import { recordProfileView } from "@/server/actions/profile-engagement";
@@ -89,6 +90,10 @@ export default async function PublicProfilePage({
   const isBoosted = profile.boosts.length > 0;
   const isVerified = profile.verificationStatus === "APPROVED";
   const isScout = session?.user?.role === "SCOUT";
+  const lastActive = profile.user.lastActiveAt;
+  const activeRecently = lastActive
+    ? Date.now() - new Date(lastActive).getTime() < 7 * 24 * 60 * 60 * 1000
+    : false;
 
   // Check existing contact request status for scouts
   let existingConversationId: string | null = null;
@@ -171,7 +176,7 @@ export default async function PublicProfilePage({
       {/* Hero section */}
       <div className="flex flex-col sm:flex-row gap-6">
         {/* Cover image */}
-        <div className="sm:w-1/3 aspect-[3/4]  overflow-hidden bg-[var(--bg-soft)] relative shadow-lg">
+        <div className="sm:w-1/3 aspect-[3/4] overflow-hidden bg-[var(--bg-soft)] relative hairline">
           {profile.portfolioImages.find((i) => i.isCover) ? (
             <ClickableCover
               coverUrl={profile.portfolioImages.find((i) => i.isCover)!.url}
@@ -187,7 +192,7 @@ export default async function PublicProfilePage({
           )}
           {isBoosted && (
             <div className="absolute top-3 left-3">
-              <Badge variant="gold" className="gap-1">
+              <Badge variant="default" className="gap-1">
                 <ShieldCheck className="h-3 w-3" /> {t("featured")}
               </Badge>
             </div>
@@ -197,16 +202,10 @@ export default async function PublicProfilePage({
         {/* Info */}
         <div className="flex-1 space-y-4">
           <div>
-            <div className="flex items-center gap-3">
-              <h1 className="text-3xl font-[var(--font-display)] font-bold">
+            <div className="flex flex-wrap items-center gap-3">
+              <h1 className="text-3xl font-display font-medium">
                 {profile.fullName || t("unnamed")}
               </h1>
-              {isBoosted && (
-                <Badge variant="gold" className="gap-1">
-                  <ShieldCheck className="h-3 w-3" />
-                  {t("featured")}
-                </Badge>
-              )}
               {isVerified && (
                 <Badge variant="outline" className="gap-1">
                   <BadgeCheck className="h-3 w-3 text-[var(--accent)]" />
@@ -214,12 +213,21 @@ export default async function PublicProfilePage({
                 </Badge>
               )}
             </div>
-            <div className="flex items-center gap-3 mt-2 text-sm text-[var(--ink-3)]">
+            <div className="flex flex-wrap items-center gap-3 mt-2 text-sm text-[var(--ink-3)]">
               {age && <span>{age} {t("years")}</span>}
               {profile.city && (
                 <span className="flex items-center gap-1">
                   <MapPin className="h-3.5 w-3.5" />
                   {profile.city}{profile.region ? `, ${profile.region}` : ""}
+                </span>
+              )}
+              {activeRecently && (
+                <span className="flex items-center gap-1.5">
+                  <span
+                    className="h-1.5 w-1.5 rounded-full bg-[var(--success)]"
+                    aria-hidden="true"
+                  />
+                  {t("activeRecently")}
                 </span>
               )}
             </div>
@@ -299,7 +307,7 @@ export default async function PublicProfilePage({
           <CardContent>
             <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
               {stats.map((stat: any, i: number) => (
-                <div key={i} className="text-center p-3 rounded-lg bg-gold/5 border border-[var(--accent)]/10">
+                <div key={i} className="text-center p-3 bg-[var(--bg-soft)] border border-[var(--rule)]">
                   <p className="text-xs text-[var(--ink-3)]">{stat.label}</p>
                   <p className="font-semibold">{stat.value}</p>
                 </div>
@@ -352,7 +360,7 @@ export default async function PublicProfilePage({
       {/* Portfolio */}
       {profile.portfolioImages.length > 0 && (
         <div>
-          <h2 className="text-lg font-[var(--font-display)] font-semibold mb-4">
+          <h2 className="text-lg font-display font-semibold mb-4">
             {t("portfolio")}
           </h2>
           <ClickableGallery
@@ -369,17 +377,17 @@ export default async function PublicProfilePage({
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
               <Globe2 className="h-4 w-4" />
-              Social
+              {t("socialTitle")}
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-4">
               {profile.instagramUrl && (
                 <a
                   href={profile.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-sm text-gold hover:underline"
+                  className="flex items-center gap-1.5 text-sm text-[var(--ink)] link-underline"
                 >
                   <Instagram className="h-4 w-4" /> Instagram
                 </a>
@@ -389,9 +397,9 @@ export default async function PublicProfilePage({
                   href={profile.tiktokUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-sm text-gold hover:underline"
+                  className="flex items-center gap-1.5 text-sm text-[var(--ink)] link-underline"
                 >
-                  TikTok
+                  <Music2 className="h-4 w-4" /> TikTok
                 </a>
               )}
               {profile.websiteUrl && (
@@ -399,7 +407,7 @@ export default async function PublicProfilePage({
                   href={profile.websiteUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-sm text-gold hover:underline"
+                  className="flex items-center gap-1.5 text-sm text-[var(--ink)] link-underline"
                 >
                   <Globe2 className="h-4 w-4" /> {t("website")}
                 </a>

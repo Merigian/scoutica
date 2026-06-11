@@ -56,7 +56,7 @@ export function MultiSelect({ options, selected, onChange, placeholder, classNam
       >
         <div className="flex flex-wrap gap-1 flex-1">
           {selectedLabels.length === 0 && (
-            <span className="text-muted-foreground">{placeholder}</span>
+            <span className="text-[var(--ink-3)]">{placeholder}</span>
           )}
           {selectedLabels.map((item) => (
             <span
@@ -71,7 +71,7 @@ export function MultiSelect({ options, selected, onChange, placeholder, classNam
             </span>
           ))}
         </div>
-        <ChevronDown className={cn("h-4 w-4 shrink-0 text-muted-foreground transition-transform", open && "rotate-180")} />
+        <ChevronDown className={cn("h-4 w-4 shrink-0 text-[var(--ink-3)] transition-transform", open && "rotate-180")} />
       </button>
 
       {open && (

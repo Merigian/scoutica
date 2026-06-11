@@ -179,7 +179,7 @@ export function SearchFiltersPanel({ locale, advancedFilters }: SearchFiltersPro
           <SlidersHorizontal className="h-3.5 w-3.5 mr-1" />
           {t("advancedFilters")}
           {!advancedFilters && (
-            <Badge variant="gold" className="ml-1 text-[10px]">PRO</Badge>
+            <Badge variant="default" className="ml-1 text-[10px]">PRO</Badge>
           )}
         </Button>
         {activeFilterCount > 0 && (
@@ -331,7 +331,7 @@ export function SearchFiltersPanel({ locale, advancedFilters }: SearchFiltersPro
                   }}
                   className={`flex items-center gap-2 h-9 px-3 rounded-md border text-sm transition-colors w-full justify-center ${
                     getParam("travelAvailability") === "true"
-                      ? "bg-gold/10 border-gold text-gold-dark font-medium"
+                      ? "bg-[var(--ink)]/10 border-[var(--ink)] text-[var(--ink-2)] font-medium"
                       : "border-[var(--rule)] text-[var(--ink-3)] hover:bg-[var(--bg-soft)] hover:text-[var(--ink)]"
                   }`}
                 >

@@ -234,7 +234,7 @@ export function CastingForm({ locale, initialData }: CastingFormProps) {
               type="checkbox"
               id="isPaid"
               {...register("isPaid")}
-              className="h-4 w-4 rounded border-border text-gold focus:ring-gold"
+              className="h-4 w-4 rounded border-[var(--rule)] text-[var(--ink)] focus:ring-[var(--ink)]"
             />
             <Label htmlFor="isPaid" className="cursor-pointer">
               {t("paidJob")}
