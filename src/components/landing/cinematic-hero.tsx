@@ -6,11 +6,7 @@ import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Magnetic } from "@/components/motion/magnetic";
-import { RevealText } from "@/components/motion/reveal-text";
 import { ArrowUpRight, ArrowDown } from "lucide-react";
-
-const EASE = [0.22, 0.61, 0.36, 1] as const;
 
 export function CinematicHero({ heroSrc }: { heroSrc: string }) {
   const t = useTranslations("landing");
@@ -27,14 +23,10 @@ export function CinematicHero({ heroSrc }: { heroSrc: string }) {
   const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-22%"]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
-  const title = t("hero.title");
-  const [lead, ...rest] = title.split(/(?<=\.)\s+/);
-  const emph = rest.join(" ");
-
   return (
     <section
       ref={ref}
-      className="noir-vignette relative w-full min-h-[100svh] overflow-hidden bg-[#0A0A0B]"
+      className="relative w-full min-h-[100svh] overflow-hidden bg-[#0A0A0B]"
     >
       {/* Cinematic cover */}
       <motion.div
@@ -52,96 +44,49 @@ export function CinematicHero({ heroSrc }: { heroSrc: string }) {
         />
       </motion.div>
 
-      {/* Scrims — fixed obsidian, cinematic grade */}
-      <div className="absolute inset-x-0 top-0 h-52 bg-gradient-to-b from-[#0A0A0B]/80 via-[#0A0A0B]/20 to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0B] via-[#0A0A0B]/45 to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0B]/80 via-[#0A0A0B]/20 to-transparent" />
+      {/* Soft legibility halo — subtle warm lift at the bottom-left so the two
+          buttons separate cleanly from the photo, without darkening it. */}
+      <div
+        className="pointer-events-none absolute inset-0 z-[5]"
+        style={{
+          background:
+            "radial-gradient(110% 70% at 0% 100%, rgba(245,241,234,0.34) 0%, rgba(245,241,234,0.14) 32%, transparent 58%)",
+        }}
+      />
 
-      {/* Content rail */}
+      {/* Content rail — minimal. The SCOUTICA wordmark already lives in the
+          photo and the explanatory copy sits in the statement section right
+          below, so the cover stays clean: just the two actions. */}
       <motion.div
         className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1440px] flex-col px-6 sm:px-10 lg:px-12"
         style={reduce ? undefined : { y: contentY, opacity: contentOpacity }}
       >
-        <motion.div
-          className="flex items-baseline justify-between gap-4 pt-28 lg:pt-32"
-          initial={reduce ? undefined : { opacity: 0 }}
-          animate={reduce ? undefined : { opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-        >
-          <span className="text-[11px] uppercase tracking-[0.32em] text-[#F4F1EA]/55">
-            {t("cover.masthead")}
-          </span>
-          <span className="text-[11px] uppercase tracking-[0.28em] text-[#F4F1EA]/45">
-            {t("cover.reach")}
-          </span>
-        </motion.div>
-
-        <div className="mt-auto pb-[clamp(3rem,8vh,7rem)] max-w-[52rem]">
-          <motion.p
-            className="mb-6 text-[12px] uppercase tracking-[0.34em] text-[#F4F1EA]/70"
-            initial={reduce ? undefined : { opacity: 0, y: 12 }}
-            animate={reduce ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-          >
-            {t("cover.manifestoTop")}
-          </motion.p>
-
-          <h1 className="font-display font-light text-[#F4F1EA] tracking-[-0.02em]">
-            <RevealText
-              text={lead}
-              as="span"
-              delay={0.35}
-              className="block text-[clamp(2.9rem,7vw,6.5rem)] leading-[0.96]"
-            />
-            {emph && (
-              <RevealText
-                text={emph}
-                as="span"
-                by="word"
-                delay={0.75}
-                className="mt-1 block italic text-[#F4F1EA]/75 text-[clamp(1.7rem,3.8vw,3.4rem)] leading-[1.05]"
-              />
-            )}
-          </h1>
-
-          <motion.p
-            className="mt-8 max-w-[46ch] text-[clamp(1rem,1.3vw,1.25rem)] leading-relaxed text-[#F4F1EA]/75"
-            initial={reduce ? undefined : { opacity: 0, y: 14 }}
-            animate={reduce ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1 }}
-          >
-            {t("hero.subtitle")}
-          </motion.p>
-
+        <div className="mt-auto pb-[clamp(3rem,9vh,7rem)] max-w-[42rem]">
           <motion.div
-            className="mt-10 flex flex-col sm:flex-row gap-3"
-            initial={reduce ? undefined : { opacity: 0, y: 14 }}
+            className="flex flex-col sm:flex-row gap-3"
+            initial={reduce ? undefined : { opacity: 0, y: 16 }}
             animate={reduce ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.15 }}
+            transition={{ duration: 0.9, delay: 0.3 }}
           >
-            <Magnetic>
-              <Button
-                size="lg"
-                asChild
-                className="!bg-[#F4F1EA] !text-[#0A0A0B] hover:!bg-white !border-0"
-              >
-                <Link href="/register/model" className="group whitespace-nowrap">
-                  {t("hero.ctaModel")}
-                  <ArrowUpRight className="h-4 w-4 group-arrow" />
-                </Link>
-              </Button>
-            </Magnetic>
-            <Magnetic>
-              <Button
-                size="lg"
-                asChild
-                className="bg-transparent !border-[#F4F1EA]/45 !text-[#F4F1EA] hover:!bg-[#F4F1EA] hover:!text-[#0A0A0B]"
-              >
-                <Link href="/register/scout" className="whitespace-nowrap">
-                  {t("hero.ctaScout")}
-                </Link>
-              </Button>
-            </Magnetic>
+            <Button
+              size="lg"
+              asChild
+              className="!bg-[#0A0A0B] !text-[#F4F1EA] hover:!bg-[#1A1814] !border-0 shadow-lg shadow-black/15"
+            >
+              <Link href="/register/model" className="group whitespace-nowrap">
+                {t("hero.ctaModel")}
+                <ArrowUpRight className="h-4 w-4 group-arrow" />
+              </Link>
+            </Button>
+            <Button
+              size="lg"
+              asChild
+              className="!bg-[#F4F1EA] !text-[#0A0A0B] hover:!bg-white !border-0 shadow-lg shadow-black/10"
+            >
+              <Link href="/register/scout" className="whitespace-nowrap">
+                {t("hero.ctaScout")}
+              </Link>
+            </Button>
           </motion.div>
         </div>
       </motion.div>
@@ -152,10 +97,10 @@ export function CinematicHero({ heroSrc }: { heroSrc: string }) {
         aria-label={t("cover.scroll")}
         className="group absolute bottom-7 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 lg:flex"
       >
-        <span className="text-[11px] uppercase tracking-[0.3em] text-[#F4F1EA]/55 group-hover:text-[#F4F1EA]/90 transition-colors">
+        <span className="text-[11px] uppercase tracking-[0.3em] text-[#14110C]/65 group-hover:text-[#14110C] transition-colors" style={{ textShadow: "0 1px 16px rgba(245,241,234,0.6)" }}>
           {t("cover.scroll")}
         </span>
-        <ArrowDown className="h-4 w-4 text-[#F4F1EA]/60 animate-bounce group-hover:text-[#F4F1EA]" />
+        <ArrowDown className="h-4 w-4 text-[#14110C]/70 animate-bounce group-hover:text-[#14110C]" />
       </a>
     </section>
   );

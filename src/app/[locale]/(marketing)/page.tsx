@@ -16,13 +16,13 @@ import { SectionIndex } from "@/components/landing/section-index";
 import { db } from "@/lib/db";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
 
-const LOCAL_HERO = "/images/hero-cover.webp";
+const LOCAL_HERO = "/images/hero-cover-v2.webp";
 const HERO_FALLBACK =
   "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=2400&q=88&auto=format&fit=crop";
 
 function resolveHeroSrc(): string {
   try {
-    const abs = path.join(process.cwd(), "public", "images", "hero-cover.webp");
+    const abs = path.join(process.cwd(), "public", "images", "hero-cover-v2.webp");
     return existsSync(abs) ? LOCAL_HERO : HERO_FALLBACK;
   } catch {
     return HERO_FALLBACK;
@@ -46,12 +46,38 @@ export default async function LandingPage() {
     { label: t("statsStrip.studiosPartner"), value: 50 },
   ];
 
+  // Split the headline into its two sentences for the intro statement.
+  const heroTitle = t("hero.title");
+  const [statementLead, ...statementRest] = heroTitle.split(/(?<=\.)\s+/);
+  const statementEmph = statementRest.join(" ");
+
   return (
     <>
       <HeroToneSetter tone="dark" />
 
       {/* ───────── HERO — cinematic Atelier Noir cover ───────── */}
       <CinematicHero heroSrc={heroSrc} />
+
+      {/* ───────── STATEMENT — what Scoutica is, legible on warm paper ───────── */}
+      <section className="bg-[var(--bg)] py-24 lg:py-32">
+        <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
+          <Reveal className="max-w-[64rem]">
+            <p className="text-eyebrow mb-7">{t("cover.manifestoTop")}</p>
+            <h2 className="font-display font-light text-[clamp(2.25rem,5vw,4.5rem)] leading-[1.04] tracking-[-0.02em] text-[var(--ink)]">
+              {statementLead}
+              {statementEmph && (
+                <>
+                  {" "}
+                  <span className="italic text-[var(--ink-3)]">
+                    {statementEmph}
+                  </span>
+                </>
+              )}
+            </h2>
+            <p className="mt-8 max-w-[54ch] text-lead">{t("hero.subtitle")}</p>
+          </Reveal>
+        </div>
+      </section>
 
       {/* ───────── 01 — PER CHI È — audience router ───────── */}
       <AudienceRouter />
