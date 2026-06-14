@@ -120,8 +120,10 @@
       "startingFrom": "From",
       "period": "per month, forever",
       "cta": "See the plans",
-      "proPrice": "from €39",
-      "proPeriod": "per month, for those who scout"
+      "proPrice": "from €29",
+      "proPeriod": "per month, for those who scout",
+      "freeLabel": "Always free",
+      "perMonth": "per month"
     },
     "hero": {
       "title": "New faces for Italian fashion. Selected with care, presented with method.",
@@ -316,13 +318,7 @@
   "auth": {
     "layout": {
       "home": "Home",
-      "copyright": "© {year} Scoutica · Milan",
-      "cover": {
-        "masthead": "N° 01 · Scoutica",
-        "headline": "Authentic work. Verified identity.",
-        "attribution": "— Scoutica Manifesto",
-        "cities": "Milan · Rome · Florence"
-      }
+      "copyright": "© {year} Scoutica · Milan"
     },
     "login": {
       "eyebrow": "Sign in",

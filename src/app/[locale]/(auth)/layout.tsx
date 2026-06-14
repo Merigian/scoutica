@@ -42,27 +42,15 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
         <div
           className="absolute inset-0 bg-cover bg-center grayscale"
           style={{
-            backgroundImage:
-              "linear-gradient(180deg, rgba(10,10,11,0.35) 0%, rgba(10,10,11,0.80) 100%), url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1400&q=85')",
+            backgroundImage: "url('/images/auth-cover.webp')",
           }}
         />
-        <div className="relative z-10 flex flex-col justify-between p-16 w-full text-[#F4F1EA]">
-          <p className="text-meta text-[#F4F1EA]/80">
-            {t("cover.masthead")}
-          </p>
-
-          <div className="max-w-md">
-            <h2 className="font-display font-light text-5xl leading-[1.0] tracking-[-0.015em] text-[#F4F1EA]">
-              {t("cover.headline")}
-            </h2>
-            <p className="mt-6 text-eyebrow text-[#F4F1EA]/75">
-              {t("cover.attribution")}
-            </p>
-          </div>
-
-          <p className="text-meta text-[#F4F1EA]/75">
-            {t("cover.cities")}
-          </p>
+        <div className="relative z-10 flex w-full items-end justify-center px-12 pt-12 pb-0">
+          <LogoMark
+            width={240}
+            className="text-[#F4F1EA]"
+            style={{ filter: "drop-shadow(0 2px 14px rgba(10,10,11,0.6))" }}
+          />
         </div>
       </aside>
     </div>

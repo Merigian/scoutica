@@ -120,8 +120,10 @@
       "startingFrom": "A partire da",
       "period": "al mese, per sempre",
       "cta": "Vedi i piani",
-      "proPrice": "da €39",
-      "proPeriod": "al mese, per chi cerca"
+      "proPrice": "da €29",
+      "proPeriod": "al mese, per chi cerca",
+      "freeLabel": "Sempre gratuito",
+      "perMonth": "al mese"
     },
     "hero": {
       "title": "Nuovi volti per la moda italiana. Selezionati con cura, presentati con metodo.",
@@ -316,13 +318,7 @@
   "auth": {
     "layout": {
       "home": "Home",
-      "copyright": "© {year} Scoutica · Milano",
-      "cover": {
-        "masthead": "N° 01 · Scoutica",
-        "headline": "Lavoro autentico. Identità verificata.",
-        "attribution": "— Manifesto Scoutica",
-        "cities": "Milano · Roma · Firenze"
-      }
+      "copyright": "© {year} Scoutica · Milano"
     },
     "login": {
       "eyebrow": "Accesso",

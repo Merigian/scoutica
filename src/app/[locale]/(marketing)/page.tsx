@@ -16,13 +16,13 @@ import { SectionIndex } from "@/components/landing/section-index";
 import { db } from "@/lib/db";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
 
-const LOCAL_HERO = "/images/hero-cover-v2.webp";
+const LOCAL_HERO = "/images/marghe-hero.png";
 const HERO_FALLBACK =
   "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=2400&q=88&auto=format&fit=crop";
 
 function resolveHeroSrc(): string {
   try {
-    const abs = path.join(process.cwd(), "public", "images", "hero-cover-v2.webp");
+    const abs = path.join(process.cwd(), "public", "images", "marghe-hero.png");
     return existsSync(abs) ? LOCAL_HERO : HERO_FALLBACK;
   } catch {
     return HERO_FALLBACK;
@@ -208,22 +208,29 @@ export default async function LandingPage() {
             </div>
           </div>
 
-          <div className="lg:col-span-4 lg:col-start-9 border border-[var(--bg)]/25 p-8 lg:p-10">
-            <p className="text-meta !text-[var(--bg)]/65">
-              {t("pricingTeaser.startingFrom")}
-            </p>
-            <p className="mt-3 font-display tabular-nums text-6xl lg:text-7xl font-light text-[var(--bg)] leading-none">
-              €0
-            </p>
-            <p className="mt-3 text-eyebrow italic !text-[var(--bg)]/75">
-              {t("pricingTeaser.titleLine1")}
-            </p>
-            <div className="mt-7 pt-5 border-t border-[var(--bg)]/20 flex items-baseline justify-between gap-4">
-              <p className="font-display tabular-nums text-3xl lg:text-4xl font-light text-[var(--bg)] leading-none whitespace-nowrap">
-                {t("pricingTeaser.proPrice")}
+          <div className="lg:col-span-4 lg:col-start-9 border border-[var(--bg)]/25">
+            {/* Per modelli — gratuito */}
+            <div className="p-8 lg:p-10">
+              <p className="text-eyebrow italic !text-[var(--bg)]/70">
+                {t("features.forModel")}
               </p>
-              <p className="text-eyebrow italic !text-[var(--bg)]/60 text-right max-w-[14ch]">
-                {t("pricingTeaser.proPeriod")}
+              <p className="mt-4 font-display tabular-nums text-6xl lg:text-7xl font-light text-[var(--bg)] leading-none">
+                €0
+              </p>
+              <p className="mt-3 text-meta !text-[var(--bg)]/60">
+                {t("pricingTeaser.freeLabel")}
+              </p>
+            </div>
+            {/* Per scout & agenzie — a pagamento */}
+            <div className="p-8 lg:p-10 hairline-t border-[var(--bg)]/20">
+              <p className="text-eyebrow italic !text-[var(--bg)]/70">
+                {t("features.forScout")}
+              </p>
+              <p className="mt-4 flex items-baseline gap-2 font-display tabular-nums text-4xl lg:text-5xl font-light text-[var(--bg)] leading-none">
+                {t("pricingTeaser.proPrice")}
+                <span className="text-meta not-italic !text-[var(--bg)]/60">
+                  {t("pricingTeaser.perMonth")}
+                </span>
               </p>
             </div>
           </div>
@@ -282,11 +289,15 @@ function BandiSection({
           </p>
         </Reveal>
 
-        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="flex md:grid md:grid-cols-3 gap-6 lg:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none -mx-6 px-6 md:mx-0 md:px-0">
           {items.map((b, i) => {
             const isClosing = b.status === "closingSoon";
             return (
-              <Reveal key={i} delay={i * 90} className="flex flex-col">
+              <Reveal
+                key={i}
+                delay={i * 90}
+                className="flex flex-col min-w-[82vw] sm:min-w-[68vw] md:min-w-0 snap-start"
+              >
                 <Link
                   href={"/register" as never}
                   className="group relative flex grow flex-col bg-[var(--bg-elevated)] hairline transition-colors duration-500 hover:bg-[var(--bg)]"

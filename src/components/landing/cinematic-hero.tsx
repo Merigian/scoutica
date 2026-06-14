@@ -10,6 +10,7 @@ import { ArrowUpRight, ArrowDown } from "lucide-react";
 
 export function CinematicHero({ heroSrc }: { heroSrc: string }) {
   const t = useTranslations("landing");
+  const isPngHero = heroSrc.toLowerCase().endsWith(".png");
   const reduce = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
 
@@ -38,9 +39,10 @@ export function CinematicHero({ heroSrc }: { heroSrc: string }) {
           alt=""
           fill
           priority
+          unoptimized={isPngHero}
           quality={92}
           sizes="100vw"
-          className="object-cover object-[62%_22%] lg:object-[58%_26%]"
+          className="object-cover object-[51%_22%] lg:object-[52%_24%]"
         />
       </motion.div>
 

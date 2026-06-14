@@ -59,24 +59,24 @@ export function MarketingNav() {
       className="nav-shell fixed top-0 z-50 w-full"
       data-scrolled={scrolled ? "true" : "false"}
     >
-      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-6 lg:px-12">
-        <Link
-          href="/"
-          aria-label="Scoutica"
-          className={cn("flex items-center gap-3", isHome && "brand-intro")}
-        >
-          <LogoMark size="lg" className="brand-intro-mark" />
-          <ScouticaWordmark size="lg" className="brand-intro-word" />
-        </Link>
-
-        <nav className="hidden md:flex items-center gap-10">
+      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-6 lg:px-12 md:grid md:grid-cols-[1fr_auto_1fr]">
+        <nav className="hidden md:flex items-center gap-8 md:justify-self-start">
           <NavLink href="/pricing" label={t("pricing")} />
           <NavLink href="/about" label={t("about")} />
           <NavLink href="/contact" label={t("contact")} />
           <NavLink href="/studios" label={t("browseStudios")} />
         </nav>
 
-        <div className="flex items-center gap-1">
+        <Link
+          href="/"
+          aria-label="Scoutica"
+          className={cn("flex items-center gap-3 md:justify-self-center", isHome && "brand-intro")}
+        >
+          <LogoMark size="lg" className="brand-intro-mark" />
+          <ScouticaWordmark size="lg" className="brand-intro-word" />
+        </Link>
+
+        <div className="flex items-center gap-1 md:justify-self-end">
           <button
             onClick={toggleLocale}
             className="hidden sm:inline-flex items-center text-[13px] text-current/85 hover:text-current px-3 py-2 transition-colors"

@@ -70,9 +70,13 @@ export async function StudiosShowcase() {
             </Link>
           </Reveal>
         ) : (
-          <div className="grid gap-6 md:grid-cols-3 lg:gap-8">
+          <div className="flex md:grid md:grid-cols-3 gap-6 lg:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none -mx-6 px-6 md:mx-0 md:px-0">
             {studios.map((s, i) => (
-              <Reveal key={s.id} delay={i * 90} className="flex flex-col">
+              <Reveal
+                key={s.id}
+                delay={i * 90}
+                className="flex flex-col min-w-[82vw] sm:min-w-[68vw] md:min-w-0 snap-start"
+              >
                 <Link
                   href={`/studios/${s.slug}` as never}
                   className="group flex grow flex-col gap-4"
@@ -109,7 +113,10 @@ export async function StudiosShowcase() {
             ))}
 
             {showInvite ? (
-              <Reveal delay={studios.length * 90} className="flex flex-col">
+              <Reveal
+                delay={studios.length * 90}
+                className="flex flex-col min-w-[82vw] sm:min-w-[68vw] md:min-w-0 snap-start"
+              >
                 <Link
                   href={"/register/studio" as never}
                   className="group flex grow flex-col items-start justify-between gap-8 bg-[var(--bg-elevated)] hairline p-8 lg:p-10 transition-[background-color,transform] duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] hover:bg-[var(--bg)] motion-safe:hover:-translate-y-1"
