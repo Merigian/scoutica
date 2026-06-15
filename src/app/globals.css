@@ -203,6 +203,50 @@ body {
   transition: background-color 240ms var(--ease-out-soft), color 240ms var(--ease-out-soft);
 }
 
+/* ─────────────────────────────────────────────
+   App-like mobile chrome — make the site feel
+   native on a phone (esp. when installed / standalone).
+   ───────────────────────────────────────────── */
+html {
+  /* Stop iOS from auto-inflating text in landscape */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+body {
+  /* No grey flash on tap; kill the rubber-band/pull-to-refresh bounce */
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+/* Interactive elements respond instantly (no 300ms delay, no double-tap zoom) */
+a,
+button,
+[role="button"],
+input,
+select,
+textarea,
+label,
+summary {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+/* No long-press callout menu on app chrome (keep it on real content/images) */
+button,
+[role="button"],
+nav a {
+  -webkit-touch-callout: none;
+}
+/* Fixed marketing header clears the notch / status bar (env() = 0 elsewhere) */
+.nav-shell {
+  padding-top: env(safe-area-inset-top);
+}
+/* When launched as an installed app, fill the dynamic viewport height */
+@media (display-mode: standalone) {
+  html,
+  body {
+    min-height: 100dvh;
+  }
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   font-weight: 400;

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter_Tight, Bodoni_Moda, Archivo } from "next/font/google";
 import "./globals.css";
 
@@ -68,6 +68,21 @@ export const metadata: Metadata = {
       "La piattaforma professionale che connette modelli con scout, agenzie e brand verificati in Italia.",
     images: ["/images/og-image.png"],
   },
+  // Standalone, native-app behaviour on iOS when launched from the Home Screen.
+  appleWebApp: {
+    capable: true,
+    title: "Scoutica",
+    statusBarStyle: "black",
+  },
+};
+
+// Mobile chrome: device-width, cover the notch (safe-area insets become usable),
+// and pin the status-bar/splash color to the obsidian theme.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#0A0A0B",
 };
 
 export default function RootLayout({
