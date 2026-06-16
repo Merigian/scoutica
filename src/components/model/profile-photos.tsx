@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Camera, Star, Trash2, Plus, Loader2 } from "lucide-react";
 import { ImageCropper } from "@/components/ui/image-cropper";
+import { uploadFileWithProgress } from "@/lib/upload-with-progress";
 
 interface ProfilePhoto {
   id: string;
@@ -27,6 +28,7 @@ export function ProfilePhotos({ photos, maxPhotos = 3 }: ProfilePhotosProps) {
   const t = useTranslations("components.profilePhotos");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [cropFile, setCropFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -61,13 +63,11 @@ export function ProfilePhotos({ photos, maxPhotos = 3 }: ProfilePhotosProps) {
     if (fileInputRef.current) fileInputRef.current.value = "";
 
     setUploading(true);
+    setProgress(0);
     setError(null);
     try {
-      const formData = new FormData();
-      formData.append("file", new File([blob], "photo.jpg", { type: "image/jpeg" }));
-
-      const res = await fetch("/api/portfolio/upload", { method: "POST", body: formData });
-      const data = await res.json();
+      const photo = new File([blob], "photo.jpg", { type: "image/jpeg" });
+      const data = await uploadFileWithProgress("/api/portfolio/upload", photo, setProgress);
 
       if (!data.success) {
         setError(data.error || t("uploadError"));
@@ -78,6 +78,7 @@ export function ProfilePhotos({ photos, maxPhotos = 3 }: ProfilePhotosProps) {
       setError(t("uploadError"));
     } finally {
       setUploading(false);
+      setProgress(0);
     }
   }, [router, t]);
 
@@ -146,6 +147,21 @@ export function ProfilePhotos({ photos, maxPhotos = 3 }: ProfilePhotosProps) {
           <p className="mb-3 hairline border-[var(--rule-strong)] bg-[var(--bg-soft)] px-4 py-3 text-sm text-[var(--ink)]">
             {error}
           </p>
+        )}
+
+        {uploading && (
+          <div className="mb-3 space-y-1.5">
+            <div className="flex items-center justify-between text-meta text-[var(--ink-3)]">
+              <span>{t("uploading")}</span>
+              <span className="tabular-nums">{progress}%</span>
+            </div>
+            <div className="h-1 w-full overflow-hidden bg-[var(--bg-soft)]">
+              <div
+                className="h-full bg-[var(--ink)] transition-[width] duration-200 ease-out"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </div>
         )}
 
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">

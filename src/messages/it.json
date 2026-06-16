@@ -2765,12 +2765,14 @@
       "cover": "Copertina",
       "formatError": "Formato non supportato. Usa JPG, PNG o WebP.",
       "sizeError": "Il file è troppo grande. Massimo 10MB.",
-      "uploadError": "Errore durante il caricamento"
+      "uploadError": "Errore durante il caricamento",
+      "uploading": "Caricamento…"
     },
     "profilePhotos": {
       "formatError": "Formato non supportato. Usa JPG, PNG o WebP.",
       "sizeError": "Il file è troppo grande. Massimo 10MB.",
       "uploadError": "Errore durante il caricamento",
+      "uploading": "Caricamento…",
       "error": "Errore",
       "deleteConfirm": "Eliminare questa foto?",
       "title": "Foto profilo",

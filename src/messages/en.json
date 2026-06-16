@@ -2765,12 +2765,14 @@
       "cover": "Cover",
       "formatError": "Format not supported. Use JPG, PNG or WebP.",
       "sizeError": "File is too large. Maximum 10MB.",
-      "uploadError": "Error uploading"
+      "uploadError": "Error uploading",
+      "uploading": "Uploading…"
     },
     "profilePhotos": {
       "formatError": "Format not supported. Use JPG, PNG or WebP.",
       "sizeError": "File is too large. Maximum 10MB.",
       "uploadError": "Error uploading",
+      "uploading": "Uploading…",
       "error": "Error",
       "deleteConfirm": "Delete this photo?",
       "title": "Profile photos",

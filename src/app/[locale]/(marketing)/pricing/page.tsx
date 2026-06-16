@@ -51,7 +51,7 @@ export default async function PricingPage() {
           <p className="lg:col-span-4 text-lead">{tCompare("subtitle")}</p>
         </div>
 
-        <div className="overflow-x-auto">
+        <div className="relative overflow-x-auto">
           <table className="w-full min-w-[640px] border-collapse text-left">
             <thead>
               <tr className="hairline-b">

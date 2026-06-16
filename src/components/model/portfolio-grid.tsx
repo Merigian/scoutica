@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/shared/empty-state";
 import { deletePortfolioImage, setCoverImage } from "@/server/actions/portfolio";
 import { ImageCropper } from "@/components/ui/image-cropper";
+import { uploadFileWithProgress } from "@/lib/upload-with-progress";
 import { Star, Trash2, Upload, Images } from "lucide-react";
 
 interface PortfolioImage {
@@ -26,6 +27,7 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
   const t = useTranslations("components.portfolio");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [cropFile, setCropFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -64,12 +66,11 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
     if (fileInputRef.current) fileInputRef.current.value = "";
 
     setUploading(true);
+    setProgress(0);
     setError(null);
     try {
-      const formData = new FormData();
-      formData.append("file", new File([blob], "photo.jpg", { type: "image/jpeg" }));
-      const res = await fetch("/api/portfolio/upload", { method: "POST", body: formData });
-      const data = await res.json();
+      const photo = new File([blob], "photo.jpg", { type: "image/jpeg" });
+      const data = await uploadFileWithProgress("/api/portfolio/upload", photo, setProgress);
       if (!data.success) {
         setError(data.error || t("uploadError"));
       }
@@ -78,6 +79,7 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
       setError(t("uploadError"));
     } finally {
       setUploading(false);
+      setProgress(0);
     }
   };
 
@@ -117,6 +119,25 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
             </Button>
           }
         />
+        {error && (
+          <p className="mt-4 hairline border-[var(--rule-strong)] bg-[var(--bg-soft)] px-4 py-3 text-sm text-[var(--ink)]">
+            {error}
+          </p>
+        )}
+        {uploading && (
+          <div className="mx-auto mt-4 max-w-xs space-y-1.5">
+            <div className="flex items-center justify-between text-meta text-[var(--ink-3)]">
+              <span>{t("uploading")}</span>
+              <span className="tabular-nums">{progress}%</span>
+            </div>
+            <div className="h-1 w-full overflow-hidden bg-[var(--bg-soft)]">
+              <div
+                className="h-full bg-[var(--ink)] transition-[width] duration-200 ease-out"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </div>
+        )}
         <ImageCropper
           file={cropFile}
           onCrop={handleCropConfirm}
@@ -142,6 +163,21 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
         <p className="hairline border-[var(--rule-strong)] bg-[var(--bg-soft)] px-4 py-3 text-sm text-[var(--ink)]">
           {error}
         </p>
+      )}
+
+      {uploading && (
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between text-meta text-[var(--ink-3)]">
+            <span>{t("uploading")}</span>
+            <span className="tabular-nums">{progress}%</span>
+          </div>
+          <div className="h-1 w-full overflow-hidden bg-[var(--bg-soft)]">
+            <div
+              className="h-full bg-[var(--ink)] transition-[width] duration-200 ease-out"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </div>
       )}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {images.map((image) => (
