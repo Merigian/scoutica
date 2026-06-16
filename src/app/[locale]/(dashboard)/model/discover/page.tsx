@@ -1,9 +1,12 @@
+import { Suspense } from "react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { searchModelProfiles } from "@/server/queries/model-profiles";
+import { searchFiltersSchema } from "@/lib/validations/search";
 import { ModelCard } from "@/components/discover/model-card";
+import { SearchFiltersPanel } from "@/components/discover/search-filters";
 import { DiscoverGrid, GridDensitySelector } from "@/components/discover/grid-density-selector";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Search } from "lucide-react";
@@ -24,12 +27,14 @@ export default async function ModelDiscoverPage({
 
   const cols = Math.min(5, Math.max(1, Number(resolvedParams.cols) || 4));
 
-  // Fetch all published model profiles
-  const results = await searchModelProfiles({
-    page: 1,
-    pageSize: 50,
-    sortBy: "relevance",
-  });
+  // Parse city/category/etc. filters from the URL (same schema as scout discover).
+  const parsed = searchFiltersSchema.safeParse(resolvedParams);
+  const filters = parsed.success
+    ? { ...parsed.data, page: 1, pageSize: 50 }
+    : { page: 1, pageSize: 50, sortBy: "relevance" as const };
+
+  // Fetch published model profiles matching the filters
+  const results = await searchModelProfiles(filters);
 
   // Don't show the model their own profile in the inspiration grid.
   const ownProfile = await db.modelProfile.findUnique({
@@ -38,16 +43,6 @@ export default async function ModelDiscoverPage({
   });
   const profiles = results.profiles.filter((p) => p.id !== ownProfile?.id);
   const total = results.total - (results.profiles.length - profiles.length);
-
-  const profileIds = profiles.map((p) => p.id);
-  const savedRows =
-    profileIds.length > 0
-      ? await db.profileLike.findMany({
-          where: { userId: session.user.id, modelProfileId: { in: profileIds } },
-          select: { modelProfileId: true },
-        })
-      : [];
-  const savedSet = new Set(savedRows.map((r) => r.modelProfileId));
 
   return (
     <div className="space-y-6">
@@ -60,6 +55,11 @@ export default async function ModelDiscoverPage({
           {t("description")}
         </p>
       </div>
+
+      {/* Filters */}
+      <Suspense fallback={<div className="h-32 animate-pulse bg-[var(--bg-soft)]" />}>
+        <SearchFiltersPanel locale={locale} advancedFilters={false} />
+      </Suspense>
 
       {/* Results Grid */}
       {profiles.length > 0 ? (
@@ -77,7 +77,7 @@ export default async function ModelDiscoverPage({
                 profile={profile}
                 locale={locale}
                 isAuthenticated
-                initialSaved={savedSet.has(profile.id)}
+                showSave={false}
               />
             ))}
           </DiscoverGrid>

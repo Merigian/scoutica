@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -54,6 +54,8 @@ interface ModelCardProps {
   contactStatus?: ContactRequestStatus | null;
   conversationId?: string | null;
   aspectVariant?: "portrait" | "tall" | "square";
+  /** Show the save/bookmark control. Off for the model inspiration grid. */
+  showSave?: boolean;
 }
 
 interface ProfileImageProps {
@@ -79,10 +81,9 @@ function ProfileImage({
 }: ProfileImageProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const hasMultiple = images.length > 1;
+  const touchStartX = useRef<number | null>(null);
 
-  const go = (e: React.MouseEvent, dir: "prev" | "next") => {
-    e.preventDefault();
-    e.stopPropagation();
+  const step = (dir: "prev" | "next") => {
     setCurrentIndex((prev) =>
       dir === "next"
         ? (prev + 1) % images.length
@@ -90,8 +91,26 @@ function ProfileImage({
     );
   };
 
+  const go = (e: React.MouseEvent, dir: "prev" | "next") => {
+    e.preventDefault();
+    e.stopPropagation();
+    step(dir);
+  };
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0]?.clientX ?? null;
+  };
+
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || !hasMultiple) return;
+    const dx = (e.changedTouches[0]?.clientX ?? touchStartX.current) - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(dx) < 40) return;
+    step(dx < 0 ? "next" : "prev");
+  };
+
   return (
-    <div className="absolute inset-0">
+    <div className="absolute inset-0" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
       {images.length > 0 ? (
         <Image
           src={images[currentIndex]}
@@ -113,7 +132,7 @@ function ProfileImage({
             type="button"
             aria-label="Previous photo"
             onClick={(e) => go(e, "prev")}
-            className="nav-zone absolute inset-y-0 left-0 z-10 flex w-1/3 items-center justify-start pl-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/90 focus-visible:ring-inset"
+            className="nav-zone absolute inset-y-0 left-0 z-10 hidden w-1/3 items-center justify-start pl-3 [@media(hover:hover)]:flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/90 focus-visible:ring-inset"
           >
             <ChevronLeft className="nav-arrow h-7 w-7 text-white" strokeWidth={1.5} />
           </button>
@@ -122,7 +141,7 @@ function ProfileImage({
             type="button"
             aria-label="Next photo"
             onClick={(e) => go(e, "next")}
-            className="nav-zone absolute inset-y-0 right-0 z-10 flex w-1/3 items-center justify-end pr-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/90 focus-visible:ring-inset"
+            className="nav-zone absolute inset-y-0 right-0 z-10 hidden w-1/3 items-center justify-end pr-3 [@media(hover:hover)]:flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/90 focus-visible:ring-inset"
           >
             <ChevronRight className="nav-arrow h-7 w-7 text-white" strokeWidth={1.5} />
           </button>
@@ -175,6 +194,7 @@ interface RowActionsProps {
   canContact: boolean;
   contactStatus: ContactRequestStatus | null;
   conversationId: string | null;
+  showSave?: boolean;
 }
 
 function RowActions({
@@ -186,6 +206,7 @@ function RowActions({
   canContact,
   contactStatus,
   conversationId,
+  showSave = true,
 }: RowActionsProps) {
   const t = useTranslations("components.discover");
   const router = useRouter();
@@ -238,21 +259,23 @@ function RowActions({
   return (
     <>
       <div className="flex shrink-0 items-center gap-2">
-        <button
-          type="button"
-          onClick={handleBookmark}
-          disabled={isPending}
-          aria-label={bookmarkLabel}
-          title={bookmarkLabel}
-          className={cn(
-            "flex h-10 w-10 items-center justify-center border border-[var(--rule)] bg-[var(--bg)] transition-colors",
-            "hover:border-[var(--rule-strong)] hover:bg-[var(--bg-soft)]",
-            saved ? "text-[var(--accent)]" : "text-[var(--ink-2)]",
-            isPending && "opacity-60"
-          )}
-        >
-          <Bookmark className={cn("h-4 w-4", saved && "fill-current")} />
-        </button>
+        {showSave && (
+          <button
+            type="button"
+            onClick={handleBookmark}
+            disabled={isPending}
+            aria-label={bookmarkLabel}
+            title={bookmarkLabel}
+            className={cn(
+              "flex h-10 w-10 items-center justify-center border border-[var(--rule)] bg-[var(--bg)] transition-colors",
+              "hover:border-[var(--rule-strong)] hover:bg-[var(--bg-soft)]",
+              saved ? "text-[var(--accent)]" : "text-[var(--ink-2)]",
+              isPending && "opacity-60"
+            )}
+          >
+            <Bookmark className={cn("h-4 w-4", saved && "fill-current")} />
+          </button>
+        )}
         {canContact && (
           <button
             type="button"
@@ -356,6 +379,7 @@ export function ModelCard({
   contactStatus = null,
   conversationId = null,
   aspectVariant = "portrait",
+  showSave = true,
 }: ModelCardProps) {
   const lang = locale === "en" ? "en" : "it";
   const t = useTranslations("components.discover");
@@ -430,16 +454,19 @@ export function ModelCard({
                     </span>
                   )}
                 </div>
-                <RowActions
-                  profileId={profile.id}
-                  profileName={name}
-                  locale={locale}
-                  isAuthenticated={isAuthenticated}
-                  initialSaved={initialSaved}
-                  canContact={canContact}
-                  contactStatus={contactStatus}
-                  conversationId={conversationId}
-                />
+                {(showSave || canContact) && (
+                  <RowActions
+                    profileId={profile.id}
+                    profileName={name}
+                    locale={locale}
+                    isAuthenticated={isAuthenticated}
+                    initialSaved={initialSaved}
+                    canContact={canContact}
+                    contactStatus={contactStatus}
+                    conversationId={conversationId}
+                    showSave={showSave}
+                  />
+                )}
               </div>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-[var(--ink-3)]">
                 {locationParts.length > 0 && (
@@ -637,12 +664,14 @@ export function ModelCard({
             verifiedLabel={verifiedRealLabel}
             showGradient
           />
-          <GridBookmarkButton
-            profileId={profile.id}
-            locale={locale}
-            isAuthenticated={isAuthenticated}
-            initialSaved={initialSaved}
-          />
+          {showSave && (
+            <GridBookmarkButton
+              profileId={profile.id}
+              locale={locale}
+              isAuthenticated={isAuthenticated}
+              initialSaved={initialSaved}
+            />
+          )}
           <span
             aria-hidden
             className="pointer-events-none absolute inset-x-0 bottom-0 h-[2px] origin-left scale-x-0 bg-[var(--accent)] transition-transform duration-300 group-hover:scale-x-100"
