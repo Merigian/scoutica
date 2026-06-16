@@ -113,7 +113,7 @@ export function MessageComposer({ onSubmit, disabled }: MessageComposerProps) {
           className={cn(
             "flex h-11 w-11 shrink-0 items-center justify-center rounded-full shadow-sm transition-opacity",
             canSend
-              ? "bg-[var(--accent)] text-white hover:opacity-90"
+              ? "bg-[var(--accent)] text-[var(--bg)] hover:opacity-90"
               : "bg-[var(--bg-soft)] text-[var(--ink-3)] cursor-not-allowed"
           )}
         >

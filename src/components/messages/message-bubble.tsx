@@ -61,7 +61,7 @@ export function MessageBubble({
           corners,
           isMine
             ? cn(
-                "bg-[var(--accent)] text-white",
+                "bg-[var(--accent)] text-[var(--bg)]",
                 failed && "bg-[var(--ink)]"
               )
             : "border border-[var(--rule)] bg-[var(--bg-elevated)] text-[var(--ink)]",

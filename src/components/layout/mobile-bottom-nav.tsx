@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
@@ -52,17 +52,22 @@ const SLOTS: Record<Role, Slot[]> = {
 export function MobileBottomNav() {
   const { data: session } = useSession();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const t = useTranslations("nav");
 
   if (!session?.user) return null;
   const role = session.user.role.toLowerCase();
   if (role !== "model" && role !== "scout" && role !== "studio") return null;
 
+  // Hide the tab bar while a conversation is open on mobile (full-height chat, like a social app).
+  if (pathname.includes("/messages") && searchParams.get("chat")) return null;
+
   const slots = SLOTS[role as Role];
   const isActive = (href: string) => pathname.includes(href);
 
   return (
     <nav
+      data-bottom-nav
       className="fixed bottom-0 left-0 right-0 z-40 hairline-t bg-[var(--bg)]/95 backdrop-blur-sm lg:hidden pb-[env(safe-area-inset-bottom)]"
       aria-label={t("dashboard")}
     >

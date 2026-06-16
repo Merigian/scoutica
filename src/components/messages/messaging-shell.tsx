@@ -211,7 +211,9 @@ export function MessagingShell({
   );
 
   const heightClass =
-    "h-[calc(100dvh-4rem-2rem-env(safe-area-inset-bottom))] lg:h-[calc(100dvh-4rem-3rem)]";
+    view === "list"
+      ? "h-[calc(100dvh-4rem-2rem-env(safe-area-inset-bottom))] lg:h-[calc(100dvh-4rem-3rem)]"
+      : "h-[calc(100dvh-4rem-env(safe-area-inset-bottom))] lg:h-[calc(100dvh-4rem-3rem)]";
 
   return (
     <div

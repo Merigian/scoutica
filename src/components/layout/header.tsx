@@ -35,7 +35,7 @@ export function Header() {
             type="button"
             onClick={() => setMenuOpen(true)}
             aria-label={t("menu")}
-            className="lg:hidden -ml-1 p-2 text-[var(--ink)] hover:bg-[var(--bg-soft)] transition-colors"
+            className="lg:hidden -ml-2 flex h-11 w-11 items-center justify-center text-[var(--ink)] hover:bg-[var(--bg-soft)] transition-colors"
           >
             <List className="h-6 w-6" />
           </button>

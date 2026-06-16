@@ -127,7 +127,7 @@ export function ConversationSidebar({
                 className={cn(
                   "flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[12px] font-medium transition-colors",
                   active
-                    ? "bg-[var(--accent)] text-white"
+                    ? "bg-[var(--accent)] text-[var(--bg)]"
                     : "bg-[var(--bg-soft)] text-[var(--ink-2)] hover:bg-[var(--bg-soft)]/70 hover:text-[var(--ink)]"
                 )}
               >

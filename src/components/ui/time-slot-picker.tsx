@@ -166,7 +166,7 @@ export function TimeSlotPicker({
               {period.label}
             </span>
           </div>
-          <div className="grid grid-cols-4 gap-1.5">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
             {period.slots.map((slot) => {
               const slotMin = timeToMinutes(slot.time);
               const booked = isSlotBooked(slot.time, bookedSlots);

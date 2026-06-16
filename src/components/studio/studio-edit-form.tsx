@@ -212,7 +212,7 @@ export function StudioEditForm({ studio }: StudioEditFormProps) {
       <Card>
         <CardHeader><CardTitle className="text-lg">Tariffe</CardTitle></CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="space-y-2">
               <Label>Oraria (€)</Label>
               <Input type="number" step="0.01" value={hourlyRate} onChange={(e) => setHourlyRate(e.target.value)} />

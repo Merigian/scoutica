@@ -49,7 +49,7 @@ export function DialogContent({
   return (
     <div
       className={cn(
-        "relative w-full max-w-lg border border-[var(--rule)] bg-[var(--bg-elevated)] p-7",
+        "relative w-full max-w-lg max-h-[90dvh] overflow-y-auto border border-[var(--rule)] bg-[var(--bg-elevated)] p-7",
         className
       )}
       onClick={(e) => e.stopPropagation()}
