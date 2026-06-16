@@ -190,8 +190,8 @@ export function ProfilePhotos({ photos, maxPhotos = 3 }: ProfilePhotosProps) {
                 </div>
               )}
 
-              {/* Hover overlay */}
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-1.5">
+              {/* Action overlay — always visible on touch, hover-revealed on desktop */}
+              <div className="absolute inset-0 bg-black/50 transition-opacity flex flex-col items-center justify-center gap-1.5 opacity-100 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100">
                 {actionLoading === photo.id ? (
                   <Loader2 className="h-5 w-5 animate-spin text-white" />
                 ) : (

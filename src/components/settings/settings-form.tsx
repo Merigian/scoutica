@@ -79,7 +79,7 @@ export function SettingsForm({ user, locale }: SettingsFormProps) {
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={uploading}
-                  className="absolute inset-0 flex items-center justify-center rounded-full bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                  className="absolute inset-0 flex items-center justify-center rounded-full bg-black/50 transition-opacity cursor-pointer opacity-100 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100"
                 >
                   {uploading ? (
                     <Loader2 className="h-5 w-5 text-white animate-spin" />

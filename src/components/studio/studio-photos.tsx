@@ -122,7 +122,7 @@ export function StudioPhotos({ studioId, images }: StudioPhotosProps) {
                     Cover
                   </Badge>
                 )}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100">
+                <div className="absolute inset-0 bg-black/40 transition-colors flex items-center justify-center gap-1 opacity-100 [@media(hover:hover)]:bg-black/0 [@media(hover:hover)]:group-hover:bg-black/40 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100">
                   {!image.isCover && (
                     <Button
                       size="icon"

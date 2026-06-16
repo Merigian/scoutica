@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -13,6 +15,7 @@ import {
   ArrowSquareOut,
   SquaresFour,
   Plus,
+  X,
   type Icon as PhosphorIcon,
 } from "@phosphor-icons/react";
 
@@ -115,45 +118,8 @@ export function AccountScreen({ publicHref, photos = [] }: AccountScreenProps) {
         )}
       </header>
 
-      {/* Instagram-style portfolio grid (models) */}
-      {isModel && (
-        <div className="hairline-t">
-          <div className="flex items-center justify-center gap-2 py-3 text-[var(--ink)]">
-            <SquaresFour className="h-[18px] w-[18px]" weight="fill" />
-            <span className="text-eyebrow">{t("portfolioTab")}</span>
-          </div>
-          {photos.length > 0 ? (
-            <div className="grid grid-cols-3 gap-0.5">
-              {photos.map((photo) => (
-                <Link
-                  key={photo.id}
-                  href={"/model/portfolio" as never}
-                  className="relative aspect-square overflow-hidden bg-[var(--bg-soft)]"
-                >
-                  <Image
-                    src={photo.url}
-                    alt=""
-                    fill
-                    sizes="(max-width: 640px) 33vw, 220px"
-                    quality={85}
-                    className="object-cover"
-                  />
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <Link
-              href={"/model/portfolio" as never}
-              className="flex flex-col items-center justify-center gap-3 py-14 text-center transition-colors hover:bg-[var(--bg-soft)]"
-            >
-              <span className="flex h-12 w-12 items-center justify-center rounded-full hairline border-[var(--rule-strong)]">
-                <Plus className="h-6 w-6 text-[var(--ink-2)]" weight="bold" />
-              </span>
-              <span className="text-sm font-medium text-[var(--ink)]">{t("addFirstPhoto")}</span>
-            </Link>
-          )}
-        </div>
-      )}
+      {/* Instagram-style portfolio grid + full-screen viewer (models) */}
+      {isModel && <ModelPhotoGrid photos={photos} />}
 
       {/* Profile-defining links */}
       {rows.length > 0 && (
@@ -177,6 +143,117 @@ export function AccountScreen({ publicHref, photos = [] }: AccountScreenProps) {
           })}
         </ul>
       )}
+    </div>
+  );
+}
+
+/**
+ * Instagram-style portfolio grid for the model account screen. Tapping a photo
+ * opens a full-screen viewer where you scroll vertically through all photos.
+ */
+function ModelPhotoGrid({ photos }: { photos: AccountPhoto[] }) {
+  const t = useTranslations("account");
+  const tNav = useTranslations("nav");
+  const [viewerIndex, setViewerIndex] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    if (viewerIndex === null) return;
+    document.body.style.overflow = "hidden";
+    const slide = scrollRef.current?.children[viewerIndex] as HTMLElement | undefined;
+    slide?.scrollIntoView({ block: "start" });
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [viewerIndex]);
+
+  useEffect(() => {
+    if (viewerIndex === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setViewerIndex(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [viewerIndex]);
+
+  return (
+    <div className="hairline-t">
+      <div className="flex items-center justify-center gap-2 py-3 text-[var(--ink)]">
+        <SquaresFour className="h-[18px] w-[18px]" weight="fill" />
+        <span className="text-eyebrow">{t("portfolioTab")}</span>
+      </div>
+
+      {photos.length > 0 ? (
+        <div className="grid grid-cols-3 gap-0.5">
+          {photos.map((photo, i) => (
+            <button
+              key={photo.id}
+              type="button"
+              onClick={() => setViewerIndex(i)}
+              className="relative aspect-square overflow-hidden bg-[var(--bg-soft)]"
+            >
+              <Image
+                src={photo.url}
+                alt=""
+                fill
+                sizes="(max-width: 640px) 33vw, 220px"
+                quality={85}
+                className="object-cover"
+              />
+            </button>
+          ))}
+        </div>
+      ) : (
+        <Link
+          href={"/model/portfolio" as never}
+          className="flex flex-col items-center justify-center gap-3 py-14 text-center transition-colors hover:bg-[var(--bg-soft)]"
+        >
+          <span className="flex h-12 w-12 items-center justify-center rounded-full hairline border-[var(--rule-strong)]">
+            <Plus className="h-6 w-6 text-[var(--ink-2)]" weight="bold" />
+          </span>
+          <span className="text-sm font-medium text-[var(--ink)]">{t("addFirstPhoto")}</span>
+        </Link>
+      )}
+
+      {/* Full-screen vertical photo viewer */}
+      {mounted && viewerIndex !== null &&
+        createPortal(
+          <div className="fixed inset-0 z-[100] bg-black animate-fade-in" role="dialog" aria-modal="true">
+            <button
+              type="button"
+              onClick={() => setViewerIndex(null)}
+              aria-label={tNav("close")}
+              className="absolute right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
+              style={{ top: "max(1rem, env(safe-area-inset-top))" }}
+            >
+              <X className="h-5 w-5" weight="bold" />
+            </button>
+            <div
+              ref={scrollRef}
+              className="h-[100dvh] snap-y snap-mandatory overflow-y-auto overscroll-contain"
+            >
+              {photos.map((photo) => (
+                <div
+                  key={photo.id}
+                  className="relative flex h-[100dvh] w-full snap-start snap-always items-center justify-center"
+                >
+                  <Image
+                    src={photo.url}
+                    alt=""
+                    fill
+                    sizes="100vw"
+                    quality={90}
+                    className="object-contain"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }
