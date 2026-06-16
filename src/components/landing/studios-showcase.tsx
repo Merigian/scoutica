@@ -88,7 +88,7 @@ export async function StudiosShowcase() {
                         alt={s.name}
                         fill
                         sizes="(min-width: 768px) 33vw, 100vw"
-                        className="object-cover grayscale transition-[filter,transform] duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:grayscale-0 motion-safe:group-hover:scale-[1.03]"
+                        className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] motion-safe:group-hover:scale-[1.03]"
                       />
                     ) : null}
                   </div>

@@ -33,7 +33,7 @@ const sizes: Record<Size, string> = {
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "default", size = "default", isLoading, disabled, children, asChild = false, ...props }, ref) => {
     const buttonClasses = cn(
-      "inline-flex items-center justify-center gap-2 font-[var(--font-body)] font-medium",
+      "inline-flex items-center justify-center gap-2 font-label font-medium tracking-[0.02em]",
       "disabled:pointer-events-none disabled:opacity-50",
       "transition-colors duration-300 ease-out",
       variants[variant],

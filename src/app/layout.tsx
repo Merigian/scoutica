@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter_Tight, Bodoni_Moda, Archivo } from "next/font/google";
+import { Fraunces, Inter_Tight, Bodoni_Moda, Archivo, Poppins } from "next/font/google";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -30,6 +30,15 @@ const archivo = Archivo({
   subsets: ["latin", "latin-ext"],
   variable: "--font-archivo",
   weight: ["300", "400", "500", "600"],
+  display: "swap",
+});
+
+// ── Fashion-agency label font (Aston Models look) — clean geometric sans,
+//    used uppercase + tracked on nav, meta, buttons and model names. ──
+const poppins = Poppins({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-poppins",
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -91,7 +100,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html suppressHydrationWarning className={`theme-noir ${fraunces.variable} ${interTight.variable} ${bodoni.variable} ${archivo.variable}`}>
+    <html suppressHydrationWarning className={`theme-noir ${fraunces.variable} ${interTight.variable} ${bodoni.variable} ${archivo.variable} ${poppins.variable}`}>
       <body className="min-h-screen antialiased">
         <a href="#main" className="skip-link">Skip to content</a>
         {children}

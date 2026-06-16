@@ -419,7 +419,7 @@ export function ModelCard({
             <header className="flex flex-col gap-2">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-4 gap-y-1">
-                  <h3 className="text-h2 text-[var(--ink)]">{name}</h3>
+                  <h3 className="text-agency text-[1.375rem] text-[var(--ink)]">{name}</h3>
                   {age !== null && (
                     <span
                       className="text-mono-num text-2xl text-[var(--ink-2)]"
@@ -650,7 +650,7 @@ export function ModelCard({
 
         <div className="space-y-1 p-3">
           <div className="flex items-center justify-between gap-2">
-            <h3 className="truncate text-sm font-medium text-[var(--ink)]">{name}</h3>
+            <h3 className="truncate text-agency text-sm text-[var(--ink)]">{name}</h3>
             {age !== null && (
               <span
                 className="text-meta text-[var(--ink-2)]"

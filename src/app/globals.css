@@ -213,9 +213,16 @@ html {
   text-size-adjust: 100%;
 }
 body {
-  /* No grey flash on tap; kill the rubber-band/pull-to-refresh bounce */
+  /* No grey flash on tap */
   -webkit-tap-highlight-color: transparent;
-  overscroll-behavior-y: none;
+}
+/* Kill the rubber-band / pull-to-refresh bounce ONLY on touch devices.
+   On desktop this combined with `overflow-x: hidden` froze wheel/touchpad
+   scrolling in Chromium, so it must not apply to mouse/trackpad. */
+@media (hover: none) and (pointer: coarse) {
+  body {
+    overscroll-behavior-y: none;
+  }
 }
 /* Interactive elements respond instantly (no 300ms delay, no double-tap zoom) */
 a,
@@ -341,15 +348,27 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--ink-3);
 }
 .text-meta {
-  font-family: var(--font-body);
+  font-family: var(--font-poppins), var(--font-body);
   font-weight: 400;
   font-size: 0.75rem;
   line-height: 1.4;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
   text-transform: none;
   color: var(--ink-3);
   font-feature-settings: "tnum", "kern";
   font-variant-numeric: tabular-nums;
+}
+/* Fashion-agency label font (Poppins) — for nav, buttons, small structural UI. */
+.font-label {
+  font-family: var(--font-poppins), var(--font-body);
+}
+/* Model / cast names — uppercase Poppins with wide tracking (Aston Models look). */
+.text-agency {
+  font-family: var(--font-poppins), var(--font-body);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1.15;
 }
 .text-caption {
   font-family: var(--font-display);

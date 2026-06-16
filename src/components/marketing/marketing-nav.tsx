@@ -23,7 +23,7 @@ function NavLink({ href, label, onClick }: { href: string; label: string; onClic
     <Link
       href={href as never}
       onClick={onClick}
-      className="link-underline text-[13px] tracking-tight text-current/85 hover:text-current transition-colors"
+      className="link-underline font-label text-[12px] uppercase tracking-[0.12em] text-current/85 hover:text-current transition-colors"
     >
       {label}
     </Link>
