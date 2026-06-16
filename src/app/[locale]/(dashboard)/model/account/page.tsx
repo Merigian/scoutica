@@ -9,11 +9,18 @@ export default async function ModelAccountPage() {
 
   const profile = await db.modelProfile.findUnique({
     where: { userId: session.user.id },
-    select: { slug: true, isPublished: true },
+    select: {
+      slug: true,
+      isPublished: true,
+      portfolioImages: {
+        orderBy: [{ isCover: "desc" }, { order: "asc" }],
+        select: { id: true, url: true },
+      },
+    },
   });
 
   const publicHref =
     profile?.slug && profile.isPublished ? `/m/${profile.slug}` : undefined;
 
-  return <AccountScreen publicHref={publicHref} />;
+  return <AccountScreen publicHref={publicHref} photos={profile?.portfolioImages ?? []} />;
 }

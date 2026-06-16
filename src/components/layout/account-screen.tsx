@@ -2,19 +2,23 @@
 
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { Avatar } from "@/components/ui/avatar";
 import {
-  Images,
   ShieldCheck,
   Buildings,
   CaretRight,
   PencilSimple,
   ArrowSquareOut,
+  SquaresFour,
+  Plus,
   type Icon as PhosphorIcon,
 } from "@phosphor-icons/react";
 
 type Role = "model" | "scout" | "studio" | "admin";
+
+export type AccountPhoto = { id: string; url: string };
 
 type Row = { key: string; href: string; icon: PhosphorIcon };
 
@@ -23,7 +27,6 @@ function rowsForRole(role: Role): Row[] {
   switch (role) {
     case "model":
       return [
-        { key: "portfolio", href: "/model/portfolio", icon: Images },
         { key: "verification", href: "/model/verification", icon: ShieldCheck },
       ];
     case "scout":
@@ -52,9 +55,11 @@ const EDIT_HREF: Partial<Record<Role, string>> = {
 interface AccountScreenProps {
   /** Public-facing profile deep link (e.g. /m/{slug}); shown as a CTA when present. */
   publicHref?: string;
+  /** Model portfolio photos, rendered as an Instagram-style grid. */
+  photos?: AccountPhoto[];
 }
 
-export function AccountScreen({ publicHref }: AccountScreenProps) {
+export function AccountScreen({ publicHref, photos = [] }: AccountScreenProps) {
   const { data: session } = useSession();
   const t = useTranslations("account");
   const tNav = useTranslations("nav");
@@ -65,6 +70,7 @@ export function AccountScreen({ publicHref }: AccountScreenProps) {
   const rows = rowsForRole(role);
   const editHref = EDIT_HREF[role];
   const hasCta = Boolean(editHref || publicHref);
+  const isModel = role === "model";
 
   return (
     <div className="mx-auto w-full max-w-md pb-6 animate-fade-in lg:max-w-2xl">
@@ -108,6 +114,46 @@ export function AccountScreen({ publicHref }: AccountScreenProps) {
           </div>
         )}
       </header>
+
+      {/* Instagram-style portfolio grid (models) */}
+      {isModel && (
+        <div className="hairline-t">
+          <div className="flex items-center justify-center gap-2 py-3 text-[var(--ink)]">
+            <SquaresFour className="h-[18px] w-[18px]" weight="fill" />
+            <span className="text-eyebrow">{t("portfolioTab")}</span>
+          </div>
+          {photos.length > 0 ? (
+            <div className="grid grid-cols-3 gap-0.5">
+              {photos.map((photo) => (
+                <Link
+                  key={photo.id}
+                  href={"/model/portfolio" as never}
+                  className="relative aspect-square overflow-hidden bg-[var(--bg-soft)]"
+                >
+                  <Image
+                    src={photo.url}
+                    alt=""
+                    fill
+                    sizes="(max-width: 640px) 33vw, 220px"
+                    quality={85}
+                    className="object-cover"
+                  />
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <Link
+              href={"/model/portfolio" as never}
+              className="flex flex-col items-center justify-center gap-3 py-14 text-center transition-colors hover:bg-[var(--bg-soft)]"
+            >
+              <span className="flex h-12 w-12 items-center justify-center rounded-full hairline border-[var(--rule-strong)]">
+                <Plus className="h-6 w-6 text-[var(--ink-2)]" weight="bold" />
+              </span>
+              <span className="text-sm font-medium text-[var(--ink)]">{t("addFirstPhoto")}</span>
+            </Link>
+          )}
+        </div>
+      )}
 
       {/* Profile-defining links */}
       {rows.length > 0 && (

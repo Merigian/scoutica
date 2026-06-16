@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Eye,
+  Heart,
   Mail,
   Send,
   ArrowUpRight,
@@ -46,14 +47,6 @@ export default async function ModelHomePage() {
     : needsPublish
     ? t("profileNotPublished")
     : null;
-
-  const strengthScore = profile.completenessScore;
-  const strengthLabel =
-    strengthScore >= 80
-      ? t("strengthProfessional")
-      : strengthScore >= 50
-      ? t("strengthGood")
-      : t("strengthBasic");
 
   return (
     <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-8 lg:py-12 animate-fade-in">
@@ -124,10 +117,10 @@ export default async function ModelHomePage() {
             })}
             noChangeLabel={t("noChange")}
           />
-          <StrengthMetric
-            label={t("profileStrength")}
-            score={strengthScore}
-            tier={strengthLabel}
+          <Metric
+            icon={<Heart className="h-4 w-4" />}
+            label={t("totalLikes")}
+            value={metrics.totalSaves}
           />
           <Metric
             icon={<Mail className="h-4 w-4" />}
@@ -369,36 +362,6 @@ function Metric({
 }
 
 // ─── Profile strength cell ───
-function StrengthMetric({
-  label,
-  score,
-  tier,
-}: {
-  label: string;
-  score: number;
-  tier: string;
-}) {
-  return (
-    <div className="p-6 lg:p-8 hairline-b hairline-r h-full flex flex-col">
-      <div className="flex items-center justify-between text-[var(--ink-3)]">
-        <span className="text-eyebrow">{label}</span>
-        <span className="text-meta tabular-nums">{score}%</span>
-      </div>
-      <p className="mt-6 font-display font-light text-[clamp(1.5rem,2.1vw,2rem)] leading-none text-[var(--ink)]">
-        {tier}
-      </p>
-      <div className="mt-auto pt-6">
-        <div className="h-px bg-[var(--rule)] overflow-hidden">
-          <div
-            className="h-px bg-[var(--ink)]"
-            style={{ width: `${Math.min(100, Math.max(0, score))}%` }}
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function formatTimeAgo(date: Date): string {
   const now = new Date();
   const diffMs = now.getTime() - date.getTime();

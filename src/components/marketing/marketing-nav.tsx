@@ -89,7 +89,7 @@ export function MarketingNav() {
           <ThemeToggle className="hidden sm:inline-flex items-center justify-center w-9 h-9 hover:opacity-70 transition-opacity" />
 
           {dashboardHref ? (
-            <Button variant="ghost" size="sm" asChild className="group !text-current">
+            <Button variant="ghost" size="sm" asChild className="group !text-current hidden sm:inline-flex">
               <Link href={dashboardHref as never}>
                 <LayoutDashboard className="h-4 w-4" />
                 {t("dashboard")}
@@ -124,6 +124,16 @@ export function MarketingNav() {
             <NavLink href="/about" label={t("about")} onClick={() => setOpen(false)} />
             <NavLink href="/contact" label={t("contact")} onClick={() => setOpen(false)} />
             <NavLink href="/studios" label={t("browseStudios")} onClick={() => setOpen(false)} />
+            {dashboardHref && (
+              <div className="pt-6 hairline-top mt-2">
+                <Button className="w-full" asChild>
+                  <Link href={dashboardHref as never} onClick={() => setOpen(false)}>
+                    <LayoutDashboard className="h-4 w-4" />
+                    {t("dashboard")}
+                  </Link>
+                </Button>
+              </div>
+            )}
             {!dashboardHref && (
               <div className="pt-6 hairline-top mt-2 space-y-3">
                 <Button variant="outline" className="w-full" asChild>
