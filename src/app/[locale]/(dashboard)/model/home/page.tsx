@@ -8,7 +8,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Eye,
-  Heart,
   Mail,
   Send,
   ArrowUpRight,
@@ -118,9 +117,10 @@ export default async function ModelHomePage() {
             noChangeLabel={t("noChange")}
           />
           <Metric
-            icon={<Heart className="h-4 w-4" />}
-            label={t("totalLikes")}
-            value={metrics.totalSaves}
+            icon={<Camera className="h-4 w-4" />}
+            label={t("portfolioPhotos")}
+            value={profile.photoCount}
+            href="/model/portfolio"
           />
           <Metric
             icon={<Mail className="h-4 w-4" />}
