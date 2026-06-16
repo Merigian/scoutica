@@ -17,6 +17,7 @@ export type Locale = (typeof SITE_CONFIG.locales)[number];
 export const NAV_ITEMS = {
   model: [
     { key: "dashboard", href: "/model/home", icon: "LayoutDashboard" },
+    { key: "discover", href: "/model/discover", icon: "Search" },
     { key: "portfolio", href: "/model/portfolio", icon: "Images" },
     { key: "opportunities", href: "/model/castings", icon: "Megaphone" },
     { key: "applications", href: "/model/applications", icon: "FileText" },

@@ -10,7 +10,6 @@ import { UnreadBadge } from "@/components/shared/unread-badge";
 import {
   House,
   Megaphone,
-  ClipboardText,
   ChatCircle,
   MagnifyingGlass,
   CalendarBlank,
@@ -28,8 +27,8 @@ type Slot =
 const SLOTS: Record<Role, Slot[]> = {
   model: [
     { type: "link", key: "home", href: "/model/home", icon: House },
+    { type: "link", key: "discover", href: "/model/discover", icon: MagnifyingGlass },
     { type: "link", key: "castings", href: "/model/castings", icon: Megaphone },
-    { type: "link", key: "applications", href: "/model/applications", icon: ClipboardText },
     { type: "link", key: "messages", href: "/model/messages", icon: ChatCircle, badge: true },
     { type: "avatar", href: "/model/account" },
   ],

@@ -31,7 +31,15 @@ export default async function ModelDiscoverPage({
     sortBy: "relevance",
   });
 
-  const profileIds = results.profiles.map((p) => p.id);
+  // Don't show the model their own profile in the inspiration grid.
+  const ownProfile = await db.modelProfile.findUnique({
+    where: { userId: session.user.id },
+    select: { id: true },
+  });
+  const profiles = results.profiles.filter((p) => p.id !== ownProfile?.id);
+  const total = results.total - (results.profiles.length - profiles.length);
+
+  const profileIds = profiles.map((p) => p.id);
   const savedRows =
     profileIds.length > 0
       ? await db.profileLike.findMany({
@@ -54,16 +62,16 @@ export default async function ModelDiscoverPage({
       </div>
 
       {/* Results Grid */}
-      {results.profiles.length > 0 ? (
+      {profiles.length > 0 ? (
         <>
           <div className="flex items-center justify-between gap-3">
             <p className="text-sm text-[var(--ink-3)]">
-              {results.total} {results.total === 1 ? t("profile") : t("profiles")}
+              {total} {total === 1 ? t("profile") : t("profiles")}
             </p>
             <GridDensitySelector cols={cols} />
           </div>
           <DiscoverGrid cols={cols}>
-            {results.profiles.map((profile) => (
+            {profiles.map((profile) => (
               <ModelCard
                 key={profile.id}
                 profile={profile}
