@@ -48,7 +48,7 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
         <div className="relative z-10 flex w-full items-end justify-center px-12 pt-12 pb-0">
           <LogoMark
             width={240}
-            className="text-[#F4F1EA]"
+            className="text-white"
             style={{ filter: "drop-shadow(0 2px 14px rgba(10,10,11,0.6))" }}
           />
         </div>

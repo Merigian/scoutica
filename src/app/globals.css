@@ -117,11 +117,11 @@
   --bg:           #0A0A0B;
   --bg-soft:      #131316;
   --bg-elevated:  #1B1B1F;
-  --ink:          #F4F1EA;
-  --ink-2:        #B6B2A9;
-  --ink-3:        #928D83;
-  --rule:         rgba(244, 241, 234, 0.12);
-  --rule-strong:  rgba(244, 241, 234, 0.26);
+  --ink:          #FFFFFF;
+  --ink-2:        #B7B7BB;
+  --ink-3:        #8B8B90;
+  --rule:         rgba(255, 255, 255, 0.12);
+  --rule-strong:  rgba(255, 255, 255, 0.26);
 
   --accent:       var(--ink);
   --accent-soft:  var(--ink-2);

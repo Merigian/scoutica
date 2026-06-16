@@ -48,7 +48,7 @@ export function BrandPreloader() {
           transition={{ duration: 0.9, ease: EASE }}
         >
           <motion.div
-            className="flex items-center gap-3 sm:gap-4 text-[#F4F1EA]"
+            className="flex items-center gap-3 sm:gap-4 text-white"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.3 } }}
@@ -75,7 +75,7 @@ export function BrandPreloader() {
 
           {/* thin progress hairline */}
           <motion.span
-            className="absolute bottom-0 left-0 h-px bg-[#F4F1EA]/40"
+            className="absolute bottom-0 left-0 h-px bg-white/40"
             initial={{ width: "0%" }}
             animate={{ width: "100%" }}
             transition={{ duration: 2, ease: "linear" }}
