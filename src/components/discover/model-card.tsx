@@ -99,6 +99,7 @@ function ProfileImage({
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           sizes={sizes}
+          quality={88}
         />
       ) : (
         <div className="flex h-full items-center justify-center">

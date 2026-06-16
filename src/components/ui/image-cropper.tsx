@@ -20,7 +20,7 @@ interface ImageCropperProps {
   onCancel: () => void;
   /** Aspect ratio width/height — default 3/4 */
   aspectRatio?: number;
-  /** Output width in px — default 600 */
+  /** Output width in px — default 1600 (high-res; the server re-encodes to webp) */
   outputWidth?: number;
 }
 
@@ -29,7 +29,7 @@ export function ImageCropper({
   onCrop,
   onCancel,
   aspectRatio = 3 / 4,
-  outputWidth = 600,
+  outputWidth = 1600,
 }: ImageCropperProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -254,6 +254,10 @@ export function ImageCropper({
     outCanvas.height = outputHeight;
     const ctx = outCanvas.getContext("2d");
     if (!ctx) return;
+
+    // High-quality downscale for crisp output.
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
 
     // Map viewport → output
     const ratio = outputWidth / viewportWidth;

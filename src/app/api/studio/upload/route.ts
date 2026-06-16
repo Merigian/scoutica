@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { putObject, extFromMime } from "@/lib/storage";
+import { putObject } from "@/lib/storage";
+import { processImage } from "@/lib/process-image";
+import { UPLOAD_PRESETS } from "@/lib/upload-config";
 
 const MAX_STUDIO_IMAGES = 10;
 
@@ -52,9 +54,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const key = `studios/${studioId}-${Date.now()}.${extFromMime(file.type)}`;
-    const { url } = await putObject(key, buffer, file.type);
+    const inputBuffer = Buffer.from(await file.arrayBuffer());
+    const processed = await processImage(inputBuffer, {
+      maxLongSide: UPLOAD_PRESETS.studio.maxLongSide,
+      quality: 85,
+    });
+    const key = `studios/${studioId}-${Date.now()}.${processed.ext}`;
+    const { url } = await putObject(key, processed.buffer, processed.contentType);
 
     const maxOrder = await db.studioImage.findFirst({
       where: { studioId },

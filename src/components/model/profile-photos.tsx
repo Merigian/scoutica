@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -28,19 +29,21 @@ export function ProfilePhotos({ photos, maxPhotos = 3 }: ProfilePhotosProps) {
   const [uploading, setUploading] = useState(false);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [cropFile, setCropFile] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    setError(null);
 
     // Validate
     const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
     if (!allowedTypes.includes(file.type)) {
-      alert(t("formatError"));
+      setError(t("formatError"));
       return;
     }
     if (file.size > 10 * 1024 * 1024) {
-      alert(t("sizeError"));
+      setError(t("sizeError"));
       return;
     }
 
@@ -58,6 +61,7 @@ export function ProfilePhotos({ photos, maxPhotos = 3 }: ProfilePhotosProps) {
     if (fileInputRef.current) fileInputRef.current.value = "";
 
     setUploading(true);
+    setError(null);
     try {
       const formData = new FormData();
       formData.append("file", new File([blob], "photo.jpg", { type: "image/jpeg" }));
@@ -66,19 +70,20 @@ export function ProfilePhotos({ photos, maxPhotos = 3 }: ProfilePhotosProps) {
       const data = await res.json();
 
       if (!data.success) {
-        alert(data.error || t("uploadError"));
+        setError(data.error || t("uploadError"));
       }
 
       router.refresh();
     } catch {
-      alert(t("uploadError"));
+      setError(t("uploadError"));
     } finally {
       setUploading(false);
     }
-  }, [router]);
+  }, [router, t]);
 
   const handleSetCover = async (imageId: string) => {
     setActionLoading(imageId);
+    setError(null);
     try {
       const res = await fetch("/api/portfolio/cover", {
         method: "POST",
@@ -86,10 +91,10 @@ export function ProfilePhotos({ photos, maxPhotos = 3 }: ProfilePhotosProps) {
         body: JSON.stringify({ imageId }),
       });
       const data = await res.json();
-      if (!data.success) alert(data.error || t("error"));
+      if (!data.success) setError(data.error || t("error"));
       router.refresh();
     } catch {
-      alert(t("error"));
+      setError(t("error"));
     } finally {
       setActionLoading(null);
     }
@@ -98,6 +103,7 @@ export function ProfilePhotos({ photos, maxPhotos = 3 }: ProfilePhotosProps) {
   const handleDelete = async (imageId: string) => {
     if (!confirm(t("deleteConfirm"))) return;
     setActionLoading(imageId);
+    setError(null);
     try {
       const res = await fetch("/api/portfolio/delete", {
         method: "POST",
@@ -105,10 +111,10 @@ export function ProfilePhotos({ photos, maxPhotos = 3 }: ProfilePhotosProps) {
         body: JSON.stringify({ imageId }),
       });
       const data = await res.json();
-      if (!data.success) alert(data.error || t("error"));
+      if (!data.success) setError(data.error || t("error"));
       router.refresh();
     } catch {
-      alert(t("error"));
+      setError(t("error"));
     } finally {
       setActionLoading(null);
     }
@@ -136,7 +142,13 @@ export function ProfilePhotos({ photos, maxPhotos = 3 }: ProfilePhotosProps) {
           onChange={handleFileSelect}
         />
 
-        <div className="grid grid-cols-3 gap-3">
+        {error && (
+          <p className="mb-3 hairline border-[var(--rule-strong)] bg-[var(--bg-soft)] px-4 py-3 text-sm text-[var(--ink)]">
+            {error}
+          </p>
+        )}
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {/* Existing photos */}
           {photos.map((photo) => (
             <div
@@ -144,10 +156,13 @@ export function ProfilePhotos({ photos, maxPhotos = 3 }: ProfilePhotosProps) {
               className="group relative aspect-[3/4] overflow-hidden bg-[var(--bg-soft)] border-2 border-transparent transition-colors hover:border-[var(--ink-3)]/20"
               style={photo.isCover ? { borderColor: "var(--ink)" } : undefined}
             >
-              <img
+              <Image
                 src={photo.url}
                 alt={t("photoAlt")}
-                className="h-full w-full object-cover"
+                fill
+                sizes="(max-width: 640px) 50vw, 33vw"
+                quality={90}
+                className="object-cover"
               />
 
               {photo.isCover && (
@@ -218,7 +233,7 @@ export function ProfilePhotos({ photos, maxPhotos = 3 }: ProfilePhotosProps) {
           onCrop={handleCropConfirm}
           onCancel={handleCropCancel}
           aspectRatio={3 / 4}
-          outputWidth={600}
+          outputWidth={1600}
         />
       </CardContent>
     </Card>

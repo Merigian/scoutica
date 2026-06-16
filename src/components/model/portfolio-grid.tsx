@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -26,6 +27,7 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [cropFile, setCropFile] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const openPicker = () => {
     if (uploading || images.length >= maxPhotos) return;
@@ -36,14 +38,15 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
     const file = e.target.files?.[0];
     if (fileInputRef.current) fileInputRef.current.value = "";
     if (!file) return;
+    setError(null);
 
     const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
     if (!allowedTypes.includes(file.type)) {
-      alert(t("formatError"));
+      setError(t("formatError"));
       return;
     }
     if (file.size > 10 * 1024 * 1024) {
-      alert(t("sizeError"));
+      setError(t("sizeError"));
       return;
     }
 
@@ -61,17 +64,18 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
     if (fileInputRef.current) fileInputRef.current.value = "";
 
     setUploading(true);
+    setError(null);
     try {
       const formData = new FormData();
       formData.append("file", new File([blob], "photo.jpg", { type: "image/jpeg" }));
       const res = await fetch("/api/portfolio/upload", { method: "POST", body: formData });
       const data = await res.json();
       if (!data.success) {
-        alert(data.error || t("uploadError"));
+        setError(data.error || t("uploadError"));
       }
       router.refresh();
     } catch {
-      alert(t("uploadError"));
+      setError(t("uploadError"));
     } finally {
       setUploading(false);
     }
@@ -118,7 +122,7 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
           onCrop={handleCropConfirm}
           onCancel={handleCropCancel}
           aspectRatio={3 / 4}
-          outputWidth={600}
+          outputWidth={1600}
         />
       </>
     );
@@ -134,16 +138,24 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
         </Button>
       </div>
 
+      {error && (
+        <p className="hairline border-[var(--rule-strong)] bg-[var(--bg-soft)] px-4 py-3 text-sm text-[var(--ink)]">
+          {error}
+        </p>
+      )}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {images.map((image) => (
           <div
             key={image.id}
             className="group relative aspect-[3/4] overflow-hidden bg-[var(--bg-soft)]"
           >
-            <img
+            <Image
               src={image.url}
               alt={t("portfolioAlt")}
-              className="h-full w-full object-cover"
+              fill
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              quality={90}
+              className="object-cover"
             />
 
             {image.isCover && (
@@ -182,7 +194,7 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
         onCrop={handleCropConfirm}
         onCancel={handleCropCancel}
         aspectRatio={3 / 4}
-        outputWidth={600}
+        outputWidth={1600}
       />
     </div>
   );

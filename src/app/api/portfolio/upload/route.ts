@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { putObject, extFromMime } from "@/lib/storage";
+import { putObject } from "@/lib/storage";
+import { processImage } from "@/lib/process-image";
+import { UPLOAD_PRESETS } from "@/lib/upload-config";
 import { calculateCompleteness } from "@/server/services/completeness";
 import { PLAN_LIMITS } from "@/config/plans";
 import type { PlanTier } from "@prisma/client";
@@ -50,9 +52,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: `Massimo ${maxPhotos} immagini` }, { status: 400 });
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const key = `portfolio/${profile.id}-${Date.now()}.${extFromMime(file.type)}`;
-    const { url } = await putObject(key, buffer, file.type);
+    const inputBuffer = Buffer.from(await file.arrayBuffer());
+    const processed = await processImage(inputBuffer, {
+      maxLongSide: UPLOAD_PRESETS.portfolio.maxLongSide,
+      quality: 85,
+    });
+    const key = `portfolio/${profile.id}-${Date.now()}.${processed.ext}`;
+    const { url } = await putObject(key, processed.buffer, processed.contentType);
 
     const maxOrder = await db.portfolioImage.findFirst({
       where: { modelProfileId: profile.id },
@@ -67,7 +73,9 @@ export async function POST(req: NextRequest) {
         modelProfileId: profile.id,
         url,
         key,
-        sizeBytes: file.size,
+        width: processed.width,
+        height: processed.height,
+        sizeBytes: processed.sizeBytes,
         order: (maxOrder?.order ?? -1) + 1,
         isCover: isFirstImage,
       },
