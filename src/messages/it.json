@@ -87,8 +87,27 @@
     "newJob": "Nuovo lavoro",
     "newStudio": "Nuovo studio",
     "modelVerifications": "Verifiche modelle",
+    "home": "Home",
+    "talents": "Talenti",
+    "menu": "Menu",
     "more": "Altro",
     "close": "Chiudi"
+  },
+  "account": {
+    "title": "Profilo",
+    "editProfile": "Modifica profilo",
+    "viewPublicProfile": "Vedi profilo pubblico",
+    "sectionProfile": "Profilo",
+    "sectionActivity": "Attività",
+    "sectionAccount": "Account",
+    "sectionPreferences": "Preferenze",
+    "appearance": "Tema",
+    "themeLight": "Chiaro",
+    "themeDark": "Scuro",
+    "language": "Lingua",
+    "roleModel": "Modello",
+    "roleScout": "Scout / Agenzia",
+    "roleStudio": "Studio"
   },
   "landing": {
     "cover": {

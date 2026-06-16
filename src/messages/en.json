@@ -87,8 +87,27 @@
     "newJob": "New job",
     "newStudio": "New studio",
     "modelVerifications": "Model verifications",
+    "home": "Home",
+    "talents": "Talent",
+    "menu": "Menu",
     "more": "More",
     "close": "Close"
+  },
+  "account": {
+    "title": "Profile",
+    "editProfile": "Edit profile",
+    "viewPublicProfile": "View public profile",
+    "sectionProfile": "Profile",
+    "sectionActivity": "Activity",
+    "sectionAccount": "Account",
+    "sectionPreferences": "Preferences",
+    "appearance": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "language": "Language",
+    "roleModel": "Model",
+    "roleScout": "Scout / Agency",
+    "roleStudio": "Studio"
   },
   "landing": {
     "cover": {

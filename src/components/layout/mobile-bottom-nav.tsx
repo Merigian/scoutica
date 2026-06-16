@@ -1,202 +1,149 @@
 "use client";
 
-import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
-import { NAV_ITEMS } from "@/config/site";
-import {
-  Search,
-  Megaphone,
-  MessageSquare,
-  Bell,
-  Building2,
-  Inbox,
-  FileText,
-  Kanban,
-  LayoutDashboard,
-  Images,
-  Bookmark,
-  ShieldCheck,
-  BadgeCheck,
-  CreditCard,
-  Settings,
-  CalendarDays,
-  Users,
-  Flag,
-  MoreHorizontal,
-  X,
-} from "lucide-react";
+import { Avatar } from "@/components/ui/avatar";
 import { UnreadBadge } from "@/components/shared/unread-badge";
-
-const ICONS: Record<string, React.ElementType> = {
-  LayoutDashboard,
-  Images,
+import {
+  House,
   Megaphone,
-  FileText,
-  Bookmark,
-  Inbox,
-  MessageSquare,
-  ShieldCheck,
-  BadgeCheck,
-  Bell,
-  CreditCard,
-  Settings,
-  Search,
-  Kanban,
-  Building2,
-  CalendarDays,
-  Users,
-  Flag,
-};
+  ClipboardText,
+  ChatCircle,
+  MagnifyingGlass,
+  CalendarBlank,
+  Plus,
+  type Icon as PhosphorIcon,
+} from "@phosphor-icons/react";
 
-type Tab = { key: string; href: string; icon: React.ElementType };
+type Role = "model" | "scout" | "studio";
 
-const MODEL_PRIMARY: Tab[] = [
-  { key: "dashboard", href: "/model/home", icon: LayoutDashboard },
-  { key: "opportunities", href: "/model/castings", icon: Megaphone },
-  { key: "applications", href: "/model/applications", icon: FileText },
-  { key: "messages", href: "/model/messages", icon: MessageSquare },
-];
+type Slot =
+  | { type: "link"; key: string; href: string; icon: PhosphorIcon; badge?: boolean }
+  | { type: "center"; key: string; href: string }
+  | { type: "avatar"; href: string };
 
-const SCOUT_PRIMARY: Tab[] = [
-  { key: "talentSearch", href: "/scout/discover", icon: Search },
-  { key: "boards", href: "/scout/boards", icon: Kanban },
-  { key: "postings", href: "/scout/castings", icon: Megaphone },
-  { key: "messages", href: "/scout/messages", icon: MessageSquare },
-];
-
-const STUDIO_PRIMARY: Tab[] = [
-  { key: "dashboard", href: "/studio/home", icon: LayoutDashboard },
-  { key: "bookings", href: "/studio/bookings", icon: CalendarDays },
-  { key: "inquiries", href: "/studio/inquiries", icon: Inbox },
-  { key: "messages", href: "/studio/messages", icon: MessageSquare },
-];
+const SLOTS: Record<Role, Slot[]> = {
+  model: [
+    { type: "link", key: "home", href: "/model/home", icon: House },
+    { type: "link", key: "castings", href: "/model/castings", icon: Megaphone },
+    { type: "link", key: "applications", href: "/model/applications", icon: ClipboardText },
+    { type: "link", key: "messages", href: "/model/messages", icon: ChatCircle, badge: true },
+    { type: "avatar", href: "/model/account" },
+  ],
+  scout: [
+    { type: "link", key: "home", href: "/scout/home", icon: House },
+    { type: "link", key: "talents", href: "/scout/discover", icon: MagnifyingGlass },
+    { type: "center", key: "newCasting", href: "/scout/castings/new" },
+    { type: "link", key: "messages", href: "/scout/messages", icon: ChatCircle, badge: true },
+    { type: "avatar", href: "/scout/account" },
+  ],
+  studio: [
+    { type: "link", key: "home", href: "/studio/home", icon: House },
+    { type: "link", key: "bookings", href: "/studio/bookings", icon: CalendarBlank },
+    { type: "center", key: "newStudio", href: "/studio/studios/new" },
+    { type: "link", key: "messages", href: "/studio/messages", icon: ChatCircle, badge: true },
+    { type: "avatar", href: "/studio/account" },
+  ],
+} as const satisfies Record<Role, Slot[]>;
 
 export function MobileBottomNav() {
   const { data: session } = useSession();
   const pathname = usePathname();
   const t = useTranslations("nav");
-  const [moreOpen, setMoreOpen] = useState(false);
 
   if (!session?.user) return null;
-  const role = session.user.role;
-  if (role === "ADMIN") return null;
+  const role = session.user.role.toLowerCase();
+  if (role !== "model" && role !== "scout" && role !== "studio") return null;
 
-  const primary =
-    role === "MODEL"
-      ? MODEL_PRIMARY
-      : role === "STUDIO"
-        ? STUDIO_PRIMARY
-        : SCOUT_PRIMARY;
-
-  const navKey = (
-    role === "MODEL" ? "model" : role === "STUDIO" ? "studio" : "scout"
-  ) as keyof typeof NAV_ITEMS;
-  const primaryHrefs = new Set(primary.map((p) => p.href));
-  const moreItems = NAV_ITEMS[navKey].filter((i) => !primaryHrefs.has(i.href));
-
+  const slots = SLOTS[role as Role];
   const isActive = (href: string) => pathname.includes(href);
 
   return (
-    <>
-      {/* "More" sheet — surfaces every nav item so nothing is mobile-unreachable */}
-      {moreOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true">
-          <button
-            type="button"
-            aria-label={t("close")}
-            onClick={() => setMoreOpen(false)}
-            className="absolute inset-0 bg-black/40 animate-fade-in"
-          />
-          <div className="absolute bottom-0 left-0 right-0 bg-[var(--bg-elevated)] hairline-t pb-[env(safe-area-inset-bottom)] animate-fade-in-up">
-            <div className="flex items-center justify-between px-5 py-4 hairline-b">
-              <span className="text-eyebrow">{t("more")}</span>
-              <button
-                type="button"
-                aria-label={t("close")}
-                onClick={() => setMoreOpen(false)}
-                className="text-[var(--ink-3)] hover:text-[var(--ink)] transition-colors"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-            <nav className="grid grid-cols-3 gap-px bg-[var(--rule)]">
-              {moreItems.map((item) => {
-                const Icon = ICONS[item.icon] ?? Settings;
-                const active = isActive(item.href);
-                return (
-                  <Link
-                    key={item.key}
-                    href={item.href as never}
-                    onClick={() => setMoreOpen(false)}
-                    className={cn(
-                      "flex flex-col items-center gap-2 bg-[var(--bg-elevated)] px-2 py-5 text-center transition-colors",
-                      active
-                        ? "text-[var(--ink)]"
-                        : "text-[var(--ink-3)] hover:text-[var(--ink)]",
-                    )}
-                  >
-                    <span className="relative">
-                      <Icon className="h-5 w-5" />
-                      {item.key === "messages" && <UnreadBadge />}
-                    </span>
-                    <span className="text-[11px] leading-tight">
-                      {t(item.key as never)}
-                    </span>
-                  </Link>
-                );
-              })}
-            </nav>
-          </div>
-        </div>
-      )}
-
-      <nav className="fixed bottom-0 left-0 right-0 z-40 hairline-t bg-[var(--bg)] lg:hidden pb-[env(safe-area-inset-bottom)]">
-        <div className="flex items-center justify-around py-2 px-1">
-          {primary.map((tab) => {
-            const active = isActive(tab.href);
+    <nav
+      className="fixed bottom-0 left-0 right-0 z-40 hairline-t bg-[var(--bg)]/95 backdrop-blur-sm lg:hidden pb-[env(safe-area-inset-bottom)]"
+      aria-label={t("dashboard")}
+    >
+      <div className="flex items-stretch justify-around px-1 pt-1.5">
+        {slots.map((slot) => {
+          if (slot.type === "center") {
             return (
               <Link
-                key={tab.key}
-                href={tab.href as never}
-                className={cn(
-                  "flex flex-col items-center gap-1 px-3 py-1.5 transition-colors relative",
-                  active ? "text-[var(--ink)]" : "text-[var(--ink-3)]",
-                )}
+                key={slot.key}
+                href={slot.href as never}
+                aria-label={t(slot.key as never)}
+                className="flex flex-1 flex-col items-center justify-start"
               >
-                {active && (
-                  <span className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-[var(--ink)]" />
-                )}
-                <span className="relative">
-                  <tab.icon className="h-5 w-5" />
-                  {tab.key === "messages" && <UnreadBadge />}
+                <span className="flex h-12 w-12 -translate-y-3 items-center justify-center rounded-full bg-[var(--ink)] text-[var(--bg)] shadow-lg shadow-black/20 transition-transform active:scale-95">
+                  <Plus className="h-6 w-6" weight="bold" />
                 </span>
-                <span className="text-[10px] text-current">
-                  {t(tab.key as never)}
+                <span className="-mt-2 text-[10px] leading-none text-[var(--ink-3)]">
+                  {t(slot.key as never)}
                 </span>
               </Link>
             );
-          })}
+          }
 
-          {/* More trigger */}
-          <button
-            type="button"
-            onClick={() => setMoreOpen(true)}
-            aria-haspopup="dialog"
-            aria-expanded={moreOpen}
-            className={cn(
-              "flex flex-col items-center gap-1 px-3 py-1.5 transition-colors",
-              moreOpen ? "text-[var(--ink)]" : "text-[var(--ink-3)]",
-            )}
-          >
-            <MoreHorizontal className="h-5 w-5" />
-            <span className="text-[10px]">{t("more")}</span>
-          </button>
-        </div>
-      </nav>
-    </>
+          if (slot.type === "avatar") {
+            const active = isActive(slot.href);
+            return (
+              <Link
+                key="avatar"
+                href={slot.href as never}
+                aria-label={t("profile")}
+                aria-current={active ? "page" : undefined}
+                className="flex flex-1 flex-col items-center gap-1 py-1"
+              >
+                <span
+                  className={cn(
+                    "flex h-7 w-7 items-center justify-center rounded-full transition-all",
+                    active && "ring-2 ring-[var(--ink)] ring-offset-2 ring-offset-[var(--bg)]",
+                  )}
+                >
+                  <Avatar
+                    src={session.user.image}
+                    name={session.user.name}
+                    size="sm"
+                    className="h-7 w-7 text-[10px]"
+                  />
+                </span>
+                <span
+                  className={cn(
+                    "text-[10px] leading-none",
+                    active ? "text-[var(--ink)]" : "text-[var(--ink-3)]",
+                  )}
+                >
+                  {t("profile")}
+                </span>
+              </Link>
+            );
+          }
+
+          const active = isActive(slot.href);
+          const Icon = slot.icon;
+          return (
+            <Link
+              key={slot.key}
+              href={slot.href as never}
+              aria-current={active ? "page" : undefined}
+              className={cn(
+                "flex flex-1 flex-col items-center gap-1 py-1 transition-colors",
+                active ? "text-[var(--ink)]" : "text-[var(--ink-3)]",
+              )}
+            >
+              <span className="relative">
+                <Icon className="h-[26px] w-[26px]" weight={active ? "fill" : "regular"} />
+                {slot.badge && <UnreadBadge />}
+              </span>
+              <span className="text-[10px] leading-none text-current">
+                {t(slot.key as never)}
+              </span>
+            </Link>
+          );
+        })}
+      </div>
+    </nav>
   );
 }
