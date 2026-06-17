@@ -46,16 +46,6 @@ export function CinematicHero({ heroSrc }: { heroSrc: string }) {
         />
       </motion.div>
 
-      {/* Soft legibility halo — subtle warm lift at the bottom-left so the two
-          buttons separate cleanly from the photo, without darkening it. */}
-      <div
-        className="pointer-events-none absolute inset-0 z-[5]"
-        style={{
-          background:
-            "radial-gradient(110% 70% at 0% 100%, rgba(245,241,234,0.34) 0%, rgba(245,241,234,0.14) 32%, transparent 58%)",
-        }}
-      />
-
       {/* Content rail — minimal. The SCOUTICA wordmark already lives in the
           photo and the explanatory copy sits in the statement section right
           below, so the cover stays clean: just the two actions. */}
