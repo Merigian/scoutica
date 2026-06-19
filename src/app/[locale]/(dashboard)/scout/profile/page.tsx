@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { VerifiedBadge } from "@/components/ui/verified-badge";
 import { ScoutProfileForm } from "@/components/forms/scout-profile-form";
 import { SCOUT_SUBTYPE_LABELS, VERIFICATION_STATUS_LABELS } from "@/config/enums";
 import { getLocale, getTranslations } from "next-intl/server";
@@ -37,6 +38,13 @@ export default async function ScoutProfilePage() {
           <CardContent className="pt-6">
             <p className="text-sm text-[var(--ink-3)]">{t("verificationStatus")}</p>
             <div className="mt-2 flex items-center gap-2">
+              {profile.verificationStatus === "APPROVED" && (
+                <VerifiedBadge
+                  size={20}
+                  variant="static"
+                  aria-label={VERIFICATION_STATUS_LABELS[profile.verificationStatus][lang]}
+                />
+              )}
               <Badge
                 variant={
                   profile.verificationStatus === "APPROVED" ? "success" :

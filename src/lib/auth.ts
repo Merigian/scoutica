@@ -15,6 +15,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       ? [Google({
           clientId: process.env.AUTH_GOOGLE_ID,
           clientSecret: process.env.AUTH_GOOGLE_SECRET,
+          // Google always asserts email ownership (email_verified), so it is
+          // safe to link a Google sign-in to an existing account that has the
+          // same email. This prevents the OAuthAccountNotLinked error for users
+          // who first registered with email + password. Only enable this for
+          // providers that verify email addresses.
+          allowDangerousEmailAccountLinking: true,
         })]
       : []),
     Credentials({

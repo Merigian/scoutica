@@ -36,7 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         take: 1000,
       }),
       db.studio.findMany({
-        where: { status: "PUBLISHED" },
+        where: { status: "PUBLISHED", studioProfile: { verificationStatus: "APPROVED" } },
         select: { slug: true, updatedAt: true },
         take: 500,
       }),

@@ -15,6 +15,7 @@ import {
   PROFESSIONAL_STATUS_LABELS,
   SPOKEN_LANGUAGES,
 } from "@/config/enums";
+import { VerifiedBadge } from "@/components/ui/verified-badge";
 
 type Lang = "it" | "en";
 
@@ -44,6 +45,7 @@ export type ChatModelProfile = {
   tiktokUrl: string | null;
   websiteUrl: string | null;
   followerCount: number | null;
+  verificationStatus: string;
   portfolioImages: { id: string; url: string; isCover: boolean }[];
 };
 
@@ -171,6 +173,7 @@ function ModelPanelBody({
   const age = profile.dateOfBirth
     ? calculateAge(new Date(profile.dateOfBirth))
     : null;
+  const isVerified = profile.verificationStatus === "APPROVED";
   const genderLabel = profile.gender
     ? (GENDER_LABELS as Record<string, Record<string, string>>)[profile.gender]?.[lang]
     : null;
@@ -207,10 +210,15 @@ function ModelPanelBody({
         alt={profile.fullName || "Model"}
       />
       <div className="px-5 py-5">
-        <h3 className="text-h3 text-[var(--ink)]">
-          {profile.fullName}
+        <h3 className="flex flex-wrap items-center gap-x-2 gap-y-1 text-h3 text-[var(--ink)]">
+          <span className="flex items-center gap-1.5">
+            {profile.fullName}
+            {isVerified && (
+              <VerifiedBadge size={18} variant="static" aria-label={t("verified")} />
+            )}
+          </span>
           {age !== null && (
-            <span className="ml-2 text-meta text-[var(--ink-3)] tabular-nums">
+            <span className="text-meta text-[var(--ink-3)] tabular-nums">
               {age}
             </span>
           )}
@@ -360,8 +368,11 @@ function ScoutPanelBody({
         <p className="text-eyebrow text-[var(--ink-3)]">
           {t("roleScout")}
         </p>
-        <h3 className="mt-2 text-h3 text-[var(--ink)]">
-          {profile.businessName ?? "—"}
+        <h3 className="mt-2 flex items-center gap-1.5 text-h3 text-[var(--ink)]">
+          <span>{profile.businessName ?? "—"}</span>
+          {isVerified && (
+            <VerifiedBadge size={18} variant="static" aria-label={t("verified")} />
+          )}
         </h3>
         {profile.roleTitle && (
           <p className="mt-1 text-[13px] text-[var(--ink-2)]">{profile.roleTitle}</p>
@@ -372,9 +383,11 @@ function ScoutPanelBody({
             {profile.city}
           </p>
         )}
-        <div className="mt-4">
-          <Chip>{isVerified ? t("verified") : t("unverified")}</Chip>
-        </div>
+        {!isVerified && (
+          <div className="mt-4">
+            <Chip>{t("unverified")}</Chip>
+          </div>
+        )}
         {profile.bio && (
           <p className="mt-5 text-[13px] leading-[1.6] text-[var(--ink-2)] line-clamp-5 whitespace-pre-wrap">
             {profile.bio}

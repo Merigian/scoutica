@@ -32,9 +32,9 @@ import {
   Plane,
   User,
   ShieldCheck,
-  BadgeCheck,
   Music2,
 } from "lucide-react";
+import { VerifiedBadge } from "@/components/ui/verified-badge";
 import { PublicProfileContactButton } from "@/components/profile/public-profile-contact-button";
 import { recordProfileView } from "@/server/actions/profile-engagement";
 import { BackLink } from "@/components/shared/back-link";
@@ -207,10 +207,7 @@ export default async function PublicProfilePage({
                 {profile.fullName || t("unnamed")}
               </h1>
               {isVerified && (
-                <Badge variant="outline" className="gap-1">
-                  <BadgeCheck className="h-3 w-3 text-[var(--accent)]" />
-                  {t("verified")}
-                </Badge>
+                <VerifiedBadge size={24} aria-label={t("verified")} />
               )}
             </div>
             <div className="flex flex-wrap items-center gap-3 mt-2 text-sm text-[var(--ink-3)]">

@@ -27,7 +27,6 @@ import { calculateAge, formatRelativeTime, formatDate } from "@/lib/utils";
 import {
   MapPin,
   ShieldCheck,
-  BadgeCheck,
   User,
   ChevronLeft,
   ChevronRight,
@@ -39,6 +38,7 @@ import {
   Bookmark,
   MessageCircle,
 } from "lucide-react";
+import { VerifiedBadge } from "@/components/ui/verified-badge";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { useLiveCols } from "@/components/discover/grid-density-selector";
@@ -170,10 +170,7 @@ function ProfileImage({
             </Badge>
           )}
           {isVerified && (
-            <Badge variant="outline" className="gap-1 bg-[var(--bg)]/90 text-[10px]">
-              <BadgeCheck className="h-3 w-3 text-[var(--accent)]" />
-              {verifiedLabel}
-            </Badge>
+            <VerifiedBadge size={20} variant="static" aria-label={verifiedLabel} />
           )}
         </div>
       )}

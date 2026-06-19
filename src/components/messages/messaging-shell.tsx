@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useRouter, usePathname, Link } from "@/i18n/routing";
-import { ArrowLeft, BadgeCheck, Info, MessageSquare } from "lucide-react";
+import { ArrowLeft, Info, MessageSquare } from "lucide-react";
 import {
   startTransition,
   useCallback,
@@ -13,6 +13,7 @@ import {
 import type { UserRole } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import { Avatar } from "@/components/ui/avatar";
+import { VerifiedBadge } from "@/components/ui/verified-badge";
 import {
   deleteConversation,
   getConversationMessages,
@@ -274,9 +275,11 @@ export function MessagingShell({
                       <p className="truncate text-[15px] font-semibold text-[var(--ink)]">
                         {thread.otherUser.name}
                       </p>
-                      {thread.otherUser.role === "SCOUT" && (
-                        <BadgeCheck
-                          className="h-4 w-4 shrink-0 text-[var(--accent)]"
+                      {thread.otherUser.verified && (
+                        <VerifiedBadge
+                          size={16}
+                          variant="static"
+                          className="shrink-0"
                           aria-label="verified"
                         />
                       )}

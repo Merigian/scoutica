@@ -161,13 +161,13 @@ export async function getConversations() {
                   role: true,
                   lastActiveAt: true,
                   modelProfile: {
-                    select: { fullName: true, slug: true },
+                    select: { fullName: true, slug: true, verificationStatus: true },
                   },
                   scoutProfile: {
-                    select: { businessName: true },
+                    select: { businessName: true, verificationStatus: true },
                   },
                   studioProfile: {
-                    select: { businessName: true },
+                    select: { businessName: true, verificationStatus: true },
                   },
                 },
               },
@@ -211,6 +211,15 @@ export async function getConversations() {
         ? otherUser.modelProfile?.slug ?? null
         : null;
 
+    const verified =
+      otherUser?.role === "MODEL"
+        ? otherUser.modelProfile?.verificationStatus === "APPROVED"
+        : otherUser?.role === "SCOUT"
+          ? otherUser.scoutProfile?.verificationStatus === "APPROVED"
+          : otherUser?.role === "STUDIO"
+            ? otherUser.studioProfile?.verificationStatus === "APPROVED"
+            : false;
+
     return {
       id: p.conversation.id,
       otherUser: {
@@ -220,6 +229,7 @@ export async function getConversations() {
         role: otherUser?.role ?? "MODEL",
         slug: profileSlug,
         lastActiveAt: otherUser?.lastActiveAt ?? null,
+        verified,
       },
       lastMessage: lastMessage
         ? {
@@ -296,9 +306,9 @@ export async function getConversationMessages(
           image: true,
           role: true,
           lastActiveAt: true,
-          modelProfile: { select: { fullName: true, slug: true } },
-          scoutProfile: { select: { businessName: true } },
-          studioProfile: { select: { businessName: true } },
+          modelProfile: { select: { fullName: true, slug: true, verificationStatus: true } },
+          scoutProfile: { select: { businessName: true, verificationStatus: true } },
+          studioProfile: { select: { businessName: true, verificationStatus: true } },
         },
       },
     },
@@ -317,6 +327,15 @@ export async function getConversationMessages(
       ? otherUser.modelProfile?.slug ?? null
       : null;
 
+  const verified =
+    otherUser?.role === "MODEL"
+      ? otherUser.modelProfile?.verificationStatus === "APPROVED"
+      : otherUser?.role === "SCOUT"
+        ? otherUser.scoutProfile?.verificationStatus === "APPROVED"
+        : otherUser?.role === "STUDIO"
+          ? otherUser.studioProfile?.verificationStatus === "APPROVED"
+          : false;
+
   return {
     messages,
     hasMore,
@@ -329,6 +348,7 @@ export async function getConversationMessages(
       role: otherUser?.role ?? "MODEL",
       slug: profileSlug,
       lastActiveAt: otherUser?.lastActiveAt ?? null,
+      verified,
     },
     otherLastReadAt: otherParticipant?.lastReadAt ?? null,
   };
@@ -378,6 +398,7 @@ export async function getModelProfileForChat(userId: string) {
       id: true,
       slug: true,
       fullName: true,
+      verificationStatus: true,
       dateOfBirth: true,
       gender: true,
       city: true,

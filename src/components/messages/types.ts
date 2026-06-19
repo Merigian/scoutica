@@ -9,6 +9,7 @@ export interface OtherUserSummary {
   role: UserRole;
   slug: string | null;
   lastActiveAt: Date | string | null;
+  verified: boolean;
 }
 
 export interface ConversationSummary {

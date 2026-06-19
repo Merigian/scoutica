@@ -5,7 +5,6 @@ import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { CinematicHero } from "@/components/landing/cinematic-hero";
 import { FeaturedProfiles } from "@/components/landing/featured-profiles";
-import { AudienceRouter } from "@/components/landing/audience-router";
 import { TrustSection } from "@/components/landing/trust-section";
 import { EditorialQuote } from "@/components/landing/editorial-quote";
 import { StudiosShowcase } from "@/components/landing/studios-showcase";
@@ -78,9 +77,6 @@ export default async function LandingPage() {
           </Reveal>
         </div>
       </section>
-
-      {/* ───────── 01 — PER CHI È — audience router ───────── */}
-      <AudienceRouter />
 
       {/* ───────── 02 — CAST — marquee of real models ───────── */}
       <div id="cast" className="scroll-mt-24">

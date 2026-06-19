@@ -10,6 +10,7 @@ import { JOB_TYPE_LABELS } from "@/config/enums";
 import { formatDate } from "@/lib/utils";
 import { MapPin, Calendar, DollarSign, Users, CheckCircle, Briefcase, Tag, Building } from "lucide-react";
 import { BackLink } from "@/components/shared/back-link";
+import { VerifiedBadge } from "@/components/ui/verified-badge";
 
 export default async function JobDetailPage({
   params,
@@ -95,7 +96,12 @@ export default async function JobDetailPage({
             {job.scoutProfile.businessName ?? "Scout"}
           </span>
           {job.scoutProfile.verificationStatus === "APPROVED" && (
-            <Badge variant="default" className="ml-1 text-[10px]">✓</Badge>
+            <VerifiedBadge
+              size={15}
+              variant="static"
+              className="ml-1 inline-block align-text-bottom"
+              aria-label="Verified"
+            />
           )}
         </p>
       </div>
