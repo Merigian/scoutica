@@ -87,6 +87,7 @@
     "newJob": "Nuovo lavoro",
     "newStudio": "Nuovo studio",
     "modelVerifications": "Verifiche modelle",
+    "studioVerifications": "Verifiche studi",
     "home": "Home",
     "talents": "Talenti",
     "menu": "Menu",
@@ -1704,6 +1705,17 @@
         "viewProfile": "Vedi profilo",
         "profilePhotos": "Foto del profilo",
         "noPhotos": "Nessuna foto caricata"
+      },
+      "studioVerifications": {
+        "title": "Verifiche studi",
+        "requestsToReview": "richieste da revisionare",
+        "submitted": "Inviata",
+        "pending": "In sospeso",
+        "city": "Città",
+        "spaces": "Spazi",
+        "registered": "Registrato",
+        "noVerifications": "Nessuna verifica in sospeso",
+        "noVerificationsDesc": "Le richieste di verifica degli studi appariranno qui."
       }
     },
     "marketing": {
@@ -2233,6 +2245,15 @@
       "title": "Stai navigando in modalità lettura",
       "description": "Verifica il tuo account per contattare le modelle, creare casting e annunci di lavoro.",
       "cta": "Verifica account"
+    },
+    "studioVerificationBanner": {
+      "pendingTitle": "Account studio in verifica",
+      "pendingDescription": "Puoi creare e pubblicare i tuoi spazi, ma diventeranno visibili al pubblico solo dopo l'approvazione del nostro team.",
+      "submittedTitle": "Richiesta di verifica inviata",
+      "submittedDescription": "Abbiamo ricevuto la tua richiesta. Il team la revisionerà a breve.",
+      "rejectedTitle": "Verifica non approvata",
+      "rejectedDescription": "Aggiorna i dati del profilo e invia di nuovo la richiesta di verifica.",
+      "cta": "Richiedi verifica"
     },
     "discover": {
       "unnamed": "Senza nome",

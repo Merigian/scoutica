@@ -1,7 +1,7 @@
 // Script to add 6 studio profiles with photos
 // Run: npx tsx prisma/seed-studios.ts
 
-import { PrismaClient, StudioType, StudioStatus } from "@prisma/client";
+import { PrismaClient, StudioType, StudioStatus, VerificationStatus } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
@@ -340,6 +340,8 @@ async function main() {
             phoneNumber: data.profile.phoneNumber,
             websiteUrl: data.profile.websiteUrl,
             vatNumber: data.profile.vatNumber,
+            verificationStatus: "APPROVED" as VerificationStatus,
+            verifiedAt: new Date(),
           },
         },
       },

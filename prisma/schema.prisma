@@ -893,10 +893,18 @@ model StudioProfile {
   websiteUrl   String?
   phoneNumber  String?
 
+  // Verification (admin-gated before the studio's spaces appear publicly)
+  verificationStatus      VerificationStatus @default(PENDING)
+  verificationNotes       String?
+  verifiedAt              DateTime?
+  verificationSubmittedAt DateTime?
+
   studios Studio[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([verificationStatus])
 }
 
 // ─── STUDIO LISTING ───────────────────────────────────────────────

@@ -87,6 +87,7 @@
     "newJob": "New job",
     "newStudio": "New studio",
     "modelVerifications": "Model verifications",
+    "studioVerifications": "Studio verifications",
     "home": "Home",
     "talents": "Talent",
     "menu": "Menu",
@@ -1704,6 +1705,17 @@
         "viewProfile": "View profile",
         "profilePhotos": "Profile photos",
         "noPhotos": "No photos uploaded"
+      },
+      "studioVerifications": {
+        "title": "Studio verifications",
+        "requestsToReview": "requests to review",
+        "submitted": "Submitted",
+        "pending": "Pending",
+        "city": "City",
+        "spaces": "Spaces",
+        "registered": "Registered",
+        "noVerifications": "No pending verifications",
+        "noVerificationsDesc": "Studio verification requests will appear here."
       }
     },
     "marketing": {
@@ -2233,6 +2245,15 @@
       "title": "You're browsing in read-only mode",
       "description": "Verify your account to contact models, create castings and job posts.",
       "cta": "Verify account"
+    },
+    "studioVerificationBanner": {
+      "pendingTitle": "Studio account under review",
+      "pendingDescription": "You can create and publish your spaces, but they only become public once our team approves your account.",
+      "submittedTitle": "Verification request sent",
+      "submittedDescription": "We received your request. Our team will review it shortly.",
+      "rejectedTitle": "Verification not approved",
+      "rejectedDescription": "Update your profile details and submit the verification request again.",
+      "cta": "Request verification"
     },
     "discover": {
       "unnamed": "Unnamed",

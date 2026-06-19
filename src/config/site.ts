@@ -44,6 +44,7 @@ export const NAV_ITEMS = {
     { key: "users", href: "/admin/users", icon: "Users" },
     { key: "verifications", href: "/admin/verifications", icon: "ShieldCheck" },
     { key: "modelVerifications", href: "/admin/model-verifications", icon: "BadgeCheck" },
+    { key: "studioVerifications", href: "/admin/studio-verifications", icon: "Building2" },
     { key: "reports", href: "/admin/reports", icon: "Flag" },
     { key: "castings", href: "/admin/castings", icon: "Megaphone" },
     { key: "subscriptions", href: "/admin/subscriptions", icon: "CreditCard" },

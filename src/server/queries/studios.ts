@@ -48,6 +48,7 @@ export async function searchStudios(filters: StudioFilters = {}): Promise<Studio
   const where: Record<string, unknown> = {
     isPublished: true,
     status: "PUBLISHED",
+    studioProfile: { verificationStatus: "APPROVED" },
   };
 
   if (filters.city) {
@@ -127,8 +128,13 @@ export async function searchStudios(filters: StudioFilters = {}): Promise<Studio
 }
 
 export async function getStudioBySlug(slug: string) {
-  return db.studio.findUnique({
-    where: { slug, isPublished: true, status: "PUBLISHED" },
+  return db.studio.findFirst({
+    where: {
+      slug,
+      isPublished: true,
+      status: "PUBLISHED",
+      studioProfile: { verificationStatus: "APPROVED" },
+    },
     include: {
       images: { orderBy: { order: "asc" } },
       studioProfile: {
