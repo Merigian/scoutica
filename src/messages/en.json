@@ -2459,11 +2459,21 @@
     },
     "studioAvailability": {
       "title": "Manage availability",
-      "instructions": "Click dates to select them, then block the selected dates.",
-      "blockDate": "Block {count} date",
-      "blockDates": "Block {count} dates",
-      "blockedDates": "Blocked dates",
-      "unblock": "Unblock"
+      "intro": "Tap free days to block them, tap a blocked day to reopen it, then save. Client bookings can't be changed.",
+      "weekdays": "Mon,Tue,Wed,Thu,Fri,Sat,Sun",
+      "prevMonth": "Previous month",
+      "nextMonth": "Next month",
+      "legendAvailable": "Available",
+      "legendBlocked": "Blocked by you",
+      "legendBooked": "Booked",
+      "tipAvailable": "Tap to block this day",
+      "tipBlocked": "Blocked — tap to reopen",
+      "tipBooked": "Booked by a client",
+      "pendingBlock": "{count, plural, one {# day to block} other {# days to block}}",
+      "pendingUnblock": "{count, plural, one {# day to reopen} other {# days to reopen}}",
+      "save": "Save changes",
+      "cancel": "Cancel",
+      "saveError": "Couldn't save your changes. Please try again."
     },
     "calendar": {
       "daysShortEn": "Mon,Tue,Wed,Thu,Fri,Sat,Sun",

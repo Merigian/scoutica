@@ -2459,11 +2459,21 @@
     },
     "studioAvailability": {
       "title": "Gestisci disponibilità",
-      "instructions": "Clicca sulle date per selezionarle, poi blocca le date selezionate.",
-      "blockDate": "Blocca {count} data",
-      "blockDates": "Blocca {count} date",
-      "blockedDates": "Date bloccate",
-      "unblock": "Sblocca"
+      "intro": "Tocca i giorni liberi per bloccarli, tocca un giorno bloccato per riaprirlo, poi salva. Le prenotazioni dei clienti non si possono modificare.",
+      "weekdays": "Lun,Mar,Mer,Gio,Ven,Sab,Dom",
+      "prevMonth": "Mese precedente",
+      "nextMonth": "Mese successivo",
+      "legendAvailable": "Disponibile",
+      "legendBlocked": "Bloccato da te",
+      "legendBooked": "Prenotato",
+      "tipAvailable": "Tocca per bloccare questo giorno",
+      "tipBlocked": "Bloccato — tocca per riaprire",
+      "tipBooked": "Prenotato da un cliente",
+      "pendingBlock": "{count, plural, one {# giorno da bloccare} other {# giorni da bloccare}}",
+      "pendingUnblock": "{count, plural, one {# giorno da riaprire} other {# giorni da riaprire}}",
+      "save": "Salva modifiche",
+      "cancel": "Annulla",
+      "saveError": "Impossibile salvare le modifiche. Riprova."
     },
     "calendar": {
       "daysShortEn": "Mon,Tue,Wed,Thu,Fri,Sat,Sun",
