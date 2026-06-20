@@ -9,6 +9,32 @@ import { StudioGallery } from "@/components/studios/studio-gallery";
 import { StudioBookingForm } from "@/components/studios/studio-booking-form";
 import { getStudioUnavailableDates } from "@/server/queries/studios";
 import { BackLink } from "@/components/shared/back-link";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const studio = await getStudioBySlug(slug);
+  if (!studio) return { title: "Studio — Scoutica" };
+
+  const cover = studio.images.find((i) => i.isCover)?.url ?? studio.images[0]?.url;
+  const loc = [studio.city, studio.region].filter(Boolean).join(", ");
+
+  return {
+    title: `${studio.name}${loc ? ` — ${loc}` : ""} | Scoutica`,
+    description:
+      studio.description?.slice(0, 160) ||
+      `${studio.name}${loc ? ` — ${loc}` : ""}. Book this studio on Scoutica.`,
+    openGraph: {
+      title: `${studio.name} | Scoutica`,
+      description: loc ? `Photo studio — ${loc}` : "Photo studio on Scoutica",
+      ...(cover && { images: [{ url: cover }] }),
+    },
+  };
+}
 
 export default async function StudioDetailPage({
   params,
