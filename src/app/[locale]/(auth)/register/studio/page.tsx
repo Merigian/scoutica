@@ -163,8 +163,8 @@ export default function RegisterStudioPage() {
 
         <p className="text-xs text-center text-[var(--ink-3)]">
           {t("termsAgree")}{" "}
-          <a href="#" className="underline">{t("terms")}</a>{" · "}
-          <a href="#" className="underline">{t("privacy")}</a>
+          <Link href="/terms" className="underline">{t("terms")}</Link>{" · "}
+          <Link href="/privacy" className="underline">{t("privacy")}</Link>
         </p>
       </form>
 

@@ -79,7 +79,6 @@ export async function sendVerificationEmail(
       return { success: false, error: `Resend: ${sendResult.error.message ?? sendResult.error.name ?? "unknown"}` };
     }
 
-    console.log("[Resend] sent OK:", { to: email, id: sendResult.data?.id });
     return { success: true };
   } catch (error) {
     console.error("Send verification email error:", error);
