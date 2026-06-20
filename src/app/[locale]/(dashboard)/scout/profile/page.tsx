@@ -7,6 +7,7 @@ import { VerifiedBadge } from "@/components/ui/verified-badge";
 import { ScoutProfileForm } from "@/components/forms/scout-profile-form";
 import { SCOUT_SUBTYPE_LABELS, VERIFICATION_STATUS_LABELS } from "@/config/enums";
 import { getLocale, getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/routing";
 
 export default async function ScoutProfilePage() {
   const session = await auth();
@@ -105,9 +106,9 @@ export default async function ScoutProfilePage() {
             {profile.verificationNotes && (
               <p className="mt-1 text-sm text-[var(--ink-3)]">{profile.verificationNotes}</p>
             )}
-            <a href="/scout/verification" className="mt-2 inline-block text-sm font-medium underline">
+            <Link href="/scout/verification" className="mt-2 inline-block text-sm font-medium underline">
               {t("resubmit")}
-            </a>
+            </Link>
           </CardContent>
         </Card>
       )}

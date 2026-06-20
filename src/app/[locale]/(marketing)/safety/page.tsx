@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
+import { Link } from "@/i18n/routing";
 
 type FaqItem = { q: string; a: string };
 type FaqGroup = { title: string; items: FaqItem[] };
@@ -91,12 +92,12 @@ export default async function FaqPage() {
             {t("contactCta.title")}
           </h2>
           <div className="lg:col-span-4">
-            <a
+            <Link
               href="/contact"
               className="link-underline text-lead text-[var(--ink)]"
             >
               {t("contactCta.link")}
-            </a>
+            </Link>
           </div>
         </div>
       </section>
