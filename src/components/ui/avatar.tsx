@@ -1,5 +1,7 @@
-import { cn } from "@/lib/utils";
-import { getInitials } from "@/lib/utils";
+"use client";
+
+import { useState } from "react";
+import { cn, getInitials } from "@/lib/utils";
 
 interface AvatarProps {
   src?: string | null;
@@ -16,11 +18,14 @@ const sizes = {
 };
 
 export function Avatar({ src, name, size = "md", className }: AvatarProps) {
-  if (src) {
+  const [errored, setErrored] = useState(false);
+
+  if (src && !errored) {
     return (
       <img
         src={src}
         alt={name || "Avatar"}
+        onError={() => setErrored(true)}
         className={cn("rounded-full object-cover", sizes[size], className)}
       />
     );
