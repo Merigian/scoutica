@@ -68,7 +68,7 @@ export function CinematicHero({ heroSrc }: { heroSrc: string }) {
           unoptimized={isPngHero}
           quality={92}
           sizes="100vw"
-          className="object-cover object-[51%_20%] lg:object-[52%_22%]"
+          className="object-cover object-[55%_30%] md:object-[51%_20%] lg:object-[52%_22%]"
         />
       </motion.div>
 
@@ -115,7 +115,7 @@ export function CinematicHero({ heroSrc }: { heroSrc: string }) {
                 <Link
                   key={lane.href}
                   href={lane.href as never}
-                  className="group relative flex h-full flex-col overflow-hidden border border-white/12 bg-white/[0.05] p-5 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] hover:border-white/30 hover:bg-white/[0.1] hover:shadow-[0_24px_70px_-24px_rgba(0,0,0,0.75)] motion-safe:hover:-translate-y-1.5 sm:p-6 lg:p-7"
+                  className="group relative flex h-full flex-col overflow-hidden border border-white/12 bg-white/[0.05] p-4 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] hover:border-white/30 hover:bg-white/[0.1] hover:shadow-[0_24px_70px_-24px_rgba(0,0,0,0.75)] motion-safe:hover:-translate-y-1.5 md:p-6 lg:p-7"
                 >
                   {/* Hover sheen along the top edge */}
                   <span
@@ -123,7 +123,8 @@ export function CinematicHero({ heroSrc }: { heroSrc: string }) {
                     className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/55 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                   />
 
-                  <div className="flex items-start justify-between">
+                  {/* Icon chip + top-right arrow — tablet / desktop only */}
+                  <div className="mb-8 hidden items-start justify-between md:flex">
                     <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/[0.06] text-white transition-colors duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:border-transparent group-hover:bg-white group-hover:text-[#0A0A0B]">
                       <Icon className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
                     </span>
@@ -133,19 +134,27 @@ export function CinematicHero({ heroSrc }: { heroSrc: string }) {
                     />
                   </div>
 
-                  <div className="mt-6 flex flex-col gap-2 sm:mt-8">
-                    <p className="font-label text-[10px] uppercase tracking-[0.22em] text-white/50">
-                      {lane.label}
-                    </p>
-                    <h2 className="font-display text-xl leading-[1.15] text-white lg:text-2xl lg:leading-[1.1]">
-                      {lane.title}
-                    </h2>
-                    <p className="mt-0.5 text-sm leading-relaxed text-white/65">
-                      {lane.desc}
-                    </p>
+                  {/* Label + title (+ description on desktop); compact arrow on mobile */}
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex min-w-0 flex-col gap-1 md:gap-2">
+                      <p className="font-label text-[10px] uppercase tracking-[0.22em] text-white/50">
+                        {lane.label}
+                      </p>
+                      <h2 className="font-display text-lg leading-tight text-white md:text-xl md:leading-[1.15] lg:text-2xl lg:leading-[1.1]">
+                        {lane.title}
+                      </h2>
+                      <p className="mt-1 hidden text-sm leading-relaxed text-white/65 md:block">
+                        {lane.desc}
+                      </p>
+                    </div>
+                    <ArrowUpRight
+                      className="h-5 w-5 shrink-0 text-white/45 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 md:hidden"
+                      aria-hidden="true"
+                    />
                   </div>
 
-                  <span className="mt-auto inline-flex items-center gap-3 pt-6 font-label text-[11px] uppercase tracking-[0.18em] text-white/80 transition-colors duration-300 group-hover:text-white lg:pt-7">
+                  {/* Discover CTA — tablet / desktop only */}
+                  <span className="mt-auto hidden items-center gap-3 pt-6 font-label text-[11px] uppercase tracking-[0.18em] text-white/80 transition-colors duration-300 group-hover:text-white md:inline-flex lg:pt-7">
                     {t("audience.discover")}
                     <span
                       aria-hidden="true"
