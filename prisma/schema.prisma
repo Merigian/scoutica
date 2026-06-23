@@ -930,8 +930,9 @@ model Studio {
   hourlyRate        Float?
   dailyRate         Float?
   weeklyRate        Float?
-  minHours          Int?
+  minHours          Float?
   availabilityNotes String?     @db.Text
+  weeklyAvailability Json?
   contactEmail      String?
   contactPhone      String?
 

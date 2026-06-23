@@ -6,10 +6,20 @@ import { useTranslations, useLocale } from "next-intl";
 import { createStudio } from "@/server/actions/studios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { AddressAutocomplete } from "@/components/ui/address-autocomplete";
+import { Select } from "@/components/ui/select";
+import { StudioLocationMap } from "@/components/studio/studio-location-map";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { STUDIO_TYPE_LABELS, STUDIO_AMENITIES } from "@/config/enums";
+import { ALL_REGION_NAMES } from "@/config/regions";
+import { WeeklyAvailabilityPicker } from "@/components/studio/weekly-availability-picker";
+import {
+  emptyWeeklyAvailability,
+  serializeWeeklyAvailability,
+  type WeeklyAvailability,
+} from "@/lib/studio-availability";
 import type { StudioType } from "@prisma/client";
 
 const STUDIO_TYPES = Object.keys(STUDIO_TYPE_LABELS) as StudioType[];
@@ -18,6 +28,7 @@ export default function NewStudioPage() {
   const router = useRouter();
   const t = useTranslations("pages.studio.createStudio");
   const tc = useTranslations("common");
+  const tw = useTranslations("components.weeklyAvailability");
   const locale = useLocale();
   const lang = (locale === "en" ? "en" : "it") as "it" | "en";
   const [isLoading, setIsLoading] = useState(false);
@@ -30,13 +41,17 @@ export default function NewStudioPage() {
   const [city, setCity] = useState("");
   const [region, setRegion] = useState("");
   const [zipCode, setZipCode] = useState("");
+  const [latitude, setLatitude] = useState<number | null>(null);
+  const [longitude, setLongitude] = useState<number | null>(null);
   const [sizeSqm, setSizeSqm] = useState("");
   const [maxCapacity, setMaxCapacity] = useState("");
   const [hourlyRate, setHourlyRate] = useState("");
   const [dailyRate, setDailyRate] = useState("");
   const [weeklyRate, setWeeklyRate] = useState("");
   const [minHours, setMinHours] = useState("");
-  const [availabilityNotes, setAvailabilityNotes] = useState("");
+  const [weeklyAvailability, setWeeklyAvailability] = useState<WeeklyAvailability>(
+    emptyWeeklyAvailability()
+  );
   const [contactEmail, setContactEmail] = useState("");
   const [contactPhone, setContactPhone] = useState("");
   const [amenities, setAmenities] = useState<string[]>([]);
@@ -66,13 +81,15 @@ export default function NewStudioPage() {
         city: city.trim() || undefined,
         region: region.trim() || undefined,
         zipCode: zipCode.trim() || undefined,
+        latitude: latitude ?? undefined,
+        longitude: longitude ?? undefined,
         sizeSqm: sizeSqm ? parseInt(sizeSqm) : undefined,
         maxCapacity: maxCapacity ? parseInt(maxCapacity) : undefined,
         hourlyRate: hourlyRate ? parseFloat(hourlyRate) : undefined,
         dailyRate: dailyRate ? parseFloat(dailyRate) : undefined,
         weeklyRate: weeklyRate ? parseFloat(weeklyRate) : undefined,
-        minHours: minHours ? parseInt(minHours) : undefined,
-        availabilityNotes: availabilityNotes.trim() || undefined,
+        minHours: minHours ? parseFloat(minHours) : undefined,
+        weeklyAvailability: serializeWeeklyAvailability(weeklyAvailability),
         contactEmail: contactEmail.trim() || undefined,
         contactPhone: contactPhone.trim() || undefined,
         amenities,
@@ -160,10 +177,19 @@ export default function NewStudioPage() {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="address">{tc("address")}</Label>
-              <Input
+              <AddressAutocomplete
                 id="address"
+                mode="address"
                 value={address}
-                onChange={(e) => setAddress(e.target.value)}
+                onChange={setAddress}
+                onSelect={(r) => {
+                  setAddress(r.address || r.text);
+                  if (r.city) setCity(r.city);
+                  if (r.region) setRegion(r.region);
+                  if (r.postcode) setZipCode(r.postcode);
+                  setLatitude(r.lat);
+                  setLongitude(r.lng);
+                }}
                 placeholder={t("addressPlaceholder")}
               />
             </div>
@@ -179,11 +205,12 @@ export default function NewStudioPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="region">{t("region")}</Label>
-                <Input
+                <Select
                   id="region"
+                  options={ALL_REGION_NAMES.map((r) => ({ value: r, label: r }))}
                   value={region}
                   onChange={(e) => setRegion(e.target.value)}
-                  placeholder={t("regionPlaceholder")}
+                  placeholder={tc("select")}
                 />
               </div>
             </div>
@@ -197,6 +224,14 @@ export default function NewStudioPage() {
                 className="max-w-[120px]"
               />
             </div>
+            <StudioLocationMap
+              lat={latitude}
+              lng={longitude}
+              onChange={(la, ln) => {
+                setLatitude(la);
+                setLongitude(ln);
+              }}
+            />
           </CardContent>
         </Card>
 
@@ -311,22 +346,28 @@ export default function NewStudioPage() {
               <Input
                 id="minHours"
                 type="number"
+                min={0.5}
+                step={0.5}
                 value={minHours}
                 onChange={(e) => setMinHours(e.target.value)}
-                placeholder="2"
+                placeholder="1"
                 className="max-w-[120px]"
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="availabilityNotes">{t("availabilityNotes")}</Label>
-              <Textarea
-                id="availabilityNotes"
-                value={availabilityNotes}
-                onChange={(e) => setAvailabilityNotes(e.target.value)}
-                placeholder={t("availabilityPlaceholder")}
-                rows={2}
-              />
-            </div>
+          </CardContent>
+        </Card>
+
+        {/* Weekly availability */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">{tw("title")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-[var(--ink-3)] mb-4">{tw("subtitle")}</p>
+            <WeeklyAvailabilityPicker
+              value={weeklyAvailability}
+              onChange={setWeeklyAvailability}
+            />
           </CardContent>
         </Card>
 

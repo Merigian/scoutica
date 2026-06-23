@@ -21,6 +21,8 @@ interface StudioPhotosProps {
   }>;
 }
 
+const MAX_STUDIO_PHOTOS = 3;
+
 export function StudioPhotos({ studioId, images }: StudioPhotosProps) {
   const router = useRouter();
   const t = useTranslations("components.studioPhotos");
@@ -82,13 +84,13 @@ export function StudioPhotos({ studioId, images }: StudioPhotosProps) {
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="text-lg">
-          {t("title")} ({images.length}/10)
+          {t("title")} ({images.length}/{MAX_STUDIO_PHOTOS})
         </CardTitle>
         <Button
           size="sm"
           variant="outline"
           onClick={() => fileInputRef.current?.click()}
-          disabled={uploading || images.length >= 10}
+          disabled={uploading || images.length >= MAX_STUDIO_PHOTOS}
         >
           {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4 mr-1" />}
           {t("addPhoto")}

@@ -28,7 +28,9 @@ export default async function StudioEditPage({
 
   const lang = locale === "en" ? "en" : "it";
   const t = await getTranslations("pages.studio.studioDetail");
-  const unavailable = await getStudioUnavailableDates(studio.id);
+  const unavailable = studio.isPublished
+    ? await getStudioUnavailableDates(studio.id)
+    : null;
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
@@ -36,13 +38,15 @@ export default async function StudioEditPage({
 
       <StudioPublishBar studio={studio} />
       <StudioPhotos studioId={studio.id} images={studio.images} />
-      <StudioAvailability
-        studioId={studio.id}
-        lang={lang as "it" | "en"}
-        blockedDates={unavailable.blockedDates}
-        bookedDates={unavailable.bookedDates}
-        blockedRecords={unavailable.blockedRecords}
-      />
+      {studio.isPublished && unavailable && (
+        <StudioAvailability
+          studioId={studio.id}
+          lang={lang as "it" | "en"}
+          blockedDates={unavailable.blockedDates}
+          bookedDates={unavailable.bookedDates}
+          blockedRecords={unavailable.blockedRecords}
+        />
+      )}
       <StudioEditForm studio={studio} />
     </div>
   );

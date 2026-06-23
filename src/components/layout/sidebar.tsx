@@ -34,6 +34,7 @@ import {
 import { signOut } from "next-auth/react";
 import { UnreadBadge } from "@/components/shared/unread-badge";
 import { LogoMark } from "@/components/ui/logo-mark";
+import { ScouticaWordmark } from "@/components/ui/wordmark";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const iconMap: Record<string, React.ElementType> = {
@@ -85,11 +86,12 @@ export function Sidebar() {
   return (
     <aside className="group/sidebar hidden lg:flex lg:flex-col lg:fixed lg:inset-y-0 lg:z-40 lg:w-[68px] hover:lg:w-64 lg:hairline-r lg:bg-[var(--bg)] lg:transition-all lg:duration-200 lg:ease-out overflow-hidden">
       <div className="flex h-14 items-center hairline-b px-4 shrink-0">
-        <Link href={"/dashboard" as never} className="flex items-center overflow-hidden text-[var(--ink)]" aria-label="Scoutica">
+        <Link href="/" className="flex items-center overflow-hidden text-[var(--ink)]" aria-label="Scoutica">
           <LogoMark size="md" className="w-9 h-9" />
-          <span className="ml-3 text-eyebrow text-[var(--ink-3)] whitespace-nowrap opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200">
-            Scoutica
-          </span>
+          <ScouticaWordmark
+            size="sm"
+            className="ml-3 whitespace-nowrap opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200"
+          />
         </Link>
       </div>
 

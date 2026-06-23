@@ -7,10 +7,10 @@ import { getTranslations } from "next-intl/server";
 import {
   registerModelSchema,
   registerScoutSchema,
-  registerSchema,
+  registerStudioSchema,
   type RegisterModelInput,
   type RegisterScoutInput,
-  type RegisterInput,
+  type RegisterStudioInput,
 } from "@/lib/validations/auth";
 import { generateTempSlug } from "@/lib/utils";
 import { calculateAge } from "@/lib/utils";
@@ -164,7 +164,7 @@ export async function registerScout(
 }
 
 export async function registerStudio(
-  data: RegisterInput & { businessName: string }
+  data: RegisterStudioInput
 ): Promise<ActionResponse<{ userId: string }>> {
   const t = await getTranslations("serverErrors");
   const rl = await rateLimitByIp("register");
@@ -172,7 +172,7 @@ export async function registerStudio(
   const cap = await verifyCaptcha(data);
   if (!cap.ok) return { success: false, error: cap.error };
   try {
-    const validated = registerSchema.parse(data);
+    const validated = registerStudioSchema.parse(data);
 
     const existing = await db.user.findUnique({ where: { email: validated.email } });
     if (existing) {
@@ -188,9 +188,10 @@ export async function registerStudio(
         email: validated.email,
         hashedPassword,
         role: "STUDIO",
+        termsAcceptedAt: new Date(),
         studioProfile: {
           create: {
-            businessName: data.businessName,
+            businessName: validated.businessName,
           },
         },
         subscription: {
@@ -201,6 +202,11 @@ export async function registerStudio(
         },
       },
     });
+
+    // Send verification email (non-blocking — don't fail registration if email fails)
+    await sendVerificationEmail(user.id, validated.email).catch((err) =>
+      console.error("Failed to send verification email:", err)
+    );
 
     return { success: true, data: { userId: user.id } };
   } catch (error) {

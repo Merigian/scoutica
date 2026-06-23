@@ -5,10 +5,20 @@ import { useRouter } from "next/navigation";
 import { updateStudio } from "@/server/actions/studios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { AddressAutocomplete } from "@/components/ui/address-autocomplete";
+import { StudioLocationMap } from "@/components/studio/studio-location-map";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Select } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { STUDIO_TYPE_LABELS, STUDIO_AMENITIES } from "@/config/enums";
+import { ALL_REGION_NAMES } from "@/config/regions";
+import { WeeklyAvailabilityPicker } from "@/components/studio/weekly-availability-picker";
+import {
+  parseWeeklyAvailability,
+  serializeWeeklyAvailability,
+  type WeeklyAvailability,
+} from "@/lib/studio-availability";
 import type { StudioType } from "@prisma/client";
 
 const STUDIO_TYPES = Object.keys(STUDIO_TYPE_LABELS) as StudioType[];
@@ -23,6 +33,8 @@ interface StudioEditFormProps {
     city: string | null;
     region: string | null;
     zipCode: string | null;
+    latitude: number | null;
+    longitude: number | null;
     sizeSqm: number | null;
     maxCapacity: number | null;
     amenities: string[];
@@ -30,7 +42,7 @@ interface StudioEditFormProps {
     dailyRate: number | null;
     weeklyRate: number | null;
     minHours: number | null;
-    availabilityNotes: string | null;
+    weeklyAvailability: unknown;
     contactEmail: string | null;
     contactPhone: string | null;
   };
@@ -48,13 +60,17 @@ export function StudioEditForm({ studio }: StudioEditFormProps) {
   const [city, setCity] = useState(studio.city || "");
   const [region, setRegion] = useState(studio.region || "");
   const [zipCode, setZipCode] = useState(studio.zipCode || "");
+  const [latitude, setLatitude] = useState<number | null>(studio.latitude);
+  const [longitude, setLongitude] = useState<number | null>(studio.longitude);
   const [sizeSqm, setSizeSqm] = useState(studio.sizeSqm?.toString() || "");
   const [maxCapacity, setMaxCapacity] = useState(studio.maxCapacity?.toString() || "");
   const [hourlyRate, setHourlyRate] = useState(studio.hourlyRate?.toString() || "");
   const [dailyRate, setDailyRate] = useState(studio.dailyRate?.toString() || "");
   const [weeklyRate, setWeeklyRate] = useState(studio.weeklyRate?.toString() || "");
   const [minHours, setMinHours] = useState(studio.minHours?.toString() || "");
-  const [availabilityNotes, setAvailabilityNotes] = useState(studio.availabilityNotes || "");
+  const [weeklyAvailability, setWeeklyAvailability] = useState<WeeklyAvailability>(
+    parseWeeklyAvailability(studio.weeklyAvailability)
+  );
   const [contactEmail, setContactEmail] = useState(studio.contactEmail || "");
   const [contactPhone, setContactPhone] = useState(studio.contactPhone || "");
   const [amenities, setAmenities] = useState<string[]>(studio.amenities);
@@ -79,13 +95,15 @@ export function StudioEditForm({ studio }: StudioEditFormProps) {
         city: city.trim() || undefined,
         region: region.trim() || undefined,
         zipCode: zipCode.trim() || undefined,
+        latitude: latitude ?? undefined,
+        longitude: longitude ?? undefined,
         sizeSqm: sizeSqm ? parseInt(sizeSqm) : undefined,
         maxCapacity: maxCapacity ? parseInt(maxCapacity) : undefined,
         hourlyRate: hourlyRate ? parseFloat(hourlyRate) : undefined,
         dailyRate: dailyRate ? parseFloat(dailyRate) : undefined,
         weeklyRate: weeklyRate ? parseFloat(weeklyRate) : undefined,
-        minHours: minHours ? parseInt(minHours) : undefined,
-        availabilityNotes: availabilityNotes.trim() || undefined,
+        minHours: minHours ? parseFloat(minHours) : undefined,
+        weeklyAvailability: serializeWeeklyAvailability(weeklyAvailability),
         contactEmail: contactEmail.trim() || undefined,
         contactPhone: contactPhone.trim() || undefined,
         amenities,
@@ -143,7 +161,19 @@ export function StudioEditForm({ studio }: StudioEditFormProps) {
         <CardContent className="space-y-4">
           <div className="space-y-2">
             <Label>Indirizzo</Label>
-            <Input value={address} onChange={(e) => setAddress(e.target.value)} />
+            <AddressAutocomplete
+              mode="address"
+              value={address}
+              onChange={setAddress}
+              onSelect={(r) => {
+                setAddress(r.address || r.text);
+                if (r.city) setCity(r.city);
+                if (r.region) setRegion(r.region);
+                if (r.postcode) setZipCode(r.postcode);
+                setLatitude(r.lat);
+                setLongitude(r.lng);
+              }}
+            />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
@@ -152,13 +182,26 @@ export function StudioEditForm({ studio }: StudioEditFormProps) {
             </div>
             <div className="space-y-2">
               <Label>Regione</Label>
-              <Input value={region} onChange={(e) => setRegion(e.target.value)} />
+              <Select
+                options={ALL_REGION_NAMES.map((r) => ({ value: r, label: r }))}
+                value={region}
+                onChange={(e) => setRegion(e.target.value)}
+                placeholder="Seleziona regione"
+              />
             </div>
           </div>
           <div className="space-y-2">
             <Label>CAP</Label>
             <Input value={zipCode} onChange={(e) => setZipCode(e.target.value)} className="max-w-[120px]" />
           </div>
+          <StudioLocationMap
+            lat={latitude}
+            lng={longitude}
+            onChange={(la, ln) => {
+              setLatitude(la);
+              setLongitude(ln);
+            }}
+          />
         </CardContent>
       </Card>
 
@@ -228,12 +271,15 @@ export function StudioEditForm({ studio }: StudioEditFormProps) {
           </div>
           <div className="space-y-2">
             <Label>Minimo ore</Label>
-            <Input type="number" value={minHours} onChange={(e) => setMinHours(e.target.value)} className="max-w-[120px]" />
+            <Input type="number" min={0.5} step={0.5} value={minHours} onChange={(e) => setMinHours(e.target.value)} className="max-w-[120px]" />
           </div>
-          <div className="space-y-2">
-            <Label>Note disponibilità</Label>
-            <Textarea value={availabilityNotes} onChange={(e) => setAvailabilityNotes(e.target.value)} rows={2} />
-          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader><CardTitle className="text-lg">Disponibilità settimanale</CardTitle></CardHeader>
+        <CardContent>
+          <WeeklyAvailabilityPicker value={weeklyAvailability} onChange={setWeeklyAvailability} />
         </CardContent>
       </Card>
 

@@ -26,11 +26,17 @@ export function StudioPublishBar({ studio }: StudioPublishBarProps) {
   const locale = useLocale();
   const lang = (locale === "en" ? "en" : "it") as "it" | "en";
   const [loading, setLoading] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handlePublish = async () => {
     setLoading("publish");
-    await publishStudio(studio.id);
+    setError(null);
+    const res = await publishStudio(studio.id);
     setLoading(null);
+    if (!res.success) {
+      setError(res.error ?? null);
+      return;
+    }
     router.refresh();
   };
 
@@ -49,8 +55,9 @@ export function StudioPublishBar({ studio }: StudioPublishBarProps) {
   };
 
   return (
-    <div className="flex items-center justify-between border-b pb-4">
-      <div className="flex items-center gap-3">
+    <div className="space-y-3 border-b pb-4">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
         <h1 className="text-2xl font-[var(--font-display)] font-bold">{studio.name}</h1>
         <Badge variant={studio.status === "PUBLISHED" ? "default" : "secondary"}>
           {STUDIO_STATUS_LABELS[studio.status][lang]}
@@ -96,7 +103,9 @@ export function StudioPublishBar({ studio }: StudioPublishBarProps) {
         >
           <Trash2 className="h-4 w-4" />
         </Button>
+        </div>
       </div>
+      {error && <p className="text-sm text-[var(--danger)]">{error}</p>}
     </div>
   );
 }

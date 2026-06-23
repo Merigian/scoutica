@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
@@ -9,6 +9,7 @@ import { verificationSchema, type VerificationInput } from "@/lib/validations/pr
 import { submitVerification } from "@/server/actions/scout-profile";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { AddressAutocomplete } from "@/components/ui/address-autocomplete";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -30,6 +31,7 @@ export function VerificationForm({ profile, status, notes }: VerificationFormPro
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<VerificationInput>({
     resolver: zodResolver(verificationSchema),
@@ -126,7 +128,20 @@ export function VerificationForm({ profile, status, notes }: VerificationFormPro
             </div>
             <div className="space-y-2">
               <Label htmlFor="city" required>{t("city")}</Label>
-              <Input id="city" {...register("city")} error={errors.city?.message} />
+              <Controller
+                control={control}
+                name="city"
+                render={({ field, fieldState }) => (
+                  <AddressAutocomplete
+                    id="city"
+                    mode="city"
+                    value={field.value ?? ""}
+                    onChange={field.onChange}
+                    onSelect={(r) => field.onChange(r.city || r.text)}
+                    error={fieldState.error?.message}
+                  />
+                )}
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="professionalEmail" required>{t("professionalEmail")}</Label>

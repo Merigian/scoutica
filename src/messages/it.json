@@ -228,9 +228,9 @@
       }
     },
     "bandi": {
-      "eyebrow": "Anteprima",
-      "title": "Esempi di bandi",
-      "subtitle": "Una selezione tipica di casting, campagne ed editoriali che gli scout pubblicano su Scoutica. Iscriviti per accedere ai bandi reali, aggiornati ogni giorno.",
+      "eyebrow": "Opportunità",
+      "title": "Bandi aperti",
+      "subtitle": "Casting, campagne ed editoriali pubblicati dagli scout su Scoutica. Iscriviti per candidarti, aggiornati ogni giorno.",
       "viewAll": "Iscriviti per vedere tutti",
       "daysLeft": "tra {n} giorni",
       "deadlineLabel": "Scadenza",
@@ -442,6 +442,7 @@
       "resend": "Rinvia email di verifica",
       "resending": "Invio in corso...",
       "resent": "Email di verifica inviata!",
+      "resendIn": "Rinvia tra {seconds}s",
       "verifying": "Verifica in corso...",
       "success": "Email verificata con successo!",
       "successDesc": "La tua email è stata verificata. Puoi continuare.",
@@ -496,6 +497,7 @@
         "fullName": "Nome completo",
         "bio": "Biografia",
         "dateOfBirth": "Data di nascita",
+        "dateOfBirthLocked": "La data di nascita non è modificabile. Per cambiarla contatta il supporto.",
         "gender": "Genere",
         "city": "Città",
         "region": "Regione",
@@ -2457,6 +2459,31 @@
       "approve": "Approva",
       "reject": "Rifiuta"
     },
+    "weeklyAvailability": {
+      "title": "Disponibilità settimanale",
+      "subtitle": "Scegli i giorni e le fasce orarie in cui lo studio è prenotabile.",
+      "closed": "Chiuso",
+      "addBand": "Aggiungi fascia",
+      "removeBand": "Rimuovi fascia",
+      "days": {
+        "mon": "Lunedì",
+        "tue": "Martedì",
+        "wed": "Mercoledì",
+        "thu": "Giovedì",
+        "fri": "Venerdì",
+        "sat": "Sabato",
+        "sun": "Domenica"
+      }
+    },
+    "studioLocationMap": {
+      "empty": "Seleziona un indirizzo per vedere l'anteprima sulla mappa.",
+      "hint": "Trascina lo spillo per correggere la posizione esatta. È la posizione che vedranno gli altri utenti.",
+      "style": {
+        "map": "Mappa",
+        "satellite": "Satellite",
+        "streets": "Strade"
+      }
+    },
     "studioAvailability": {
       "title": "Gestisci disponibilità",
       "intro": "Tocca i giorni liberi per bloccarli, tocca un giorno bloccato per riaprirlo, poi salva. Le prenotazioni dei clienti non si possono modificare.",
@@ -2903,6 +2930,10 @@
       "createError": "Errore durante la creazione",
       "updateError": "Errore durante l'aggiornamento",
       "publishError": "Errore durante la pubblicazione",
+      "publishRequirements": "Per pubblicare lo studio aggiungi: {missing}",
+      "requireCity": "una città",
+      "requireRate": "almeno una tariffa (oraria, giornaliera o settimanale)",
+      "requirePhoto": "almeno una foto",
       "deleteError": "Errore durante l'eliminazione",
       "newInquiryTitle": "Nuova richiesta per il tuo studio",
       "newInquiryBody": "{name} ha inviato una richiesta per \"{studio}\"",

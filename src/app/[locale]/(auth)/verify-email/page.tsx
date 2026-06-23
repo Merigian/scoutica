@@ -29,6 +29,7 @@ export default function VerifyEmailPage() {
   );
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [resendStatus, setResendStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [cooldown, setCooldown] = useState(0);
   const [showChange, setShowChange] = useState(false);
   const [newEmail, setNewEmail] = useState("");
   const [changeStatus, setChangeStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
@@ -66,6 +67,13 @@ export default function VerifyEmailPage() {
     });
   }, [status, updateSession, router]);
 
+  // Tick down the resend cooldown each second
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const id = setInterval(() => setCooldown((c) => (c <= 1 ? 0 : c - 1)), 1000);
+    return () => clearInterval(id);
+  }, [cooldown]);
+
   const handleChangeEmail = async () => {
     if (!newEmail.trim()) return;
     setChangeStatus("sending");
@@ -100,11 +108,12 @@ export default function VerifyEmailPage() {
   };
 
   const handleResend = async () => {
-    if (!email) return;
+    if (!email || cooldown > 0) return;
     setResendStatus("sending");
     const result = await resendVerificationEmail(email);
     if (result.success) {
       setResendStatus("sent");
+      setCooldown(60);
     } else {
       setResendStatus("error");
       setErrorMessage(
@@ -156,9 +165,13 @@ export default function VerifyEmailPage() {
                 size="lg"
                 className="mt-8 w-full"
                 onClick={handleResend}
-                disabled={resendStatus === "sending"}
+                disabled={resendStatus === "sending" || cooldown > 0}
               >
-                {resendStatus === "sending" ? t("resending") : t("resend")}
+                {resendStatus === "sending"
+                  ? t("resending")
+                  : cooldown > 0
+                    ? t("resendIn", { seconds: cooldown })
+                    : t("resend")}
               </Button>
             )}
           </>
@@ -179,14 +192,17 @@ export default function VerifyEmailPage() {
                 size="lg"
                 className="mt-8 w-full"
                 onClick={handleResend}
-                disabled={resendStatus === "sending" || resendStatus === "sent"}
+                disabled={resendStatus === "sending" || cooldown > 0}
               >
                 {resendStatus === "sending"
                   ? t("resending")
-                  : resendStatus === "sent"
-                    ? t("resent")
+                  : cooldown > 0
+                    ? t("resendIn", { seconds: cooldown })
                     : t("resend")}
               </Button>
+            )}
+            {resendStatus === "sent" && (
+              <p className="mt-3 text-sm text-[var(--ink-3)]">{t("resent")}</p>
             )}
             {resendStatus === "error" && errorMessage && (
               <p className="mt-3 text-sm text-[var(--accent)]">{errorMessage}</p>

@@ -65,7 +65,7 @@ export default async function StudioListPage() {
               href={`/studio/studios/${studio.id}` as never}
               className="group block space-y-4"
             >
-              <div className="relative aspect-[4/5] bg-[var(--bg-soft)] overflow-hidden">
+              <div className="relative aspect-video bg-[var(--bg-soft)] overflow-hidden">
                 {studio.images[0]?.url ? (
                   <Image
                     src={studio.images[0].url}

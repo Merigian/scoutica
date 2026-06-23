@@ -228,9 +228,9 @@
       }
     },
     "bandi": {
-      "eyebrow": "Preview",
-      "title": "Sample openings",
-      "subtitle": "A typical selection of castings, campaigns and editorials scouts publish on Scoutica. Sign up to access the real listings, updated daily.",
+      "eyebrow": "Opportunities",
+      "title": "Open calls",
+      "subtitle": "Castings, campaigns and editorials published by scouts on Scoutica. Sign up to apply, updated daily.",
       "viewAll": "Sign up to see them all",
       "daysLeft": "in {n} days",
       "deadlineLabel": "Deadline",
@@ -442,6 +442,7 @@
       "resend": "Resend verification email",
       "resending": "Sending...",
       "resent": "Verification email sent!",
+      "resendIn": "Resend in {seconds}s",
       "verifying": "Verifying your email...",
       "success": "Email verified successfully!",
       "successDesc": "Your email has been verified. You can now continue.",
@@ -496,6 +497,7 @@
         "fullName": "Full name",
         "bio": "Biography",
         "dateOfBirth": "Date of birth",
+        "dateOfBirthLocked": "Date of birth can't be changed. Contact support to update it.",
         "gender": "Gender",
         "city": "City",
         "region": "Region",
@@ -2457,6 +2459,31 @@
       "approve": "Approve",
       "reject": "Reject"
     },
+    "weeklyAvailability": {
+      "title": "Weekly availability",
+      "subtitle": "Choose the days and time ranges when the studio can be booked.",
+      "closed": "Closed",
+      "addBand": "Add time range",
+      "removeBand": "Remove time range",
+      "days": {
+        "mon": "Monday",
+        "tue": "Tuesday",
+        "wed": "Wednesday",
+        "thu": "Thursday",
+        "fri": "Friday",
+        "sat": "Saturday",
+        "sun": "Sunday"
+      }
+    },
+    "studioLocationMap": {
+      "empty": "Select an address to preview it on the map.",
+      "hint": "Drag the pin to fine-tune the exact position. This is the location other users will see.",
+      "style": {
+        "map": "Map",
+        "satellite": "Satellite",
+        "streets": "Streets"
+      }
+    },
     "studioAvailability": {
       "title": "Manage availability",
       "intro": "Tap free days to block them, tap a blocked day to reopen it, then save. Client bookings can't be changed.",
@@ -2903,6 +2930,10 @@
       "createError": "Error during creation",
       "updateError": "Error during update",
       "publishError": "Error during publishing",
+      "publishRequirements": "To publish your studio, add: {missing}",
+      "requireCity": "a city",
+      "requireRate": "at least one rate (hourly, daily or weekly)",
+      "requirePhoto": "at least one photo",
       "deleteError": "Error during deletion",
       "newInquiryTitle": "New inquiry for your studio",
       "newInquiryBody": "{name} sent an inquiry for \"{studio}\"",

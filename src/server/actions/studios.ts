@@ -5,7 +5,9 @@ import { db } from "@/lib/db";
 import { getTranslations } from "next-intl/server";
 import { generateSlug } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
+import { Prisma } from "@prisma/client";
 import type { StudioType } from "@prisma/client";
+import type { WeeklyAvailability } from "@/lib/studio-availability";
 import type { ActionResponse } from "@/types";
 
 interface CreateStudioInput {
@@ -16,6 +18,8 @@ interface CreateStudioInput {
   city?: string;
   region?: string;
   zipCode?: string;
+  latitude?: number | null;
+  longitude?: number | null;
   sizeSqm?: number;
   maxCapacity?: number;
   amenities: string[];
@@ -23,7 +27,7 @@ interface CreateStudioInput {
   dailyRate?: number;
   weeklyRate?: number;
   minHours?: number;
-  availabilityNotes?: string;
+  weeklyAvailability?: WeeklyAvailability | null;
   contactEmail?: string;
   contactPhone?: string;
 }
@@ -65,6 +69,8 @@ export async function createStudio(
         city: data.city || null,
         region: data.region || null,
         zipCode: data.zipCode || null,
+        latitude: data.latitude ?? null,
+        longitude: data.longitude ?? null,
         sizeSqm: data.sizeSqm || null,
         maxCapacity: data.maxCapacity || null,
         amenities: data.amenities,
@@ -72,7 +78,9 @@ export async function createStudio(
         dailyRate: data.dailyRate || null,
         weeklyRate: data.weeklyRate || null,
         minHours: data.minHours || null,
-        availabilityNotes: data.availabilityNotes || null,
+        weeklyAvailability: data.weeklyAvailability
+          ? (data.weeklyAvailability as Prisma.InputJsonValue)
+          : Prisma.DbNull,
         contactEmail: data.contactEmail || null,
         contactPhone: data.contactPhone || null,
       },
@@ -123,6 +131,8 @@ export async function updateStudio(
         city: data.city ?? undefined,
         region: data.region ?? undefined,
         zipCode: data.zipCode ?? undefined,
+        latitude: data.latitude ?? undefined,
+        longitude: data.longitude ?? undefined,
         sizeSqm: data.sizeSqm ?? undefined,
         maxCapacity: data.maxCapacity ?? undefined,
         amenities: data.amenities ?? undefined,
@@ -130,7 +140,12 @@ export async function updateStudio(
         dailyRate: data.dailyRate ?? undefined,
         weeklyRate: data.weeklyRate ?? undefined,
         minHours: data.minHours ?? undefined,
-        availabilityNotes: data.availabilityNotes ?? undefined,
+        weeklyAvailability:
+          data.weeklyAvailability === undefined
+            ? undefined
+            : data.weeklyAvailability === null
+              ? Prisma.DbNull
+              : (data.weeklyAvailability as Prisma.InputJsonValue),
         contactEmail: data.contactEmail ?? undefined,
         contactPhone: data.contactPhone ?? undefined,
       },
@@ -163,9 +178,24 @@ export async function publishStudio(studioId: string): Promise<ActionResponse> {
 
     const studio = await db.studio.findFirst({
       where: { id: studioId, studioProfileId: studioProfile.id },
+      include: { _count: { select: { images: true } } },
     });
     if (!studio) {
       return { success: false, error: t("studioNotFound") };
+    }
+
+    // Enforce minimum completeness before a listing can go live
+    const missing: string[] = [];
+    if (!studio.city?.trim()) missing.push(ts("requireCity"));
+    if (!studio.hourlyRate && !studio.dailyRate && !studio.weeklyRate) {
+      missing.push(ts("requireRate"));
+    }
+    if (studio._count.images === 0) missing.push(ts("requirePhoto"));
+    if (missing.length > 0) {
+      return {
+        success: false,
+        error: ts("publishRequirements", { missing: missing.join(", ") }),
+      };
     }
 
     await db.studio.update({

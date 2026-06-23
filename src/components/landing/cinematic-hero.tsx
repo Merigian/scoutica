@@ -104,7 +104,7 @@ export function CinematicHero({ heroSrc }: { heroSrc: string }) {
 
           {/* Three entries */}
           <motion.div
-            className="mt-9 grid grid-cols-1 gap-3 sm:grid-cols-3 lg:gap-4"
+            className="mt-9 grid grid-cols-1 gap-3 md:grid-cols-3 lg:gap-4"
             initial={reduce ? undefined : { opacity: 0, y: 20 }}
             animate={reduce ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.35 }}
@@ -115,32 +115,42 @@ export function CinematicHero({ heroSrc }: { heroSrc: string }) {
                 <Link
                   key={lane.href}
                   href={lane.href as never}
-                  className="group relative flex flex-col gap-5 border border-white/15 bg-black/35 p-5 backdrop-blur-md transition-[background-color,transform,border-color] duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] hover:border-white/25 hover:bg-black/55 motion-safe:hover:-translate-y-1 lg:p-6"
+                  className="group relative flex h-full flex-col overflow-hidden border border-white/12 bg-white/[0.05] p-5 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] hover:border-white/30 hover:bg-white/[0.1] hover:shadow-[0_24px_70px_-24px_rgba(0,0,0,0.75)] motion-safe:hover:-translate-y-1.5 sm:p-6 lg:p-7"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="h-px w-8 bg-white/40" aria-hidden="true" />
-                    <Icon
-                      className="h-5 w-5 text-white transition-transform duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-110"
-                      strokeWidth={1.5}
+                  {/* Hover sheen along the top edge */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/55 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  />
+
+                  <div className="flex items-start justify-between">
+                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/[0.06] text-white transition-colors duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:border-transparent group-hover:bg-white group-hover:text-[#0A0A0B]">
+                      <Icon className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
+                    </span>
+                    <ArrowUpRight
+                      className="h-5 w-5 text-white/35 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
                       aria-hidden="true"
                     />
                   </div>
 
-                  <div className="flex flex-col gap-1.5">
-                    <p className="font-label text-[10px] uppercase tracking-[0.2em] text-white/55">
+                  <div className="mt-6 flex flex-col gap-2 sm:mt-8">
+                    <p className="font-label text-[10px] uppercase tracking-[0.22em] text-white/50">
                       {lane.label}
                     </p>
-                    <h2 className="font-display text-xl leading-tight text-white">
+                    <h2 className="font-display text-xl leading-[1.15] text-white lg:text-2xl lg:leading-[1.1]">
                       {lane.title}
                     </h2>
-                    <p className="text-sm leading-relaxed text-white/65">
+                    <p className="mt-0.5 text-sm leading-relaxed text-white/65">
                       {lane.desc}
                     </p>
                   </div>
 
-                  <span className="mt-1 inline-flex items-center gap-1.5 font-label text-[11px] uppercase tracking-[0.16em] text-white">
+                  <span className="mt-auto inline-flex items-center gap-3 pt-6 font-label text-[11px] uppercase tracking-[0.18em] text-white/80 transition-colors duration-300 group-hover:text-white lg:pt-7">
                     {t("audience.discover")}
-                    <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <span
+                      aria-hidden="true"
+                      className="h-px w-6 bg-white/40 transition-all duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:w-10 group-hover:bg-white"
+                    />
                   </span>
                 </Link>
               );

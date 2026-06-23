@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
@@ -9,6 +9,7 @@ import { jobSchema, type JobInput } from "@/lib/validations/job";
 import { createJob, updateJob } from "@/server/actions/jobs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { AddressAutocomplete } from "@/components/ui/address-autocomplete";
 import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
@@ -34,6 +35,7 @@ export function JobForm({ locale, initialData }: JobFormProps) {
   const {
     register,
     handleSubmit,
+    control,
     setValue,
     watch,
     formState: { errors },
@@ -133,7 +135,19 @@ export function JobForm({ locale, initialData }: JobFormProps) {
 
           <div className="space-y-2">
             <Label htmlFor="city">{t("city")}</Label>
-            <Input id="city" {...register("city")} />
+            <Controller
+              control={control}
+              name="city"
+              render={({ field }) => (
+                <AddressAutocomplete
+                  id="city"
+                  mode="city"
+                  value={field.value ?? ""}
+                  onChange={field.onChange}
+                  onSelect={(r) => field.onChange(r.city || r.text)}
+                />
+              )}
+            />
           </div>
 
           <div className="space-y-2">

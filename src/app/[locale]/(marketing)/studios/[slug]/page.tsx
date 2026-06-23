@@ -4,6 +4,7 @@ import { getStudioBySlug } from "@/server/queries/studios";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { STUDIO_TYPE_LABELS, STUDIO_AMENITIES } from "@/config/enums";
+import { parseWeeklyAvailability, hasAnyAvailability, DAY_KEYS } from "@/lib/studio-availability";
 import { MapPin, Clock, Euro, Users, Maximize, Phone, Mail, Globe, Check } from "lucide-react";
 import { StudioGallery } from "@/components/studios/studio-gallery";
 import { StudioBookingForm } from "@/components/studios/studio-booking-form";
@@ -57,6 +58,9 @@ export default async function StudioDetailPage({
   const amenityLabels = studio.amenities
     .map((key) => STUDIO_AMENITIES.find((a) => a.key === key)?.label[lang])
     .filter(Boolean);
+
+  const tw = await getTranslations("components.weeklyAvailability");
+  const weekly = parseWeeklyAvailability(studio.weeklyAvailability);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -152,12 +156,21 @@ export default async function StudioDetailPage({
             </div>
           )}
 
-          {studio.availabilityNotes && (
+          {hasAnyAvailability(weekly) && (
             <div>
               <p className="text-eyebrow mb-4">{t("availability")}</p>
-              <p className="text-body text-[var(--ink-2)] whitespace-pre-wrap">
-                {studio.availabilityNotes}
-              </p>
+              <div className="space-y-1.5">
+                {DAY_KEYS.filter((d) => weekly[d].length > 0).map((d) => (
+                  <div key={d} className="flex gap-4 text-sm text-[var(--ink-2)]">
+                    <span className="w-28 shrink-0 font-medium text-[var(--ink)]">
+                      {tw(`days.${d}`)}
+                    </span>
+                    <span className="tabular-nums">
+                      {weekly[d].map((b) => `${b.start}–${b.end}`).join(", ")}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 

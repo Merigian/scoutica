@@ -5,7 +5,7 @@ import { putObject } from "@/lib/storage";
 import { processImage } from "@/lib/process-image";
 import { UPLOAD_PRESETS } from "@/lib/upload-config";
 
-const MAX_STUDIO_IMAGES = 10;
+const MAX_STUDIO_IMAGES = 3;
 
 export async function POST(req: NextRequest) {
   try {

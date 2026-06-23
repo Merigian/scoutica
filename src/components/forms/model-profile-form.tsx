@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
@@ -12,10 +12,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
+import { AddressAutocomplete } from "@/components/ui/address-autocomplete";
 import { MultiSelect } from "@/components/ui/multi-select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { GENDER_LABELS, EYE_COLOR_LABELS, HAIR_COLOR_LABELS, ETHNICITY_LABELS, MODEL_CATEGORY_LABELS, PROFESSIONAL_STATUS_LABELS, PROFILE_VISIBILITY_LABELS } from "@/config/enums";
-import { ALL_REGION_NAMES, getCitiesByRegion } from "@/config/regions";
+import { ALL_REGION_NAMES } from "@/config/regions";
 
 interface ModelProfileFormProps {
   profile: Omit<ModelProfileInput, 'firstName' | 'lastName'> & { firstName: string; lastName: string; dateOfBirth: string | null };
@@ -27,6 +28,7 @@ export function ModelProfileForm({ profile }: ModelProfileFormProps) {
   const tp = useTranslations("components.profileForm");
   const locale = useLocale();
   const lang = (locale === "en" ? "en" : "it") as "it" | "en";
+  const dobLocked = Boolean(profile.dateOfBirth);
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isFirstRender = useRef(true);
@@ -34,6 +36,7 @@ export function ModelProfileForm({ profile }: ModelProfileFormProps) {
   const {
     register,
     handleSubmit,
+    control,
     watch,
     setValue,
     formState: { errors },
@@ -44,9 +47,6 @@ export function ModelProfileForm({ profile }: ModelProfileFormProps) {
       dateOfBirth: profile.dateOfBirth ?? undefined,
     },
   });
-
-  const selectedRegion = watch("region");
-  const cities = selectedRegion ? getCitiesByRegion(selectedRegion) : [];
 
   // Auto-save on form changes (debounced)
   const doSave = useCallback(
@@ -106,7 +106,10 @@ export function ModelProfileForm({ profile }: ModelProfileFormProps) {
           </div>
           <div className="space-y-2">
             <Label htmlFor="dateOfBirth">{t("fields.dateOfBirth")}</Label>
-            <Input id="dateOfBirth" type="date" {...register("dateOfBirth")} error={errors.dateOfBirth?.message} />
+            <Input id="dateOfBirth" type="date" disabled={dobLocked} {...register("dateOfBirth")} error={errors.dateOfBirth?.message} />
+            {dobLocked && (
+              <p className="text-xs text-[var(--ink-3)]">{t("fields.dateOfBirthLocked")}</p>
+            )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="gender">{t("fields.gender")}</Label>
@@ -118,11 +121,25 @@ export function ModelProfileForm({ profile }: ModelProfileFormProps) {
           </div>
           <div className="space-y-2">
             <Label htmlFor="city">{t("fields.city")}</Label>
-            {cities.length > 0 ? (
-              <Select id="city" options={cities.map((c) => ({ value: c, label: c }))} placeholder={selectPlaceholder} {...register("city")} />
-            ) : (
-              <Input id="city" placeholder={tp("cityNoRegion")} {...register("city")} />
-            )}
+            <Controller
+              control={control}
+              name="city"
+              render={({ field, fieldState }) => (
+                <AddressAutocomplete
+                  id="city"
+                  mode="city"
+                  value={field.value ?? ""}
+                  onChange={field.onChange}
+                  onSelect={(r) => {
+                    field.onChange(r.city || r.text);
+                    if (r.region && ALL_REGION_NAMES.includes(r.region)) {
+                      setValue("region", r.region, { shouldValidate: true, shouldDirty: true });
+                    }
+                  }}
+                  error={fieldState.error?.message}
+                />
+              )}
+            />
           </div>
           <div className="space-y-2 sm:col-span-2">
             <Label htmlFor="bio">{t("fields.bio")}</Label>

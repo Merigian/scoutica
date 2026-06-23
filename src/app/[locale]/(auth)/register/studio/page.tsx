@@ -66,7 +66,7 @@ export default function RegisterStudioPage() {
         return;
       }
 
-      router.push("/studio/studios" as never);
+      router.push("/verify-email?email=" + encodeURIComponent(data.email) as never);
     } catch (err) {
       setError(err instanceof Error ? err.message : t("registrationError"));
     } finally {
