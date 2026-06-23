@@ -20,7 +20,7 @@ export async function TrustSection() {
   return (
     <section
       id="verifica"
-      className="scroll-mt-24 bg-[var(--bg-soft)] py-24 lg:py-32 text-[var(--ink)]"
+      className="scroll-mt-24 hairline-t bg-[var(--bg-soft)] py-16 lg:py-24 text-[var(--ink)]"
     >
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
         <Reveal className="mb-16 lg:mb-24 grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">

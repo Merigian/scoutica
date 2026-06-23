@@ -19,7 +19,7 @@ export async function FeaturedProfiles() {
   const cast = profiles.slice(0, 12);
 
   return (
-    <section className="hairline-t bg-[var(--bg-soft)] py-24 lg:py-32 overflow-hidden">
+    <section className="hairline-t bg-[var(--bg-soft)] py-16 lg:py-24 overflow-hidden">
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
         <div className="mb-14 grid lg:grid-cols-12 gap-12 items-end">
           <div className="lg:col-span-7">

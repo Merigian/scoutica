@@ -23,7 +23,7 @@ export async function StudiosShowcase() {
   return (
     <section
       id="studi"
-      className="scroll-mt-24 hairline-t bg-[var(--bg)] py-24 lg:py-32"
+      className="scroll-mt-24 hairline-t bg-[var(--bg)] py-16 lg:py-24"
     >
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
         <Reveal className="mb-14 lg:mb-20 grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">

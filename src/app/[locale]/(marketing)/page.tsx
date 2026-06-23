@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { CinematicHero } from "@/components/landing/cinematic-hero";
 import { FeaturedProfiles } from "@/components/landing/featured-profiles";
 import { TrustSection } from "@/components/landing/trust-section";
-import { EditorialQuote } from "@/components/landing/editorial-quote";
 import { StudiosShowcase } from "@/components/landing/studios-showcase";
 import { HeroToneSetter } from "@/components/landing/hero-tone-setter";
 import { Reveal } from "@/components/landing/reveal";
@@ -58,7 +57,7 @@ export default async function LandingPage() {
       <CinematicHero heroSrc={heroSrc} />
 
       {/* ───────── STATEMENT — what Scoutica is, legible on warm paper ───────── */}
-      <section className="bg-[var(--bg)] py-24 lg:py-32">
+      <section className="bg-[var(--bg)] py-16 lg:py-24">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
           <Reveal className="max-w-[64rem]">
             <p className="text-eyebrow mb-7">{t("cover.manifestoTop")}</p>
@@ -78,6 +77,47 @@ export default async function LandingPage() {
         </div>
       </section>
 
+      {/* ───────── METODO — 3 steps (orienta prima della prova) ───────── */}
+      <section
+        id="metodo"
+        className="scroll-mt-24 hairline-t bg-[var(--bg)] py-16 lg:py-24"
+      >
+        <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
+          <Reveal className="mb-14 lg:mb-20 grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
+            <div className="lg:col-span-7">
+              <SectionIndex n="07" className="mb-6">{t("sections.method")}</SectionIndex>
+              <h2 className="text-display text-balance">{t("howItWorks.title")}</h2>
+            </div>
+            <p className="lg:col-span-4 lg:col-start-9 text-lead self-end">
+              {t("howItWorks.subtitle")}
+            </p>
+          </Reveal>
+
+          <ol className="grid md:grid-cols-3 hairline-t">
+            {(["step1", "step2", "step3"] as const).map((k, i) => (
+              <Reveal
+                as="li"
+                key={k}
+                delay={i * 90}
+                className={`p-8 lg:p-10 hairline-b md:border-b-0 ${
+                  i > 0 ? "md:hairline-l" : ""
+                }`}
+              >
+                <p className="font-display font-light tabular-nums text-[clamp(2rem,3vw,2.75rem)] leading-none text-[var(--ink-3)] mb-6">
+                  0{i + 1}
+                </p>
+                <h3 className="text-h2 mb-5 text-[var(--ink)]">
+                  {t(`howItWorks.${k}.title`)}
+                </h3>
+                <p className="text-body text-[var(--ink-2)] max-w-md">
+                  {t(`howItWorks.${k}.description`)}
+                </p>
+              </Reveal>
+            ))}
+          </ol>
+        </div>
+      </section>
+
       {/* ───────── 02 — CAST — marquee of real models ───────── */}
       <div id="cast" className="scroll-mt-24">
         <FeaturedProfiles />
@@ -89,16 +129,13 @@ export default async function LandingPage() {
       {/* ───────── 04 — BANDI — 3 mock open calls in 3-up grid ───────── */}
       <BandiSection t={t} />
 
-      {/* ───────── PULL-QUOTE — manifesto voice ───────── */}
-      <EditorialQuote />
-
       {/* ───────── STUDI — bookable studios showcase ───────── */}
       <StudiosShowcase />
 
       {/* ───────── MANIFESTO + NUMERI ───────── */}
       <section
         id="manifesto"
-        className="scroll-mt-24 hairline-t bg-[var(--bg-soft)] py-24 lg:py-32"
+        className="scroll-mt-24 hairline-t bg-[var(--bg-soft)] py-16 lg:py-24"
       >
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
           <Reveal className="grid lg:grid-cols-12 gap-10 lg:gap-20 items-end">
@@ -132,50 +169,9 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* ───────── METODO — 3 steps ───────── */}
-      <section
-        id="metodo"
-        className="scroll-mt-24 hairline-t bg-[var(--bg)] py-24 lg:py-32"
-      >
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
-          <Reveal className="mb-14 lg:mb-20 grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
-            <div className="lg:col-span-5">
-              <SectionIndex n="07" className="mb-6">{t("sections.method")}</SectionIndex>
-              <h2 className="text-display">{t("howItWorks.title")}</h2>
-            </div>
-            <p className="lg:col-span-6 lg:col-start-7 text-lead self-end">
-              {t("howItWorks.subtitle")}
-            </p>
-          </Reveal>
-
-          <ol className="grid md:grid-cols-3 hairline-t">
-            {(["step1", "step2", "step3"] as const).map((k, i) => (
-              <Reveal
-                as="li"
-                key={k}
-                delay={i * 90}
-                className={`p-8 lg:p-10 hairline-b md:border-b-0 ${
-                  i > 0 ? "md:hairline-l" : ""
-                }`}
-              >
-                <p className="font-display font-light tabular-nums text-[clamp(2rem,3vw,2.75rem)] leading-none text-[var(--ink-3)] mb-6">
-                  0{i + 1}
-                </p>
-                <h3 className="text-h2 mb-5 text-[var(--ink)]">
-                  {t(`howItWorks.${k}.title`)}
-                </h3>
-                <p className="text-body text-[var(--ink-2)] max-w-md">
-                  {t(`howItWorks.${k}.description`)}
-                </p>
-              </Reveal>
-            ))}
-          </ol>
-        </div>
-      </section>
-
       {/* ───────── CHIUSURA — dark band with CTA + tariffe + wordmark ───────── */}
       <section className="bg-[var(--ink)] text-[var(--bg)]">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-24 lg:py-32 grid lg:grid-cols-12 gap-12 lg:gap-16 items-end">
+        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24 grid lg:grid-cols-12 gap-12 lg:gap-16 items-end">
           <div className="lg:col-span-7">
             <h2 className="font-display font-light text-[clamp(2.25rem,5vw,4.5rem)] leading-[1.05] tracking-[-0.02em] text-[var(--bg)] max-w-[22ch]">
               {t("socialProof.title")}
@@ -272,7 +268,7 @@ function BandiSection({
   return (
     <section
       id="bandi"
-      className="scroll-mt-24 hairline-t bg-[var(--bg-soft)]/40 py-24 lg:py-32"
+      className="scroll-mt-24 hairline-t bg-[var(--bg-soft)]/40 py-16 lg:py-24"
     >
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
         <Reveal className="mb-14 lg:mb-20 grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
