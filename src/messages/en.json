@@ -2462,8 +2462,9 @@
     "weeklyAvailability": {
       "title": "Weekly availability",
       "subtitle": "Choose the days and time ranges when the studio can be booked.",
+      "multiBandHint": "For each day you can add multiple time slots (e.g. one in the morning and one in the afternoon).",
       "closed": "Closed",
-      "addBand": "Add time range",
+      "addBand": "Add another time slot",
       "removeBand": "Remove time range",
       "days": {
         "mon": "Monday",

@@ -30,7 +30,21 @@ export function WeeklyAvailabilityPicker({ value, onChange }: WeeklyAvailability
   const toggleDay = (day: DayKey) =>
     setDay(day, value[day].length > 0 ? [] : [{ ...DEFAULT_BAND }]);
 
-  const addBand = (day: DayKey) => setDay(day, [...value[day], { ...DEFAULT_BAND }]);
+  const addBand = (day: DayKey) => {
+    const existing = value[day];
+    const last = existing[existing.length - 1];
+    // Start the new slot where the previous one ends, so it's a distinct band
+    // (e.g. morning 09:00–13:00 then afternoon 13:00–14:00) instead of a duplicate.
+    let startIdx = last
+      ? TIME_OPTIONS.indexOf(last.end)
+      : TIME_OPTIONS.indexOf(DEFAULT_BAND.start);
+    if (startIdx < 0 || startIdx > START_OPTIONS.length - 1) {
+      startIdx = START_OPTIONS.length - 1;
+    }
+    const start = TIME_OPTIONS[startIdx];
+    const end = TIME_OPTIONS[Math.min(startIdx + 2, TIME_OPTIONS.length - 1)];
+    setDay(day, [...existing, { start, end }]);
+  };
 
   const removeBand = (day: DayKey, index: number) =>
     setDay(day, value[day].filter((_, i) => i !== index));
@@ -40,6 +54,7 @@ export function WeeklyAvailabilityPicker({ value, onChange }: WeeklyAvailability
 
   return (
     <div className="space-y-2">
+      <p className="text-xs leading-relaxed text-[var(--ink-3)]">{t("multiBandHint")}</p>
       {DAY_KEYS.map((day) => {
         const bands = value[day];
         const isOpen = bands.length > 0;

@@ -2462,8 +2462,9 @@
     "weeklyAvailability": {
       "title": "Disponibilità settimanale",
       "subtitle": "Scegli i giorni e le fasce orarie in cui lo studio è prenotabile.",
+      "multiBandHint": "Per ogni giorno puoi aggiungere più fasce orarie (es. una al mattino e una al pomeriggio).",
       "closed": "Chiuso",
-      "addBand": "Aggiungi fascia",
+      "addBand": "Aggiungi un'altra fascia",
       "removeBand": "Rimuovi fascia",
       "days": {
         "mon": "Lunedì",
