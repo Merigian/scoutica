@@ -59,7 +59,7 @@ export async function AudienceDoors() {
             >
               <Link
                 href={d.href as never}
-                className="group relative flex min-h-[56vh] w-full flex-col justify-between bg-[var(--bg-elevated)] p-7 transition-colors duration-500 hairline hover:bg-[var(--bg-soft)] md:min-h-[clamp(26rem,38vh,32rem)] lg:p-9"
+                className="group relative flex h-full w-full flex-col justify-between bg-[var(--bg-elevated)] p-7 transition-colors duration-500 hairline hover:bg-[var(--bg-soft)] md:min-h-[clamp(26rem,38vh,32rem)] lg:p-9"
               >
                 <div>
                   <p className="font-label text-[11px] uppercase tracking-[0.22em] text-[var(--ink-3)]">
@@ -72,7 +72,7 @@ export async function AudienceDoors() {
                     {d.desc}
                   </p>
                 </div>
-                <span className="mt-10 inline-flex items-center gap-3 font-label text-[11px] uppercase tracking-[0.18em] text-[var(--ink-2)] transition-colors duration-300 group-hover:text-[var(--ink)]">
+                <span className="mt-8 md:mt-10 inline-flex items-center gap-3 font-label text-[11px] uppercase tracking-[0.18em] text-[var(--ink-2)] transition-colors duration-300 group-hover:text-[var(--ink)]">
                   <span className="link-underline">{t("audience.discover")}</span>
                   <ArrowUpRight className="group-arrow h-4 w-4" aria-hidden="true" />
                 </span>

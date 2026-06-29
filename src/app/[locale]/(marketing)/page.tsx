@@ -124,100 +124,64 @@ export default async function LandingPage() {
       {/* ───────── STUDI — bookable studios showcase ───────── */}
       <StudiosShowcase />
 
-      {/* ───────── MANIFESTO + NUMERI ───────── */}
-      <section
-        id="manifesto"
-        className="scroll-mt-24 hairline-t bg-[var(--bg-soft)] py-16 lg:py-24"
-      >
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
-          <Reveal className="grid lg:grid-cols-12 gap-10 lg:gap-20 items-end">
+      {/* ───────── CHIUSURA — manifesto + network in numbers + CTA (dark) ───────── */}
+      <section className="bg-[var(--ink)] text-[var(--bg)]">
+        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
+          <Reveal className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-end">
             <div className="lg:col-span-7">
-              <SectionIndex n="06" className="mb-6">{t("sections.manifesto")}</SectionIndex>
-              <h2 className="font-display font-light text-[clamp(2.25rem,5vw,4.5rem)] leading-[1.02] tracking-[-0.025em] text-[var(--ink)] max-w-[18ch]">
+              <p className="text-eyebrow italic !text-[var(--bg)]/65 mb-5">
+                {t("socialProof.title")}
+              </p>
+              <h2 className="font-display font-light text-[clamp(2rem,5vw,4.5rem)] leading-[1.04] tracking-[-0.02em] text-[var(--bg)] max-w-[20ch]">
                 {t("cta.title")}
               </h2>
             </div>
-            <p className="lg:col-span-5 lg:col-start-8 text-lead max-w-[42ch]">
-              {t("pricingTeaser.lead")}
+            <p className="lg:col-span-5 lg:col-start-8 font-display text-[clamp(1.0625rem,1.4vw,1.375rem)] leading-[1.5] text-[var(--bg)]/70 max-w-[44ch]">
+              {t("cta.subtitle")}
             </p>
           </Reveal>
 
-          {/* Numbers — the review in figures */}
-          <ol className="mt-16 lg:mt-24 grid grid-cols-2 lg:grid-cols-4 border-t border-l border-[var(--rule)]">
+          {/* Network in figures */}
+          <ol className="mt-12 lg:mt-20 grid grid-cols-2 lg:grid-cols-4 border-t border-l border-[var(--bg)]/20">
             {stats.map((s, i) => (
               <Reveal
                 as="li"
                 key={s.label}
                 delay={i * 70}
-                className="border-r border-b border-[var(--rule)] px-6 lg:px-8 py-10 lg:py-14"
+                className="border-r border-b border-[var(--bg)]/20 px-5 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-14"
               >
-                <p className="font-display font-light tabular-nums text-[clamp(2.75rem,5.5vw,4.75rem)] leading-[0.92] text-[var(--ink)]">
+                <p className="flex items-baseline font-display font-light tabular-nums text-[clamp(2.5rem,6vw,4.75rem)] leading-[0.92] text-[var(--bg)]">
                   <CountUp value={s.value} locale={locale} />
+                  {s.value > 0 && <span className="text-[0.45em] text-[var(--bg)]/45">+</span>}
                 </p>
-                <p className="mt-4 text-meta max-w-[16ch]">{s.label}</p>
+                <p className="mt-3 lg:mt-4 text-meta !text-[var(--bg)]/55 max-w-[16ch]">{s.label}</p>
               </Reveal>
             ))}
           </ol>
-        </div>
-      </section>
 
-      {/* ───────── CHIUSURA — dark band with CTA + tariffe + wordmark ───────── */}
-      <section className="bg-[var(--ink)] text-[var(--bg)]">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24 grid lg:grid-cols-12 gap-12 lg:gap-16 items-end">
-          <div className="lg:col-span-7">
-            <h2 className="font-display font-light text-[clamp(2.25rem,5vw,4.5rem)] leading-[1.05] tracking-[-0.02em] text-[var(--bg)] max-w-[22ch]">
-              {t("socialProof.title")}
-            </h2>
-            <p className="mt-8 max-w-2xl font-display text-[clamp(1.125rem,1.4vw,1.375rem)] leading-[1.45] text-[var(--bg)]/75">
-              {t("cta.subtitle")}
-            </p>
-            <div className="mt-10 flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-              <Button
-                size="lg"
-                asChild
-                className="!bg-[var(--bg)] !text-[var(--ink)] hover:!opacity-90 !border-0"
-              >
-                <Link href="/register" className="group">
-                  {t("cta.button")}
-                  <ArrowUpRight className="h-4 w-4 group-arrow" />
-                </Link>
-              </Button>
-              <Link
-                href="/pricing"
-                className="inline-flex items-center gap-2 px-2 py-3 text-[15px] text-[var(--bg)]/85 hover:text-[var(--bg)] transition-colors"
-              >
-                {t("pricingTeaser.cta")}
-                <ArrowRight className="h-4 w-4" />
+          <div className="mt-12 lg:mt-16 flex flex-col sm:flex-row gap-3 sm:items-center">
+            <Button
+              size="lg"
+              asChild
+              className="w-full sm:w-auto !bg-[var(--bg)] !text-[var(--ink)] hover:!opacity-90 !border-0"
+            >
+              <Link href="/register" className="group justify-center">
+                {t("cta.button")}
+                <ArrowUpRight className="h-4 w-4 group-arrow" />
               </Link>
-            </div>
+            </Button>
+            <Link
+              href="/pricing"
+              className="inline-flex items-center justify-center gap-2 px-2 py-3 text-[15px] text-[var(--bg)]/85 hover:text-[var(--bg)] transition-colors"
+            >
+              {t("pricingTeaser.cta")}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
 
-          <div className="lg:col-span-4 lg:col-start-9 border border-[var(--bg)]/25">
-            {/* Per modelli — gratuito */}
-            <div className="p-8 lg:p-10">
-              <p className="text-eyebrow italic !text-[var(--bg)]/70">
-                {t("features.forModel")}
-              </p>
-              <p className="mt-4 font-display tabular-nums text-6xl lg:text-7xl font-light text-[var(--bg)] leading-none">
-                €0
-              </p>
-              <p className="mt-3 text-meta !text-[var(--bg)]/60">
-                {t("pricingTeaser.freeLabel")}
-              </p>
-            </div>
-            {/* Per scout & agenzie — a pagamento */}
-            <div className="p-8 lg:p-10 hairline-t border-[var(--bg)]/20">
-              <p className="text-eyebrow italic !text-[var(--bg)]/70">
-                {t("features.forScout")}
-              </p>
-              <p className="mt-4 flex items-baseline gap-2 font-display tabular-nums text-4xl lg:text-5xl font-light text-[var(--bg)] leading-none">
-                {t("pricingTeaser.proPrice")}
-                <span className="text-meta not-italic !text-[var(--bg)]/60">
-                  {t("pricingTeaser.perMonth")}
-                </span>
-              </p>
-            </div>
-          </div>
+          <p className="mt-5 text-meta !text-[var(--bg)]/55 max-w-[52ch]">
+            {t("pricingTeaser.lead")}
+          </p>
         </div>
 
         <div className="hairline-t border-[var(--bg)]/20">

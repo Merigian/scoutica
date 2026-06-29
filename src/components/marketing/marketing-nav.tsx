@@ -47,6 +47,16 @@ export function MarketingNav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Lock body scroll while the full-screen mobile menu is open.
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
   const dashboardHref = session?.user?.role ? ROLE_DASHBOARD[session.user.role] ?? "/dashboard" : null;
 
   const toggleLocale = () => {
@@ -57,7 +67,7 @@ export function MarketingNav() {
   return (
     <header
       className="nav-shell fixed top-0 z-50 w-full"
-      data-scrolled={scrolled ? "true" : "false"}
+      data-scrolled={scrolled || open ? "true" : "false"}
     >
       <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-6 lg:px-12 md:grid md:grid-cols-[1fr_auto_1fr]">
         <nav className="hidden md:flex items-center gap-8 md:justify-self-start">
@@ -70,10 +80,18 @@ export function MarketingNav() {
         <Link
           href="/"
           aria-label="Scoutica"
-          className={cn("flex items-center gap-3 md:justify-self-center", isHome && "brand-intro")}
+          className={cn("flex items-center gap-2.5 sm:gap-3 md:justify-self-center", isHome && "brand-intro")}
         >
-          <LogoMark size="lg" className="brand-intro-mark" />
-          <ScouticaWordmark size="lg" className="brand-intro-word" />
+          <LogoMark
+            size="lg"
+            className="brand-intro-mark"
+            style={{ width: "clamp(32px,8.5vw,48px)", height: "clamp(32px,8.5vw,48px)" }}
+          />
+          <ScouticaWordmark
+            size="lg"
+            className="brand-intro-word"
+            style={{ fontSize: "clamp(21px,5.4vw,32px)" }}
+          />
         </Link>
 
         <div className="flex items-center gap-1 md:justify-self-end">
@@ -109,53 +127,72 @@ export function MarketingNav() {
 
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden p-2 ml-1"
+            className="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2.5 text-current hover:opacity-70 transition-opacity"
             aria-label="Menu"
+            aria-expanded={open}
           >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {open ? <X className="h-[22px] w-[22px]" /> : <Menu className="h-[22px] w-[22px]" />}
           </button>
         </div>
       </div>
 
       {open && (
-        <div className="md:hidden hairline-top bg-[var(--bg)] text-[var(--ink)] animate-fade-in">
-          <nav className="mx-auto max-w-[1440px] px-6 py-8 flex flex-col gap-6">
-            <NavLink href="/pricing" label={t("pricing")} onClick={() => setOpen(false)} />
-            <NavLink href="/about" label={t("about")} onClick={() => setOpen(false)} />
-            <NavLink href="/contact" label={t("contact")} onClick={() => setOpen(false)} />
-            <NavLink href="/studios" label={t("browseStudios")} onClick={() => setOpen(false)} />
-            {dashboardHref && (
-              <div className="pt-6 hairline-top mt-2">
-                <Button className="w-full" asChild>
-                  <Link href={dashboardHref as never} onClick={() => setOpen(false)}>
-                    <LayoutDashboard className="h-4 w-4" />
-                    {t("dashboard")}
+        <div className="md:hidden fixed inset-0 top-16 z-40 flex flex-col overflow-y-auto bg-[var(--bg)] text-[var(--ink)] animate-fade-in">
+          <nav className="flex flex-col px-6 pt-4">
+            {[
+              { href: "/pricing", label: t("pricing") },
+              { href: "/about", label: t("about") },
+              { href: "/contact", label: t("contact") },
+              { href: "/studios", label: t("browseStudios") },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                href={item.href as never}
+                onClick={() => setOpen(false)}
+                className="group flex items-baseline justify-between border-b border-[var(--rule)] py-5"
+              >
+                <span className="font-display font-light text-[clamp(2rem,9vw,2.75rem)] leading-[1.04] tracking-[-0.02em] text-[var(--ink)]">
+                  {item.label}
+                </span>
+                <ArrowUpRight className="h-5 w-5 shrink-0 self-center text-[var(--ink-3)] transition-colors group-hover:text-[var(--ink)]" />
+              </Link>
+            ))}
+          </nav>
+
+          <div className="mt-auto px-6 pb-[calc(env(safe-area-inset-bottom)+1.75rem)] pt-8">
+            {dashboardHref ? (
+              <Button className="w-full" size="lg" asChild>
+                <Link href={dashboardHref as never} onClick={() => setOpen(false)} className="justify-center">
+                  <LayoutDashboard className="h-4 w-4" />
+                  {t("dashboard")}
+                </Link>
+              </Button>
+            ) : (
+              <div className="space-y-3">
+                <Button className="w-full" size="lg" asChild>
+                  <Link href="/register" onClick={() => setOpen(false)} className="justify-center">
+                    {t("register")}
+                  </Link>
+                </Button>
+                <Button variant="outline" className="w-full" size="lg" asChild>
+                  <Link href="/login" onClick={() => setOpen(false)} className="justify-center">
+                    {t("login")}
                   </Link>
                 </Button>
               </div>
             )}
-            {!dashboardHref && (
-              <div className="pt-6 hairline-top mt-2 space-y-3">
-                <Button variant="outline" className="w-full" asChild>
-                  <Link href="/login" onClick={() => setOpen(false)}>{t("login")}</Link>
-                </Button>
-                <Button className="w-full" asChild>
-                  <Link href="/register" onClick={() => setOpen(false)}>{t("register")}</Link>
-                </Button>
-              </div>
-            )}
 
-            <div className="pt-6 hairline-top mt-2 flex items-center justify-between">
+            <div className="mt-8 flex items-center justify-between border-t border-[var(--rule)] pt-6">
               <button
                 onClick={toggleLocale}
-                className="inline-flex items-center text-[13px] text-current/85 hover:text-current py-2 transition-colors"
+                className="-ml-1 inline-flex min-h-[44px] items-center px-1 font-label text-[12px] uppercase tracking-[0.12em] text-[var(--ink-2)] hover:text-[var(--ink)] transition-colors"
                 aria-label={t("switchToOtherLang")}
               >
                 {t("otherLangCode")}
               </button>
-              <ThemeToggle className="inline-flex items-center justify-center w-9 h-9 hover:opacity-70 transition-opacity" />
+              <ThemeToggle className="inline-flex items-center justify-center h-11 w-11 -mr-2.5 hover:opacity-70 transition-opacity" />
             </div>
-          </nav>
+          </div>
         </div>
       )}
     </header>
