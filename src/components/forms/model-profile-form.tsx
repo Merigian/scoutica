@@ -225,7 +225,7 @@ export function ModelProfileForm({ profile }: ModelProfileFormProps) {
             </p>
           </div>
           <div className="space-y-2 sm:col-span-2 flex items-center gap-3">
-            <input type="checkbox" id="travelAvailability" className="h-4 w-4 rounded border-[var(--rule)]" {...register("travelAvailability")} />
+            <input type="checkbox" id="travelAvailability" className="h-4 w-4 border-[var(--rule)] accent-[var(--ink)]" {...register("travelAvailability")} />
             <Label htmlFor="travelAvailability">{t("fields.travelAvailability")}</Label>
           </div>
         </CardContent>

@@ -5,6 +5,8 @@ import { redirect } from "next/navigation";
 import { ContactRequestList } from "@/components/contacts/contact-request-list";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Send } from "lucide-react";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 
 export default async function ScoutContactsPage() {
   const session = await auth();
@@ -38,14 +40,12 @@ export default async function ScoutContactsPage() {
   });
 
   return (
-    <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-8 lg:py-12 animate-fade-in">
-      <header className="hairline-b pb-8 lg:pb-10 mb-10 lg:mb-14 space-y-3">
-        <p className="text-eyebrow">Contatti</p>
-        <h1 className="font-[var(--font-display)] font-light text-[clamp(2rem,3.4vw,3rem)] leading-[1.05] tracking-[-0.015em] text-[var(--ink)]">
-          {t("title")}
-        </h1>
-        <p className="text-lead max-w-[58ch]">{t("description")}</p>
-      </header>
+    <PageContainer>
+      <PageHeader
+        eyebrow="Contatti"
+        title={t("title")}
+        description={t("description")}
+      />
 
       {requests.length > 0 ? (
         <ContactRequestList requests={requests} role="SCOUT" locale={locale} />
@@ -58,6 +58,6 @@ export default async function ScoutContactsPage() {
           actionHref={`/${locale}/scout/discover`}
         />
       )}
-    </div>
+    </PageContainer>
   );
 }

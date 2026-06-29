@@ -7,6 +7,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/shared/empty-state";
 import { CreateBoardDialog } from "@/components/shortlists/create-board-dialog";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 import { Layers, Users } from "lucide-react";
 
 export default async function ScoutBoardsPage() {
@@ -48,18 +50,12 @@ export default async function ScoutBoardsPage() {
   });
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-[var(--font-display)] font-bold">
-            {t("title")}
-          </h1>
-          <p className="text-[var(--ink-3)] text-sm mt-1">
-            {t("description")}
-          </p>
-        </div>
-        <CreateBoardDialog locale={locale} />
-      </div>
+    <PageContainer>
+      <PageHeader
+        title={t("title")}
+        description={t("description")}
+        actions={<CreateBoardDialog locale={locale} />}
+      />
 
       {boards.length > 0 ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -114,6 +110,6 @@ export default async function ScoutBoardsPage() {
           description={t("noBoardsDesc")}
         />
       )}
-    </div>
+    </PageContainer>
   );
 }

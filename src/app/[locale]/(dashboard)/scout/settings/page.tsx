@@ -3,6 +3,8 @@ import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { SettingsForm } from "@/components/settings/settings-form";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 
 export default async function ScoutSettingsPage() {
   const session = await auth();
@@ -19,16 +21,14 @@ export default async function ScoutSettingsPage() {
   if (!user) redirect(`/${locale}/login`);
 
   return (
-    <div className="space-y-6 max-w-2xl">
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">
-          {t("title")}
-        </h1>
+    <PageContainer>
+      <PageHeader title={t("title")} />
+      <div className="max-w-2xl">
+        <SettingsForm
+          user={{ name: user.name ?? "", email: user.email, locale: user.locale, image: user.image }}
+          locale={locale}
+        />
       </div>
-      <SettingsForm
-        user={{ name: user.name ?? "", email: user.email, locale: user.locale, image: user.image }}
-        locale={locale}
-      />
-    </div>
+    </PageContainer>
   );
 }

@@ -8,6 +8,12 @@ import type { ActionResponse } from "@/types";
 import { eachDayOfInterval, format } from "date-fns";
 import { z } from "zod";
 
+const slotSchema = z.object({
+  date: z.string().trim().min(1).max(10),
+  startTime: z.string().trim().max(10),
+  endTime: z.string().trim().max(10),
+});
+
 const createBookingSchema = z.object({
   studioId: z.string().min(1).max(64),
   name: z.string().trim().min(1).max(120),
@@ -20,6 +26,7 @@ const createBookingSchema = z.object({
   endTime: z.string().max(10).optional(),
   totalDays: z.number().int().min(1).max(365),
   totalPrice: z.number().min(0).max(1_000_000).optional(),
+  slots: z.array(slotSchema).min(1).max(31).optional(),
 });
 
 type CreateBookingInput = z.infer<typeof createBookingSchema>;
@@ -96,6 +103,7 @@ export async function createStudioBooking(
         endTime: data.endTime || null,
         totalDays: data.totalDays,
         totalPrice: data.totalPrice || null,
+        slots: data.slots && data.slots.length > 0 ? data.slots : undefined,
         status: "PENDING",
       },
     });

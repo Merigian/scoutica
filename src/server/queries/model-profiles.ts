@@ -1,10 +1,12 @@
 import { db } from "@/lib/db";
+import { toPublicModelName } from "@/lib/utils";
 import type { SearchFilters } from "@/types";
 import type { Prisma } from "@prisma/client";
 
 export type ModelProfileCard = {
   id: string;
   slug: string;
+  /** Public display name — surname reduced to an initial (see toPublicModelName). */
   fullName: string | null;
   city: string | null;
   region: string | null;
@@ -97,7 +99,8 @@ export async function searchModelProfiles(
   const mapped: ModelProfileCard[] = profiles.map((p) => ({
     id: p.id,
     slug: p.slug,
-    fullName: p.fullName,
+    // Public cards expose only the surname initial (privacy).
+    fullName: toPublicModelName(p.fullName),
     city: p.city,
     region: p.region,
     gender: p.gender,
@@ -301,7 +304,8 @@ export async function getFeaturedProfiles(): Promise<ModelProfileCard[]> {
   return profiles.map((p) => ({
     id: p.id,
     slug: p.slug,
-    fullName: p.fullName,
+    // Public cards expose only the surname initial (privacy).
+    fullName: toPublicModelName(p.fullName),
     city: p.city,
     region: p.region,
     gender: p.gender,
@@ -369,7 +373,8 @@ export async function getFavoriteProfiles(userId: string): Promise<ModelProfileC
   return likes.map(({ modelProfile: p }) => ({
     id: p.id,
     slug: p.slug,
-    fullName: p.fullName,
+    // Public cards expose only the surname initial (privacy).
+    fullName: toPublicModelName(p.fullName),
     city: p.city,
     region: p.region,
     gender: p.gender,
@@ -402,7 +407,7 @@ export async function getFavoriteProfiles(userId: string): Promise<ModelProfileC
 
 // Get a model profile by userId for the chat sidebar panel
 export async function getModelProfileForChat(userId: string) {
-  return db.modelProfile.findUnique({
+  const profile = await db.modelProfile.findUnique({
     where: { userId },
     select: {
       id: true,
@@ -436,6 +441,10 @@ export async function getModelProfileForChat(userId: string) {
       },
     },
   });
+  // Mask the surname for the chat panel (shown to the other party).
+  return profile
+    ? { ...profile, fullName: toPublicModelName(profile.fullName) }
+    : null;
 }
 
 // Get a single model profile by slug for public view

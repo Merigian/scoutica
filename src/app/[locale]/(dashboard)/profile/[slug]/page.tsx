@@ -19,7 +19,7 @@ import {
   MODEL_CATEGORY_LABELS,
   PROFESSIONAL_STATUS_LABELS,
 } from "@/config/enums";
-import { calculateAge, formatDate } from "@/lib/utils";
+import { calculateAge, formatDate, toPublicModelName } from "@/lib/utils";
 import {
   MapPin,
   Ruler,
@@ -50,7 +50,7 @@ export async function generateMetadata({
   const profile = await getModelProfileBySlug(slug);
   if (!profile) return { title: "Profile — Scoutica" };
 
-  const name = profile.fullName || "Model";
+  const name = toPublicModelName(profile.fullName) || "Model";
   const city = profile.city || "";
   const height = profile.height ? `${profile.height}cm` : "";
   const cover = profile.portfolioImages.find((i) => i.isCover)?.url;
@@ -85,6 +85,10 @@ export default async function PublicProfilePage({
 
   const isAuthenticated = !!session?.user?.id;
   const isOwnProfile = session?.user?.id === profile.user.id;
+  // Owner sees their own full name; everyone else sees the surname initial only.
+  const displayName = isOwnProfile
+    ? profile.fullName
+    : toPublicModelName(profile.fullName);
 
   const age = profile.dateOfBirth ? calculateAge(profile.dateOfBirth) : null;
   const isBoosted = profile.boosts.length > 0;
@@ -174,15 +178,15 @@ export default async function PublicProfilePage({
       </div>
 
       {/* Hero section */}
-      <div className="flex flex-col sm:flex-row gap-6">
+      <div className="flex flex-col md:flex-row gap-6 md:gap-8">
         {/* Cover image */}
-        <div className="sm:w-1/3 aspect-[3/4] overflow-hidden bg-[var(--bg-soft)] relative hairline">
+        <div className="md:w-1/3 aspect-[3/4] max-h-[60vh] md:max-h-none overflow-hidden bg-[var(--bg-soft)] relative hairline">
           {profile.portfolioImages.find((i) => i.isCover) ? (
             <ClickableCover
               coverUrl={profile.portfolioImages.find((i) => i.isCover)!.url}
-              allImages={profile.portfolioImages.map((img) => ({ url: img.url, alt: profile.fullName || "Model" }))}
+              allImages={profile.portfolioImages.map((img) => ({ url: img.url, alt: displayName || "Model" }))}
               coverIndex={profile.portfolioImages.findIndex((i) => i.isCover)}
-              alt={profile.fullName || "Model"}
+              alt={displayName || "Model"}
               sizes="(max-width: 640px) 100vw, 33vw"
             />
           ) : (
@@ -204,7 +208,7 @@ export default async function PublicProfilePage({
           <div>
             <div className="flex flex-wrap items-center gap-3">
               <h1 className="text-3xl font-display font-medium">
-                {profile.fullName || t("unnamed")}
+                {displayName || t("unnamed")}
               </h1>
               {isVerified && (
                 <VerifiedBadge size={24} aria-label={t("verified")} />
@@ -273,7 +277,7 @@ export default async function PublicProfilePage({
           {isScout && (
             <PublicProfileContactButton
               modelProfileId={profile.id}
-              modelName={profile.fullName ?? "Model"}
+              modelName={displayName ?? "Model"}
               locale={locale}
               existingConversationId={existingConversationId}
               contactRequestStatus={contactRequestStatus}

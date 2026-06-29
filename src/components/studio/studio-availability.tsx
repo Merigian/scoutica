@@ -279,7 +279,7 @@ export function StudioAvailability({
         </div>
         </div>
 
-        {error && <p className="text-xs text-red-500">{error}</p>}
+        {error && <p className="text-xs text-[var(--danger)]">{error}</p>}
 
         {/* Pending changes action bar */}
         {pendingCount > 0 && (

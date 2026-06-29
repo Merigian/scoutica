@@ -1177,7 +1177,19 @@
         "paymentCanceled": "Payment canceled",
         "currentPlan": "Current plan",
         "nextRenewal": "Next renewal: {date}",
-        "expiresOn": "Expires on {date}"
+        "expiresOn": "Expires on {date}",
+        "subtitle": "Your plan and profile visibility.",
+        "planName": "Free — Everything included",
+        "planTagline": "All features are free during the launch phase.",
+        "features": [
+          "12 portfolio photos",
+          "Video & PDF book upload",
+          "Unlimited contacts",
+          "Advanced filters",
+          "Everything included for free"
+        ],
+        "visibility": "Visibility",
+        "boostHeading": "Boost"
       },
       "castingDetail": {
         "backToCastings": "Back to castings",
@@ -2191,6 +2203,9 @@
       "vsLastMonth": "vs last month",
       "flat": "No change"
     },
+    "verifiedBadge": {
+      "label": "Verified"
+    },
     "readOnlyBanner": {
       "title": "You're browsing in read-only mode",
       "description": "Verify your account to contact models, create castings and job posts.",
@@ -2688,7 +2703,18 @@
       "phone": "Phone",
       "additionalNotes": "Additional notes",
       "notesPlaceholder": "Briefly describe your project...",
-      "submit": "Book now"
+      "submit": "Book now",
+      "timeSlots": "Time slots",
+      "timeSlotsHint": "Add one or more time slots, even on different days (e.g. 08:00–09:00 and 13:00–15:00).",
+      "date": "Date",
+      "from": "From",
+      "to": "To",
+      "addSlot": "Add",
+      "removeSlot": "Remove slot",
+      "noSlotsYet": "No slots added yet. Pick a time and press Add.",
+      "slot": "slot",
+      "slotsLabel": "slots",
+      "errorEndAfterStart": "End time must be after the start time."
     },
     "studioInquiry": {
       "errorRequired": "Fill in required fields",
@@ -2776,7 +2802,10 @@
       "formatError": "Format not supported. Use JPG, PNG or WebP.",
       "sizeError": "File is too large. Maximum 10MB.",
       "uploadError": "Error uploading",
-      "uploading": "Uploading…"
+      "uploading": "Uploading…",
+      "reorder": "Drag to reorder",
+      "reorderHint": "Drag photos by the handle to change their order.",
+      "reorderError": "Couldn't reorder photos. Please try again."
     },
     "profilePhotos": {
       "formatError": "Format not supported. Use JPG, PNG or WebP.",

@@ -4,6 +4,8 @@ import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { ContactRequestList } from "@/components/contacts/contact-request-list";
 import { EmptyState } from "@/components/shared/empty-state";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 import { Mail } from "lucide-react";
 
 export default async function ModelContactsPage() {
@@ -33,15 +35,8 @@ export default async function ModelContactsPage() {
   });
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">
-          {t("title")}
-        </h1>
-        <p className="text-[var(--ink-3)] text-sm mt-1">
-          {t("description")}
-        </p>
-      </div>
+    <PageContainer>
+      <PageHeader title={t("title")} description={t("description")} />
 
       {requests.length > 0 ? (
         <ContactRequestList requests={requests} role="MODEL" locale={locale} />
@@ -52,6 +47,6 @@ export default async function ModelContactsPage() {
           description={t("noRequestsDesc")}
         />
       )}
-    </div>
+    </PageContainer>
   );
 }

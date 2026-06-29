@@ -7,6 +7,8 @@ import { ModelCard } from "@/components/discover/model-card";
 import { DiscoverGrid, GridDensitySelector } from "@/components/discover/grid-density-selector";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Bookmark } from "lucide-react";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 import type { ContactRequestStatus } from "@prisma/client";
 
 export default async function ScoutFavoritesPage({
@@ -61,11 +63,8 @@ export default async function ScoutFavoritesPage({
   const canContact = !!scoutProfile;
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">{t("title")}</h1>
-        <p className="text-[var(--ink-3)] text-sm mt-1">{t("description")}</p>
-      </div>
+    <PageContainer>
+      <PageHeader title={t("title")} description={t("description")} />
 
       {profiles.length > 0 ? (
         <>
@@ -100,6 +99,6 @@ export default async function ScoutFavoritesPage({
           description={t("emptyDesc")}
         />
       )}
-    </div>
+    </PageContainer>
   );
 }

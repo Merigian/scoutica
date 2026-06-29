@@ -5,6 +5,8 @@ import { redirect } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/shared/empty-state";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 import { StudioVerificationActions } from "@/components/admin/studio-verification-actions";
 import { formatRelativeTime } from "@/lib/utils";
 import { Building2 } from "lucide-react";
@@ -36,15 +38,15 @@ export default async function AdminStudioVerificationsPage() {
     status === "VERIFICATION_SUBMITTED" ? t("submitted") : t("pending");
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">{t("title")}</h1>
-        <p className="text-[var(--ink-3)] text-sm mt-1">
+    <PageContainer>
+      <PageHeader title={t("title")} />
+
+      <div className="space-y-6">
+        <p className="text-[var(--ink-3)] text-sm">
           {pending.length} {t("requestsToReview")}
         </p>
-      </div>
 
-      {pending.length > 0 ? (
+        {pending.length > 0 ? (
         <div className="space-y-4">
           {pending.map((profile) => (
             <Card key={profile.id}>
@@ -125,6 +127,7 @@ export default async function AdminStudioVerificationsPage() {
           description={t("noVerificationsDesc")}
         />
       )}
-    </div>
+      </div>
+    </PageContainer>
   );
 }

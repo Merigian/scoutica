@@ -64,7 +64,7 @@ const iconMap: Record<string, React.ElementType> = {
 // Items to visually separate into a "secondary" group at the bottom of nav
 const SECONDARY_KEYS = new Set(["settings", "notifications"]);
 
-export function Sidebar() {
+export function Sidebar({ hideVerification = false }: { hideVerification?: boolean }) {
   const { data: session } = useSession();
   const pathname = usePathname();
   const t = useTranslations("nav");
@@ -74,7 +74,9 @@ export function Sidebar() {
   if (!session?.user) return null;
 
   const role = session.user.role.toLowerCase() as "model" | "scout" | "studio" | "admin";
-  const navItems = NAV_ITEMS[role] || [];
+  const navItems = (NAV_ITEMS[role] || []).filter(
+    (item) => !(hideVerification && item.key === "verification"),
+  );
   const primaryItems = navItems.filter((item) => !SECONDARY_KEYS.has(item.key));
   const secondaryItems = navItems.filter((item) => SECONDARY_KEYS.has(item.key));
 
@@ -84,7 +86,7 @@ export function Sidebar() {
   };
 
   return (
-    <aside className="group/sidebar hidden lg:flex lg:flex-col lg:fixed lg:inset-y-0 lg:z-40 lg:w-[68px] hover:lg:w-64 lg:hairline-r lg:bg-[var(--bg)] lg:transition-all lg:duration-200 lg:ease-out overflow-hidden">
+    <aside className="group/sidebar hidden lg:flex lg:flex-col lg:fixed lg:inset-y-0 lg:z-40 lg:w-[68px] hover:lg:w-64 lg:hairline-r lg:bg-[var(--bg)] hover:lg:bg-[var(--bg-elevated)] lg:transition-all lg:duration-200 lg:ease-out overflow-hidden">
       <div className="flex h-14 items-center hairline-b px-4 shrink-0">
         <Link href="/" className="flex items-center overflow-hidden text-[var(--ink)]" aria-label="Scoutica">
           <LogoMark size="md" className="w-9 h-9" />

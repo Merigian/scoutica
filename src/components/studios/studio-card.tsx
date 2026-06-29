@@ -88,7 +88,7 @@ export function StudioCard({ studio, locale }: StudioCardProps) {
                     key={i}
                     aria-hidden
                     className={cn(
-                      "h-1.5 rounded-full transition-all",
+                      "h-1.5 transition-all",
                       i === currentIndex ? "w-3 bg-white" : "w-1.5 bg-white/50"
                     )}
                   />

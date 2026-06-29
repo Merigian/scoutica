@@ -9,6 +9,8 @@ import { ModelCard } from "@/components/discover/model-card";
 import { SearchFiltersPanel } from "@/components/discover/search-filters";
 import { DiscoverGrid, GridDensitySelector } from "@/components/discover/grid-density-selector";
 import { EmptyState } from "@/components/shared/empty-state";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 import { Search } from "lucide-react";
 
 export default async function ModelDiscoverPage({
@@ -45,50 +47,44 @@ export default async function ModelDiscoverPage({
   const total = results.total - (results.profiles.length - profiles.length);
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">
-          {t("title")}
-        </h1>
-        <p className="text-[var(--ink-3)] text-sm mt-1">
-          {t("description")}
-        </p>
+    <PageContainer>
+      <PageHeader title={t("title")} description={t("description")} />
+
+      <div className="space-y-6">
+        {/* Filters */}
+        <Suspense fallback={<div className="h-32 animate-pulse bg-[var(--bg-soft)]" />}>
+          <SearchFiltersPanel locale={locale} advancedFilters={false} />
+        </Suspense>
+
+        {/* Results Grid */}
+        {profiles.length > 0 ? (
+          <>
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-sm text-[var(--ink-3)]">
+                {total} {total === 1 ? t("profile") : t("profiles")}
+              </p>
+              <GridDensitySelector cols={cols} />
+            </div>
+            <DiscoverGrid cols={cols}>
+              {profiles.map((profile) => (
+                <ModelCard
+                  key={profile.id}
+                  profile={profile}
+                  locale={locale}
+                  isAuthenticated
+                  showSave={false}
+                />
+              ))}
+            </DiscoverGrid>
+          </>
+        ) : (
+          <EmptyState
+            icon={Search}
+            title={t("noProfiles")}
+            description={t("noProfilesDesc")}
+          />
+        )}
       </div>
-
-      {/* Filters */}
-      <Suspense fallback={<div className="h-32 animate-pulse bg-[var(--bg-soft)]" />}>
-        <SearchFiltersPanel locale={locale} advancedFilters={false} />
-      </Suspense>
-
-      {/* Results Grid */}
-      {profiles.length > 0 ? (
-        <>
-          <div className="flex items-center justify-between gap-3">
-            <p className="text-sm text-[var(--ink-3)]">
-              {total} {total === 1 ? t("profile") : t("profiles")}
-            </p>
-            <GridDensitySelector cols={cols} />
-          </div>
-          <DiscoverGrid cols={cols}>
-            {profiles.map((profile) => (
-              <ModelCard
-                key={profile.id}
-                profile={profile}
-                locale={locale}
-                isAuthenticated
-                showSave={false}
-              />
-            ))}
-          </DiscoverGrid>
-        </>
-      ) : (
-        <EmptyState
-          icon={Search}
-          title={t("noProfiles")}
-          description={t("noProfilesDesc")}
-        />
-      )}
-    </div>
+    </PageContainer>
   );
 }

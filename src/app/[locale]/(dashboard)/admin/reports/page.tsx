@@ -5,6 +5,8 @@ import { redirect } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/shared/empty-state";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 import { ReportActions } from "@/components/admin/report-actions";
 import { REPORT_REASON_LABELS } from "@/config/enums";
 import { formatRelativeTime } from "@/lib/utils";
@@ -27,17 +29,15 @@ export default async function AdminReportsPage() {
   });
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">
-          {t("title")}
-        </h1>
-        <p className="text-[var(--ink-3)] text-sm mt-1">
+    <PageContainer>
+      <PageHeader title={t("title")} />
+
+      <div className="space-y-6">
+        <p className="text-[var(--ink-3)] text-sm">
           {reports.length} {t("reportsToReview")}
         </p>
-      </div>
 
-      {reports.length > 0 ? (
+        {reports.length > 0 ? (
         <div className="space-y-4">
           {reports.map((report) => (
             <Card key={report.id}>
@@ -76,6 +76,7 @@ export default async function AdminReportsPage() {
           description={t("noReportsDesc")}
         />
       )}
-    </div>
+      </div>
+    </PageContainer>
   );
 }

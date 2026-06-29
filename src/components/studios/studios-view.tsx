@@ -25,12 +25,12 @@ export function StudiosView({ studios, locale, totalLabel }: StudiosViewProps) {
       <div className="flex items-center justify-between mb-6">
         <p className="text-sm text-[var(--ink-3)]">{totalLabel}</p>
 
-        <div className="flex items-center gap-1 bg-[var(--bg-soft)] p-0.5 rounded-sm">
+        <div className="flex items-center gap-1 bg-[var(--bg-soft)] p-0.5 hairline">
           <button
             onClick={() => setView("grid")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium tracking-wide uppercase transition-colors rounded-sm ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium tracking-wide uppercase transition-colors ${
               view === "grid"
-                ? "bg-[var(--bg-elevated)] text-[var(--ink)] shadow-sm"
+                ? "bg-[var(--bg-elevated)] text-[var(--ink)]"
                 : "text-[var(--ink-3)] hover:text-[var(--ink)]"
             }`}
           >
@@ -39,9 +39,9 @@ export function StudiosView({ studios, locale, totalLabel }: StudiosViewProps) {
           </button>
           <button
             onClick={() => setView("map")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium tracking-wide uppercase transition-colors rounded-sm ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium tracking-wide uppercase transition-colors ${
               view === "map"
-                ? "bg-[var(--bg-elevated)] text-[var(--ink)] shadow-sm"
+                ? "bg-[var(--bg-elevated)] text-[var(--ink)]"
                 : "text-[var(--ink-3)] hover:text-[var(--ink)]"
             }`}
           >

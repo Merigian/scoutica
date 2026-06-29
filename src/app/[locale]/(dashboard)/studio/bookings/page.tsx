@@ -76,11 +76,30 @@ export default async function StudioBookingsPage() {
                     {" → "}
                     {format(new Date(booking.endDate), "d MMM yyyy", { locale: dateFnsLocale })}
                   </span>
-                  {(booking.startTime || booking.endTime) && (
-                    <span className="flex items-center gap-1 text-[var(--ink-3)] text-xs">
-                      <Clock className="h-3 w-3" />
-                      {booking.startTime || "–"} – {booking.endTime || "–"}
+                  {Array.isArray(booking.slots) && booking.slots.length > 0 ? (
+                    <span className="flex flex-wrap items-center gap-1.5">
+                      {(booking.slots as Array<{ date: string; startTime: string; endTime: string }>).map(
+                        (s, i) => (
+                          <span
+                            key={i}
+                            className="inline-flex items-center gap-1 border border-[var(--rule)] bg-[var(--bg-soft)] px-1.5 py-0.5 text-[11px] text-[var(--ink-2)]"
+                          >
+                            <Clock className="h-2.5 w-2.5" />
+                            <span className="capitalize">
+                              {format(new Date(s.date + "T00:00:00"), "EEE d", { locale: dateFnsLocale })}
+                            </span>
+                            {s.startTime}–{s.endTime}
+                          </span>
+                        )
+                      )}
                     </span>
+                  ) : (
+                    (booking.startTime || booking.endTime) && (
+                      <span className="flex items-center gap-1 text-[var(--ink-3)] text-xs">
+                        <Clock className="h-3 w-3" />
+                        {booking.startTime || "–"} – {booking.endTime || "–"}
+                      </span>
+                    )
                   )}
                   <span className="text-[var(--ink-3)] text-xs">
                     ({booking.totalDays}{" "}

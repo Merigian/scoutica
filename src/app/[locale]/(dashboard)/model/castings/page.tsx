@@ -9,7 +9,9 @@ import { EmptyState } from "@/components/shared/empty-state";
 import { ListingBookmarkButton } from "@/components/shared/listing-bookmark-button";
 import { getSavedCastingIds } from "@/server/queries/saved-listings";
 import { formatDate } from "@/lib/utils";
-import { MapPin, Calendar, DollarSign, Users, Megaphone } from "lucide-react";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
+import { MapPin, Calendar, DollarSign, Users, Megaphone, Clock } from "lucide-react";
 
 export default async function ModelCastingsPage() {
   const session = await auth();
@@ -60,15 +62,8 @@ export default async function ModelCastingsPage() {
   });
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">
-          {t("title")}
-        </h1>
-        <p className="text-[var(--ink-3)] text-sm mt-1">
-          {t("description")}
-        </p>
-      </div>
+    <PageContainer>
+      <PageHeader title={t("title")} description={t("description")} />
 
       {castings.length > 0 ? (
         <div className="grid gap-4">
@@ -117,7 +112,8 @@ export default async function ModelCastingsPage() {
                           )}
                           {casting.deadline && (
                             <span className="flex items-center gap-1">
-                              ⏰ {t("deadline")} {formatDate(casting.deadline, lang)}
+                              <Clock className="h-3 w-3" />
+                              {t("deadline")} {formatDate(casting.deadline, lang)}
                             </span>
                           )}
                           {casting.compensation && (
@@ -146,6 +142,6 @@ export default async function ModelCastingsPage() {
           description={t("noCastingsDesc")}
         />
       )}
-    </div>
+    </PageContainer>
   );
 }

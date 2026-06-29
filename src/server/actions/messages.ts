@@ -3,6 +3,7 @@
 import { auth } from "@/lib/auth";
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
+import { toPublicModelName } from "@/lib/utils";
 import type { ActionResponse } from "@/types";
 
 export async function sendMessage(
@@ -201,7 +202,7 @@ export async function getConversations() {
     const otherUser = otherParticipant?.user;
     const displayName =
       otherUser?.role === "MODEL"
-        ? otherUser.modelProfile?.fullName ?? otherUser.name
+        ? toPublicModelName(otherUser.modelProfile?.fullName ?? otherUser.name)
         : otherUser?.role === "STUDIO"
           ? otherUser.studioProfile?.businessName ?? otherUser.name
           : otherUser?.scoutProfile?.businessName ?? otherUser?.name;
@@ -317,7 +318,7 @@ export async function getConversationMessages(
   const otherUser = otherParticipant?.user;
   const displayName =
     otherUser?.role === "MODEL"
-      ? otherUser.modelProfile?.fullName ?? otherUser.name
+      ? toPublicModelName(otherUser.modelProfile?.fullName ?? otherUser.name)
       : otherUser?.role === "STUDIO"
         ? otherUser.studioProfile?.businessName ?? otherUser.name
         : otherUser?.scoutProfile?.businessName ?? otherUser?.name;

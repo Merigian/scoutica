@@ -58,7 +58,7 @@ export function StudioPublishBar({ studio }: StudioPublishBarProps) {
     <div className="space-y-3 border-b pb-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">{studio.name}</h1>
+        <h1 className="text-h2">{studio.name}</h1>
         <Badge variant={studio.status === "PUBLISHED" ? "default" : "secondary"}>
           {STUDIO_STATUS_LABELS[studio.status][lang]}
         </Badge>

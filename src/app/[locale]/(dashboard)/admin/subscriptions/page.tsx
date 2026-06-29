@@ -5,6 +5,8 @@ import { redirect } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/shared/empty-state";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 import { formatRelativeTime } from "@/lib/utils";
 import { CreditCard } from "lucide-react";
 
@@ -33,17 +35,15 @@ export default async function AdminSubscriptionsPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">
-          {t("title")}
-        </h1>
-        <p className="text-[var(--ink-3)] text-sm mt-1">
+    <PageContainer>
+      <PageHeader title={t("title")} />
+
+      <div className="space-y-6">
+        <p className="text-[var(--ink-3)] text-sm">
           {subscriptions.length} {t("activeSubscriptions")}
         </p>
-      </div>
 
-      {subscriptions.length > 0 ? (
+        {subscriptions.length > 0 ? (
         <div className="space-y-3">
           {subscriptions.map((sub) => (
             <Card key={sub.id}>
@@ -74,6 +74,7 @@ export default async function AdminSubscriptionsPage() {
           description={t("noSubscriptionsDesc")}
         />
       )}
-    </div>
+      </div>
+    </PageContainer>
   );
 }

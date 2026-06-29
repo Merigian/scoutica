@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 
 export default async function AuthLayout({ children }: { children: React.ReactNode }) {
   const t = await getTranslations("auth.layout");
+  const tl = await getTranslations("landing");
   const year = new Date().getFullYear();
 
   return (
@@ -37,20 +38,28 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
         </footer>
       </div>
 
-      {/* Editorial column — full-bleed monochrome */}
-      <aside className="relative hidden lg:flex flex-1 hairline-l overflow-hidden bg-[var(--bg-soft)]">
+      {/* Editorial column — full-bleed cinematic cover */}
+      <aside className="relative hidden flex-1 overflow-hidden bg-[#0A0A0B] hairline-l lg:flex">
         <div
-          className="absolute inset-0 bg-cover bg-center grayscale"
+          className="absolute inset-0 bg-cover bg-center"
           style={{
             backgroundImage: "url('/images/auth-cover.webp')",
           }}
         />
-        <div className="relative z-10 flex w-full items-end justify-center px-12 pt-12 pb-0">
-          <LogoMark
-            width={240}
-            className="text-white"
-            style={{ filter: "drop-shadow(0 2px 14px rgba(10,10,11,0.6))" }}
-          />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/45"
+        />
+        <div className="relative z-10 flex w-full flex-col justify-between p-14 xl:p-16">
+          <p className="font-label text-[11px] uppercase tracking-[0.28em] text-white/70">
+            {tl("cover.masthead")}
+          </p>
+          <h2 className="max-w-[15ch] font-display text-[clamp(2.25rem,3.4vw,3.75rem)] font-light leading-[1.0] tracking-[-0.02em] text-white">
+            {tl("verification.title")}
+          </h2>
+          <p className="font-label text-[11px] uppercase tracking-[0.22em] text-white/60">
+            Milano · Roma · Firenze
+          </p>
         </div>
       </aside>
     </div>

@@ -11,6 +11,7 @@ const eslintConfig = [
       "scripts/**",
       "prisma/**",
       "public/**",
+      "promo-video/**",
     ],
   },
   ...nextCoreWebVitals,

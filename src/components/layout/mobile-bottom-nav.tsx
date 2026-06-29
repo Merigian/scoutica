@@ -80,7 +80,7 @@ export function MobileBottomNav() {
                 aria-label={t(slot.key as never)}
                 className="flex flex-1 flex-col items-center justify-start"
               >
-                <span className="flex h-12 w-12 -translate-y-3 items-center justify-center rounded-full bg-[var(--ink)] text-[var(--bg)] shadow-lg shadow-black/20 transition-transform active:scale-95">
+                <span className="flex h-12 w-12 -translate-y-3 items-center justify-center bg-[var(--ink)] text-[var(--bg)] ring-4 ring-[var(--bg)] transition-transform active:scale-95">
                   <Plus className="h-6 w-6" weight="bold" />
                 </span>
                 <span className="-mt-2 text-[10px] leading-none text-[var(--ink-3)]">

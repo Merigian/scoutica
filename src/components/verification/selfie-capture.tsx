@@ -185,7 +185,7 @@ export function SelfieCapture({ token, onSubmitted, onNoCamera }: SelfieCaptureP
       </div>
 
       {error && error !== "no-camera" && (
-        <p className="text-center text-meta text-red-600">{error}</p>
+        <p className="text-center text-meta text-[var(--danger)]">{error}</p>
       )}
 
       <div className="flex justify-center gap-3">

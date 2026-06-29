@@ -1,16 +1,34 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  TouchSensor,
+  KeyboardSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  rectSortingStrategy,
+  arrayMove,
+  useSortable,
+  sortableKeyboardCoordinates,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/shared/empty-state";
-import { deletePortfolioImage, setCoverImage } from "@/server/actions/portfolio";
+import { deletePortfolioImage, setCoverImage, reorderImages } from "@/server/actions/portfolio";
 import { ImageCropper } from "@/components/ui/image-cropper";
 import { uploadFileWithProgress } from "@/lib/upload-with-progress";
-import { Star, Trash2, Upload, Images } from "lucide-react";
+import { Star, Trash2, Upload, Images, GripVertical } from "lucide-react";
 
 interface PortfolioImage {
   id: string;
@@ -30,6 +48,43 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
   const [progress, setProgress] = useState(0);
   const [cropFile, setCropFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [items, setItems] = useState<PortfolioImage[]>(images);
+  const itemsRef = useRef(items);
+  itemsRef.current = items;
+
+  // Keep local order in sync when the server data changes (upload / delete / cover).
+  useEffect(() => {
+    setItems(images);
+  }, [images]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 150, tolerance: 8 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  );
+
+  const persistOrder = async (ordered: PortfolioImage[]) => {
+    const result = await reorderImages(ordered.map((i) => i.id));
+    if (!result.success) {
+      setError(result.error || t("reorderError"));
+      router.refresh();
+    }
+  };
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+    const current = itemsRef.current;
+    const cover = current.find((i) => i.isCover);
+    const rest = cover ? current.filter((i) => i.id !== cover.id) : current;
+    const oldIndex = rest.findIndex((i) => i.id === active.id);
+    const newIndex = rest.findIndex((i) => i.id === over.id);
+    if (oldIndex === -1 || newIndex === -1) return;
+    const newRest = arrayMove(rest, oldIndex, newIndex);
+    const next = cover ? [cover, ...newRest] : newRest;
+    setItems(next);
+    void persistOrder(next);
+  };
 
   const openPicker = () => {
     if (uploading || images.length >= maxPhotos) return;
@@ -90,7 +145,14 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
   };
 
   const handleSetCover = async (imageId: string) => {
+    // The cover is always pinned first, so promote the new cover to the front.
+    const next = [
+      ...itemsRef.current.filter((i) => i.id === imageId),
+      ...itemsRef.current.filter((i) => i.id !== imageId),
+    ].map((img) => ({ ...img, isCover: img.id === imageId }));
+    setItems(next);
     await setCoverImage(imageId);
+    await reorderImages(next.map((i) => i.id));
     router.refresh();
   };
 
@@ -149,6 +211,9 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
     );
   }
 
+  const cover = items.find((i) => i.isCover);
+  const rest = cover ? items.filter((i) => i.id !== cover.id) : items;
+
   return (
     <div className="space-y-6">
       {fileInput}
@@ -179,51 +244,31 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
           </div>
         </div>
       )}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-        {images.map((image) => (
-          <div
-            key={image.id}
-            className="group relative aspect-[3/4] overflow-hidden bg-[var(--bg-soft)]"
-          >
-            <Image
-              src={image.url}
-              alt={t("portfolioAlt")}
-              fill
-              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              quality={90}
-              className="object-cover"
-            />
-
-            {image.isCover && (
-              <div className="absolute top-2 left-2">
-                <Badge variant="default">
-                  <Star className="h-3 w-3 mr-1" />
-                  {t("cover")}
-                </Badge>
-              </div>
-            )}
-
-            <div className="absolute inset-0 bg-black/50 transition-opacity flex items-center justify-center gap-2 opacity-100 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100">
-              {!image.isCover && (
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  onClick={() => handleSetCover(image.id)}
-                >
-                  <Star className="h-4 w-4" />
-                </Button>
-              )}
-              <Button
-                size="sm"
-                variant="destructive"
-                onClick={() => handleDelete(image.id)}
-              >
-                <Trash2 className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        ))}
-      </div>
+      {rest.length > 1 && (
+        <p className="flex items-center gap-1.5 text-meta">
+          <GripVertical className="h-3.5 w-3.5" />
+          {t("reorderHint")}
+        </p>
+      )}
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {cover && <PortfolioCoverTile image={cover} onDelete={handleDelete} />}
+          <SortableContext items={rest.map((i) => i.id)} strategy={rectSortingStrategy}>
+            {rest.map((image) => (
+              <PortfolioTile
+                key={image.id}
+                image={image}
+                onSetCover={handleSetCover}
+                onDelete={handleDelete}
+              />
+            ))}
+          </SortableContext>
+        </div>
+      </DndContext>
 
       <ImageCropper
         file={cropFile}
@@ -232,6 +277,108 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
         aspectRatio={3 / 4}
         outputWidth={1600}
       />
+    </div>
+  );
+}
+
+function PortfolioTile({
+  image,
+  onSetCover,
+  onDelete,
+}: {
+  image: PortfolioImage;
+  onSetCover: (id: string) => void;
+  onDelete: (id: string) => void;
+}) {
+  const t = useTranslations("components.portfolio");
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: image.id,
+  });
+  const style: React.CSSProperties = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    zIndex: isDragging ? 30 : undefined,
+    opacity: isDragging ? 0.85 : 1,
+  };
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className="group relative aspect-[3/4] overflow-hidden bg-[var(--bg-soft)]"
+    >
+      <Image
+        src={image.url}
+        alt={t("portfolioAlt")}
+        fill
+        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+        quality={90}
+        draggable={false}
+        className="object-cover pointer-events-none select-none"
+      />
+
+      {image.isCover && (
+        <div className="absolute top-2 left-2 z-10">
+          <Badge variant="default">
+            <Star className="h-3 w-3 mr-1" />
+            {t("cover")}
+          </Badge>
+        </div>
+      )}
+
+      {/* Drag handle — only this initiates a reorder, so the tile stays tappable */}
+      <button
+        type="button"
+        {...attributes}
+        {...listeners}
+        aria-label={t("reorder")}
+        className="absolute top-2 right-2 z-20 flex h-8 w-8 touch-none items-center justify-center bg-[var(--bg)]/85 text-[var(--ink)] cursor-grab active:cursor-grabbing opacity-100 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100 transition-opacity"
+      >
+        <GripVertical className="h-4 w-4" />
+      </button>
+
+      <div className="absolute inset-0 z-10 bg-black/50 transition-opacity flex items-center justify-center gap-2 opacity-100 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100">
+        {!image.isCover && (
+          <Button size="sm" variant="secondary" onClick={() => onSetCover(image.id)}>
+            <Star className="h-4 w-4" />
+          </Button>
+        )}
+        <Button size="sm" variant="destructive" onClick={() => onDelete(image.id)}>
+          <Trash2 className="h-4 w-4" />
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+function PortfolioCoverTile({
+  image,
+  onDelete,
+}: {
+  image: PortfolioImage;
+  onDelete: (id: string) => void;
+}) {
+  const t = useTranslations("components.portfolio");
+  return (
+    <div className="group relative aspect-[3/4] overflow-hidden bg-[var(--bg-soft)]">
+      <Image
+        src={image.url}
+        alt={t("portfolioAlt")}
+        fill
+        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+        quality={90}
+        className="object-cover"
+      />
+      <div className="absolute top-2 left-2 z-10">
+        <Badge variant="default">
+          <Star className="h-3 w-3 mr-1" />
+          {t("cover")}
+        </Badge>
+      </div>
+      <div className="absolute inset-0 z-10 bg-black/50 transition-opacity flex items-center justify-center gap-2 opacity-100 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100">
+        <Button size="sm" variant="destructive" onClick={() => onDelete(image.id)}>
+          <Trash2 className="h-4 w-4" />
+        </Button>
+      </div>
     </div>
   );
 }

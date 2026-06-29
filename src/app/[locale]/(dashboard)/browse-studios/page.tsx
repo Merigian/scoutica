@@ -51,7 +51,7 @@ export default async function BrowseStudiosPage({
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">{t("title")}</h1>
+        <h1 className="text-h2">{t("title")}</h1>
         <p className="text-[var(--ink-3)] text-sm mt-1">{t("description")}</p>
       </div>
 

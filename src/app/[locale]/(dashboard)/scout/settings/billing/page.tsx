@@ -6,6 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle } from "lucide-react";
 import { BillingActions } from "@/components/settings/billing-actions";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 
 export default async function ScoutBillingPage({
   params,
@@ -58,36 +60,36 @@ export default async function ScoutBillingPage({
     currentPlan === "AGENCY" ? "Agency" : currentPlan === "SCOUT_PRO" ? "Scout Pro" : "Free";
 
   return (
-    <div className="space-y-6 max-w-2xl">
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">{t("title")}</h1>
-      </div>
+    <PageContainer>
+      <PageHeader title={t("title")} />
 
-      <Card className="border-[var(--accent)]/20">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            {t("currentPlan")}
-            <Badge variant={currentPlan === "FREE" ? "outline" : "default"}>{planLabel}</Badge>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {subscription?.currentPeriodEnd && currentPlan !== "FREE" && (
-            <p className="text-xs text-[var(--ink-3)]">
-              {subscription.cancelAtPeriodEnd ? "Cancellato il" : "Rinnovo il"}{" "}
-              {new Date(subscription.currentPeriodEnd).toLocaleDateString("it-IT")}
-            </p>
-          )}
-          <ul className="space-y-2">
-            {features.map((f, i) => (
-              <li key={i} className="flex items-center gap-2 text-sm">
-                <CheckCircle className="h-4 w-4 text-success shrink-0" />
-                {f}
-              </li>
-            ))}
-          </ul>
-          <BillingActions currentPlan={currentPlan} scoutSubtype={subtype} locale={locale} />
-        </CardContent>
-      </Card>
-    </div>
+      <div className="max-w-2xl">
+        <Card className="border-[var(--accent)]/20">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              {t("currentPlan")}
+              <Badge variant={currentPlan === "FREE" ? "outline" : "default"}>{planLabel}</Badge>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {subscription?.currentPeriodEnd && currentPlan !== "FREE" && (
+              <p className="text-xs text-[var(--ink-3)]">
+                {subscription.cancelAtPeriodEnd ? "Cancellato il" : "Rinnovo il"}{" "}
+                {new Date(subscription.currentPeriodEnd).toLocaleDateString("it-IT")}
+              </p>
+            )}
+            <ul className="space-y-2">
+              {features.map((f, i) => (
+                <li key={i} className="flex items-center gap-2 text-sm">
+                  <CheckCircle className="h-4 w-4 text-success shrink-0" />
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <BillingActions currentPlan={currentPlan} scoutSubtype={subtype} locale={locale} />
+          </CardContent>
+        </Card>
+      </div>
+    </PageContainer>
   );
 }

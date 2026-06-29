@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { User, Search, Camera, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 export function CinematicHero({ heroSrc }: { heroSrc: string }) {
   const t = useTranslations("landing");
@@ -17,42 +17,16 @@ export function CinematicHero({ heroSrc }: { heroSrc: string }) {
     target: ref,
     offset: ["start start", "end start"],
   });
-  // Cinematic parallax: image drifts down + scales, content lifts & fades.
+  // Cinematic parallax: image drifts + scales, content lifts & fades.
   const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "16%"]);
   const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-12%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
-
-  // The three entries double as the "what Scoutica offers" explainer — each
-  // lane routes a visitor to their register flow (model / scout / studio).
-  const lanes = [
-    {
-      href: "/register/model",
-      icon: User,
-      label: t("features.forModel"),
-      title: t("hero.ctaModel"),
-      desc: t("hero.ctaModelDesc"),
-    },
-    {
-      href: "/register/scout",
-      icon: Search,
-      label: t("features.forScout"),
-      title: t("hero.ctaScout"),
-      desc: t("hero.ctaScoutDesc"),
-    },
-    {
-      href: "/register/studio",
-      icon: Camera,
-      label: t("features.forStudio"),
-      title: t("hero.ctaStudio"),
-      desc: t("hero.ctaStudioDesc"),
-    },
-  ] as const;
 
   return (
     <section
       ref={ref}
-      id="per-chi-e"
+      id="top"
       className="relative w-full min-h-[100svh] overflow-hidden bg-[#0A0A0B]"
     >
       {/* Cinematic cover */}
@@ -68,103 +42,82 @@ export function CinematicHero({ heroSrc }: { heroSrc: string }) {
           unoptimized={isPngHero}
           quality={92}
           sizes="100vw"
-          className="object-cover object-[55%_30%] md:object-[51%_20%] lg:object-[52%_22%]"
+          className="object-cover object-[55%_28%] md:object-[51%_20%] lg:object-[52%_22%]"
         />
       </motion.div>
 
-      {/* Legibility scrim — keeps the model clear up top, darkens the tray. */}
+      {/* Legibility scrim */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-[5] bg-gradient-to-t from-black/90 via-black/40 to-transparent"
+        className="pointer-events-none absolute inset-0 z-[5] bg-gradient-to-t from-black/90 via-black/35 to-black/20"
       />
 
-      {/* Content rail — heading + the three entries, docked at the bottom. */}
+      {/* Statement + single primary CTA, docked at the bottom. */}
       <motion.div
         className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1440px] flex-col px-6 sm:px-10 lg:px-12"
         style={reduce ? undefined : { y: contentY, opacity: contentOpacity }}
       >
-        <div className="mt-auto pb-[clamp(2.5rem,7vh,5rem)] pt-[clamp(6rem,18vh,9rem)] sm:pt-0">
-          {/* Heading */}
-          <motion.div
-            className="max-w-[44rem]"
-            initial={reduce ? undefined : { opacity: 0, y: 16 }}
-            animate={reduce ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+        <div className="mt-auto pb-[clamp(3.5rem,10vh,7rem)] pt-[clamp(6rem,18vh,9rem)] sm:pt-0">
+          <motion.p
+            className="font-label text-[11px] uppercase tracking-[0.28em] text-white/65"
+            initial={reduce ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.15 }}
           >
-            <p className="font-label text-[11px] uppercase tracking-[0.22em] text-white/65">
-              {t("audience.eyebrow")}
-            </p>
-            <h1 className="mt-3 font-display text-[clamp(1.875rem,4.2vw,3rem)] font-light leading-[1.04] tracking-[-0.01em] text-white">
-              {t("audience.title")}
-            </h1>
-            <p className="mt-4 max-w-[46ch] text-base leading-relaxed text-white/70">
-              {t("audience.subtitle")}
-            </p>
-          </motion.div>
+            {t("cover.manifestoTop")}
+          </motion.p>
 
-          {/* Three entries */}
-          <motion.div
-            className="mt-9 grid grid-cols-1 gap-3 md:grid-cols-3 lg:gap-4"
-            initial={reduce ? undefined : { opacity: 0, y: 20 }}
-            animate={reduce ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.35 }}
+          <motion.h1
+            className="mt-5 max-w-[15ch] font-display font-light leading-[0.98] tracking-[-0.03em] text-white text-[clamp(2.75rem,8.5vw,7rem)]"
+            initial={reduce ? false : { opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.85, delay: 0.25 }}
           >
-            {lanes.map((lane) => {
-              const Icon = lane.icon;
-              return (
-                <Link
-                  key={lane.href}
-                  href={lane.href as never}
-                  className="group relative flex h-full flex-col overflow-hidden border border-white/12 bg-white/[0.05] p-4 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] hover:border-white/30 hover:bg-white/[0.1] hover:shadow-[0_24px_70px_-24px_rgba(0,0,0,0.75)] motion-safe:hover:-translate-y-1.5 md:p-6 lg:p-7"
-                >
-                  {/* Hover sheen along the top edge */}
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/55 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                  />
+            {t("cover.manifestoBottom")}
+          </motion.h1>
 
-                  {/* Icon chip + top-right arrow — tablet / desktop only */}
-                  <div className="mb-8 hidden items-start justify-between md:flex">
-                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/[0.06] text-white transition-colors duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:border-transparent group-hover:bg-white group-hover:text-[#0A0A0B]">
-                      <Icon className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
-                    </span>
-                    <ArrowUpRight
-                      className="h-5 w-5 text-white/35 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
-                      aria-hidden="true"
-                    />
-                  </div>
+          <motion.p
+            className="mt-6 max-w-[46ch] text-[clamp(1rem,1.6vw,1.2rem)] leading-relaxed text-white/72"
+            initial={reduce ? false : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            {t("hero.subtitle")}
+          </motion.p>
 
-                  {/* Label + title (+ description on desktop); compact arrow on mobile */}
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="flex min-w-0 flex-col gap-1 md:gap-2">
-                      <p className="font-label text-[10px] uppercase tracking-[0.22em] text-white/50">
-                        {lane.label}
-                      </p>
-                      <h2 className="font-display text-lg leading-tight text-white md:text-xl md:leading-[1.15] lg:text-2xl lg:leading-[1.1]">
-                        {lane.title}
-                      </h2>
-                      <p className="mt-1 hidden text-sm leading-relaxed text-white/65 md:block">
-                        {lane.desc}
-                      </p>
-                    </div>
-                    <ArrowUpRight
-                      className="h-5 w-5 shrink-0 text-white/45 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 md:hidden"
-                      aria-hidden="true"
-                    />
-                  </div>
-
-                  {/* Discover CTA — tablet / desktop only */}
-                  <span className="mt-auto hidden items-center gap-3 pt-6 font-label text-[11px] uppercase tracking-[0.18em] text-white/80 transition-colors duration-300 group-hover:text-white md:inline-flex lg:pt-7">
-                    {t("audience.discover")}
-                    <span
-                      aria-hidden="true"
-                      className="h-px w-6 bg-white/40 transition-all duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:w-10 group-hover:bg-white"
-                    />
-                  </span>
-                </Link>
-              );
-            })}
+          <motion.div
+            className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4"
+            initial={reduce ? false : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
+            <Link
+              href="/register"
+              className="group inline-flex items-center gap-3 bg-white px-7 py-4 font-label text-[12px] uppercase tracking-[0.2em] text-black transition-colors duration-300 hover:bg-white/[0.88]"
+            >
+              {t("cta.button")}
+              <ArrowUpRight className="h-4 w-4 group-arrow" aria-hidden="true" />
+            </Link>
+            <a
+              href="#per-chi-e"
+              className="group inline-flex items-center py-2 font-label text-[12px] uppercase tracking-[0.18em] text-white/85 transition-colors duration-300 hover:text-white"
+            >
+              <span className="link-underline">{t("audience.discover")}</span>
+            </a>
           </motion.div>
+        </div>
+
+        {/* Scroll cue */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-5 hidden justify-center sm:flex">
+          <motion.span
+            aria-hidden="true"
+            className="h-10 w-px bg-white/40"
+            style={{ transformOrigin: "top" }}
+            animate={
+              reduce ? undefined : { scaleY: [0.35, 1, 0.35], opacity: [0.3, 0.7, 0.3] }
+            }
+            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+          />
         </div>
       </motion.div>
     </section>

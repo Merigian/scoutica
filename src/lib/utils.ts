@@ -73,3 +73,20 @@ export function getInitials(name: string): string {
     .toUpperCase()
     .slice(0, 2);
 }
+
+/**
+ * Public display name for a model: first name + surname initial
+ * ("Matteo Rossi" -> "Matteo R."). Protects the surname on public surfaces
+ * (cards, public profile, chat). Returns null for empty input so callers can
+ * fall back to a placeholder; single-word names are returned unchanged.
+ */
+export function toPublicModelName(
+  fullName: string | null | undefined
+): string | null {
+  if (!fullName) return null;
+  const parts = fullName.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return null;
+  if (parts.length === 1) return parts[0];
+  const initial = parts[1].charAt(0).toUpperCase();
+  return `${parts[0]} ${initial}.`;
+}

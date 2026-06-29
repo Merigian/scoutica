@@ -240,7 +240,7 @@ export function StudioEditForm({ studio }: StudioEditFormProps) {
                   onChange={() => toggleAmenity(amenity.key)}
                   className="sr-only"
                 />
-                <span className={`h-4 w-4 rounded border flex items-center justify-center text-[10px] ${
+                <span className={`h-4 w-4 border flex items-center justify-center text-[10px] ${
                   amenities.includes(amenity.key) ? "bg-[var(--ink)] border-[var(--ink)] text-[var(--bg-elevated)]" : "border-[var(--ink-3)]/30"
                 }`}>
                   {amenities.includes(amenity.key) && "✓"}

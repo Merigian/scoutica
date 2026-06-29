@@ -2,6 +2,8 @@ import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { VerificationForm } from "@/components/forms/verification-form";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 import { getTranslations } from "next-intl/server";
 
 export default async function VerificationPage() {
@@ -17,28 +19,24 @@ export default async function VerificationPage() {
   if (!profile) redirect("/login");
 
   return (
-    <div className="mx-auto max-w-2xl space-y-8 animate-fade-in">
-      <div>
-        <h1 className="text-h2">{t("title")}</h1>
-        <p className="mt-1 text-[var(--ink-3)]">
-          {t("description")}
-        </p>
+    <PageContainer>
+      <PageHeader title={t("title")} description={t("description")} />
+      <div className="max-w-2xl">
+        <VerificationForm
+          profile={{
+            fullName: profile.user?.name ?? "",
+            businessName: profile.businessName ?? "",
+            roleTitle: profile.roleTitle,
+            city: profile.city ?? "",
+            professionalEmail: profile.professionalEmail ?? "",
+            websiteUrl: profile.websiteUrl,
+            socialProfileUrl: profile.socialProfileUrl,
+            vatNumber: profile.vatNumber,
+          }}
+          status={profile.verificationStatus}
+          notes={profile.verificationNotes}
+        />
       </div>
-
-      <VerificationForm
-        profile={{
-          fullName: profile.user?.name ?? "",
-          businessName: profile.businessName ?? "",
-          roleTitle: profile.roleTitle,
-          city: profile.city ?? "",
-          professionalEmail: profile.professionalEmail ?? "",
-          websiteUrl: profile.websiteUrl,
-          socialProfileUrl: profile.socialProfileUrl,
-          vatNumber: profile.vatNumber,
-        }}
-        status={profile.verificationStatus}
-        notes={profile.verificationNotes}
-      />
-    </div>
+    </PageContainer>
   );
 }

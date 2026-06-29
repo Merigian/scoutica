@@ -10,6 +10,8 @@ import { EmptyState } from "@/components/shared/empty-state";
 import { JOB_STATUS_LABELS, JOB_TYPE_LABELS } from "@/config/enums";
 import { formatDate } from "@/lib/utils";
 import { Plus, Calendar, MapPin, Users, Briefcase, Tag } from "lucide-react";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 
 export default async function ScoutLavoriPage() {
   const session = await auth();
@@ -42,23 +44,19 @@ export default async function ScoutLavoriPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-[var(--font-display)] font-bold">
-            {t("title")}
-          </h1>
-          <p className="text-[var(--ink-3)] text-sm mt-1">
-            {t("description")}
-          </p>
-        </div>
-        <Link href={`/${locale}/scout/lavori/new`}>
-          <Button size="sm">
-            <Plus className="h-4 w-4 mr-1" />
-            {t("newJob")}
-          </Button>
-        </Link>
-      </div>
+    <PageContainer>
+      <PageHeader
+        title={t("title")}
+        description={t("description")}
+        actions={
+          <Link href={`/${locale}/scout/lavori/new`}>
+            <Button size="sm">
+              <Plus className="h-4 w-4 mr-1" />
+              {t("newJob")}
+            </Button>
+          </Link>
+        }
+      />
 
       {jobs.length > 0 ? (
         <div className="grid gap-4">
@@ -116,6 +114,6 @@ export default async function ScoutLavoriPage() {
           actionHref={`/${locale}/scout/lavori/new`}
         />
       )}
-    </div>
+    </PageContainer>
   );
 }

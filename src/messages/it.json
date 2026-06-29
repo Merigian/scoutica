@@ -1177,7 +1177,19 @@
         "paymentCanceled": "Pagamento annullato",
         "currentPlan": "Piano attuale",
         "nextRenewal": "Prossimo rinnovo: {date}",
-        "expiresOn": "Scade il {date}"
+        "expiresOn": "Scade il {date}",
+        "subtitle": "Il tuo piano e la visibilità del tuo profilo.",
+        "planName": "Free — Tutto incluso",
+        "planTagline": "Tutte le funzionalità sono gratuite durante la fase di lancio.",
+        "features": [
+          "12 foto nel portfolio",
+          "Upload video e PDF book",
+          "Contatti illimitati",
+          "Filtri avanzati",
+          "Tutto incluso gratuitamente"
+        ],
+        "visibility": "Visibilità",
+        "boostHeading": "Boost"
       },
       "castingDetail": {
         "backToCastings": "Torna ai casting",
@@ -2191,6 +2203,9 @@
       "vsLastMonth": "vs mese scorso",
       "flat": "Invariato"
     },
+    "verifiedBadge": {
+      "label": "Verificato"
+    },
     "readOnlyBanner": {
       "title": "Stai navigando in modalità lettura",
       "description": "Verifica il tuo account per contattare le modelle, creare casting e annunci di lavoro.",
@@ -2688,7 +2703,18 @@
       "phone": "Telefono",
       "additionalNotes": "Note aggiuntive",
       "notesPlaceholder": "Descrivi brevemente il tuo progetto...",
-      "submit": "Prenota"
+      "submit": "Prenota",
+      "timeSlots": "Fasce orarie",
+      "timeSlotsHint": "Aggiungi una o più fasce orarie, anche su giorni diversi (es. 08:00–09:00 e 13:00–15:00).",
+      "date": "Data",
+      "from": "Dalle",
+      "to": "Alle",
+      "addSlot": "Aggiungi",
+      "removeSlot": "Rimuovi fascia",
+      "noSlotsYet": "Nessuna fascia aggiunta. Scegli un orario e premi Aggiungi.",
+      "slot": "fascia",
+      "slotsLabel": "fasce",
+      "errorEndAfterStart": "L'orario di fine deve essere successivo all'inizio."
     },
     "studioInquiry": {
       "errorRequired": "Compila i campi obbligatori",
@@ -2776,7 +2802,10 @@
       "formatError": "Formato non supportato. Usa JPG, PNG o WebP.",
       "sizeError": "Il file è troppo grande. Massimo 10MB.",
       "uploadError": "Errore durante il caricamento",
-      "uploading": "Caricamento…"
+      "uploading": "Caricamento…",
+      "reorder": "Trascina per riordinare",
+      "reorderHint": "Trascina le foto dalla maniglia per cambiarne l'ordine.",
+      "reorderError": "Impossibile riordinare le foto. Riprova."
     },
     "profilePhotos": {
       "formatError": "Formato non supportato. Usa JPG, PNG o WebP.",

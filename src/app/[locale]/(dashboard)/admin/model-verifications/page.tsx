@@ -6,6 +6,8 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/shared/empty-state";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 import { ModelVerificationActions } from "@/components/admin/model-verification-actions";
 import { formatRelativeTime } from "@/lib/utils";
 import { ShieldCheck, ExternalLink } from "lucide-react";
@@ -30,15 +32,15 @@ export default async function AdminModelVerificationsPage() {
   });
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">{t("title")}</h1>
-        <p className="text-[var(--ink-3)] text-sm mt-1">
+    <PageContainer>
+      <PageHeader title={t("title")} />
+
+      <div className="space-y-6">
+        <p className="text-[var(--ink-3)] text-sm">
           {pending.length} {t("requestsToReview")}
         </p>
-      </div>
 
-      {pending.length > 0 ? (
+        {pending.length > 0 ? (
         <div className="space-y-4">
           {pending.map((profile) => {
             const profileHref = `/${locale}/profile/${profile.slug}`;
@@ -128,6 +130,7 @@ export default async function AdminModelVerificationsPage() {
           description={t("noVerificationsDesc")}
         />
       )}
-    </div>
+      </div>
+    </PageContainer>
   );
 }

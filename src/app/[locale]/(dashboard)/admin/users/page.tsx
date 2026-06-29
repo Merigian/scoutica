@@ -5,6 +5,8 @@ import { redirect } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar } from "@/components/ui/avatar";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 import { formatRelativeTime } from "@/lib/utils";
 
 export default async function AdminUsersPage() {
@@ -32,17 +34,15 @@ export default async function AdminUsersPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">
-          {t("title")}
-        </h1>
-        <p className="text-[var(--ink-3)] text-sm mt-1">
+    <PageContainer>
+      <PageHeader title={t("title")} />
+
+      <div className="space-y-6">
+        <p className="text-[var(--ink-3)] text-sm">
           {users.length} {t("usersLatest")}
         </p>
-      </div>
 
-      <div className="divide-y divide-border  border">
+        <div className="divide-y divide-border  border">
         {users.map((user) => (
           <div key={user.id} className="flex items-center gap-3 p-3">
             <Avatar name={user.name ?? user.email} src={user.image ?? undefined} size="sm" />
@@ -75,6 +75,7 @@ export default async function AdminUsersPage() {
           </div>
         ))}
       </div>
-    </div>
+      </div>
+    </PageContainer>
   );
 }

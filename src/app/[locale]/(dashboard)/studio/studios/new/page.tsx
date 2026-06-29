@@ -21,6 +21,8 @@ import {
   type WeeklyAvailability,
 } from "@/lib/studio-availability";
 import type { StudioType } from "@prisma/client";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 
 const STUDIO_TYPES = Object.keys(STUDIO_TYPE_LABELS) as StudioType[];
 
@@ -109,15 +111,10 @@ export default function NewStudioPage() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">{t("title")}</h1>
-        <p className="text-[var(--ink-3)] text-sm mt-1">
-          {t("subtitle")}
-        </p>
-      </div>
-
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <PageContainer>
+      <PageHeader title={t("title")} description={t("subtitle")} />
+      <div className="max-w-3xl">
+        <form onSubmit={handleSubmit} className="space-y-6">
         {error && (
           <div className=" bg-[var(--accent)]/10 border border-[var(--accent)]/20 px-4 py-3 text-sm text-[var(--accent)]">
             {error}
@@ -288,7 +285,7 @@ export default function NewStudioPage() {
                     onChange={() => toggleAmenity(amenity.key)}
                     className="sr-only"
                   />
-                  <span className={`h-4 w-4 rounded border flex items-center justify-center text-[10px] ${
+                  <span className={`h-4 w-4 border flex items-center justify-center text-[10px] ${
                     amenities.includes(amenity.key) ? "bg-[var(--ink)] border-[var(--ink)] text-[var(--bg-elevated)]" : "border-[var(--ink-3)]/30"
                   }`}>
                     {amenities.includes(amenity.key) && "✓"}
@@ -409,7 +406,8 @@ export default function NewStudioPage() {
             {t("submit")}
           </Button>
         </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    </PageContainer>
   );
 }

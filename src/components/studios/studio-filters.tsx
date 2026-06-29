@@ -70,7 +70,7 @@ export function StudioFilters({
         <select
           value={region}
           onChange={(e) => setRegion(e.target.value)}
-          className="h-9 rounded-md border border-[var(--rule)] bg-[var(--bg)] px-3 text-sm text-[var(--ink)] focus:outline-none focus:ring-2 focus:ring-ring"
+          className="h-9 border border-[var(--rule)] bg-[var(--bg)] px-3 text-sm text-[var(--ink)] focus:outline-none focus:border-[var(--ink)]"
         >
           <option value="">{t("allRegions")}</option>
           {regions.map((r) => (
@@ -80,7 +80,7 @@ export function StudioFilters({
         <select
           value={type}
           onChange={(e) => setType(e.target.value)}
-          className="h-9 rounded-md border border-[var(--rule)] bg-[var(--bg)] px-3 text-sm text-[var(--ink)] focus:outline-none focus:ring-2 focus:ring-ring"
+          className="h-9 border border-[var(--rule)] bg-[var(--bg)] px-3 text-sm text-[var(--ink)] focus:outline-none focus:border-[var(--ink)]"
         >
           <option value="">{t("allTypes")}</option>
           {studioTypes.map((t) => (
@@ -91,7 +91,7 @@ export function StudioFilters({
           value={sort}
           onChange={(e) => setSort(e.target.value)}
           aria-label={t("sortLabel")}
-          className="h-9 rounded-md border border-[var(--rule)] bg-[var(--bg)] px-3 text-sm text-[var(--ink)] focus:outline-none focus:ring-2 focus:ring-ring"
+          className="h-9 border border-[var(--rule)] bg-[var(--bg)] px-3 text-sm text-[var(--ink)] focus:outline-none focus:border-[var(--ink)]"
         >
           <option value="newest">{t("sortNewest")}</option>
           <option value="priceAsc">{t("sortPriceAsc")}</option>

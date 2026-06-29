@@ -11,6 +11,8 @@ import { formatRelativeTime } from "@/lib/utils";
 import { JobApplicationActions } from "@/components/jobs/job-application-actions";
 import { Users } from "lucide-react";
 import { BackLink } from "@/components/shared/back-link";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 
 export default async function JobApplicationsPage({
   params,
@@ -59,22 +61,24 @@ export default async function JobApplicationsPage({
   };
 
   return (
-    <div className="space-y-6">
+    <PageContainer>
       <BackLink href="/scout/lavori" label={t("backToJobs")} />
 
-      <div>
-        <div className="flex items-center gap-2 mb-1">
-          <h1 className="text-2xl font-[var(--font-display)] font-bold">{job.title}</h1>
-          <Badge variant="outline" className="text-[10px]">
-            {JOB_TYPE_LABELS[job.jobType as keyof typeof JOB_TYPE_LABELS]?.[lang] ?? job.jobType}
-          </Badge>
-        </div>
-        <p className="text-[var(--ink-3)] text-sm">
-          {job.applications.length} {t("applicationsReceived")}
-        </p>
-      </div>
+      <PageHeader title={job.title} />
 
-      {job.applications.length > 0 ? (
+      <div className="space-y-6">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <Badge variant="outline" className="text-[10px]">
+              {JOB_TYPE_LABELS[job.jobType as keyof typeof JOB_TYPE_LABELS]?.[lang] ?? job.jobType}
+            </Badge>
+          </div>
+          <p className="text-[var(--ink-3)] text-sm">
+            {job.applications.length} {t("applicationsReceived")}
+          </p>
+        </div>
+
+        {job.applications.length > 0 ? (
         <div className="space-y-3">
           {job.applications.map((app) => {
             const coverImage = app.modelProfile.portfolioImages[0]?.url;
@@ -130,6 +134,7 @@ export default async function JobApplicationsPage({
           description={t("noApplicationsDesc")}
         />
       )}
-    </div>
+      </div>
+    </PageContainer>
   );
 }

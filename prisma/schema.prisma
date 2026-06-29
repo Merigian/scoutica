@@ -1018,6 +1018,10 @@ model StudioBooking {
   totalDays  Int
   totalPrice Float?
 
+  // Optional per-day time ranges, e.g. [{ "date":"2026-07-01","startTime":"08:00","endTime":"09:00" }, ...].
+  // When present the booking covers exactly these slots; startTime/endTime keep the first slot for back-compat.
+  slots Json?
+
   status BookingStatus @default(PENDING)
 
   createdAt DateTime @default(now())

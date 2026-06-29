@@ -192,7 +192,7 @@ export function Calendar({
                   "cursor-not-allowed opacity-30",
                 // Unavailable (blocked/booked)
                 unavailable &&
-                  "bg-destructive/8 text-destructive/60 line-through cursor-not-allowed",
+                  "bg-[var(--bg-soft)] text-[var(--ink-3)]/50 line-through cursor-not-allowed",
                 // Selected range middle
                 selected &&
                   !rangeStartDay &&

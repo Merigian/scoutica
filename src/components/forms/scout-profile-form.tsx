@@ -92,7 +92,7 @@ export function ScoutProfileForm({ profile }: ScoutProfileFormProps) {
           </span>
         )}
         {saveStatus === "saved" && (
-          <span className="flex items-center gap-1.5 text-xs text-green-600">
+          <span className="flex items-center gap-1.5 text-xs text-[var(--success)]">
             <Check className="h-3 w-3" /> Salvato
           </span>
         )}

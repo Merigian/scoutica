@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { CastingForm } from "@/components/forms/casting-form";
 import { BackLink } from "@/components/shared/back-link";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 
 export default async function EditCastingPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -42,14 +44,12 @@ export default async function EditCastingPage({ params }: { params: Promise<{ id
   };
 
   return (
-    <div className="space-y-6 max-w-3xl">
+    <PageContainer>
       <BackLink href="/scout/castings" label="← Castings" />
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">
-          {t("editTitle")}
-        </h1>
+      <PageHeader title={t("editTitle")} />
+      <div className="max-w-3xl">
+        <CastingForm locale={locale} initialData={initialData} />
       </div>
-      <CastingForm locale={locale} initialData={initialData} />
-    </div>
+    </PageContainer>
   );
 }

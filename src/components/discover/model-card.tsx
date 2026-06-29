@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useRef } from "react";
+import { useState, useTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -26,7 +26,6 @@ import type {
 import { calculateAge, formatRelativeTime, formatDate } from "@/lib/utils";
 import {
   MapPin,
-  ShieldCheck,
   User,
   ChevronLeft,
   ChevronRight,
@@ -63,9 +62,7 @@ interface ProfileImageProps {
   alt: string;
   sizes: string;
   isBoosted: boolean;
-  isVerified: boolean;
   featuredLabel: string;
-  verifiedLabel: string;
   showGradient: boolean;
 }
 
@@ -74,14 +71,11 @@ function ProfileImage({
   alt,
   sizes,
   isBoosted,
-  isVerified,
   featuredLabel,
-  verifiedLabel,
   showGradient,
 }: ProfileImageProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const hasMultiple = images.length > 1;
-  const touchStartX = useRef<number | null>(null);
 
   const step = (dir: "prev" | "next") => {
     setCurrentIndex((prev) =>
@@ -97,20 +91,8 @@ function ProfileImage({
     step(dir);
   };
 
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0]?.clientX ?? null;
-  };
-
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null || !hasMultiple) return;
-    const dx = (e.changedTouches[0]?.clientX ?? touchStartX.current) - touchStartX.current;
-    touchStartX.current = null;
-    if (Math.abs(dx) < 40) return;
-    step(dx < 0 ? "next" : "prev");
-  };
-
   return (
-    <div className="absolute inset-0" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+    <div className="absolute inset-0">
       {images.length > 0 ? (
         <Image
           src={images[currentIndex]}
@@ -132,7 +114,7 @@ function ProfileImage({
             type="button"
             aria-label="Previous photo"
             onClick={(e) => go(e, "prev")}
-            className="nav-zone absolute inset-y-0 left-0 z-10 hidden w-1/3 items-center justify-start pl-3 [@media(hover:hover)]:flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/90 focus-visible:ring-inset"
+            className="nav-zone absolute inset-y-0 left-0 z-10 flex w-1/3 items-center justify-start pl-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/90 focus-visible:ring-inset"
           >
             <ChevronLeft className="nav-arrow h-7 w-7 text-white" strokeWidth={1.5} />
           </button>
@@ -141,7 +123,7 @@ function ProfileImage({
             type="button"
             aria-label="Next photo"
             onClick={(e) => go(e, "next")}
-            className="nav-zone absolute inset-y-0 right-0 z-10 hidden w-1/3 items-center justify-end pr-3 [@media(hover:hover)]:flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/90 focus-visible:ring-inset"
+            className="nav-zone absolute inset-y-0 right-0 z-10 flex w-1/3 items-center justify-end pr-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/90 focus-visible:ring-inset"
           >
             <ChevronRight className="nav-arrow h-7 w-7 text-white" strokeWidth={1.5} />
           </button>
@@ -161,17 +143,11 @@ function ProfileImage({
         </>
       )}
 
-      {(isBoosted || isVerified) && (
+      {isBoosted && (
         <div className="absolute left-2 top-2 z-10 flex flex-col items-start gap-1">
-          {isBoosted && (
-            <Badge variant="default" className="gap-1 text-[10px]">
-              <ShieldCheck className="h-3 w-3" />
-              {featuredLabel}
-            </Badge>
-          )}
-          {isVerified && (
-            <VerifiedBadge size={20} variant="static" aria-label={verifiedLabel} />
-          )}
+          <span className="inline-flex items-center border border-white/25 bg-black/35 px-2 py-1 text-[10px] uppercase tracking-[0.18em] text-white backdrop-blur-sm">
+            {featuredLabel}
+          </span>
         </div>
       )}
 
@@ -391,6 +367,18 @@ export function ModelCard({
   const verifiedLabel = t("featured");
   const verifiedRealLabel = t("verified");
   const name = profile.fullName || t("unnamed");
+  const gridMeta = [
+    age !== null ? String(age) : null,
+    profile.city,
+    profile.height !== null ? `${profile.height} cm` : null,
+  ]
+    .filter(Boolean)
+    .join(" \u00b7 ");
+  const primaryCategory = profile.categories?.[0] ?? null;
+  const primaryCategoryLabel = primaryCategory
+    ? MODEL_CATEGORY_LABELS[primaryCategory as keyof typeof MODEL_CATEGORY_LABELS]?.[lang] ??
+      primaryCategory
+    : null;
   const statusLabel = profile.professionalStatus
     ? PROFESSIONAL_STATUS_LABELS[profile.professionalStatus as ProfessionalStatus]?.[lang]
     : null;
@@ -430,9 +418,7 @@ export function ModelCard({
               alt={name}
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 18rem, (max-width: 1280px) 20rem, 24rem"
               isBoosted={profile.isBoosted}
-              isVerified={profile.isVerified}
               featuredLabel={verifiedLabel}
-              verifiedLabel={verifiedRealLabel}
               showGradient={false}
             />
           </div>
@@ -441,7 +427,16 @@ export function ModelCard({
             <header className="flex flex-col gap-2">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-4 gap-y-1">
-                  <h3 className="text-agency text-[1.375rem] text-[var(--ink)]">{name}</h3>
+                  <h3 className="flex items-center gap-2 font-display text-[1.5rem] font-medium tracking-[-0.01em] text-[var(--ink)]">
+                    {name}
+                    {profile.isVerified && (
+                      <VerifiedBadge
+                        size={18}
+                        className="shrink-0 text-[var(--ink-2)]"
+                        aria-label={verifiedRealLabel}
+                      />
+                    )}
+                  </h3>
                   {age !== null && (
                     <span
                       className="text-mono-num text-2xl text-[var(--ink-2)]"
@@ -642,10 +637,10 @@ export function ModelCard({
 
   return (
     <Link href={`/${locale}/profile/${profile.slug}`}>
-      <Card className="group relative overflow-hidden border-transparent bg-transparent transition-colors duration-200 hover:bg-[var(--bg-soft)]">
+      <Card className="group relative border-transparent bg-transparent transition-colors duration-200 hover:bg-[var(--bg-soft)]">
         <div
           className={cn(
-            "relative overflow-hidden bg-[var(--bg-soft)]",
+            "relative overflow-hidden border border-[var(--rule)] bg-[var(--bg-soft)] transition-colors duration-200 group-hover:border-[var(--rule-strong)]",
             aspectVariant === "square" && "aspect-square",
             aspectVariant === "tall" && "aspect-[4/5]",
             aspectVariant === "portrait" && "aspect-[3/4]",
@@ -656,9 +651,7 @@ export function ModelCard({
             alt={name}
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             isBoosted={profile.isBoosted}
-            isVerified={profile.isVerified}
             featuredLabel={verifiedLabel}
-            verifiedLabel={verifiedRealLabel}
             showGradient
           />
           {showSave && (
@@ -671,44 +664,32 @@ export function ModelCard({
           )}
           <span
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-[2px] origin-left scale-x-0 bg-[var(--accent)] transition-transform duration-300 group-hover:scale-x-100"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-[2px] origin-left scale-x-0 bg-white transition-transform duration-300 group-hover:scale-x-100"
           />
         </div>
 
-        <div className="space-y-1 p-3">
-          <div className="flex items-center justify-between gap-2">
-            <h3 className="truncate text-agency text-sm text-[var(--ink)]">{name}</h3>
-            {age !== null && (
-              <span
-                className="text-meta text-[var(--ink-2)]"
-                suppressHydrationWarning
-              >
-                {age}
-              </span>
+        <div className="space-y-1.5 px-1 pt-3">
+          <div className="flex min-w-0 items-center gap-1.5">
+            <h3 className="truncate font-display text-[1.0625rem] font-medium leading-snug tracking-[-0.01em] text-[var(--ink)]">
+              {name}
+            </h3>
+            {profile.isVerified && (
+              <VerifiedBadge
+                size={15}
+                className="shrink-0 text-[var(--ink-2)]"
+                aria-label={verifiedRealLabel}
+              />
             )}
           </div>
 
-          {(profile.city || profile.height !== null) && (
-            <div className="flex items-center gap-1.5 text-xs text-[var(--ink-3)]">
-              {profile.city && (
-                <span className="truncate">{profile.city}</span>
-              )}
-              {profile.city && profile.height !== null && <span aria-hidden>·</span>}
-              {profile.height !== null && (
-                <span className="text-meta">{profile.height} cm</span>
-              )}
-            </div>
+          {gridMeta && (
+            <p className="text-meta text-[var(--ink-3)]" suppressHydrationWarning>
+              {gridMeta}
+            </p>
           )}
 
-          {profile.categories && profile.categories.length > 0 && (
-            <div className="flex gap-1 overflow-hidden pt-1">
-              {profile.categories.slice(0, 2).map((cat) => (
-                <Badge key={cat} variant="outline" className="px-1.5 py-0 text-[9px]">
-                  {MODEL_CATEGORY_LABELS[cat as keyof typeof MODEL_CATEGORY_LABELS]?.[lang] ||
-                    cat}
-                </Badge>
-              ))}
-            </div>
+          {primaryCategoryLabel && (
+            <p className="truncate text-eyebrow">{primaryCategoryLabel}</p>
           )}
         </div>
       </Card>

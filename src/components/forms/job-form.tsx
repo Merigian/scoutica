@@ -219,7 +219,7 @@ export function JobForm({ locale, initialData }: JobFormProps) {
               type="checkbox"
               id="isPaid"
               {...register("isPaid")}
-              className="h-4 w-4 rounded border-[var(--rule)] text-[var(--ink)] focus:ring-[var(--ink)]"
+              className="h-4 w-4 border-[var(--rule)] accent-[var(--ink)] focus:ring-[var(--ink)]"
             />
             <Label htmlFor="isPaid" className="cursor-pointer">
               {t("paidJob")}

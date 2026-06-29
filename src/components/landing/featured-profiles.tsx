@@ -43,7 +43,7 @@ export async function FeaturedProfiles() {
           {cast.map((p) => (
             <div
               key={p.id}
-              className="w-[260px] sm:w-[300px] lg:w-[340px] shrink-0"
+              className="w-[280px] sm:w-[320px] lg:w-[360px] shrink-0"
             >
               <ModelCard
                 profile={p}

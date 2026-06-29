@@ -6,6 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle } from "lucide-react";
 import { StudioBillingActions } from "@/components/settings/studio-billing-actions";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 
 export default async function StudioBillingPage() {
   const session = await auth();
@@ -38,12 +40,11 @@ export default async function StudioBillingPage() {
   const planLabel = currentPlan === "STUDIO" ? "Studio Pro" : "Free";
 
   return (
-    <div className="space-y-6 max-w-2xl">
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">{t("title")}</h1>
-      </div>
+    <PageContainer>
+      <PageHeader title={t("title")} />
 
-      <Card className="border-[var(--accent)]/20">
+      <div className="max-w-2xl">
+        <Card className="border-[var(--accent)]/20">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             {t("currentPlan")}
@@ -67,7 +68,8 @@ export default async function StudioBillingPage() {
           </ul>
           <StudioBillingActions currentPlan={currentPlan} />
         </CardContent>
-      </Card>
-    </div>
+        </Card>
+      </div>
+    </PageContainer>
   );
 }

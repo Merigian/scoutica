@@ -1,0 +1,26 @@
+{
+  "name": "scoutica-promo-video",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Remotion video project for Scoutica promo reels — isolated from the Next.js app.",
+  "scripts": {
+    "dev": "remotion studio",
+    "studio": "remotion studio",
+    "render": "remotion render Reel out/scoutica-reel.mp4",
+    "render:promo": "remotion render Promo out/scoutica-promo.mp4",
+    "still": "remotion still Reel out/still.png --frame=60",
+    "upgrade": "remotion upgrade"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.482",
+    "@remotion/google-fonts": "^4.0.482",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "remotion": "^4.0.482"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3"
+  }
+}

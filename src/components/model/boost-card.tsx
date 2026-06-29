@@ -2,9 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Zap, CheckCircle } from "lucide-react";
 import { createBoostCheckout } from "@/server/actions/stripe";
 import { formatDate } from "@/lib/utils";
@@ -35,40 +33,40 @@ export function BoostCard({ activeBoosts, locale }: BoostCardProps) {
     }
   };
 
+  const isActive = activeBoosts.length > 0;
+
   return (
-    <Card className="border-[var(--accent)]/30">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Zap className="h-5 w-5 text-[var(--ink)]" />
-          {t("title")}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <p className="text-sm text-[var(--ink-3)]">{t("description")}</p>
+    <div className="hairline bg-[var(--bg-elevated)] p-6 lg:p-7">
+      <div className="flex items-center gap-2.5">
+        <Zap className="h-5 w-5 text-[var(--ink)]" />
+        <h3 className="text-h3">{t("title")}</h3>
+      </div>
+      <p className="mt-3 text-body text-[var(--ink-2)] max-w-[44ch]">{t("description")}</p>
 
-        {activeBoosts.length > 0 && (
-          <div className="flex items-center gap-2">
-            <Badge variant="default" className="gap-1">
-              <CheckCircle className="h-3 w-3" />
-              {t("active")}
-            </Badge>
-            {latestEnd && (
-              <span className="text-sm text-[var(--ink-3)]">
-                {t("activeUntil")} {formatDate(latestEnd, locale)}
-              </span>
-            )}
-          </div>
-        )}
+      {isActive && (
+        <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2">
+          <span className="inline-flex items-center gap-1.5 hairline border-[var(--ink)] px-2.5 py-1 font-label text-[11px] uppercase tracking-[0.14em] text-[var(--ink)]">
+            <CheckCircle className="h-3 w-3" />
+            {t("active")}
+          </span>
+          {latestEnd && (
+            <span className="text-meta">
+              {t("activeUntil")} {formatDate(latestEnd, locale)}
+            </span>
+          )}
+        </div>
+      )}
 
+      <div className="mt-6">
         {canBuyMore ? (
-          <Button variant="default" isLoading={loading} onClick={handleBuyBoost}>
-            <Zap className="h-4 w-4 mr-1" />
+          <Button variant="default" isLoading={loading} onClick={handleBuyBoost} className="group">
+            <Zap className="h-4 w-4 mr-1.5" />
             {t("button")} — {t("price")}
           </Button>
         ) : (
-          <p className="text-sm text-[var(--ink-3)]">{t("maxReached")}</p>
+          <p className="text-meta">{t("maxReached")}</p>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

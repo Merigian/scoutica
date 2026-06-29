@@ -2,6 +2,8 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { CastingForm } from "@/components/forms/casting-form";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 
 export default async function NewCastingPage() {
   const session = await auth();
@@ -11,16 +13,11 @@ export default async function NewCastingPage() {
   if (!session?.user?.id || session.user.role !== "SCOUT") redirect(`/${locale}/login`);
 
   return (
-    <div className="space-y-6 max-w-3xl">
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">
-          {t("title")}
-        </h1>
-        <p className="text-[var(--ink-3)] text-sm mt-1">
-          {t("description")}
-        </p>
+    <PageContainer>
+      <PageHeader title={t("title")} description={t("description")} />
+      <div className="max-w-3xl">
+        <CastingForm locale={locale} />
       </div>
-      <CastingForm locale={locale} />
-    </div>
+    </PageContainer>
   );
 }

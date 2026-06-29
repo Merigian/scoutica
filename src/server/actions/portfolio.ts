@@ -170,11 +170,20 @@ export async function reorderImages(imageIds: string[]): Promise<ActionResponse>
       return { success: false, error: t("unauthorized") };
     }
 
-    // Update each image's order
-    await Promise.all(
+    const profile = await db.modelProfile.findUnique({
+      where: { userId: session.user.id },
+      select: { id: true },
+    });
+    if (!profile) {
+      return { success: false, error: t("profileNotFound") };
+    }
+
+    // Scope every write to the caller's own profile so foreign image IDs are
+    // silently ignored (prevents cross-account reordering / IDOR).
+    await db.$transaction(
       imageIds.map((id, index) =>
-        db.portfolioImage.update({
-          where: { id },
+        db.portfolioImage.updateMany({
+          where: { id, modelProfileId: profile.id },
           data: { order: index },
         })
       )

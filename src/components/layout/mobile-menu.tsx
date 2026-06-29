@@ -61,9 +61,10 @@ const ICONS: Record<string, PhosphorIcon> = {
 interface MobileMenuProps {
   open: boolean;
   onClose: () => void;
+  hideVerification?: boolean;
 }
 
-export function MobileMenu({ open, onClose }: MobileMenuProps) {
+export function MobileMenu({ open, onClose, hideVerification = false }: MobileMenuProps) {
   const { data: session } = useSession();
   const t = useTranslations("nav");
   const tAccount = useTranslations("account");
@@ -86,7 +87,9 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
   if (!session?.user) return null;
 
   const role = session.user.role.toLowerCase() as keyof typeof NAV_ITEMS;
-  const items = NAV_ITEMS[role] || [];
+  const items = (NAV_ITEMS[role] || []).filter(
+    (item) => !(hideVerification && item.key === "verification"),
+  );
   const isDark = theme !== "light";
   const accountHref = role === "admin" ? undefined : `/${role}/account`;
 

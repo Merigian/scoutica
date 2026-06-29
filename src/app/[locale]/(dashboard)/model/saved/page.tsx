@@ -6,6 +6,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/shared/empty-state";
 import { ListingBookmarkButton } from "@/components/shared/listing-bookmark-button";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 import {
   getSavedListings,
   type SavedListingItem,
@@ -20,6 +22,7 @@ import {
   Briefcase,
   Tag,
   Bookmark,
+  Clock,
 } from "lucide-react";
 
 export default async function ModelSavedPage() {
@@ -40,11 +43,8 @@ export default async function ModelSavedPage() {
   );
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-medium">{t("title")}</h1>
-        <p className="text-sm text-[var(--ink-3)] mt-1">{t("description")}</p>
-      </div>
+    <PageContainer>
+      <PageHeader title={t("title")} description={t("description")} />
 
       {items.length === 0 ? (
         <EmptyState
@@ -121,7 +121,8 @@ export default async function ModelSavedPage() {
                               )}
                               {c.deadline && (
                                 <span className="flex items-center gap-1">
-                                  ⏰ {t("deadline")}{" "}
+                                  <Clock className="h-3 w-3" />
+                                  {t("deadline")}{" "}
                                   {formatDate(c.deadline, lang)}
                                 </span>
                               )}
@@ -217,7 +218,8 @@ export default async function ModelSavedPage() {
                               )}
                               {j.deadline && (
                                 <span className="flex items-center gap-1">
-                                  ⏰ {t("deadline")}{" "}
+                                  <Clock className="h-3 w-3" />
+                                  {t("deadline")}{" "}
                                   {formatDate(j.deadline, lang)}
                                 </span>
                               )}
@@ -241,6 +243,6 @@ export default async function ModelSavedPage() {
           )}
         </div>
       )}
-    </div>
+    </PageContainer>
   );
 }

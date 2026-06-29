@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import { getNotifications } from "@/server/actions/notifications";
 import { NotificationList } from "@/components/notifications/notification-list";
 import { EmptyState } from "@/components/shared/empty-state";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 import { Bell } from "lucide-react";
 
 export default async function ScoutNotificationsPage() {
@@ -16,12 +18,8 @@ export default async function ScoutNotificationsPage() {
   const notifications = await getNotifications();
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">
-          {t("title")}
-        </h1>
-      </div>
+    <PageContainer>
+      <PageHeader title={t("title")} />
 
       {notifications.length > 0 ? (
         <NotificationList notifications={notifications} locale={locale} />
@@ -32,6 +30,6 @@ export default async function ScoutNotificationsPage() {
           description={t("noNotificationsDesc")}
         />
       )}
-    </div>
+    </PageContainer>
   );
 }

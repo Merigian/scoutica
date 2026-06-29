@@ -4,6 +4,8 @@ import { getTranslations, getLocale } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { CinematicHero } from "@/components/landing/cinematic-hero";
+import { AudienceDoors } from "@/components/landing/audience-doors";
+import { StickyCta } from "@/components/landing/sticky-cta";
 import { FeaturedProfiles } from "@/components/landing/featured-profiles";
 import { TrustSection } from "@/components/landing/trust-section";
 import { StudiosShowcase } from "@/components/landing/studios-showcase";
@@ -44,11 +46,6 @@ export default async function LandingPage() {
     { label: t("statsStrip.studiosPartner"), value: 50 },
   ];
 
-  // Split the headline into its two sentences for the intro statement.
-  const heroTitle = t("hero.title");
-  const [statementLead, ...statementRest] = heroTitle.split(/(?<=\.)\s+/);
-  const statementEmph = statementRest.join(" ");
-
   return (
     <>
       <HeroToneSetter tone="dark" />
@@ -56,23 +53,23 @@ export default async function LandingPage() {
       {/* ───────── HERO — cinematic Atelier Noir cover ───────── */}
       <CinematicHero heroSrc={heroSrc} />
 
-      {/* ───────── STATEMENT — what Scoutica is, legible on warm paper ───────── */}
+      {/* ───────── PER CHI È — three audiences as horizontal doors ───────── */}
+      <AudienceDoors />
+
+      {/* ───────── CAST — volti reali (social proof, early) ───────── */}
+      <div id="cast" className="scroll-mt-24">
+        <FeaturedProfiles />
+      </div>
+
+      {/* ───────── MANIFESTO — what Scoutica stands for ───────── */}
       <section className="bg-[var(--bg)] py-16 lg:py-24">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
           <Reveal className="max-w-[64rem]">
-            <p className="text-eyebrow mb-7">{t("cover.manifestoTop")}</p>
+            <p className="text-eyebrow mb-7">{t("quote.eyebrow")}</p>
             <h2 className="font-display font-light text-[clamp(2.25rem,5vw,4.5rem)] leading-[1.04] tracking-[-0.02em] text-[var(--ink)]">
-              {statementLead}
-              {statementEmph && (
-                <>
-                  {" "}
-                  <span className="italic text-[var(--ink-3)]">
-                    {statementEmph}
-                  </span>
-                </>
-              )}
+              {t("quote.text")}
             </h2>
-            <p className="mt-8 max-w-[54ch] text-lead">{t("hero.subtitle")}</p>
+            <p className="mt-8 text-meta">{t("quote.attribution")}</p>
           </Reveal>
         </div>
       </section>
@@ -93,13 +90,13 @@ export default async function LandingPage() {
             </p>
           </Reveal>
 
-          <ol className="grid md:grid-cols-3 hairline-t">
+          <ol className="-mx-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-6 md:mx-0 md:grid md:grid-cols-3 md:gap-0 md:overflow-visible md:px-0 md:snap-none md:hairline-t [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {(["step1", "step2", "step3"] as const).map((k, i) => (
               <Reveal
                 as="li"
                 key={k}
                 delay={i * 90}
-                className={`p-8 lg:p-10 hairline-b md:border-b-0 ${
+                className={`min-w-[78vw] snap-start bg-[var(--bg-soft)] p-8 sm:min-w-[52vw] md:min-w-0 md:bg-transparent md:p-10 ${
                   i > 0 ? "md:hairline-l" : ""
                 }`}
               >
@@ -117,11 +114,6 @@ export default async function LandingPage() {
           </ol>
         </div>
       </section>
-
-      {/* ───────── 02 — CAST — marquee of real models ───────── */}
-      <div id="cast" className="scroll-mt-24">
-        <FeaturedProfiles />
-      </div>
 
       {/* ───────── 03 — VERIFICA — trust differentiator (dark) ───────── */}
       <TrustSection />
@@ -239,6 +231,8 @@ export default async function LandingPage() {
           </div>
         </div>
       </section>
+
+      <StickyCta />
     </>
   );
 }

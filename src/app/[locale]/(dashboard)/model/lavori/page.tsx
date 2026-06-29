@@ -10,7 +10,9 @@ import { ListingBookmarkButton } from "@/components/shared/listing-bookmark-butt
 import { getSavedJobIds } from "@/server/queries/saved-listings";
 import { JOB_TYPE_LABELS } from "@/config/enums";
 import { formatDate } from "@/lib/utils";
-import { MapPin, Calendar, DollarSign, Users, Briefcase, Tag } from "lucide-react";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
+import { MapPin, Calendar, DollarSign, Users, Briefcase, Tag, Clock } from "lucide-react";
 
 export default async function ModelLavoriPage() {
   const session = await auth();
@@ -59,15 +61,8 @@ export default async function ModelLavoriPage() {
   });
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">
-          {t("title")}
-        </h1>
-        <p className="text-[var(--ink-3)] text-sm mt-1">
-          {t("description")}
-        </p>
-      </div>
+    <PageContainer>
+      <PageHeader title={t("title")} description={t("description")} />
 
       {jobs.length > 0 ? (
         <div className="grid gap-4">
@@ -120,7 +115,8 @@ export default async function ModelLavoriPage() {
                           )}
                           {job.deadline && (
                             <span className="flex items-center gap-1">
-                              ⏰ {t("deadline")} {formatDate(job.deadline, lang)}
+                              <Clock className="h-3 w-3" />
+                              {t("deadline")} {formatDate(job.deadline, lang)}
                             </span>
                           )}
                           {job.compensation && (
@@ -149,6 +145,6 @@ export default async function ModelLavoriPage() {
           description={t("noJobsDesc")}
         />
       )}
-    </div>
+    </PageContainer>
   );
 }

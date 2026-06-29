@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { JobForm } from "@/components/forms/job-form";
 import { BackLink } from "@/components/shared/back-link";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 
 export default async function EditJobPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -40,14 +42,12 @@ export default async function EditJobPage({ params }: { params: Promise<{ id: st
   };
 
   return (
-    <div className="space-y-6 max-w-3xl">
+    <PageContainer>
       <BackLink href="/scout/lavori" label="← Lavori" />
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">
-          {t("editTitle")}
-        </h1>
+      <PageHeader title={t("editTitle")} />
+      <div className="max-w-3xl">
+        <JobForm locale={locale} initialData={initialData} />
       </div>
-      <JobForm locale={locale} initialData={initialData} />
-    </div>
+    </PageContainer>
   );
 }

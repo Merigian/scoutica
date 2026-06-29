@@ -44,7 +44,7 @@ export function OnboardingChecklist(props: OnboardingChecklistProps) {
         <div>
           <h3 className="font-display font-semibold">{t("welcome")}</h3>
           <p className="text-sm text-[var(--ink-3)] mt-1">{t("subtitle")}</p>
-          <div className="mt-3 h-1.5 bg-[var(--bg-soft)] rounded-full overflow-hidden">
+          <div className="mt-3 h-1.5 bg-[var(--bg-soft)] overflow-hidden">
             <div
               className="h-full bg-[var(--ink)] transition-all duration-500"
               style={{ width: `${(completedCount / STEPS.length) * 100}%` }}
@@ -64,15 +64,15 @@ export function OnboardingChecklist(props: OnboardingChecklistProps) {
                 key={step.key}
                 href={step.href as never}
                 className={cn(
-                  "flex items-center gap-3 p-3 rounded transition-colors",
+                  "flex items-center gap-3 p-3 transition-colors",
                   done
-                    ? "bg-success/5 text-[var(--ink-3)]"
+                    ? "bg-[var(--bg-soft)]/40 text-[var(--ink-3)]"
                     : "bg-[var(--bg-soft)]/50 hover:bg-[var(--bg-soft)]"
                 )}
               >
                 <div className={cn(
-                  "flex h-8 w-8 items-center justify-center rounded-full shrink-0",
-                  done ? "bg-success/10 text-success" : "bg-[var(--ink)]/10 text-[var(--ink)]"
+                  "flex h-8 w-8 items-center justify-center shrink-0",
+                  done ? "bg-[var(--ink)]/15 text-[var(--ink)]" : "bg-[var(--ink)]/10 text-[var(--ink)]"
                 )}>
                   {done ? <CheckCircle className="h-4 w-4" /> : <Icon className="h-4 w-4" />}
                 </div>

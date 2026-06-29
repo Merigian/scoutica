@@ -12,6 +12,8 @@ import { formatRelativeTime } from "@/lib/utils";
 import { ApplicationActions } from "@/components/castings/application-actions";
 import { Users } from "lucide-react";
 import { BackLink } from "@/components/shared/back-link";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 
 export default async function CastingApplicationsPage({
   params,
@@ -60,17 +62,17 @@ export default async function CastingApplicationsPage({
   };
 
   return (
-    <div className="space-y-6">
+    <PageContainer>
       <BackLink href="/scout/castings" label={t("backToCastings")} />
 
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">{casting.title}</h1>
-        <p className="text-[var(--ink-3)] text-sm mt-1">
+      <PageHeader title={casting.title} />
+
+      <div className="space-y-6">
+        <p className="text-[var(--ink-3)] text-sm">
           {casting.applications.length} {t("applicationsReceived")}
         </p>
-      </div>
 
-      {casting.applications.length > 0 ? (
+        {casting.applications.length > 0 ? (
         <div className="space-y-3">
           {casting.applications.map((app) => {
             const coverImage = app.modelProfile.portfolioImages[0]?.url;
@@ -126,6 +128,7 @@ export default async function CastingApplicationsPage({
           description={t("noApplicationsDesc")}
         />
       )}
-    </div>
+      </div>
+    </PageContainer>
   );
 }

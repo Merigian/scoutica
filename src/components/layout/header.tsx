@@ -12,7 +12,7 @@ import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { LogoMark } from "@/components/ui/logo-mark";
 import { MobileMenu } from "@/components/layout/mobile-menu";
 
-export function Header() {
+export function Header({ hideVerification = false }: { hideVerification?: boolean }) {
   const { data: session } = useSession();
   const t = useTranslations("nav");
   const router = useRouter();
@@ -69,7 +69,7 @@ export function Header() {
         )}
       </header>
 
-      {session?.user && <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />}
+      {session?.user && <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} hideVerification={hideVerification} />}
     </>
   );
 }

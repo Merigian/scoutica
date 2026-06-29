@@ -10,6 +10,8 @@ import { PIPELINE_STAGE_LABELS } from "@/config/enums";
 import { BoardItemActions } from "@/components/shortlists/board-item-actions";
 import { Users } from "lucide-react";
 import { BackLink } from "@/components/shared/back-link";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 
 export default async function BoardDetailPage({
   params,
@@ -62,21 +64,18 @@ export default async function BoardDetailPage({
   const stages = ["SAVED", "CONTACTED", "REPLIED", "SHORTLISTED", "BOOKED"];
 
   return (
-    <div className="space-y-6">
+    <PageContainer>
       <BackLink href="/scout/boards" label={t("backToBoards")} />
 
-      <div>
-        <h1 className="text-2xl font-[var(--font-display)] font-bold">{board.name}</h1>
-        {board.description && (
-          <p className="text-[var(--ink-3)] text-sm mt-1">{board.description}</p>
-        )}
-        <p className="text-xs text-[var(--ink-3)] mt-2">
+      <PageHeader title={board.name} description={board.description ?? undefined} />
+
+      <div className="space-y-6">
+        <p className="text-xs text-[var(--ink-3)]">
           {board.items.length} {t("profiles")}
         </p>
-      </div>
 
-      {/* Pipeline stage badges */}
-      <div className="flex gap-2 flex-wrap">
+        {/* Pipeline stage badges */}
+        <div className="flex gap-2 flex-wrap">
         {stages.map((stage) => {
           const count = board.items.filter((i) => i.pipelineStage === stage).length;
           return (
@@ -140,6 +139,7 @@ export default async function BoardDetailPage({
           actionHref={`/${locale}/scout/discover`}
         />
       )}
-    </div>
+      </div>
+    </PageContainer>
   );
 }

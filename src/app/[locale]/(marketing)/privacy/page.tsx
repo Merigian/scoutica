@@ -49,7 +49,7 @@ export default function PrivacyPage() {
   const lastUpdated = new Date().toLocaleDateString("it-IT", { month: "long", year: "numeric" });
 
   return (
-    <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-3xl px-6 lg:px-8">
       <header className="py-20 lg:py-28 hairline-b">
         <p className="text-eyebrow mb-6">Legal · Privacy</p>
         <h1 className="text-h1">Privacy Policy</h1>
@@ -65,7 +65,7 @@ export default function PrivacyPage() {
       <section>
         {sections.map((s, i) => (
           <article key={i} className="py-10 hairline-b">
-            <div className="flex gap-8">
+            <div className="flex flex-col gap-2 sm:flex-row sm:gap-8">
               <span className="font-[var(--font-body)] text-[var(--ink-3)] text-sm tabular-nums shrink-0 w-10 pt-1">
                 {String(i + 1).padStart(2, "0")}
               </span>

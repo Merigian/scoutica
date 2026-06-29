@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { BackLink } from "@/components/shared/back-link";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 import {
   Building2,
   MapPin,
@@ -47,10 +49,12 @@ export default async function PublicScoutProfilePage({
   }
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
+    <PageContainer>
       <BackLink href="/model/contacts" label={t("back")} />
 
-      <div className="space-y-4">
+      <PageHeader title={scoutProfile.businessName || scoutProfile.user.name || ""} />
+
+      <div className="max-w-3xl space-y-4">
         {/* Header */}
         <div className="flex items-center gap-4">
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[var(--bg-soft)] text-2xl font-bold">
@@ -58,9 +62,6 @@ export default async function PublicScoutProfilePage({
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-[var(--font-display)] font-bold">
-                {scoutProfile.businessName || scoutProfile.user.name}
-              </h1>
               <Badge variant="default" className="gap-1">
                 <ShieldCheck className="h-3 w-3" />
                 {t("verified")}
@@ -152,6 +153,6 @@ export default async function PublicScoutProfilePage({
           </Card>
         )}
       </div>
-    </div>
+    </PageContainer>
   );
 }

@@ -147,7 +147,7 @@ export function StudioMapView({ studios, locale }: StudioMapViewProps) {
 
   if (mappable.length === 0) {
     return (
-      <div className="flex items-center justify-center h-[500px] bg-surface border border-[var(--rule)] rounded-sm text-[var(--ink-3)] text-sm">
+      <div className="flex items-center justify-center h-[500px] bg-surface border border-[var(--rule)] text-[var(--ink-3)] text-sm">
         {t("noStudios")}
       </div>
     );
@@ -156,7 +156,7 @@ export function StudioMapView({ studios, locale }: StudioMapViewProps) {
   return (
     <div
       ref={mapContainer}
-      className="w-full h-[540px] lg:h-[620px] rounded-sm border border-[var(--rule)] overflow-hidden"
+      className="w-full h-[540px] lg:h-[620px] border border-[var(--rule)] overflow-hidden"
     />
   );
 }
