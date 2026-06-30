@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useInView, useScroll, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface ImageRevealProps {
@@ -14,6 +14,8 @@ interface ImageRevealProps {
   /** Subtle parallax drift of the image inside its frame as it scrolls. */
   parallax?: boolean;
   rounded?: boolean;
+  /** CSS object-position for the cover crop (e.g. "center 25%", "top"). */
+  objectPosition?: string;
 }
 
 /**
@@ -28,9 +30,16 @@ export function ImageReveal({
   priority,
   parallax = true,
   rounded = false,
+  objectPosition = "center",
 }: ImageRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
+  // Drive the wipe from a robust in-view check. whileInView with a negative
+  // root margin could fail to fire for images already near the top of the page,
+  // leaving the clip-path stuck closed (an empty box). useInView with an
+  // `amount` threshold reliably triggers — and reduced-motion shows it at once.
+  const inView = useInView(ref, { once: true, amount: 0.2 });
+  const revealed = reduce || inView;
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -44,13 +53,12 @@ export function ImageReveal({
     >
       <motion.div
         className="absolute inset-0"
-        initial={reduce ? undefined : { clipPath: "inset(100% 0 0 0)" }}
-        whileInView={reduce ? undefined : { clipPath: "inset(0% 0 0 0)" }}
-        viewport={{ once: true, margin: "-10%" }}
+        initial={false}
+        animate={{ clipPath: revealed ? "inset(0% 0 0 0)" : "inset(100% 0 0 0)" }}
         transition={{ duration: 1.1, ease: [0.22, 0.61, 0.36, 1] }}
       >
         <motion.div className="absolute inset-[-8%]" style={parallax && !reduce ? { y } : undefined}>
-          <Image src={src} alt={alt} fill priority={priority} sizes={sizes} className="object-cover" />
+          <Image src={src} alt={alt} fill priority={priority} sizes={sizes} className="object-cover" style={{ objectPosition }} />
         </motion.div>
       </motion.div>
     </div>
