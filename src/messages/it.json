@@ -91,7 +91,10 @@
     "talents": "Talenti",
     "menu": "Menu",
     "more": "Altro",
-    "close": "Chiudi"
+    "close": "Chiudi",
+    "expand": "Espandi menu",
+    "collapse": "Comprimi menu",
+    "verified": "Verificato"
   },
   "account": {
     "title": "Profilo",
@@ -967,12 +970,12 @@
     "eyebrow": "Manifesto · Chi siamo",
     "title": "Chi siamo",
     "lead": "Una piattaforma editoriale per il fashion italiano. Talento, sguardo, luogo — un solo sistema.",
-    "intro1": "<strong>Scoutica</strong> nasce dall'esigenza di modernizzare il mondo dello scouting nella moda italiana. Troppo spesso, il contatto tra modelli e professionisti del settore avviene attraverso canali informali, DM su Instagram e processi manuali poco strutturati.",
+    "intro1": "<strong>Scoutica</strong> nasce dall'esigenza di modernizzare il mondo dello scouting nella moda italiana. Troppo spesso, il contatto tra modelli e professionisti del settore avviene attraverso canali informali e processi manuali poco strutturati.",
     "intro2": "La nostra missione è creare uno spazio professionale, sicuro e trasparente dove i modelli possano presentarsi al meglio e dove scout, agenzie e brand verificati possano scoprire nuovi talenti in modo efficiente e rispettoso.",
     "whyNow": {
       "eyebrow": "Perché adesso",
       "title": "Il fashion italiano merita la sua piattaforma.",
-      "body": "L'Italia è il quarto mercato moda al mondo per ricavi, ma il suo scouting vive ancora sui DM, sugli screenshot di IG e su rubriche di numeri privati. Nel 2026 questo non è più accettabile — né per i talenti, né per chi li cerca, né per i brand che vogliono lavorare in regola."
+      "body": "L'Italia è il quarto mercato moda al mondo per ricavi, ma il suo scouting vive ancora su scambi informali e rubriche di numeri privati. Nel 2026 questo non è più accettabile — né per i talenti, né per chi li cerca, né per i brand che vogliono lavorare in regola."
     },
     "valuesTitle": "I nostri valori",
     "safety": "Sicurezza",

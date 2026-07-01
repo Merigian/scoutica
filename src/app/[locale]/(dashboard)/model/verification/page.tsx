@@ -35,8 +35,8 @@ export default async function ModelVerificationPage() {
             <p className="text-meta text-[var(--ink-3)]">{t("approvedDesc")}</p>
           </div>
         ) : status === "VERIFICATION_SUBMITTED" ? (
-          <div className="border border-[var(--rule)] p-6 text-center space-y-3">
-            <Clock className="mx-auto h-7 w-7 text-[var(--ink-2)]" />
+          <div className="border border-warning/30 bg-warning/5 p-6 text-center space-y-3">
+            <Clock className="mx-auto h-7 w-7 text-warning" />
             <p className="text-h3 text-[var(--ink)]">{t("submittedTitle")}</p>
             <p className="text-meta text-[var(--ink-3)]">{t("submittedDesc")}</p>
           </div>

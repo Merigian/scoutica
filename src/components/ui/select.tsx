@@ -23,9 +23,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             "flex h-11 w-full border bg-[var(--bg-elevated)] px-4 py-2 pr-10 text-[15px] text-[var(--ink)]",
             "disabled:cursor-not-allowed disabled:opacity-50",
             "transition-colors duration-300 appearance-none cursor-pointer",
-            error
-              ? "border-[var(--danger)] focus:border-[var(--danger)]"
-              : "border-[var(--rule-strong)] hover:border-[var(--ink)] focus:border-[var(--ink)]",
+            error ? "field-control field-control--error" : "field-control",
             className,
           )}
           ref={ref}

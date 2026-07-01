@@ -57,7 +57,10 @@ export function ImageReveal({
         animate={{ clipPath: revealed ? "inset(0% 0 0 0)" : "inset(100% 0 0 0)" }}
         transition={{ duration: 1.1, ease: [0.22, 0.61, 0.36, 1] }}
       >
-        <motion.div className="absolute inset-[-8%]" style={parallax && !reduce ? { y } : undefined}>
+        <motion.div
+          className={cn("absolute", parallax && !reduce ? "inset-[-8%]" : "inset-0")}
+          style={parallax && !reduce ? { y } : undefined}
+        >
           <Image src={src} alt={alt} fill priority={priority} sizes={sizes} className="object-cover" style={{ objectPosition }} />
         </motion.div>
       </motion.div>

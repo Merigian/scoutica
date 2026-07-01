@@ -42,10 +42,10 @@
   --color-destructive: var(--danger);
   --color-destructive-foreground: var(--bg-elevated);
   --color-border: var(--rule);
-  --color-input: var(--rule);
+  --color-input: var(--field);
   --color-ring: var(--ink);
   --color-success: var(--success);
-  --color-warning: #8C5A0F;
+  --color-warning: var(--warning);
   --color-surface: var(--bg-soft);
 
   /* Legacy gold tokens removed — Galleria is ink-on-cream, no gold. */
@@ -122,6 +122,7 @@
   --ink-3:        #8B8B90;
   --rule:         rgba(255, 255, 255, 0.12);
   --rule-strong:  rgba(255, 255, 255, 0.26);
+  --field:        rgba(255, 255, 255, 0.40);
 
   --accent:       var(--ink);
   --accent-soft:  var(--ink-2);
@@ -129,6 +130,7 @@
 
   --danger:       #E0584F;
   --success:      #74C39A;
+  --warning:      #E0A23C;
 
   /* Fonts → Atelier Noir pairing (cascades to .text-* and h1–h6). */
   --font-display: var(--font-bodoni),  "Didot", "Bodoni MT", Georgia, serif;
@@ -150,6 +152,7 @@
   --ink-3:        #605C53;
   --rule:         rgba(20, 19, 15, 0.14);
   --rule-strong:  rgba(20, 19, 15, 0.30);
+  --field:        rgba(20, 19, 15, 0.48);
 
   --accent:       var(--ink);
   --accent-soft:  var(--ink-2);
@@ -157,6 +160,7 @@
 
   --danger:       #B23A30;
   --success:      #2E6B47;
+  --warning:      #8C5A0F;
 }
 
 /* Noir surfaces, vignette and film-grain helpers */
@@ -184,6 +188,15 @@
 .theme-noir .hairline-b,
 .theme-noir .hairline-l,
 .theme-noir .hairline-r { border-color: var(--rule); }
+
+/* Form controls — explicit border rules so the >=3:1 field border does not
+   depend on ambiguous arbitrary `border-[var(--field)]` JIT generation. */
+.theme-noir .field-control { border-color: var(--field); }
+.theme-noir .field-control:hover,
+.theme-noir .field-control:focus { border-color: var(--ink); }
+.theme-noir .field-control--error,
+.theme-noir .field-control--error:hover,
+.theme-noir .field-control--error:focus { border-color: var(--danger); }
 
 /* ─── Base ─── */
 * { border-color: var(--rule); }

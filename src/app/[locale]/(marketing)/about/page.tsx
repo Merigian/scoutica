@@ -7,7 +7,7 @@ import { FadeIn } from "@/components/motion/fade-in";
 import { ImageReveal } from "@/components/motion/image-reveal";
 import { ArrowUpRight } from "lucide-react";
 
-const ABOUT_IMG = "/images/chi-siamo.JPG";
+const ABOUT_IMG = "/images/chi-siamo1.png";
 
 type PrincipleItem = { n: string; k: string; d: string };
 
@@ -49,7 +49,8 @@ export default async function AboutPage() {
         alt=""
         className="aspect-[21/9] w-full"
         sizes="100vw"
-        objectPosition="center 10%"
+        objectPosition="center"
+        parallax={false}
         priority
       />
 

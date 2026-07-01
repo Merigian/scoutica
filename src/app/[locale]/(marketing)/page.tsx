@@ -154,7 +154,7 @@ export default async function LandingPage() {
                   <CountUp value={s.value} locale={locale} />
                   {s.value > 0 && <span className="text-[0.45em] text-[var(--bg)]/45">+</span>}
                 </p>
-                <p className="mt-3 lg:mt-4 text-meta !text-[var(--bg)]/55 max-w-[16ch]">{s.label}</p>
+                <p className="mt-3 lg:mt-4 text-meta !text-[var(--bg)]/70 max-w-[16ch]">{s.label}</p>
               </Reveal>
             ))}
           </ol>
@@ -179,7 +179,7 @@ export default async function LandingPage() {
             </Link>
           </div>
 
-          <p className="mt-5 text-meta !text-[var(--bg)]/55 max-w-[52ch]">
+          <p className="mt-5 text-meta !text-[var(--bg)]/70 max-w-[52ch]">
             {t("pricingTeaser.lead")}
           </p>
         </div>
@@ -260,14 +260,14 @@ function BandiSection({
                   <span
                     className={`inline-flex items-center gap-2 text-eyebrow italic whitespace-nowrap ${
                       isClosing
-                        ? "!text-[var(--danger)]"
+                        ? "!text-[var(--warning)]"
                         : "!text-[var(--success)]"
                     }`}
                   >
                     <span
                       className={`h-1.5 w-1.5 rounded-full ${
                         isClosing
-                          ? "bg-[var(--danger)]"
+                          ? "bg-[var(--warning)]"
                           : "bg-[var(--success)]"
                       }`}
                       aria-hidden="true"

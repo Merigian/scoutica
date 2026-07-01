@@ -69,8 +69,8 @@ export function MarketingNav() {
       className="nav-shell fixed top-0 z-50 w-full"
       data-scrolled={scrolled || open ? "true" : "false"}
     >
-      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-6 lg:px-12 md:grid md:grid-cols-[1fr_auto_1fr]">
-        <nav className="hidden md:flex items-center gap-8 md:justify-self-start">
+      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-6 lg:px-12 lg:grid lg:grid-cols-[1fr_auto_1fr]">
+        <nav className="hidden lg:flex items-center gap-8 lg:justify-self-start">
           <NavLink href="/pricing" label={t("pricing")} />
           <NavLink href="/about" label={t("about")} />
           <NavLink href="/contact" label={t("contact")} />
@@ -80,7 +80,7 @@ export function MarketingNav() {
         <Link
           href="/"
           aria-label="Scoutica"
-          className={cn("flex items-center gap-2.5 sm:gap-3 md:justify-self-center", isHome && "brand-intro")}
+          className={cn("flex items-center gap-2.5 sm:gap-3 lg:justify-self-center", isHome && "brand-intro")}
         >
           <LogoMark
             size="lg"
@@ -94,20 +94,20 @@ export function MarketingNav() {
           />
         </Link>
 
-        <div className="flex items-center gap-1 md:justify-self-end">
+        <div className="flex items-center gap-1 lg:justify-self-end">
           <button
             onClick={toggleLocale}
-            className="hidden sm:inline-flex items-center text-[13px] text-current/85 hover:text-current px-3 py-2 transition-colors"
+            className="hidden lg:inline-flex items-center text-[13px] text-current/85 hover:text-current px-3 py-2 transition-colors"
             title={t("switchToOtherLang")}
             aria-label={t("switchToOtherLang")}
           >
             {t("otherLangCode")}
           </button>
 
-          <ThemeToggle className="hidden sm:inline-flex items-center justify-center w-9 h-9 hover:opacity-70 transition-opacity" />
+          <ThemeToggle className="hidden lg:inline-flex items-center justify-center w-9 h-9 hover:opacity-70 transition-opacity" />
 
           {dashboardHref ? (
-            <Button variant="ghost" size="sm" asChild className="group !text-current hidden sm:inline-flex">
+            <Button variant="ghost" size="sm" asChild className="group !text-current hidden lg:inline-flex">
               <Link href={dashboardHref as never}>
                 <LayoutDashboard className="h-4 w-4" />
                 {t("dashboard")}
@@ -116,10 +116,10 @@ export function MarketingNav() {
             </Button>
           ) : (
             <>
-              <Button variant="ghost" size="sm" asChild className="hidden sm:inline-flex !text-current">
+              <Button variant="ghost" size="sm" asChild className="hidden lg:inline-flex !text-current">
                 <Link href="/login">{t("login")}</Link>
               </Button>
-              <Button size="sm" asChild className="hidden sm:inline-flex">
+              <Button size="sm" asChild className="hidden lg:inline-flex">
                 <Link href="/register">{t("register")}</Link>
               </Button>
             </>
@@ -127,7 +127,7 @@ export function MarketingNav() {
 
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2.5 text-current hover:opacity-70 transition-opacity"
+            className="lg:hidden inline-flex items-center justify-center w-11 h-11 -mr-2.5 text-current hover:opacity-70 transition-opacity"
             aria-label="Menu"
             aria-expanded={open}
           >
@@ -137,7 +137,7 @@ export function MarketingNav() {
       </div>
 
       {open && (
-        <div className="md:hidden fixed inset-0 top-16 z-40 flex flex-col overflow-y-auto bg-[var(--bg)] text-[var(--ink)] animate-fade-in">
+        <div className="lg:hidden fixed inset-0 top-16 z-40 flex flex-col overflow-y-auto bg-[var(--bg)] text-[var(--ink)] animate-fade-in">
           <nav className="flex flex-col px-6 pt-4">
             {[
               { href: "/pricing", label: t("pricing") },

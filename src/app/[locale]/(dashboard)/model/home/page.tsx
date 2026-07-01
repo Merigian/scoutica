@@ -286,6 +286,35 @@ export default async function ModelHomePage() {
             </ul>
           </div>
 
+          {/* Forza profilo (published only) */}
+          {profile.isPublished && (
+            <div>
+              <p className="text-eyebrow hairline-b pb-4 mb-6">
+                {t("profileStrength")}
+              </p>
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="font-[var(--font-display)] font-light text-[clamp(2rem,4vw,2.75rem)] leading-none tabular-nums text-[var(--ink)]">
+                  {profile.completenessScore}%
+                </span>
+                {profile.completenessScore < 100 && (
+                  <Link
+                    href="/model/profile"
+                    className="inline-flex items-center gap-1.5 text-meta hover:text-[var(--ink)] transition-colors whitespace-nowrap"
+                  >
+                    {t("editProfile")}
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                )}
+              </div>
+              <div className="mt-4 h-[3px] w-full bg-[var(--bg-soft)]">
+                <div
+                  className="h-full bg-[var(--ink)] transition-[width] duration-500"
+                  style={{ width: `${profile.completenessScore}%` }}
+                />
+              </div>
+            </div>
+          )}
+
           {/* Visibilità — Boost */}
           {profile.isPublished && (
             <div>

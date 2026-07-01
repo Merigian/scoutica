@@ -20,7 +20,7 @@ export type PlanLimits = {
 //   actions (contact requests, boards, advanced filters, saved searches),
 //   creating a clear upgrade path to the paid tiers (Scout Pro / Agency / Studio).
 const FREE_LIMITS: PlanLimits = {
-  maxPhotos: 12,
+  maxPhotos: 5,
   videoUpload: true,
   pdfBookUpload: true,
   contactRequestsPerMonth: 5,

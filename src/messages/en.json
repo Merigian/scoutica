@@ -91,7 +91,10 @@
     "talents": "Talent",
     "menu": "Menu",
     "more": "More",
-    "close": "Close"
+    "close": "Close",
+    "expand": "Expand menu",
+    "collapse": "Collapse menu",
+    "verified": "Verified"
   },
   "account": {
     "title": "Profile",
@@ -967,12 +970,12 @@
     "eyebrow": "Manifesto · About",
     "title": "About us",
     "lead": "An editorial platform for Italian fashion. Talent, eye, place — one system.",
-    "intro1": "<strong>Scoutica</strong> was born from the need to modernize the world of scouting in Italian fashion. Too often, contact between models and industry professionals happens through informal channels, Instagram DMs, and unstructured manual processes.",
+    "intro1": "<strong>Scoutica</strong> was born from the need to modernize the world of scouting in Italian fashion. Too often, contact between models and industry professionals happens through informal channels and unstructured manual processes.",
     "intro2": "Our mission is to create a professional, safe, and transparent space where models can present themselves at their best and where verified scouts, agencies, and brands can discover new talent efficiently and respectfully.",
     "whyNow": {
       "eyebrow": "Why now",
       "title": "Italian fashion deserves its own platform.",
-      "body": "Italy is the fourth fashion market in the world by revenue, yet its scouting still lives on DMs, IG screenshots, and private phone rubrics. In 2026 this is no longer acceptable — not for the talent, not for those searching, not for the brands who want to work properly."
+      "body": "Italy is the fourth fashion market in the world by revenue, yet its scouting still lives on informal exchanges and private phone rubrics. In 2026 this is no longer acceptable — not for the talent, not for those searching, not for the brands who want to work properly."
     },
     "valuesTitle": "Our values",
     "safety": "Safety",

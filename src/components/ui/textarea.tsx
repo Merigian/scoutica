@@ -15,9 +15,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             "placeholder:text-[var(--ink-3)]",
             "disabled:cursor-not-allowed disabled:opacity-50",
             "resize-y transition-colors duration-300",
-            error
-              ? "border-[var(--danger)] focus:border-[var(--danger)]"
-              : "border-[var(--rule-strong)] hover:border-[var(--ink)] focus:border-[var(--ink)]",
+            error ? "field-control field-control--error" : "field-control",
             className,
           )}
           ref={ref}
