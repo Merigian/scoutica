@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { CondensedTitle } from "@/components/layout/condensed-title";
 
 interface PageHeaderProps {
   /** Eyebrow label (e.g. section name). */
@@ -25,6 +26,7 @@ export function PageHeader({ eyebrow, title, description, actions, className }: 
       )}
     >
       <div className="space-y-3">
+        <CondensedTitle title={title} />
         {eyebrow && <p className="text-eyebrow">{eyebrow}</p>}
         <h1 className="font-[var(--font-display)] font-light text-[clamp(2rem,3.4vw,3rem)] leading-[1.05] tracking-[-0.015em] text-[var(--ink)] max-w-[22ch]">
           {title}

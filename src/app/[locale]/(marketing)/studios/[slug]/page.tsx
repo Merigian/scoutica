@@ -64,7 +64,7 @@ export default async function StudioDetailPage({
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-      <BackLink href="/studios" label={t("backToStudios")} />
+      <BackLink href="/studios" label={t("backToStudios")} barMode={false} />
 
       <div className="mb-10">
         <StudioGallery

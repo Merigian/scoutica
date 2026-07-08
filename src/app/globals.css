@@ -270,6 +270,19 @@ nav a {
 .nav-shell {
   padding-top: env(safe-area-inset-top);
 }
+/* Condensing header (mobile app chrome). The compact page title portaled into
+   the sticky dashboard header crossfades with the brand lockup; a portaled
+   back chevron replaces the drawer trigger on pushed (detail) screens. */
+[data-app-header] [data-brand-lockup] {
+  transition: opacity 200ms var(--ease-out-soft);
+}
+[data-app-header]:has([data-condensed="true"]) [data-brand-lockup] {
+  opacity: 0;
+  pointer-events: none;
+}
+[data-app-header]:has([data-back-slot]:not(:empty)) [data-menu-trigger] {
+  display: none;
+}
 /* When launched as an installed app, fill the dynamic viewport height */
 @media (display-mode: standalone) {
   html,
