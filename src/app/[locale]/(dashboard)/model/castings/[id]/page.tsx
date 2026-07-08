@@ -6,6 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { CastingApplyButton } from "@/components/castings/casting-apply-button";
+import { MoodboardView } from "@/components/moodboard/moodboard-view";
+import type { MoodboardItem } from "@/lib/validations/moodboard";
 import { formatDate } from "@/lib/utils";
 import { MapPin, Calendar, DollarSign, Users, CheckCircle } from "lucide-react";
 import { BackLink } from "@/components/shared/back-link";
@@ -171,6 +173,8 @@ export default async function CastingDetailPage({
             </CardContent>
           </Card>
         )}
+
+        <MoodboardView items={((casting.moodboard as unknown) as MoodboardItem[] | null) ?? []} />
 
         {/* Deadline */}
         {casting.deadline && (

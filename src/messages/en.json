@@ -2619,6 +2619,19 @@
       "range": "Range",
       "occupied": "Occupied"
     },
+    "moodboard": {
+      "viewTitle": "Moodboard",
+      "addFiles": "Upload photos or PDF",
+      "addLink": "Add link",
+      "linkPlaceholder": "Paste a link (https://…)",
+      "remove": "Remove",
+      "hint": "Reference photos, PDFs or links. Models can view and download them from the job, without applying.",
+      "uploadError": "Upload failed",
+      "invalidLink": "Invalid link (use http/https)",
+      "maxReached": "Maximum {max} items",
+      "download": "Download",
+      "openLink": "Open link"
+    },
     "searchFilters": {
       "searchPlaceholder": "Search by name, city, bio...",
       "filters": "Filters",

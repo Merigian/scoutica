@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { JobForm } from "@/components/forms/job-form";
+import type { MoodboardItem } from "@/lib/validations/moodboard";
 import { BackLink } from "@/components/shared/back-link";
 import { PageContainer } from "@/components/layout/page-container";
 import { PageHeader } from "@/components/layout/page-header";
@@ -39,6 +40,7 @@ export default async function EditJobPage({ params }: { params: Promise<{ id: st
     modelRequirements: job.modelRequirements || "",
     spotsNeeded: job.spotsNeeded || undefined,
     deadline: job.deadline?.toISOString().split("T")[0] || "",
+    moodboard: ((job.moodboard as unknown) as MoodboardItem[] | null) ?? [],
   };
 
   return (

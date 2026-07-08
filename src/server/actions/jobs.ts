@@ -45,6 +45,7 @@ export async function createJob(data: unknown): Promise<ActionResponse<{ jobId: 
       spotsNeeded: parsed.data.spotsNeeded,
       deadline: parsed.data.deadline ? new Date(parsed.data.deadline) : null,
       notes: parsed.data.notes,
+      moodboard: parsed.data.moodboard ?? [],
       status: "DRAFT",
     },
   });
@@ -94,6 +95,7 @@ export async function updateJob(
       spotsNeeded: parsed.data.spotsNeeded,
       deadline: parsed.data.deadline ? new Date(parsed.data.deadline) : null,
       notes: parsed.data.notes,
+      moodboard: parsed.data.moodboard ?? [],
     },
   });
 

@@ -6,6 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { JobApplyButton } from "@/components/jobs/job-apply-button";
+import { MoodboardView } from "@/components/moodboard/moodboard-view";
+import type { MoodboardItem } from "@/lib/validations/moodboard";
 import { JOB_TYPE_LABELS } from "@/config/enums";
 import { formatDate } from "@/lib/utils";
 import { MapPin, Calendar, DollarSign, Users, CheckCircle, Briefcase, Tag, Building } from "lucide-react";
@@ -201,6 +203,8 @@ export default async function JobDetailPage({
             </CardContent>
           </Card>
         )}
+
+        <MoodboardView items={((job.moodboard as unknown) as MoodboardItem[] | null) ?? []} />
 
         {/* Deadline */}
         {job.deadline && (

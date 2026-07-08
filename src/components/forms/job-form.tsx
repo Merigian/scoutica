@@ -14,6 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { MoodboardEditor } from "@/components/moodboard/moodboard-editor";
 import { ITALIAN_REGIONS } from "@/config/regions";
 import { JOB_TYPE_LABELS } from "@/config/enums";
 import { AlertCircle } from "lucide-react";
@@ -230,6 +231,18 @@ export function JobForm({ locale, initialData }: JobFormProps) {
             <Label htmlFor="notes">{t("notes")}</Label>
             <Textarea id="notes" rows={2} {...register("notes")} />
           </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Moodboard</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <MoodboardEditor
+            value={watch("moodboard") ?? []}
+            onChange={(items) => setValue("moodboard", items, { shouldDirty: true })}
+          />
         </CardContent>
       </Card>
 

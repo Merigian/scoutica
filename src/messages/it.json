@@ -2619,6 +2619,19 @@
       "range": "Intervallo",
       "occupied": "Occupato"
     },
+    "moodboard": {
+      "viewTitle": "Moodboard",
+      "addFiles": "Carica foto o PDF",
+      "addLink": "Aggiungi link",
+      "linkPlaceholder": "Incolla un link (https://…)",
+      "remove": "Rimuovi",
+      "hint": "Foto, PDF o link di riferimento. Le modelle possono vederli e scaricarli dal lavoro, senza doversi candidare.",
+      "uploadError": "Caricamento non riuscito",
+      "invalidLink": "Link non valido (usa http/https)",
+      "maxReached": "Massimo {max} elementi",
+      "download": "Scarica",
+      "openLink": "Apri link"
+    },
     "searchFilters": {
       "searchPlaceholder": "Cerca per nome, città, bio...",
       "filters": "Filtri",

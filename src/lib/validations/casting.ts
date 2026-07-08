@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { moodboardSchema } from "./moodboard";
 
 export const castingSchema = z.object({
   title: z.string().min(3, "Il titolo deve contenere almeno 3 caratteri").max(200),
@@ -18,6 +19,7 @@ export const castingSchema = z.object({
   address: z.string().max(500).optional().nullable(),
   instructions: z.string().max(3000).optional().nullable(),
   materialsRequired: z.string().max(3000).optional().nullable(),
+  moodboard: moodboardSchema,
 });
 
 export const castingApplicationSchema = z.object({

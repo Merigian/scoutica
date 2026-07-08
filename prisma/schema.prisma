@@ -566,6 +566,7 @@ model Casting {
   address           String?
   instructions      String?  @db.Text
   materialsRequired String?  @db.Text
+  moodboard         Json?
 
   status      CastingStatus @default(DRAFT)
   publishedAt DateTime?
@@ -625,6 +626,7 @@ model Job {
   deadline          DateTime?
   notes             String?  @db.Text
   referenceImages   String[]
+  moodboard         Json?
 
   status      JobStatus @default(DRAFT)
   publishedAt DateTime?

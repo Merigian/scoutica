@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { moodboardSchema } from "./moodboard";
 
 export const jobSchema = z.object({
   title: z.string().min(3, "Il titolo deve contenere almeno 3 caratteri").max(200),
@@ -26,6 +27,7 @@ export const jobSchema = z.object({
   spotsNeeded: z.coerce.number().min(1).max(1000).optional().nullable(),
   deadline: z.string().optional().nullable(),
   notes: z.string().max(2000).optional().nullable(),
+  moodboard: moodboardSchema,
 });
 
 export type JobInput = z.infer<typeof jobSchema>;

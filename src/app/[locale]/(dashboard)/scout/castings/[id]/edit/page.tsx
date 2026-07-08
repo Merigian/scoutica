@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { CastingForm } from "@/components/forms/casting-form";
+import type { MoodboardItem } from "@/lib/validations/moodboard";
 import { BackLink } from "@/components/shared/back-link";
 import { PageContainer } from "@/components/layout/page-container";
 import { PageHeader } from "@/components/layout/page-header";
@@ -41,6 +42,7 @@ export default async function EditCastingPage({ params }: { params: Promise<{ id
     address: casting.address || "",
     instructions: casting.instructions || "",
     materialsRequired: casting.materialsRequired || "",
+    moodboard: ((casting.moodboard as unknown) as MoodboardItem[] | null) ?? [],
   };
 
   return (

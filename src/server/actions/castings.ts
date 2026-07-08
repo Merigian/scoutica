@@ -48,6 +48,7 @@ export async function createCasting(data: unknown): Promise<ActionResponse<{ cas
       address: parsed.data.address,
       instructions: parsed.data.instructions,
       materialsRequired: parsed.data.materialsRequired,
+      moodboard: parsed.data.moodboard ?? [],
       status: "DRAFT",
     },
   });
@@ -99,6 +100,7 @@ export async function updateCasting(
       address: parsed.data.address,
       instructions: parsed.data.instructions,
       materialsRequired: parsed.data.materialsRequired,
+      moodboard: parsed.data.moodboard ?? [],
     },
   });
 
