@@ -23,9 +23,13 @@ import { Search, SlidersHorizontal, X, Plane } from "lucide-react";
 interface SearchFiltersProps {
   locale: string;
   advancedFilters: boolean;
+  /** Namespaces the search input id so multiple instances can coexist. */
+  instanceId?: string;
+  /** Render without the outer panel chrome (border/bg/padding) — e.g. inside a sheet. */
+  bare?: boolean;
 }
 
-export function SearchFiltersPanel({ locale, advancedFilters }: SearchFiltersProps) {
+export function SearchFiltersPanel({ locale, advancedFilters, instanceId = "", bare = false }: SearchFiltersProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -34,6 +38,7 @@ export function SearchFiltersPanel({ locale, advancedFilters }: SearchFiltersPro
 
   const lang = locale === "en" ? "en" : "it";
   const t = useTranslations("components.searchFilters");
+  const searchInputId = `discover-search${instanceId ? `-${instanceId}` : ""}`;
 
   const getParam = (key: string) => searchParams.get(key) ?? "";
 
@@ -82,13 +87,13 @@ export function SearchFiltersPanel({ locale, advancedFilters }: SearchFiltersPro
     : [];
 
   return (
-    <div className=" border bg-[var(--bg-soft)]/80 backdrop-blur-sm p-4 sm:p-5 shadow-sm space-y-4">
+    <div className={bare ? "space-y-5" : "hairline bg-[var(--bg-soft)] p-4 sm:p-5 space-y-4"}>
       {/* Search bar + Sort */}
-      <div className="flex gap-3">
-        <div className="relative flex-1">
+      <div className="flex flex-wrap gap-3">
+        <div className="relative min-w-[12rem] flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--ink-3)]" />
           <Input
-            id="discover-search"
+            id={searchInputId}
             placeholder={t("searchPlaceholder")}
             className="pl-9"
             defaultValue={getParam("query")}
@@ -104,13 +109,13 @@ export function SearchFiltersPanel({ locale, advancedFilters }: SearchFiltersPro
           variant="secondary"
           className="shrink-0 px-3"
           onClick={() => {
-            const input = document.getElementById("discover-search") as HTMLInputElement | null;
+            const input = document.getElementById(searchInputId) as HTMLInputElement | null;
             if (input) updateParams({ query: input.value || undefined });
           }}
         >
           <Search className="h-4 w-4" />
         </Button>
-        <div className="w-44 shrink-0">
+        <div className="w-full shrink-0 sm:w-44">
           <Select
             options={[
               { value: "relevance", label: t("sortRelevance") },

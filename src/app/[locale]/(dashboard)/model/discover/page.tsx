@@ -6,7 +6,7 @@ import { db } from "@/lib/db";
 import { searchModelProfiles } from "@/server/queries/model-profiles";
 import { searchFiltersSchema } from "@/lib/validations/search";
 import { ModelCard } from "@/components/discover/model-card";
-import { SearchFiltersPanel } from "@/components/discover/search-filters";
+import { DiscoverFilters } from "@/components/discover/discover-filters";
 import { DiscoverGrid, GridDensitySelector } from "@/components/discover/grid-density-selector";
 import { EmptyState } from "@/components/shared/empty-state";
 import { PageContainer } from "@/components/layout/page-container";
@@ -52,8 +52,8 @@ export default async function ModelDiscoverPage({
 
       <div className="space-y-6">
         {/* Filters */}
-        <Suspense fallback={<div className="h-32 animate-pulse bg-[var(--bg-soft)]" />}>
-          <SearchFiltersPanel locale={locale} advancedFilters={false} />
+        <Suspense fallback={<div className="h-12 animate-pulse bg-[var(--bg-soft)] lg:h-32" />}>
+          <DiscoverFilters locale={locale} advancedFilters={false} />
         </Suspense>
 
         {/* Results Grid */}
@@ -63,7 +63,9 @@ export default async function ModelDiscoverPage({
               <p className="text-sm text-[var(--ink-3)]">
                 {total} {total === 1 ? t("profile") : t("profiles")}
               </p>
-              <GridDensitySelector cols={cols} />
+              <div className="hidden sm:block">
+                <GridDensitySelector cols={cols} />
+              </div>
             </div>
             <DiscoverGrid cols={cols}>
               {profiles.map((profile) => (

@@ -2621,6 +2621,8 @@
     },
     "searchFilters": {
       "searchPlaceholder": "Search by name, city, bio...",
+      "filters": "Filters",
+      "apply": "Show results",
       "sortRelevance": "Relevance",
       "sortRecent": "Most recent",
       "sortCompleteness": "Completeness",
