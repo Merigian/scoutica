@@ -49,6 +49,13 @@ const SLOTS: Record<Role, Slot[]> = {
   ],
 } as const satisfies Record<Role, Slot[]>;
 
+/** Destinations owned by the tab bar — the drawer (overflow menu) hides these. */
+export function tabBarHrefs(role: string): string[] {
+  const slots = SLOTS[role as Role];
+  if (!slots) return [];
+  return slots.filter((s) => s.type !== "center").map((s) => s.href);
+}
+
 /* Per-tab scroll persistence (native tab-bar behavior): the offset of the tab
    root you leave is remembered for the session and restored when you return
    to it via the tab bar. */

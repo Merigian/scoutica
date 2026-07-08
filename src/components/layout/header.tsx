@@ -11,6 +11,7 @@ import { ScouticaWordmark } from "@/components/ui/wordmark";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { LogoMark } from "@/components/ui/logo-mark";
 import { MobileMenu } from "@/components/layout/mobile-menu";
+import { NotificationDot } from "@/components/shared/notification-dot";
 
 export function Header({ hideVerification = false }: { hideVerification?: boolean }) {
   const { data: session } = useSession();
@@ -79,8 +80,9 @@ export function Header({ hideVerification = false }: { hideVerification?: boolea
               </button>
             </div>
             <Button variant="ghost" size="icon" asChild>
-              <Link href={`/${role}/notifications` as never} aria-label={t("notifications")}>
+              <Link href={`/${role}/notifications` as never} aria-label={t("notifications")} className="relative">
                 <Bell className="h-[18px] w-[18px]" />
+                <NotificationDot />
               </Link>
             </Button>
           </div>

@@ -8,6 +8,7 @@ import { Link, useRouter, usePathname } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useBodyScrollLock } from "@/hooks/use-body-scroll-lock";
 import { NAV_ITEMS } from "@/config/site";
+import { tabBarHrefs } from "@/components/layout/mobile-bottom-nav";
 import { Avatar } from "@/components/ui/avatar";
 import { UnreadBadge } from "@/components/shared/unread-badge";
 import {
@@ -34,6 +35,7 @@ import {
   Translate,
   SignOut,
   X,
+  CaretRight,
   type Icon as PhosphorIcon,
 } from "@phosphor-icons/react";
 
@@ -82,8 +84,13 @@ export function MobileMenu({ open, onClose, hideVerification = false }: MobileMe
   if (!session?.user) return null;
 
   const role = session.user.role.toLowerCase() as keyof typeof NAV_ITEMS;
+  // The drawer is the overflow menu: primary journeys live on the tab bar and
+  // are hidden here (admin has no tab bar, so it keeps the full list).
+  const tabHrefs = tabBarHrefs(role);
   const items = (NAV_ITEMS[role] || []).filter(
-    (item) => !(hideVerification && item.key === "verification"),
+    (item) =>
+      !(hideVerification && item.key === "verification") &&
+      !tabHrefs.includes(item.href),
   );
   const isDark = theme !== "light";
   const accountHref = role === "admin" ? undefined : `/${role}/account`;
@@ -154,16 +161,17 @@ export function MobileMenu({ open, onClose, hideVerification = false }: MobileMe
             <Link
               href={accountHref as never}
               onClick={onClose}
-              className="flex items-center gap-3 px-4 py-4 hairline-b transition-colors hover:bg-[var(--bg-soft)]"
+              className="flex items-center gap-3 px-4 py-4 hairline-b transition-colors hover:bg-[var(--bg-soft)] active:bg-[var(--bg-soft)]"
             >
               {identity}
+              <CaretRight className="h-4 w-4 shrink-0 text-[var(--ink-3)]" />
             </Link>
           ) : (
             <div className="flex items-center gap-3 px-4 py-4 hairline-b">{identity}</div>
           )}
 
-          {/* Full navigation */}
-          <nav className="py-2">
+          {/* Overflow navigation — iOS list rows */}
+          <nav>
             {items.map((item) => {
               const Icon = ICONS[item.icon] ?? House;
               const active = pathname.includes(item.href);
@@ -174,7 +182,7 @@ export function MobileMenu({ open, onClose, hideVerification = false }: MobileMe
                   onClick={onClose}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "flex items-center gap-4 px-4 py-3 text-[15px] transition-colors",
+                    "flex min-h-14 items-center gap-4 px-4 py-2 text-[15px] hairline-b transition-colors active:bg-[var(--bg-soft)]",
                     active
                       ? "bg-[var(--bg-soft)] font-medium text-[var(--ink)]"
                       : "text-[var(--ink-2)] hover:bg-[var(--bg-soft)] hover:text-[var(--ink)]",
@@ -185,17 +193,18 @@ export function MobileMenu({ open, onClose, hideVerification = false }: MobileMe
                     {item.key === "messages" && <UnreadBadge />}
                   </span>
                   <span className="flex-1">{t(item.key as never)}</span>
+                  <CaretRight className="h-4 w-4 shrink-0 text-[var(--ink-3)]" />
                 </Link>
               );
             })}
           </nav>
 
           {/* Preferences */}
-          <div className="mt-1 hairline-t py-2">
+          <div className="py-2">
             <button
               type="button"
               onClick={() => setTheme(isDark ? "light" : "dark")}
-              className="flex w-full items-center gap-4 px-4 py-3 text-[15px] text-[var(--ink-2)] transition-colors hover:bg-[var(--bg-soft)] hover:text-[var(--ink)]"
+              className="flex min-h-14 w-full items-center gap-4 px-4 py-2 text-[15px] text-[var(--ink-2)] transition-colors hover:bg-[var(--bg-soft)] hover:text-[var(--ink)] active:bg-[var(--bg-soft)]"
             >
               {mounted && isDark ? (
                 <Sun className="h-[22px] w-[22px] shrink-0" />
@@ -210,7 +219,7 @@ export function MobileMenu({ open, onClose, hideVerification = false }: MobileMe
             <button
               type="button"
               onClick={switchLocale}
-              className="flex w-full items-center gap-4 px-4 py-3 text-[15px] text-[var(--ink-2)] transition-colors hover:bg-[var(--bg-soft)] hover:text-[var(--ink)]"
+              className="flex min-h-14 w-full items-center gap-4 px-4 py-2 text-[15px] text-[var(--ink-2)] transition-colors hover:bg-[var(--bg-soft)] hover:text-[var(--ink)] active:bg-[var(--bg-soft)]"
             >
               <Translate className="h-[22px] w-[22px] shrink-0" />
               <span className="flex-1 text-left">{tAccount("language")}</span>
@@ -226,7 +235,7 @@ export function MobileMenu({ open, onClose, hideVerification = false }: MobileMe
           <button
             type="button"
             onClick={handleSignOut}
-            className="flex w-full items-center justify-center gap-2 hairline border-[var(--rule-strong)] px-4 py-3 text-sm font-medium text-[var(--ink-2)] transition-colors hover:bg-[var(--bg-soft)] hover:text-[var(--ink)]"
+            className="flex min-h-11 w-full items-center justify-center gap-2 hairline border-[var(--rule-strong)] px-4 py-3 text-sm font-medium text-[var(--ink-2)] transition-colors hover:bg-[var(--bg-soft)] hover:text-[var(--ink)] active:bg-[var(--bg-soft)]"
           >
             <SignOut className="h-[18px] w-[18px]" weight="bold" />
             {t("logout")}
