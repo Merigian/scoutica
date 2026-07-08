@@ -90,7 +90,7 @@ export default async function LandingPage() {
             </p>
           </Reveal>
 
-          <ol className="-mx-6 flex snap-x snap-mandatory gap-3 overflow-x-auto touch-pan-x overscroll-x-contain px-6 md:mx-0 md:grid md:grid-cols-3 md:gap-0 md:overflow-visible md:px-0 md:snap-none md:hairline-t [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <ol className="-mx-6 flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain select-none md:select-auto px-6 md:mx-0 md:grid md:grid-cols-3 md:gap-0 md:overflow-visible md:px-0 md:snap-none md:hairline-t [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {(["step1", "step2", "step3"] as const).map((k, i) => (
               <Reveal
                 as="li"
@@ -239,7 +239,7 @@ function BandiSection({
           </p>
         </Reveal>
 
-        <div className="flex md:grid md:grid-cols-3 gap-6 lg:gap-8 overflow-x-auto touch-pan-x overscroll-x-contain md:overflow-visible snap-x snap-mandatory md:snap-none -mx-6 px-6 md:mx-0 md:px-0">
+        <div className="flex md:grid md:grid-cols-3 gap-6 lg:gap-8 overflow-x-auto overscroll-x-contain select-none md:select-auto md:overflow-visible snap-x snap-mandatory md:snap-none -mx-6 px-6 md:mx-0 md:px-0">
           {items.map((b, i) => {
             const isClosing = b.status === "closingSoon";
             return (
