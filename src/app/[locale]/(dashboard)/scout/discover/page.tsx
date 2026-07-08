@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 import { searchModelProfiles } from "@/server/queries/model-profiles";
 import { searchFiltersSchema } from "@/lib/validations/search";
 import { PLAN_LIMITS } from "@/config/plans";
-import { SearchFiltersPanel } from "@/components/discover/search-filters";
+import { DiscoverFilters } from "@/components/discover/discover-filters";
 import { SavedSearchBar } from "@/components/discover/saved-search-bar";
 import { ModelCard } from "@/components/discover/model-card";
 import { Pagination } from "@/components/discover/pagination";
@@ -121,8 +121,8 @@ export default async function DiscoverPage({
       <PageHeader title={t("title")} description={t("description")} className="mb-0" />
 
       {/* Filters */}
-      <Suspense fallback={<div className="h-32 animate-pulse bg-[var(--bg-soft)] " />}>
-        <SearchFiltersPanel locale={locale} advancedFilters={advancedFilters} />
+      <Suspense fallback={<div className="h-12 animate-pulse bg-[var(--bg-soft)] lg:h-32" />}>
+        <DiscoverFilters locale={locale} advancedFilters={advancedFilters} />
       </Suspense>
 
       {/* Saved searches */}
@@ -146,7 +146,9 @@ export default async function DiscoverPage({
             ? `${results.total} ${results.total === 1 ? t("result") : t("results")}`
             : ""}
         </p>
-        <GridDensitySelector cols={cols} />
+        <div className="hidden sm:block">
+          <GridDensitySelector cols={cols} />
+        </div>
       </div>
 
       {/* Results Grid */}
