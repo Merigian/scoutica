@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -81,14 +81,20 @@ function ProfileImage({
   showGradient,
 }: ProfileImageProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const trackRef = useRef<HTMLDivElement>(null);
   const hasMultiple = images.length > 1;
 
   const step = (dir: "prev" | "next") => {
-    setCurrentIndex((prev) =>
+    const el = trackRef.current;
+    const next =
       dir === "next"
-        ? (prev + 1) % images.length
-        : (prev - 1 + images.length) % images.length
-    );
+        ? (currentIndex + 1) % images.length
+        : (currentIndex - 1 + images.length) % images.length;
+    if (el) {
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      el.scrollTo({ left: next * el.clientWidth, behavior: reduce ? "auto" : "smooth" });
+    }
+    setCurrentIndex(next);
   };
 
   const go = (e: React.MouseEvent, dir: "prev" | "next") => {
@@ -97,11 +103,23 @@ function ProfileImage({
     step(dir);
   };
 
+  // Keep dots (and the ±1 slide window) in sync with native swipes.
+  const handleScroll = () => {
+    const el = trackRef.current;
+    if (!el || el.clientWidth === 0) return;
+    const i = Math.round(el.scrollLeft / el.clientWidth);
+    if (i !== currentIndex && i >= 0 && i < images.length) setCurrentIndex(i);
+  };
+
   return (
     <div className="absolute inset-0">
-      {images.length > 0 ? (
+      {images.length === 0 ? (
+        <div className="flex h-full items-center justify-center">
+          <User className="h-10 w-10 text-[var(--ink-3)]/40" />
+        </div>
+      ) : !hasMultiple ? (
         <Image
-          src={images[currentIndex]}
+          src={images[0]}
           alt={alt}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
@@ -109,8 +127,27 @@ function ProfileImage({
           quality={88}
         />
       ) : (
-        <div className="flex h-full items-center justify-center">
-          <User className="h-10 w-10 text-[var(--ink-3)]/40" />
+        // Native swipe: scroll-snap track (no JS physics). Only the current
+        // slide ±1 mounts its image so dense grids stay light.
+        <div
+          ref={trackRef}
+          onScroll={handleScroll}
+          className="flex h-full w-full snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {images.map((src, i) => (
+            <div key={`${src}-${i}`} className="relative h-full w-full shrink-0 snap-start">
+              {Math.abs(i - currentIndex) <= 1 && (
+                <Image
+                  src={src}
+                  alt={i === 0 ? alt : ""}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  sizes={sizes}
+                  quality={88}
+                />
+              )}
+            </div>
+          ))}
         </div>
       )}
 

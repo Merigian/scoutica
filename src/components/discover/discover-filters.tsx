@@ -1,18 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { SlidersHorizontal } from "lucide-react";
+import { Faders } from "@phosphor-icons/react";
 import { BottomSheet } from "@/components/ui/bottom-sheet";
 import { Button } from "@/components/ui/button";
 import { SearchFiltersPanel } from "./search-filters";
 
 /**
- * Responsive shell for the discover filters. On desktop the panel is inline; on
- * mobile it collapses to a single "Filtri" trigger that opens an editorial
- * bottom-sheet holding the exact same controls (no information is lost, just
- * re-housed in a native, thumb-friendly pattern).
+ * Responsive shell for the discover filters. On desktop the panel is inline;
+ * on mobile the trigger is a 44px filter icon (with active-count badge)
+ * portaled into the sticky app header — always one thumb-reach away — that
+ * opens an editorial bottom-sheet holding the exact same controls.
  */
 export function DiscoverFilters({
   locale,
@@ -22,8 +23,13 @@ export function DiscoverFilters({
   advancedFilters: boolean;
 }) {
   const [open, setOpen] = useState(false);
+  const [headerSlot, setHeaderSlot] = useState<HTMLElement | null>(null);
   const searchParams = useSearchParams();
   const t = useTranslations("components.searchFilters");
+
+  useEffect(() => {
+    setHeaderSlot(document.getElementById("scoutica-header-actions"));
+  }, []);
 
   const activeCount = Array.from(searchParams.keys()).filter(
     (k) => !["page", "pageSize", "sortBy", "cols"].includes(k),
@@ -36,39 +42,39 @@ export function DiscoverFilters({
         <SearchFiltersPanel locale={locale} advancedFilters={advancedFilters} instanceId="d" />
       </div>
 
-      {/* Mobile: trigger + bottom-sheet */}
-      <div className="lg:hidden">
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          className="flex min-h-[48px] w-full items-center justify-between gap-3 hairline bg-[var(--bg-soft)] px-4 text-left transition-colors active:bg-[var(--bg-elevated)]"
-          aria-haspopup="dialog"
-          aria-expanded={open}
-        >
-          <span className="flex items-center gap-2.5 font-label text-[12px] uppercase tracking-[0.14em] text-[var(--ink)]">
-            <SlidersHorizontal className="h-4 w-4" />
-            {t("filters")}
-          </span>
-          {activeCount > 0 && (
-            <span className="flex h-6 min-w-6 items-center justify-center bg-[var(--ink)] px-1.5 font-label text-[11px] text-[var(--bg-elevated)]">
-              {activeCount}
-            </span>
-          )}
-        </button>
+      {/* Mobile: header filter icon + bottom-sheet */}
+      {headerSlot &&
+        createPortal(
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-label={t("filters")}
+            aria-haspopup="dialog"
+            aria-expanded={open}
+            className="relative flex h-11 w-11 items-center justify-center text-[var(--ink)] transition-opacity active:opacity-70"
+          >
+            <Faders className="h-[22px] w-[22px]" />
+            {activeCount > 0 && (
+              <span className="absolute right-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center bg-[var(--ink)] px-1 font-label text-[10px] leading-none text-[var(--bg)]">
+                {activeCount}
+              </span>
+            )}
+          </button>,
+          headerSlot,
+        )}
 
-        <BottomSheet
-          open={open}
-          onClose={() => setOpen(false)}
-          title={t("filters")}
-          footer={
-            <Button className="w-full" size="lg" onClick={() => setOpen(false)}>
-              {t("apply")}
-            </Button>
-          }
-        >
-          <SearchFiltersPanel locale={locale} advancedFilters={advancedFilters} instanceId="m" bare />
-        </BottomSheet>
-      </div>
+      <BottomSheet
+        open={open}
+        onClose={() => setOpen(false)}
+        title={t("filters")}
+        footer={
+          <Button className="w-full" size="lg" onClick={() => setOpen(false)}>
+            {t("apply")}
+          </Button>
+        }
+      >
+        <SearchFiltersPanel locale={locale} advancedFilters={advancedFilters} instanceId="m" bare />
+      </BottomSheet>
     </>
   );
 }

@@ -121,7 +121,7 @@ export default async function DiscoverPage({
       <PageHeader title={t("title")} description={t("description")} className="mb-0" />
 
       {/* Filters */}
-      <Suspense fallback={<div className="h-12 animate-pulse bg-[var(--bg-soft)] lg:h-32" />}>
+      <Suspense fallback={<div className="hidden animate-shimmer lg:block lg:h-32" />}>
         <DiscoverFilters locale={locale} advancedFilters={advancedFilters} />
       </Suspense>
 
@@ -152,6 +152,8 @@ export default async function DiscoverPage({
       {/* Results Grid */}
       {results.profiles.length > 0 ? (
         <>
+          {/* Edge-to-edge gallery on mobile; padded column returns at lg */}
+          <div className="-mx-4 lg:mx-0">
           <DiscoverGrid cols={cols}>
             {results.profiles.map((profile) => {
               const contact = contactByModelId.get(profile.id) ?? null;
@@ -169,6 +171,7 @@ export default async function DiscoverPage({
               );
             })}
           </DiscoverGrid>
+          </div>
 
           <Pagination
             page={results.page}

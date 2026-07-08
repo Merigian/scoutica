@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -25,6 +26,15 @@ export function Pagination({ page, totalPages, total, locale }: PaginationProps)
     params.set("page", String(p));
     router.push(`${pathname}?${params.toString()}`);
   };
+
+  // Warm the next page so paging forward feels instant on mobile.
+  const hasNext = page < totalPages;
+  useEffect(() => {
+    if (!hasNext) return;
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", String(page + 1));
+    router.prefetch(`${pathname}?${params.toString()}`);
+  }, [hasNext, page, pathname, router, searchParams]);
 
   if (totalPages <= 1) return null;
 

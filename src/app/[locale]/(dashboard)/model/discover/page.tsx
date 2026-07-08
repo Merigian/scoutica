@@ -52,7 +52,7 @@ export default async function ModelDiscoverPage({
 
       <div className="space-y-6">
         {/* Filters */}
-        <Suspense fallback={<div className="h-12 animate-pulse bg-[var(--bg-soft)] lg:h-32" />}>
+        <Suspense fallback={<div className="hidden animate-shimmer lg:block lg:h-32" />}>
           <DiscoverFilters locale={locale} advancedFilters={false} />
         </Suspense>
 
@@ -65,6 +65,8 @@ export default async function ModelDiscoverPage({
               </p>
               <GridDensitySelector cols={cols} />
             </div>
+            {/* Edge-to-edge gallery on mobile; padded column returns at lg */}
+            <div className="-mx-4 sm:-mx-6 lg:mx-0">
             <DiscoverGrid cols={cols}>
               {profiles.map((profile) => (
                 <ModelCard
@@ -76,6 +78,7 @@ export default async function ModelDiscoverPage({
                 />
               ))}
             </DiscoverGrid>
+            </div>
           </>
         ) : (
           <EmptyState

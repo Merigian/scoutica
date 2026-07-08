@@ -67,6 +67,12 @@ export function Header({ hideVerification = false }: { hideVerification?: boolea
           />
         </div>
 
+        {/* Page-contextual actions (e.g. discover's filter icon) portal here */}
+        <div
+          id="scoutica-header-actions"
+          className="lg:hidden flex items-center empty:hidden"
+        />
+
         {session?.user && (
           <div className="flex items-center gap-1">
             <div className="hidden lg:flex items-center gap-1">
