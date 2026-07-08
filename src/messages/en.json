@@ -2293,6 +2293,8 @@
       "ethnicity": "Ethnicity",
       "languages": "Languages",
       "travel": "Available to travel",
+      "viewProfile": "View profile",
+      "moreActions": "More actions",
       "addToFavorites": "Add to favorites",
       "removeFromFavorites": "Remove from favorites",
       "contact": "Contact",
@@ -2561,6 +2563,8 @@
       "today": "Today"
     },
     "studioFilters": {
+      "filters": "Filters",
+      "apply": "Apply",
       "searchPlaceholder": "Search by name, city...",
       "allRegions": "All regions",
       "allTypes": "All types",

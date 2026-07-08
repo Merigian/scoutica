@@ -59,6 +59,7 @@ export default async function BrowseStudiosPage({
         lang={lang}
         studioTypes={studioTypes}
         regions={ALL_REGION_NAMES}
+        basePath="/browse-studios"
         initialQuery={(resolvedParams.q as string) || ""}
         initialRegion={(resolvedParams.region as string) || ""}
         initialType={(resolvedParams.type as string) || ""}

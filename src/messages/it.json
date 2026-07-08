@@ -2293,6 +2293,8 @@
       "ethnicity": "Etnia",
       "languages": "Lingue",
       "travel": "Disponibile a viaggiare",
+      "viewProfile": "Vedi profilo",
+      "moreActions": "Altre azioni",
       "addToFavorites": "Aggiungi ai preferiti",
       "removeFromFavorites": "Rimuovi dai preferiti",
       "contact": "Contatta",
@@ -2561,6 +2563,8 @@
       "today": "Oggi"
     },
     "studioFilters": {
+      "filters": "Filtri",
+      "apply": "Applica",
       "searchPlaceholder": "Cerca per nome, città...",
       "allRegions": "Tutte le regioni",
       "allTypes": "Tutti i tipi",

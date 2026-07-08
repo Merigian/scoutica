@@ -36,12 +36,19 @@ import {
   Bookmark,
   MessageCircle,
 } from "lucide-react";
+import {
+  BookmarkSimple,
+  ChatCircle,
+  DotsThree,
+  UserCircle,
+} from "@phosphor-icons/react";
 import { VerifiedBadge } from "@/components/ui/verified-badge";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { useLiveCols } from "@/components/discover/grid-density-selector";
 import { toggleProfileBookmark } from "@/server/actions/profile-engagement";
 import { ContactRequestForm } from "@/components/forms/contact-request-form";
+import { ActionSheet, type ActionSheetAction } from "@/components/ui/action-sheet";
 
 interface ModelCardProps {
   profile: ModelProfileCard;
@@ -285,37 +292,50 @@ interface GridBookmarkButtonProps {
   profileId: string;
   locale: string;
   isAuthenticated: boolean;
-  initialSaved: boolean;
+  saved: boolean;
+  onSavedChange: (saved: boolean) => void;
 }
 
-function GridBookmarkButton({
+/** Optimistic bookmark toggle shared by the grid overlay and the context sheet. */
+function useBookmarkToggle({
   profileId,
   locale,
   isAuthenticated,
-  initialSaved,
+  saved,
+  onSavedChange,
 }: GridBookmarkButtonProps) {
-  const t = useTranslations("components.discover");
   const router = useRouter();
-  const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
 
-  const handleBookmark = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const toggle = () => {
     if (!isAuthenticated) {
       router.push(`/${locale}/login`);
       return;
     }
     const next = !saved;
-    setSaved(next);
+    onSavedChange(next);
     startTransition(async () => {
       const res = await toggleProfileBookmark(profileId);
       if (res.success && res.data) {
-        setSaved(res.data.saved);
+        onSavedChange(res.data.saved);
       } else {
-        setSaved(!next);
+        onSavedChange(!next);
       }
     });
+  };
+
+  return { toggle, isPending };
+}
+
+function GridBookmarkButton(props: GridBookmarkButtonProps) {
+  const t = useTranslations("components.discover");
+  const { saved } = props;
+  const { toggle, isPending } = useBookmarkToggle(props);
+
+  const handleBookmark = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggle();
   };
 
   const label = saved ? t("removeFromFavorites") : t("addToFavorites");
@@ -342,6 +362,118 @@ function GridBookmarkButton({
   );
 }
 
+interface GridCardActionsProps extends GridBookmarkButtonProps {
+  profileName: string;
+  slug: string;
+  showSave: boolean;
+  canContact: boolean;
+  contactStatus: ContactRequestStatus | null;
+  conversationId: string | null;
+}
+
+/**
+ * Mobile "…" on grid cards → iOS context sheet (view profile / save /
+ * contact). Wrapped so sheet taps never bubble into the card's Link.
+ */
+function GridCardActions(props: GridCardActionsProps) {
+  const {
+    profileId,
+    profileName,
+    slug,
+    locale,
+    saved,
+    showSave,
+    canContact,
+    contactStatus,
+    conversationId,
+  } = props;
+  const t = useTranslations("components.discover");
+  const tCommon = useTranslations("common");
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
+  const { toggle, isPending } = useBookmarkToggle(props);
+
+  const iconCls = "h-[22px] w-[22px]";
+  const contactLabel =
+    contactStatus === "ACCEPTED"
+      ? t("goToChat")
+      : contactStatus === "PENDING"
+        ? t("requestPending")
+        : t("contact");
+
+  const actions: ActionSheetAction[] = [
+    {
+      key: "view",
+      label: t("viewProfile"),
+      icon: <UserCircle className={iconCls} />,
+      onSelect: () => router.push(`/${locale}/profile/${slug}`),
+    },
+    ...(showSave
+      ? [
+          {
+            key: "save",
+            label: saved ? t("removeFromFavorites") : t("addToFavorites"),
+            icon: <BookmarkSimple className={iconCls} weight={saved ? "fill" : "regular"} />,
+            disabled: isPending,
+            onSelect: toggle,
+          },
+        ]
+      : []),
+    ...(canContact
+      ? [
+          {
+            key: "contact",
+            label: contactLabel,
+            icon: <ChatCircle className={iconCls} />,
+            disabled: contactStatus === "PENDING",
+            onSelect: () => {
+              if (contactStatus === "ACCEPTED" && conversationId) {
+                router.push(`/${locale}/scout/messages?chat=${conversationId}`);
+              } else {
+                setContactOpen(true);
+              }
+            },
+          },
+        ]
+      : []),
+  ];
+
+  return (
+    <span className="contents" onClick={(e) => e.stopPropagation()}>
+      <button
+        type="button"
+        aria-label={t("moreActions")}
+        aria-haspopup="dialog"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setOpen(true);
+        }}
+        className="-mr-1.5 -mt-2 flex h-11 w-11 shrink-0 items-center justify-center text-[var(--ink-3)] transition-colors active:text-[var(--ink)] lg:hidden"
+      >
+        <DotsThree className="h-6 w-6" weight="bold" />
+      </button>
+      <ActionSheet
+        open={open}
+        onClose={() => setOpen(false)}
+        title={profileName}
+        actions={actions}
+        cancelLabel={tCommon("cancel")}
+      />
+      {canContact && (
+        <ContactRequestForm
+          modelProfileId={profileId}
+          modelName={profileName}
+          locale={locale}
+          open={contactOpen}
+          onOpenChange={setContactOpen}
+        />
+      )}
+    </span>
+  );
+}
+
 export function ModelCard({
   profile,
   locale,
@@ -356,6 +488,7 @@ export function ModelCard({
   const lang = locale === "en" ? "en" : "it";
   const t = useTranslations("components.discover");
   const cols = useLiveCols(4);
+  const [gridSaved, setGridSaved] = useState(initialSaved);
   const age = profile.dateOfBirth ? calculateAge(profile.dateOfBirth) : null;
   const images =
     profile.images.length > 0
@@ -637,7 +770,8 @@ export function ModelCard({
               profileId={profile.id}
               locale={locale}
               isAuthenticated={isAuthenticated}
-              initialSaved={initialSaved}
+              saved={gridSaved}
+              onSavedChange={setGridSaved}
             />
           )}
           <span
@@ -646,25 +780,40 @@ export function ModelCard({
           />
         </div>
 
-        <div className="space-y-1.5 px-1 pt-3">
-          <div className="flex min-w-0 items-center gap-1.5">
-            <h3 className="truncate font-display text-[1.0625rem] font-medium leading-snug tracking-[-0.01em] text-[var(--ink)]">
-              {name}
-            </h3>
-            {profile.isVerified && (
-              <VerifiedBadge
-                size={15}
-                className="shrink-0 text-[var(--ink-2)]"
-                aria-label={verifiedRealLabel}
-              />
+        <div className="flex items-start justify-between gap-1 px-1 pt-3">
+          <div className="min-w-0 flex-1 space-y-1.5">
+            <div className="flex min-w-0 items-center gap-1.5">
+              <h3 className="truncate font-display text-[1.0625rem] font-medium leading-snug tracking-[-0.01em] text-[var(--ink)]">
+                {name}
+              </h3>
+              {profile.isVerified && (
+                <VerifiedBadge
+                  size={15}
+                  className="shrink-0 text-[var(--ink-2)]"
+                  aria-label={verifiedRealLabel}
+                />
+              )}
+            </div>
+
+            {gridMeta && (
+              <p className="text-meta text-[var(--ink-3)]" suppressHydrationWarning>
+                {gridMeta}
+              </p>
             )}
           </div>
-
-          {gridMeta && (
-            <p className="text-meta text-[var(--ink-3)]" suppressHydrationWarning>
-              {gridMeta}
-            </p>
-          )}
+          <GridCardActions
+            profileId={profile.id}
+            profileName={name}
+            slug={profile.slug}
+            locale={locale}
+            isAuthenticated={isAuthenticated}
+            saved={gridSaved}
+            onSavedChange={setGridSaved}
+            showSave={showSave}
+            canContact={canContact}
+            contactStatus={contactStatus}
+            conversationId={conversationId}
+          />
         </div>
       </Card>
     </Link>
