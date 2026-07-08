@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { publishStudio, pauseStudio, deleteStudio } from "@/server/actions/studios";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useConfirmSheet } from "@/components/ui/confirm-sheet";
 import { STUDIO_STATUS_LABELS } from "@/config/enums";
 import type { StudioStatus } from "@prisma/client";
 import { Globe, Pause, Trash2, ExternalLink } from "lucide-react";
@@ -23,10 +24,12 @@ interface StudioPublishBarProps {
 export function StudioPublishBar({ studio }: StudioPublishBarProps) {
   const router = useRouter();
   const t = useTranslations("components.studioPublish");
+  const tCommon = useTranslations("common");
   const locale = useLocale();
   const lang = (locale === "en" ? "en" : "it") as "it" | "en";
   const [loading, setLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const { confirmSheet, requestConfirm } = useConfirmSheet();
 
   const handlePublish = async () => {
     setLoading("publish");
@@ -48,14 +51,21 @@ export function StudioPublishBar({ studio }: StudioPublishBarProps) {
   };
 
   const handleDelete = async () => {
-    if (!confirm(t("deleteConfirm"))) return;
-    setLoading("delete");
-    await deleteStudio(studio.id);
-    router.push("/studio/studios");
+    requestConfirm({
+      title: t("deleteConfirm"),
+      actionLabel: tCommon("delete"),
+      cancelLabel: tCommon("cancel"),
+      onConfirm: async () => {
+        setLoading("delete");
+        await deleteStudio(studio.id);
+        router.push("/studio/studios");
+      },
+    });
   };
 
   return (
     <div className="space-y-3 border-b pb-4">
+      {confirmSheet}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
         <h1 className="text-h2">{studio.name}</h1>

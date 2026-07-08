@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Camera, Star, Trash2, Plus, Loader2 } from "lucide-react";
 import { ImageCropper } from "@/components/ui/image-cropper";
+import { useConfirmSheet } from "@/components/ui/confirm-sheet";
 import { uploadFileWithProgress } from "@/lib/upload-with-progress";
 
 interface ProfilePhoto {
@@ -26,6 +27,8 @@ interface ProfilePhotosProps {
 export function ProfilePhotos({ photos, maxPhotos = 3 }: ProfilePhotosProps) {
   const router = useRouter();
   const t = useTranslations("components.profilePhotos");
+  const tCommon = useTranslations("common");
+  const { confirmSheet, requestConfirm } = useConfirmSheet();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -102,29 +105,36 @@ export function ProfilePhotos({ photos, maxPhotos = 3 }: ProfilePhotosProps) {
   };
 
   const handleDelete = async (imageId: string) => {
-    if (!confirm(t("deleteConfirm"))) return;
-    setActionLoading(imageId);
-    setError(null);
-    try {
-      const res = await fetch("/api/portfolio/delete", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ imageId }),
-      });
-      const data = await res.json();
-      if (!data.success) setError(data.error || t("error"));
-      router.refresh();
-    } catch {
-      setError(t("error"));
-    } finally {
-      setActionLoading(null);
-    }
+    requestConfirm({
+      title: t("deleteConfirm"),
+      actionLabel: t("delete"),
+      cancelLabel: tCommon("cancel"),
+      onConfirm: async () => {
+        setActionLoading(imageId);
+        setError(null);
+        try {
+          const res = await fetch("/api/portfolio/delete", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ imageId }),
+          });
+          const data = await res.json();
+          if (!data.success) setError(data.error || t("error"));
+          router.refresh();
+        } catch {
+          setError(t("error"));
+        } finally {
+          setActionLoading(null);
+        }
+      },
+    });
   };
 
   const emptySlots = Math.max(0, maxPhotos - photos.length);
 
   return (
     <Card>
+      {confirmSheet}
       <CardHeader>
         <CardTitle className="text-xl flex items-center gap-2">
           <Camera className="h-5 w-5" />

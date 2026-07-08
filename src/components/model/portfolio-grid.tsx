@@ -27,6 +27,7 @@ import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/shared/empty-state";
 import { deletePortfolioImage, setCoverImage, reorderImages } from "@/server/actions/portfolio";
 import { ImageCropper } from "@/components/ui/image-cropper";
+import { useConfirmSheet } from "@/components/ui/confirm-sheet";
 import { uploadFileWithProgress } from "@/lib/upload-with-progress";
 import { Star, Trash2, Upload, Images, GripVertical } from "lucide-react";
 
@@ -43,6 +44,8 @@ interface PortfolioImage {
 export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImage[]; maxPhotos?: number }) {
   const router = useRouter();
   const t = useTranslations("components.portfolio");
+  const tCommon = useTranslations("common");
+  const { confirmSheet, requestConfirm } = useConfirmSheet();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -139,9 +142,14 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
   };
 
   const handleDelete = async (imageId: string) => {
-    if (!confirm(t("deleteConfirm"))) return;
-    await deletePortfolioImage(imageId);
-    router.refresh();
+    requestConfirm({
+      title: t("deleteConfirm"),
+      actionLabel: tCommon("delete"),
+      cancelLabel: tCommon("cancel"),
+      onConfirm: () => {
+        void deletePortfolioImage(imageId).then(() => router.refresh());
+      },
+    });
   };
 
   const handleSetCover = async (imageId: string) => {
@@ -216,6 +224,7 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
 
   return (
     <div className="space-y-6">
+      {confirmSheet}
       {fileInput}
       <div className="flex justify-end">
         <Button onClick={openPicker} isLoading={uploading} disabled={images.length >= maxPhotos}>

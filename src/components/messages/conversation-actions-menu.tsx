@@ -14,8 +14,20 @@ import {
   UserRound,
   type LucideIcon,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import {
+  Archive as PhArchive,
+  Bell as PhBell,
+  BellSlash as PhBellSlash,
+  Flag as PhFlag,
+  PushPin,
+  PushPinSlash,
+  Trash as PhTrash,
+  UserCircle as PhUserCircle,
+} from "@phosphor-icons/react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { ActionSheet, type ActionSheetAction } from "@/components/ui/action-sheet";
+import { useIsDesktop } from "@/hooks/use-is-desktop";
 
 interface MenuAction {
   key: string;
@@ -52,8 +64,10 @@ export function ConversationActionsMenu({
   onDelete,
 }: ConversationActionsMenuProps) {
   const t = useTranslations("components.messaging");
+  const isDesktop = useIsDesktop();
   const [open, setOpen] = useState(false);
   const [confirmKey, setConfirmKey] = useState<"delete" | null>(null);
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
@@ -141,6 +155,38 @@ export function ConversationActionsMenu({
     },
   ];
 
+  // Mobile: iOS context sheet with Phosphor icons; delete goes through a
+  // nested destructive confirm sheet.
+  const phosphorFor = (key: string): ReactNode => {
+    const cls = "h-[22px] w-[22px]";
+    switch (key) {
+      case "profile":
+        return <PhUserCircle className={cls} />;
+      case "pin":
+        return isPinned ? <PushPinSlash className={cls} /> : <PushPin className={cls} />;
+      case "archive":
+        return <PhArchive className={cls} />;
+      case "mute":
+        return isMuted ? <PhBell className={cls} /> : <PhBellSlash className={cls} />;
+      case "report":
+        return <PhFlag className={cls} />;
+      case "delete":
+        return <PhTrash className={cls} />;
+      default:
+        return null;
+    }
+  };
+
+  const sheetActions: ActionSheetAction[] = actions.map((a) => ({
+    key: a.key,
+    label: a.label,
+    destructive: a.destructive,
+    disabled: a.disabled,
+    icon: phosphorFor(a.key),
+    onSelect:
+      a.key === "delete" ? () => setConfirmDeleteOpen(true) : a.onSelect,
+  }));
+
   return (
     <div ref={containerRef} className="relative">
       <button
@@ -158,7 +204,32 @@ export function ConversationActionsMenu({
         <MoreHorizontal className="h-4 w-4" />
       </button>
 
-      {open && (
+      {!isDesktop && (
+        <>
+          <ActionSheet
+            open={open}
+            onClose={() => setOpen(false)}
+            actions={sheetActions}
+            cancelLabel={t("cancel")}
+          />
+          <ActionSheet
+            open={confirmDeleteOpen}
+            onClose={() => setConfirmDeleteOpen(false)}
+            title={t("confirmDelete")}
+            actions={[
+              {
+                key: "delete",
+                label: t("deleteChat"),
+                destructive: true,
+                onSelect: onDelete,
+              },
+            ]}
+            cancelLabel={t("cancel")}
+          />
+        </>
+      )}
+
+      {isDesktop && open && (
         <div
           role="menu"
           aria-label={t("actions")}
