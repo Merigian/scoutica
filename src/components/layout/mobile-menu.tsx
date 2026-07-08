@@ -142,7 +142,7 @@ export function MobileMenu({ open, onClose, hideVerification = false }: MobileMe
             type="button"
             aria-label={t("close")}
             onClick={onClose}
-            className="-mr-2 p-2 text-[var(--ink-3)] transition-colors hover:text-[var(--ink)]"
+            className="-mr-2 flex h-11 w-11 items-center justify-center text-[var(--ink-3)] transition-colors hover:text-[var(--ink)]"
           >
             <X className="h-5 w-5" />
           </button>

@@ -188,7 +188,7 @@ export function MessageThreadView({
                 onClick={loadOlder}
                 disabled={loadingOlder}
                 className={cn(
-                  "inline-flex items-center gap-2 rounded-full bg-[var(--bg-soft)] px-4 py-2",
+                  "inline-flex min-h-11 items-center gap-2 rounded-full bg-[var(--bg-soft)] px-4 py-2 lg:min-h-0",
                   "text-[12px] font-medium text-[var(--ink-2)] hover:bg-[var(--bg-soft)]/70 hover:text-[var(--ink)] transition-colors",
                   loadingOlder && "opacity-60 cursor-wait"
                 )}
@@ -273,7 +273,7 @@ export function MessageThreadView({
                             <button
                               type="button"
                               onClick={() => void handleRetry(msg.id)}
-                              className="text-[var(--ink)] underline-offset-4 hover:underline"
+                              className="p-2 -m-2 text-[var(--ink)] underline-offset-4 hover:underline"
                             >
                               {t("retry")}
                             </button>
@@ -315,7 +315,7 @@ export function MessageThreadView({
             }
             aria-label={t("scrollToBottom")}
             className={cn(
-              "sticky bottom-4 ml-auto mr-4 mb-2 flex items-center gap-2 rounded-full px-4 py-2",
+              "sticky bottom-4 ml-auto mr-4 mb-2 flex min-h-11 items-center gap-2 rounded-full px-4 py-2 lg:min-h-0",
               "bg-[var(--accent)] text-[var(--bg)] shadow-md hover:opacity-90 transition-opacity",
               "text-[12px] font-medium"
             )}

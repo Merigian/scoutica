@@ -239,7 +239,7 @@ function RowActions({
             aria-label={bookmarkLabel}
             title={bookmarkLabel}
             className={cn(
-              "flex h-10 w-10 items-center justify-center border border-[var(--rule)] bg-[var(--bg)] transition-colors",
+              "flex h-11 w-11 items-center justify-center border border-[var(--rule)] bg-[var(--bg)] transition-colors lg:h-10 lg:w-10",
               "hover:border-[var(--rule-strong)] hover:bg-[var(--bg-soft)]",
               saved ? "text-[var(--accent)]" : "text-[var(--ink-2)]",
               isPending && "opacity-60"
@@ -256,7 +256,7 @@ function RowActions({
             aria-label={contactLabel}
             title={contactLabel}
             className={cn(
-              "flex h-10 w-10 items-center justify-center border border-[var(--rule)] bg-[var(--bg)] transition-colors",
+              "flex h-11 w-11 items-center justify-center border border-[var(--rule)] bg-[var(--bg)] transition-colors lg:h-10 lg:w-10",
               "hover:border-[var(--rule-strong)] hover:bg-[var(--bg-soft)]",
               contactStatus === "ACCEPTED"
                 ? "text-[var(--accent)]"
@@ -328,7 +328,7 @@ function GridBookmarkButton({
       aria-label={label}
       title={label}
       className={cn(
-        "absolute right-1.5 top-1.5 z-20 flex h-7 w-7 items-center justify-center",
+        "absolute right-0 top-0 z-20 flex h-11 w-11 items-center justify-center",
         "transition-[opacity,transform,color] duration-150 hover:scale-110 active:scale-95",
         saved ? "text-[var(--accent-soft)]" : "text-white",
         !saved &&

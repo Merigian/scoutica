@@ -334,7 +334,7 @@ export function SearchFiltersPanel({ locale, advancedFilters, instanceId = "", b
                     const current = getParam("travelAvailability");
                     updateParams({ travelAvailability: current === "true" ? undefined : "true" });
                   }}
-                  className={`flex items-center gap-2 h-9 px-3 rounded-md border text-sm transition-colors w-full justify-center ${
+                  className={`flex items-center gap-2 h-11 lg:h-9 px-3 rounded-md border text-sm transition-colors w-full justify-center ${
                     getParam("travelAvailability") === "true"
                       ? "bg-[var(--ink)]/10 border-[var(--ink)] text-[var(--ink-2)] font-medium"
                       : "border-[var(--rule)] text-[var(--ink-3)] hover:bg-[var(--bg-soft)] hover:text-[var(--ink)]"

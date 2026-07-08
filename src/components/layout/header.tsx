@@ -41,7 +41,7 @@ export function Header({ hideVerification = false }: { hideVerification?: boolea
           </button>
         )}
 
-        <Link href={"/dashboard" as never} className="lg:hidden flex items-center gap-2 text-[var(--ink)]" aria-label="Scoutica">
+        <Link href={"/dashboard" as never} className="lg:hidden flex h-11 items-center gap-2 text-[var(--ink)]" aria-label="Scoutica">
           <LogoMark size="sm" />
           <ScouticaWordmark size="sm" />
         </Link>

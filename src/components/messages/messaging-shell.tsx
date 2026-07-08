@@ -260,7 +260,7 @@ export function MessagingShell({
                   type="button"
                   onClick={handleBack}
                   aria-label={t("backToList")}
-                  className="flex h-9 w-9 items-center justify-center text-[var(--ink-2)] hover:text-[var(--ink)] lg:hidden"
+                  className="-ml-1 flex h-11 w-11 items-center justify-center text-[var(--ink-2)] hover:text-[var(--ink)] lg:hidden"
                 >
                   <ArrowLeft className="h-4 w-4" />
                 </button>
@@ -288,7 +288,7 @@ export function MessagingShell({
                     thread.otherUser.slug ? (
                       <Link
                         href={`/m/${thread.otherUser.slug}`}
-                        className="text-[12px] text-[var(--accent)] hover:underline"
+                        className="inline-flex items-center py-2 -my-2 text-[12px] text-[var(--accent)] hover:underline"
                       >
                         {t("openProfile")}
                       </Link>
@@ -302,7 +302,7 @@ export function MessagingShell({
                       setView(view === "profile" ? "thread" : "profile")
                     }
                     aria-label={t("openProfile")}
-                    className="flex h-9 w-9 items-center justify-center rounded-full text-[var(--ink-2)] hover:bg-[var(--bg-soft)] hover:text-[var(--ink)] lg:hidden"
+                    className="flex h-11 w-11 items-center justify-center rounded-full text-[var(--ink-2)] hover:bg-[var(--bg-soft)] hover:text-[var(--ink)] lg:hidden"
                   >
                     <Info className="h-4 w-4" />
                   </button>

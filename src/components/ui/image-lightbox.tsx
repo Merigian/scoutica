@@ -63,7 +63,7 @@ export function ImageLightbox({ images, initialIndex = 0, open, onClose }: Image
       {/* Close */}
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 z-10 rounded-full bg-white/10 hover:bg-white/20 p-2 text-white transition-colors"
+        className="absolute top-4 right-4 z-10 rounded-full bg-white/10 hover:bg-white/20 p-3 lg:p-2 text-white transition-colors"
         aria-label="Close"
       >
         <X className="h-6 w-6" />
@@ -81,7 +81,7 @@ export function ImageLightbox({ images, initialIndex = 0, open, onClose }: Image
             e.stopPropagation();
             goPrev();
           }}
-          className="absolute left-3 z-10 rounded-full bg-white/10 hover:bg-white/20 p-2 text-white transition-colors"
+          className="absolute left-3 z-10 rounded-full bg-white/10 hover:bg-white/20 p-3 lg:p-2 text-white transition-colors"
           aria-label="Previous"
         >
           <ChevronLeft className="h-6 w-6" />
@@ -110,7 +110,7 @@ export function ImageLightbox({ images, initialIndex = 0, open, onClose }: Image
             e.stopPropagation();
             goNext();
           }}
-          className="absolute right-3 z-10 rounded-full bg-white/10 hover:bg-white/20 p-2 text-white transition-colors"
+          className="absolute right-3 z-10 rounded-full bg-white/10 hover:bg-white/20 p-3 lg:p-2 text-white transition-colors"
           aria-label="Next"
         >
           <ChevronRight className="h-6 w-6" />
@@ -119,7 +119,7 @@ export function ImageLightbox({ images, initialIndex = 0, open, onClose }: Image
 
       {/* Dots */}
       {images.length > 1 && images.length <= 20 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex">
           {images.map((_, i) => (
             <button
               key={i}
@@ -127,13 +127,17 @@ export function ImageLightbox({ images, initialIndex = 0, open, onClose }: Image
                 e.stopPropagation();
                 setCurrentIndex(i);
               }}
-              className={`h-1.5 rounded-full transition-all ${
-                i === currentIndex
-                  ? "w-6 bg-white"
-                  : "w-1.5 bg-white/40 hover:bg-white/60"
-              }`}
+              className="flex h-11 items-center px-[3px]"
               aria-label={`Go to image ${i + 1}`}
-            />
+            >
+              <span
+                className={`h-1.5 rounded-full transition-all ${
+                  i === currentIndex
+                    ? "w-6 bg-white"
+                    : "w-1.5 bg-white/40 hover:bg-white/60"
+                }`}
+              />
+            </button>
           ))}
         </div>
       )}

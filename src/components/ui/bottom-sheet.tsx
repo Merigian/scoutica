@@ -113,30 +113,31 @@ export function BottomSheet({
               if (info.offset.y > 120 || info.velocity.y > 600) onClose();
             }}
           >
-            {/* Drag handle — grab to pull the sheet down and dismiss */}
+            {/* Drag zone — handle + header row both grab the sheet (buttons excluded) */}
             <div
               onPointerDown={(e) => {
-                if (!reduce) dragControls.start(e);
+                if (reduce) return;
+                if ((e.target as HTMLElement).closest("button")) return;
+                dragControls.start(e);
               }}
-              className="flex shrink-0 cursor-grab touch-none justify-center pt-3 pb-2 active:cursor-grabbing"
-              aria-hidden="true"
+              className="shrink-0 cursor-grab touch-none active:cursor-grabbing"
             >
-              <span className="h-1 w-10 rounded-full bg-[var(--rule-strong)]" />
-            </div>
+              <div className="flex justify-center pt-3 pb-2" aria-hidden="true">
+                <span className="h-1 w-10 rounded-full bg-[var(--rule-strong)]" />
+              </div>
 
-            {(title || true) && (
-              <div className="flex shrink-0 items-center justify-between gap-3 px-5 pb-3">
+              <div className="flex items-center justify-between gap-3 px-5 pb-3">
                 <div className="min-w-0 text-eyebrow">{title}</div>
                 <button
                   type="button"
                   aria-label="Close"
                   onClick={onClose}
-                  className="-mr-2 flex h-10 w-10 items-center justify-center text-[var(--ink-3)] transition-colors hover:text-[var(--ink)]"
+                  className="-mr-2.5 flex h-11 w-11 items-center justify-center text-[var(--ink-3)] transition-colors hover:text-[var(--ink)]"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
-            )}
+            </div>
 
             <div className="flex-1 overflow-y-auto overscroll-contain px-5 pb-5">
               {children}

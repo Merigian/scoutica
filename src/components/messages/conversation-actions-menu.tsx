@@ -151,7 +151,7 @@ export function ConversationActionsMenu({
         aria-expanded={open}
         aria-label={t("actions")}
         className={cn(
-          "flex h-9 w-9 items-center justify-center transition-colors",
+          "flex h-11 w-11 items-center justify-center transition-colors lg:h-9 lg:w-9",
           "text-[var(--ink-2)] hover:bg-[var(--bg-soft)] hover:text-[var(--ink)]"
         )}
       >
@@ -176,7 +176,7 @@ export function ConversationActionsMenu({
                 <button
                   type="button"
                   onClick={() => setConfirmKey(null)}
-                  className="px-3 py-1.5 text-[12px] font-medium text-[var(--ink-2)] hover:text-[var(--ink)] transition-colors"
+                  className="min-h-11 px-3 py-1.5 text-[12px] font-medium text-[var(--ink-2)] hover:text-[var(--ink)] transition-colors lg:min-h-0"
                 >
                   {t("cancel")}
                 </button>
@@ -187,7 +187,7 @@ export function ConversationActionsMenu({
                     setOpen(false);
                     onDelete();
                   }}
-                  className="bg-[var(--ink)] px-3 py-1.5 text-[12px] font-medium text-[var(--bg-elevated)] hover:bg-[var(--ink-2)] transition-colors"
+                  className="min-h-11 bg-[var(--ink)] px-3 py-1.5 text-[12px] font-medium text-[var(--bg-elevated)] hover:bg-[var(--ink-2)] transition-colors lg:min-h-0"
                 >
                   {t("confirm")}
                 </button>
@@ -213,7 +213,7 @@ export function ConversationActionsMenu({
                       onClick={a.onSelect}
                       disabled={a.disabled}
                       className={cn(
-                        "flex w-full items-center gap-3 px-4 py-2.5 text-left text-[13px]",
+                        "flex w-full items-center gap-3 px-4 py-3.5 text-left text-[13px] lg:py-2.5",
                         "hover:bg-[var(--bg-soft)] transition-colors",
                         "disabled:opacity-40 disabled:cursor-not-allowed",
                         a.destructive

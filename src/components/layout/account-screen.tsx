@@ -99,7 +99,7 @@ export function AccountScreen({ publicHref, photos = [] }: AccountScreenProps) {
             {editHref && (
               <Link
                 href={editHref as never}
-                className="flex flex-1 items-center justify-center gap-2 hairline border-[var(--rule-strong)] px-4 py-2.5 text-sm font-medium text-[var(--ink)] transition-colors hover:bg-[var(--bg-soft)]"
+                className="flex min-h-11 flex-1 items-center justify-center gap-2 hairline border-[var(--rule-strong)] px-4 py-2.5 text-sm font-medium text-[var(--ink)] transition-colors hover:bg-[var(--bg-soft)] lg:min-h-0"
               >
                 <PencilSimple className="h-4 w-4" weight="bold" />
                 {t("editProfile")}
@@ -108,7 +108,7 @@ export function AccountScreen({ publicHref, photos = [] }: AccountScreenProps) {
             {publicHref && (
               <Link
                 href={publicHref as never}
-                className="flex flex-1 items-center justify-center gap-2 bg-[var(--ink)] px-4 py-2.5 text-sm font-medium text-[var(--bg)] transition-opacity hover:opacity-90"
+                className="flex min-h-11 flex-1 items-center justify-center gap-2 bg-[var(--ink)] px-4 py-2.5 text-sm font-medium text-[var(--bg)] transition-opacity hover:opacity-90 lg:min-h-0"
               >
                 <ArrowSquareOut className="h-4 w-4" weight="bold" />
                 {t("viewPublicProfile")}
@@ -226,7 +226,7 @@ function ModelPhotoGrid({ photos }: { photos: AccountPhoto[] }) {
               type="button"
               onClick={() => setViewerIndex(null)}
               aria-label={tNav("close")}
-              className="absolute right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
+              className="absolute right-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
               style={{ top: "max(1rem, env(safe-area-inset-top))" }}
             >
               <X className="h-5 w-5" weight="bold" />

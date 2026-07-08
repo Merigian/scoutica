@@ -96,7 +96,7 @@ export function ConversationSidebar({
             placeholder={t("searchPlaceholder")}
             aria-label={t("searchPlaceholder")}
             className={cn(
-              "h-11 w-full rounded-xl border-0 bg-[var(--bg-soft)] pl-10 pr-9 text-[14px]",
+              "h-11 w-full rounded-xl border-0 bg-[var(--bg-soft)] pl-10 pr-11 text-[14px]",
               "placeholder:text-[var(--ink-3)] text-[var(--ink)]",
               "focus:outline-none focus:ring-2 focus:ring-[var(--accent)] transition-all"
             )}
@@ -106,7 +106,7 @@ export function ConversationSidebar({
               type="button"
               onClick={() => setQuery("")}
               aria-label="Clear"
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--ink-3)] hover:text-[var(--ink)]"
+              className="absolute right-0 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center text-[var(--ink-3)] hover:text-[var(--ink)]"
             >
               <X className="h-4 w-4" />
             </button>
@@ -125,7 +125,7 @@ export function ConversationSidebar({
                 onClick={() => setFilter(f.key)}
                 aria-pressed={active}
                 className={cn(
-                  "flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[12px] font-medium transition-colors",
+                  "flex min-h-11 shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[12px] font-medium transition-colors lg:min-h-0",
                   active
                     ? "bg-[var(--accent)] text-[var(--bg)]"
                     : "bg-[var(--bg-soft)] text-[var(--ink-2)] hover:bg-[var(--bg-soft)]/70 hover:text-[var(--ink)]"

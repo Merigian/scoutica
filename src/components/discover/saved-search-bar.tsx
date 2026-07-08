@@ -83,12 +83,12 @@ export function SavedSearchBar({ enabled, savedSearches }: SavedSearchBarProps) 
         {savedSearches.map((s) => (
           <span
             key={s.id}
-            className="group inline-flex items-center gap-1 border border-[var(--rule)] pl-3 pr-1 py-1 text-sm hover:border-[var(--rule-strong)] transition-colors"
+            className="group inline-flex min-h-11 items-center gap-1 border border-[var(--rule)] pl-3 pr-1 py-1 text-sm hover:border-[var(--rule-strong)] transition-colors lg:min-h-0"
           >
             <button
               type="button"
               onClick={() => applySearch(s.filters)}
-              className="text-[var(--ink-2)] hover:text-[var(--ink)] transition-colors"
+              className="inline-flex items-center self-stretch text-[var(--ink-2)] hover:text-[var(--ink)] transition-colors"
             >
               {s.name}
             </button>
@@ -96,7 +96,7 @@ export function SavedSearchBar({ enabled, savedSearches }: SavedSearchBarProps) 
               type="button"
               onClick={() => handleDelete(s.id)}
               aria-label={t("delete")}
-              className="p-0.5 text-[var(--ink-3)] hover:text-[var(--ink)] transition-colors"
+              className="inline-flex items-center self-stretch px-2 lg:px-0.5 text-[var(--ink-3)] hover:text-[var(--ink)] transition-colors"
             >
               <X className="h-3.5 w-3.5" />
             </button>
