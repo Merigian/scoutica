@@ -71,6 +71,7 @@
   /* Semantic state colors — feedback only (errors, confirmations) */
   --danger:       #6B1F1F;
   --success:      #1F4D2C;
+  --gilt:         #8A6B3F;
 
   /* Back-compat: legacy font vars resolve to new fonts so untouched components keep rendering */
   --font-antonio: var(--font-fraunces),    Georgia, "Times New Roman", serif;
@@ -105,6 +106,7 @@
 
   --danger:       #C44545;
   --success:      #5A9A75;
+  --gilt:         #C8A566;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -130,6 +132,10 @@
   --accent:       var(--ink);
   --accent-soft:  var(--ink-2);
   --accent-fade:  var(--bg-soft);
+
+  /* Champagne whisper-accent — folio numerals, kickers, editorial marks only.
+     Never fills, never buttons: dosage is what keeps it couture. */
+  --gilt:         #C8A566;
 
   --danger:       #E0584F;
   --success:      #74C39A;
@@ -160,6 +166,8 @@
   --accent:       var(--ink);
   --accent-soft:  var(--ink-2);
   --accent-fade:  var(--bg-soft);
+
+  --gilt:         #8A6B3F;
 
   --danger:       #B23A30;
   --success:      #2E6B47;
@@ -423,6 +431,12 @@ h1, h2, h3, h4, h5, h6 {
   font-feature-settings: "tnum";
   font-variant-numeric: tabular-nums;
   letter-spacing: 0;
+}
+.text-gilt { color: var(--gilt); }
+/* Outlined display type — giant editorial ticker words */
+.text-outline-ink {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--ink-3);
 }
 
 /* ─────────────────────────────────────────────

@@ -115,6 +115,10 @@
     "roleStudio": "Studio"
   },
   "landing": {
+    "coverV2": {
+      "line1": "New faces",
+      "line2": "for Italian fashion."
+    },
     "cover": {
       "masthead": "Scoutica · Italy",
       "reach": "Across Italy",

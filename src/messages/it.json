@@ -115,6 +115,10 @@
     "roleStudio": "Studio"
   },
   "landing": {
+    "coverV2": {
+      "line1": "Nuovi volti",
+      "line2": "per la moda italiana."
+    },
     "cover": {
       "masthead": "Scoutica · Italia",
       "reach": "In tutta Italia",

@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { Reveal } from "@/components/landing/reveal";
+import { SectionIndex } from "@/components/landing/section-index";
 import { FileCheck, ShieldCheck, UserCheck } from "lucide-react";
 
 /**
@@ -25,13 +26,9 @@ export async function TrustSection() {
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
         <Reveal className="mb-16 lg:mb-24 grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
           <div className="lg:col-span-8">
-            {/* Kicker — light variant for the dark band */}
-            <div className="mb-6 flex items-center gap-3">
-              <span className="h-px w-8 bg-[var(--ink)]/30" aria-hidden="true" />
-              <span className="text-eyebrow !text-[var(--ink)]/70">
-                {t("verification.eyebrow")}
-              </span>
-            </div>
+            <SectionIndex n="04" className="mb-6">
+              {t("verification.eyebrow")}
+            </SectionIndex>
             <h2 className="font-display font-light text-[clamp(2.25rem,5vw,4.25rem)] leading-[1.04] tracking-[-0.025em] text-[var(--ink)] max-w-[18ch]">
               {t("verification.title")}
             </h2>

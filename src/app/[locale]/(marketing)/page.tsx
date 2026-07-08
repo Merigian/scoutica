@@ -4,6 +4,7 @@ import { getTranslations, getLocale } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { CinematicHero } from "@/components/landing/cinematic-hero";
+import { EditorialTicker } from "@/components/landing/editorial-ticker";
 import { AudienceDoors } from "@/components/landing/audience-doors";
 import { StickyCta } from "@/components/landing/sticky-cta";
 import { FeaturedProfiles } from "@/components/landing/featured-profiles";
@@ -53,7 +54,12 @@ export default async function LandingPage() {
       {/* ───────── HERO — cinematic Atelier Noir cover ───────── */}
       <CinematicHero heroSrc={heroSrc} />
 
-      {/* ───────── PER CHI È — three audiences as horizontal doors ───────── */}
+      {/* ───────── TICKER — outlined city masthead strip ───────── */}
+      <EditorialTicker
+        items={["Milano", "Roma", "Firenze", "Torino", "Napoli", "Venezia"]}
+      />
+
+      {/* ───────── PER CHI È — three audiences as photographic doors ───────── */}
       <AudienceDoors />
 
       {/* ───────── CAST — volti reali (social proof, early) ───────── */}
@@ -82,7 +88,7 @@ export default async function LandingPage() {
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
           <Reveal className="mb-14 lg:mb-20 grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
             <div className="lg:col-span-7">
-              <SectionIndex n="07" className="mb-6">{t("sections.method")}</SectionIndex>
+              <SectionIndex n="03" className="mb-6">{t("sections.method")}</SectionIndex>
               <h2 className="text-display text-balance">{t("howItWorks.title")}</h2>
             </div>
             <p className="lg:col-span-4 lg:col-start-9 text-lead self-end">
@@ -100,7 +106,7 @@ export default async function LandingPage() {
                   i > 0 ? "md:hairline-l" : ""
                 }`}
               >
-                <p className="font-display font-light tabular-nums text-[clamp(2rem,3vw,2.75rem)] leading-none text-[var(--ink-3)] mb-6">
+                <p className="font-display font-light italic tabular-nums text-[clamp(2rem,3vw,2.75rem)] leading-none text-[var(--gilt)] mb-6">
                   0{i + 1}
                 </p>
                 <h3 className="text-h2 mb-5 text-[var(--ink)]">
@@ -152,7 +158,7 @@ export default async function LandingPage() {
               >
                 <p className="flex items-baseline font-display font-light tabular-nums text-[clamp(2.5rem,6vw,4.75rem)] leading-[0.92] text-[var(--bg)]">
                   <CountUp value={s.value} locale={locale} />
-                  {s.value > 0 && <span className="text-[0.45em] text-[var(--bg)]/45">+</span>}
+                  {s.value > 0 && <span className="text-[0.45em] text-[var(--gilt)]">+</span>}
                 </p>
                 <p className="mt-3 lg:mt-4 text-meta !text-[var(--bg)]/70 max-w-[16ch]">{s.label}</p>
               </Reveal>
@@ -231,7 +237,7 @@ function BandiSection({
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
         <Reveal className="mb-14 lg:mb-20 grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
           <div className="lg:col-span-7">
-            <SectionIndex n="04" className="mb-6">{t("bandi.eyebrow")}</SectionIndex>
+            <SectionIndex n="05" className="mb-6">{t("bandi.eyebrow")}</SectionIndex>
             <h2 className="text-display max-w-[16ch]">{t("bandi.title")}</h2>
           </div>
           <p className="lg:col-span-4 lg:col-start-9 text-lead">

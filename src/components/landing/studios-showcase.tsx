@@ -28,7 +28,7 @@ export async function StudiosShowcase() {
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
         <Reveal className="mb-14 lg:mb-20 grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
           <div className="lg:col-span-7">
-            <SectionIndex n="05" className="mb-6">
+            <SectionIndex n="06" className="mb-6">
               {t("studios.eyebrow")}
             </SectionIndex>
             <h2 className="text-display max-w-[16ch]">{t("studios.title")}</h2>
