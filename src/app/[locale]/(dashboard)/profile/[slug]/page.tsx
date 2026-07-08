@@ -35,11 +35,15 @@ import {
   Music2,
 } from "lucide-react";
 import { VerifiedBadge } from "@/components/ui/verified-badge";
+import { Button } from "@/components/ui/button";
 import { PublicProfileContactButton } from "@/components/profile/public-profile-contact-button";
+import { ProfileHeroMobile } from "@/components/profile/profile-hero-mobile";
+import { MobileActionBar } from "@/components/layout/mobile-action-bar";
 import { recordProfileView } from "@/server/actions/profile-engagement";
 import { BackLink } from "@/components/shared/back-link";
 import { ReportBlockMenu } from "@/components/shared/report-block-menu";
 import { PrivateNoteCard } from "@/components/scout/private-note-card";
+import Link from "next/link";
 
 export async function generateMetadata({
   params,

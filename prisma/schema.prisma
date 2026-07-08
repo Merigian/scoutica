@@ -508,6 +508,10 @@ model Conversation {
   id            String    @id @default(cuid())
   lastMessageAt DateTime?
 
+  isGroup     Boolean @default(false)
+  name        String?
+  createdById String?
+
   participants ConversationParticipant[]
   messages     Message[]
   contactRequest ContactRequest?

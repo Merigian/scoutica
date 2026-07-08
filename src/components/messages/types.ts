@@ -14,7 +14,10 @@ export interface OtherUserSummary {
 
 export interface ConversationSummary {
   id: string;
+  isGroup: boolean;
+  name?: string | null;
   otherUser: OtherUserSummary;
+  participants?: OtherUserSummary[];
   lastMessage: {
     body: string;
     senderId: string;

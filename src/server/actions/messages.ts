@@ -2,9 +2,56 @@
 
 import { auth } from "@/lib/auth";
 import { getTranslations } from "next-intl/server";
+import type { UserRole } from "@prisma/client";
 import { db } from "@/lib/db";
 import { toPublicModelName } from "@/lib/utils";
 import type { ActionResponse } from "@/types";
+import type { OtherUserSummary } from "@/components/messages/types";
+
+type ChatParticipantUser = {
+  id: string;
+  name: string | null;
+  image: string | null;
+  role: UserRole;
+  lastActiveAt: Date | null;
+  modelProfile: { fullName: string | null; slug: string | null; verificationStatus: string } | null;
+  scoutProfile: { businessName: string | null; verificationStatus: string } | null;
+  studioProfile: { businessName: string | null; verificationStatus: string } | null;
+};
+
+// Shared display logic for a conversation counterpart (masks model surname).
+function summarizeParticipant(
+  user: ChatParticipantUser | null | undefined,
+  fallbackName: string
+): OtherUserSummary {
+  const displayName =
+    user?.role === "MODEL"
+      ? toPublicModelName(user.modelProfile?.fullName ?? user.name)
+      : user?.role === "STUDIO"
+        ? user.studioProfile?.businessName ?? user.name
+        : user?.scoutProfile?.businessName ?? user?.name;
+
+  const slug = user?.role === "MODEL" ? user.modelProfile?.slug ?? null : null;
+
+  const verified =
+    user?.role === "MODEL"
+      ? user.modelProfile?.verificationStatus === "APPROVED"
+      : user?.role === "SCOUT"
+        ? user.scoutProfile?.verificationStatus === "APPROVED"
+        : user?.role === "STUDIO"
+          ? user.studioProfile?.verificationStatus === "APPROVED"
+          : false;
+
+  return {
+    id: user?.id ?? "",
+    name: displayName ?? fallbackName,
+    image: user?.image ?? null,
+    role: user?.role ?? "MODEL",
+    slug,
+    lastActiveAt: user?.lastActiveAt ?? null,
+    verified,
+  };
+}
 
 export async function sendMessage(
   conversationId: string,
@@ -61,8 +108,8 @@ export async function sendMessage(
     data: { lastMessageAt: new Date() },
   });
 
-  // Get the other participant for notification
-  const otherParticipant = await db.conversationParticipant.findFirst({
+  // Notify every OTHER participant (works for both 1:1 and group conversations)
+  const otherParticipants = await db.conversationParticipant.findMany({
     where: {
       conversationId,
       userId: { not: session.user.id },
@@ -70,19 +117,22 @@ export async function sendMessage(
     select: { userId: true, user: { select: { role: true } } },
   });
 
-  if (otherParticipant) {
-    const rolePrefix = otherParticipant.user.role === "MODEL" ? "/model"
-      : otherParticipant.user.role === "SCOUT" ? "/scout"
-      : otherParticipant.user.role === "STUDIO" ? "/studio" : "";
-
-    await db.notification.create({
-      data: {
-        userId: otherParticipant.userId,
-        type: "NEW_MESSAGE",
-        title: tm("newMessageTitle"),
-        body: body.length > 100 ? body.slice(0, 100) + "…" : body,
-        link: `${rolePrefix}/messages/${conversationId}`,
-      },
+  if (otherParticipants.length > 0) {
+    const preview = body.length > 100 ? body.slice(0, 100) + "…" : body;
+    await db.notification.createMany({
+      data: otherParticipants.map((p) => {
+        const rolePrefix =
+          p.user.role === "MODEL" ? "/model"
+            : p.user.role === "SCOUT" ? "/scout"
+              : p.user.role === "STUDIO" ? "/studio" : "";
+        return {
+          userId: p.userId,
+          type: "NEW_MESSAGE" as const,
+          title: tm("newMessageTitle"),
+          body: preview,
+          link: `${rolePrefix}/messages/${conversationId}`,
+        };
+      }),
     });
   }
 
@@ -193,54 +243,54 @@ export async function getConversations() {
   });
 
   return participations.map((p) => {
-    const otherParticipant = p.conversation.participants[0];
-    const lastMessage = p.conversation.messages[0];
+    const conv = p.conversation;
+    const others = conv.participants; // already excludes the current user
+    const lastMessage = conv.messages[0];
     const hasUnread = lastMessage
       ? !p.lastReadAt || new Date(lastMessage.createdAt) > new Date(p.lastReadAt)
       : false;
 
-    const otherUser = otherParticipant?.user;
-    const displayName =
-      otherUser?.role === "MODEL"
-        ? toPublicModelName(otherUser.modelProfile?.fullName ?? otherUser.name)
-        : otherUser?.role === "STUDIO"
-          ? otherUser.studioProfile?.businessName ?? otherUser.name
-          : otherUser?.scoutProfile?.businessName ?? otherUser?.name;
+    const lastMessagePayload = lastMessage
+      ? {
+          body: lastMessage.body,
+          senderId: lastMessage.senderId,
+          createdAt: lastMessage.createdAt,
+        }
+      : null;
 
-    const profileSlug =
-      otherUser?.role === "MODEL"
-        ? otherUser.modelProfile?.slug ?? null
-        : null;
-
-    const verified =
-      otherUser?.role === "MODEL"
-        ? otherUser.modelProfile?.verificationStatus === "APPROVED"
-        : otherUser?.role === "SCOUT"
-          ? otherUser.scoutProfile?.verificationStatus === "APPROVED"
-          : otherUser?.role === "STUDIO"
-            ? otherUser.studioProfile?.verificationStatus === "APPROVED"
-            : false;
+    if (conv.isGroup) {
+      const groupName = conv.name?.trim() || tm("groupFallback");
+      return {
+        id: conv.id,
+        isGroup: true,
+        name: groupName as string | null,
+        otherUser: {
+          id: "",
+          name: groupName,
+          image: null,
+          role: "SCOUT" as UserRole,
+          slug: null,
+          lastActiveAt: null,
+          verified: false,
+        },
+        participants: others.map((op) =>
+          summarizeParticipant(op.user, tm("userFallback"))
+        ) as OtherUserSummary[] | undefined,
+        lastMessage: lastMessagePayload,
+        hasUnread,
+        messageCount: conv._count.messages,
+      };
+    }
 
     return {
-      id: p.conversation.id,
-      otherUser: {
-        id: otherUser?.id ?? "",
-        name: displayName ?? tm("userFallback"),
-        image: otherUser?.image ?? null,
-        role: otherUser?.role ?? "MODEL",
-        slug: profileSlug,
-        lastActiveAt: otherUser?.lastActiveAt ?? null,
-        verified,
-      },
-      lastMessage: lastMessage
-        ? {
-            body: lastMessage.body,
-            senderId: lastMessage.senderId,
-            createdAt: lastMessage.createdAt,
-          }
-        : null,
+      id: conv.id,
+      isGroup: false,
+      name: null as string | null,
+      otherUser: summarizeParticipant(others[0]?.user, tm("userFallback")),
+      participants: undefined as OtherUserSummary[] | undefined,
+      lastMessage: lastMessagePayload,
       hasUnread,
-      messageCount: p.conversation._count.messages,
+      messageCount: conv._count.messages,
     };
   });
 }
@@ -294,7 +344,12 @@ export async function getConversationMessages(
   const messages = slice.slice().reverse();
   const nextCursor = hasMore ? slice[slice.length - 1].id : null;
 
-  const otherParticipant = await db.conversationParticipant.findFirst({
+  const conversationMeta = await db.conversation.findUnique({
+    where: { id: conversationId },
+    select: { isGroup: true, name: true },
+  });
+
+  const others = await db.conversationParticipant.findMany({
     where: {
       conversationId,
       userId: { not: session.user.id },
@@ -315,43 +370,35 @@ export async function getConversationMessages(
     },
   });
 
-  const otherUser = otherParticipant?.user;
-  const displayName =
-    otherUser?.role === "MODEL"
-      ? toPublicModelName(otherUser.modelProfile?.fullName ?? otherUser.name)
-      : otherUser?.role === "STUDIO"
-        ? otherUser.studioProfile?.businessName ?? otherUser.name
-        : otherUser?.scoutProfile?.businessName ?? otherUser?.name;
-
-  const profileSlug =
-    otherUser?.role === "MODEL"
-      ? otherUser.modelProfile?.slug ?? null
-      : null;
-
-  const verified =
-    otherUser?.role === "MODEL"
-      ? otherUser.modelProfile?.verificationStatus === "APPROVED"
-      : otherUser?.role === "SCOUT"
-        ? otherUser.scoutProfile?.verificationStatus === "APPROVED"
-        : otherUser?.role === "STUDIO"
-          ? otherUser.studioProfile?.verificationStatus === "APPROVED"
-          : false;
+  const isGroup = conversationMeta?.isGroup ?? false;
+  const groupName = isGroup
+    ? conversationMeta?.name?.trim() || tm("groupFallback")
+    : null;
+  const participants = others.map((op) =>
+    summarizeParticipant(op.user, tm("userFallback"))
+  );
+  const otherUser: OtherUserSummary = isGroup
+    ? {
+        id: "",
+        name: groupName ?? tm("groupFallback"),
+        image: null,
+        role: "SCOUT" as UserRole,
+        slug: null,
+        lastActiveAt: null,
+        verified: false,
+      }
+    : summarizeParticipant(others[0]?.user, tm("userFallback"));
 
   return {
     messages,
     hasMore,
     nextCursor,
     currentUserId: session.user.id,
-    otherUser: {
-      id: otherUser?.id ?? "",
-      name: displayName ?? tm("userFallback"),
-      image: otherUser?.image ?? null,
-      role: otherUser?.role ?? "MODEL",
-      slug: profileSlug,
-      lastActiveAt: otherUser?.lastActiveAt ?? null,
-      verified,
-    },
-    otherLastReadAt: otherParticipant?.lastReadAt ?? null,
+    isGroup,
+    groupName,
+    participants,
+    otherUser,
+    otherLastReadAt: isGroup ? null : others[0]?.lastReadAt ?? null,
   };
 }
 
@@ -477,4 +524,136 @@ export async function getScoutProfileForChat(userId: string) {
       verificationStatus: true,
     },
   });
+}
+
+// People a scout may add to a group: only counterparts they already have a
+// one-to-one conversation with (i.e. an accepted contact request).
+export async function getGroupCandidates(): Promise<OtherUserSummary[]> {
+  const tm = await getTranslations("serverErrors.messages");
+  const session = await auth();
+  if (!session?.user?.id || session.user.role !== "SCOUT") return [];
+
+  const existing = await db.conversationParticipant.findMany({
+    where: {
+      userId: { not: session.user.id },
+      conversation: {
+        isGroup: false,
+        participants: { some: { userId: session.user.id } },
+      },
+    },
+    distinct: ["userId"],
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          image: true,
+          role: true,
+          lastActiveAt: true,
+          modelProfile: { select: { fullName: true, slug: true, verificationStatus: true } },
+          scoutProfile: { select: { businessName: true, verificationStatus: true } },
+          studioProfile: { select: { businessName: true, verificationStatus: true } },
+        },
+      },
+    },
+  });
+
+  return existing.map((e) => summarizeParticipant(e.user, tm("userFallback")));
+}
+
+export async function createGroupConversation(
+  name: string,
+  participantUserIds: string[]
+): Promise<ActionResponse<{ conversationId: string }>> {
+  const t = await getTranslations("serverErrors");
+  const tm = await getTranslations("serverErrors.messages");
+  const session = await auth();
+  if (!session?.user?.id) {
+    return { success: false, error: t("unauthorized") };
+  }
+
+  // Only scouts/agencies/brands may create groups, and only once verified.
+  if (session.user.role !== "SCOUT") {
+    return { success: false, error: tm("groupOnlyScouts") };
+  }
+  const scoutProfile = await db.scoutProfile.findUnique({
+    where: { userId: session.user.id },
+    select: { verificationStatus: true },
+  });
+  if (scoutProfile?.verificationStatus !== "APPROVED") {
+    return { success: false, error: tm("mustBeVerified") };
+  }
+
+  const trimmedName = name.trim();
+  if (trimmedName.length < 1 || trimmedName.length > 100) {
+    return { success: false, error: tm("groupNameRequired") };
+  }
+
+  const currentUserId = session.user.id;
+  const uniqueIds = Array.from(new Set(participantUserIds)).filter(
+    (id) => id && id !== currentUserId
+  );
+  if (uniqueIds.length < 2) {
+    return { success: false, error: tm("groupTooFewMembers") };
+  }
+  if (uniqueIds.length > 30) {
+    return { success: false, error: tm("groupTooManyMembers") };
+  }
+
+  // Security: the scout may only add people they already have a 1:1
+  // conversation with. Anything outside that set is rejected.
+  const existing = await db.conversationParticipant.findMany({
+    where: {
+      userId: { not: currentUserId },
+      conversation: {
+        isGroup: false,
+        participants: { some: { userId: currentUserId } },
+      },
+    },
+    select: { userId: true },
+  });
+  const allowed = new Set(existing.map((e) => e.userId));
+  const invalid = uniqueIds.filter((id) => !allowed.has(id));
+  if (invalid.length > 0) {
+    return { success: false, error: tm("groupInvalidMembers") };
+  }
+
+  const conversation = await db.conversation.create({
+    data: {
+      isGroup: true,
+      name: trimmedName,
+      createdById: currentUserId,
+      lastMessageAt: new Date(),
+      participants: {
+        create: [
+          { userId: currentUserId },
+          ...uniqueIds.map((userId) => ({ userId })),
+        ],
+      },
+    },
+    select: { id: true },
+  });
+
+  // Notify the members they were added to a new group.
+  const members = await db.user.findMany({
+    where: { id: { in: uniqueIds } },
+    select: { id: true, role: true },
+  });
+  await db.notification.createMany({
+    data: members.map((m) => {
+      const rolePrefix =
+        m.role === "MODEL" ? "/model"
+          : m.role === "SCOUT" ? "/scout"
+            : m.role === "STUDIO" ? "/studio" : "";
+      return {
+        userId: m.id,
+        type: "NEW_MESSAGE" as const,
+        title: tm("groupCreatedTitle"),
+        body: trimmedName,
+        link: `${rolePrefix}/messages/${conversation.id}`,
+      };
+    }),
+  });
+
+  return { success: true, data: { conversationId: conversation.id } };
 }

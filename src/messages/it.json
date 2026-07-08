@@ -1794,6 +1794,7 @@
       "publishProfileRequired": "Devi pubblicare il tuo profilo prima di poterti candidare."
     },
     "publicProfile": {
+      "loginToContact": "Accedi per contattare",
       "about": "Chi sono",
       "portfolio": "Portfolio",
       "experience": "Esperienza",
@@ -2421,6 +2422,17 @@
       "roleStudio": "Studio",
       "backToList": "Indietro",
       "openProfile": "Apri profilo",
+      "close": "Chiudi",
+      "newGroup": "Nuovo gruppo",
+      "newGroupTitle": "Crea un gruppo",
+      "groupNameLabel": "Nome del gruppo",
+      "groupNamePlaceholder": "Es. Campagna estate 2026",
+      "selectMembers": "Aggiungi partecipanti",
+      "membersSelected": "{count} selezionati",
+      "membersCount": "{count} partecipanti",
+      "createGroup": "Crea gruppo",
+      "groupCreateError": "Impossibile creare il gruppo. Riprova.",
+      "noCandidates": "Non hai ancora contatti da aggiungere. Avvia prima una conversazione con qualcuno.",
       "closeProfile": "Chiudi profilo",
       "actions": "Azioni",
       "goToProfile": "Vai al profilo",
@@ -3109,7 +3121,14 @@
       "notInConversation": "Non fai parte di questa conversazione",
       "newMessageTitle": "Nuovo messaggio",
       "mustBeVerified": "Il tuo account deve essere verificato per inviare messaggi",
-      "userFallback": "Utente"
+      "userFallback": "Utente",
+      "groupFallback": "Gruppo",
+      "groupOnlyScouts": "Solo gli scout possono creare gruppi",
+      "groupNameRequired": "Inserisci un nome per il gruppo",
+      "groupTooFewMembers": "Seleziona almeno 2 partecipanti",
+      "groupTooManyMembers": "Un gruppo può avere al massimo 30 partecipanti",
+      "groupInvalidMembers": "Puoi aggiungere solo persone che hai già contattato",
+      "groupCreatedTitle": "Aggiunto a un gruppo"
     },
     "verification": {
       "alreadyVerified": "Il tuo profilo è già verificato"

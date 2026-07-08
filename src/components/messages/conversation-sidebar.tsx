@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { Search, X } from "lucide-react";
+import { Search, Users, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Avatar } from "@/components/ui/avatar";
@@ -15,6 +15,7 @@ interface ConversationSidebarProps {
   conversations: ConversationSummary[];
   activeId: string | null;
   onSelect: (id: string) => void;
+  onNewGroup?: () => void;
   viewerRole: ViewerRole;
   currentUserId: string;
 }
@@ -23,6 +24,8 @@ export function ConversationSidebar({
   conversations,
   activeId,
   onSelect,
+  onNewGroup,
+  viewerRole,
   currentUserId,
 }: ConversationSidebarProps) {
   const t = useTranslations("components.messaging");
@@ -80,10 +83,21 @@ export function ConversationSidebar({
       aria-label={t("title")}
       className="flex h-full min-h-0 flex-col bg-[var(--bg)]"
     >
-      <div className="px-5 pt-6 pb-3">
+      <div className="flex items-center justify-between gap-2 px-5 pt-6 pb-3">
         <h2 className="text-[28px] font-semibold leading-tight tracking-tight text-[var(--ink)]">
           {t("title")}
         </h2>
+        {viewerRole === "SCOUT" && onNewGroup && (
+          <button
+            type="button"
+            onClick={onNewGroup}
+            aria-label={t("newGroup")}
+            title={t("newGroup")}
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--bg-soft)] text-[var(--ink)] transition-colors hover:bg-[var(--bg-soft)]/70"
+          >
+            <Users className="h-[18px] w-[18px]" />
+          </button>
+        )}
       </div>
 
       <div className="px-5 pb-3">
@@ -185,11 +199,17 @@ export function ConversationSidebar({
                     )}
                   >
                     <div className="relative shrink-0">
-                      <Avatar
-                        src={c.otherUser.image}
-                        name={c.otherUser.name}
-                        size="md"
-                      />
+                      {c.isGroup ? (
+                        <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--bg-soft)] text-[var(--ink-2)]">
+                          <Users className="h-5 w-5" />
+                        </span>
+                      ) : (
+                        <Avatar
+                          src={c.otherUser.image}
+                          name={c.otherUser.name}
+                          size="md"
+                        />
+                      )}
                       {showUnread && (
                         <span
                           aria-label="unread"

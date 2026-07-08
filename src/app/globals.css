@@ -77,6 +77,9 @@
   --font-inter:   var(--font-inter-tight), -apple-system, BlinkMacSystemFont, sans-serif;
   --font-jbm:     var(--font-inter-tight), -apple-system, BlinkMacSystemFont, sans-serif;
 
+  /* Mobile chrome metrics — keep in sync with MobileBottomNav's rendered height */
+  --bottom-nav-h: 54px;
+
   /* Motion */
   --ease-out-soft:  cubic-bezier(0.22, 0.61, 0.36, 1);
   --ease-out-quart: cubic-bezier(0.22, 0.61, 0.36, 1);

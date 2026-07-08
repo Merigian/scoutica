@@ -47,7 +47,7 @@ interface ConversationActionsMenuProps {
   onTogglePin: () => void;
   onToggleArchive: () => void;
   onToggleMute: () => void;
-  onReport: () => void;
+  onReport?: () => void;
   onDelete: () => void;
 }
 
@@ -135,15 +135,19 @@ export function ConversationActionsMenu({
         setOpen(false);
       },
     },
-    {
-      key: "report",
-      label: t("report"),
-      icon: Flag,
-      onSelect: () => {
-        onReport();
-        setOpen(false);
-      },
-    },
+    ...(onReport
+      ? [
+          {
+            key: "report",
+            label: t("report"),
+            icon: Flag,
+            onSelect: () => {
+              onReport();
+              setOpen(false);
+            },
+          },
+        ]
+      : []),
     {
       key: "delete",
       label: t("deleteChat"),

@@ -2,12 +2,11 @@
 
 import { useTranslations } from "next-intl";
 import { useRouter, usePathname, Link } from "@/i18n/routing";
-import { ArrowLeft, Info, MessageSquare } from "lucide-react";
+import { ArrowLeft, Info, MessageSquare, Users } from "lucide-react";
 import {
   startTransition,
   useCallback,
   useEffect,
-  useMemo,
   useState,
 } from "react";
 import type { UserRole } from "@prisma/client";
@@ -24,6 +23,7 @@ import {
 } from "@/server/actions/messages";
 import { ConversationActionsMenu } from "./conversation-actions-menu";
 import { ConversationSidebar } from "./conversation-sidebar";
+import { GroupCreateDialog } from "./group-create-dialog";
 import { MessageThreadView } from "./message-thread-view";
 import {
   ProfilePanel,
@@ -54,6 +54,9 @@ type ThreadState = {
   nextCursor: string | null;
   otherUser: OtherUserSummary;
   otherLastReadAt: Date | string | null;
+  isGroup: boolean;
+  groupName: string | null;
+  participants: OtherUserSummary[];
 };
 
 type View = "list" | "thread" | "profile";
@@ -82,6 +85,7 @@ export function MessagingShell({
     kind: "none",
   });
   const [profileLoading, setProfileLoading] = useState(false);
+  const [newGroupOpen, setNewGroupOpen] = useState(false);
 
   useEffect(() => {
     setConversations(initialConversations);
@@ -99,6 +103,9 @@ export function MessagingShell({
           nextCursor: payload.nextCursor,
           otherUser: payload.otherUser,
           otherLastReadAt: payload.otherLastReadAt,
+          isGroup: payload.isGroup,
+          groupName: payload.groupName,
+          participants: payload.participants,
         });
       } else {
         setThread(null);
@@ -142,6 +149,10 @@ export function MessagingShell({
 
   useEffect(() => {
     if (!thread) return;
+    if (thread.isGroup) {
+      setProfileData({ kind: "none" });
+      return;
+    }
     void loadProfile(thread.otherUser);
   }, [thread, loadProfile]);
 
@@ -198,6 +209,19 @@ export function MessagingShell({
     router.refresh();
   }, [activeId, pathname, router]);
 
+  const handleGroupCreated = useCallback(
+    (conversationId: string) => {
+      setNewGroupOpen(false);
+      setActiveId(conversationId);
+      setView("thread");
+      const params = new URLSearchParams();
+      params.set("chat", conversationId);
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+      router.refresh();
+    },
+    [pathname, router]
+  );
+
   useEffect(() => {
     if (!activeId) return;
     void markConversationRead(activeId);
@@ -205,11 +229,6 @@ export function MessagingShell({
       prev.map((c) => (c.id === activeId ? { ...c, hasUnread: false } : c))
     );
   }, [activeId]);
-
-  const activeConversation = useMemo(
-    () => conversations.find((c) => c.id === activeId) ?? null,
-    [conversations, activeId]
-  );
 
   const heightClass =
     view === "list"
@@ -238,6 +257,7 @@ export function MessagingShell({
             conversations={conversations}
             activeId={activeId}
             onSelect={handleSelect}
+            onNewGroup={() => setNewGroupOpen(true)}
           />
         </div>
 
@@ -249,7 +269,7 @@ export function MessagingShell({
             "flex-col"
           )}
         >
-          {!activeId || !activeConversation ? (
+          {!activeId ? (
             <EmptyThread t={t} />
           ) : loadingThread || !thread ? (
             <ThreadSkeleton />
@@ -265,17 +285,25 @@ export function MessagingShell({
                   <ArrowLeft className="h-4 w-4" />
                 </button>
                 <div className="flex min-w-0 items-center gap-3">
-                  <Avatar
-                    src={thread.otherUser.image}
-                    name={thread.otherUser.name}
-                    size="md"
-                  />
+                  {thread.isGroup ? (
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--bg-soft)] text-[var(--ink-2)]">
+                      <Users className="h-5 w-5" />
+                    </span>
+                  ) : (
+                    <Avatar
+                      src={thread.otherUser.image}
+                      name={thread.otherUser.name}
+                      size="md"
+                    />
+                  )}
                   <div className="min-w-0">
                     <div className="flex items-center gap-1.5">
                       <p className="truncate text-[15px] font-semibold text-[var(--ink)]">
-                        {thread.otherUser.name}
+                        {thread.isGroup
+                          ? thread.groupName
+                          : thread.otherUser.name}
                       </p>
-                      {thread.otherUser.verified && (
+                      {!thread.isGroup && thread.otherUser.verified && (
                         <VerifiedBadge
                           size={16}
                           variant="static"
@@ -284,8 +312,14 @@ export function MessagingShell({
                         />
                       )}
                     </div>
-                    {thread.otherUser.role === "MODEL" &&
-                    thread.otherUser.slug ? (
+                    {thread.isGroup ? (
+                      <p className="truncate text-[12px] text-[var(--ink-3)]">
+                        {t("membersCount", {
+                          count: thread.participants.length + 1,
+                        })}
+                      </p>
+                    ) : thread.otherUser.role === "MODEL" &&
+                      thread.otherUser.slug ? (
                       <Link
                         href={`/m/${thread.otherUser.slug}`}
                         className="inline-flex items-center py-2 -my-2 text-[12px] text-[var(--accent)] hover:underline"
@@ -308,6 +342,7 @@ export function MessagingShell({
                   </button>
                   <ConversationActionsMenu
                     hasProfile={
+                      !thread.isGroup &&
                       thread.otherUser.role === "MODEL" &&
                       Boolean(thread.otherUser.slug)
                     }
@@ -317,18 +352,22 @@ export function MessagingShell({
                     onTogglePin={() => prefs.togglePinned(activeId)}
                     onToggleArchive={() => prefs.toggleArchived(activeId)}
                     onToggleMute={() => prefs.toggleMuted(activeId)}
-                    onReport={() => {
-                      router.push(
-                        `/reports/new?user=${thread.otherUser.id}` as never
-                      );
-                    }}
+                    onReport={
+                      thread.isGroup
+                        ? undefined
+                        : () => {
+                            router.push(
+                              `/reports/new?user=${thread.otherUser.id}` as never
+                            );
+                          }
+                    }
                     onDelete={() => void handleDelete()}
                     onOpenProfile={
-                      thread.otherUser.role === "MODEL" && thread.otherUser.slug
+                      !thread.isGroup &&
+                      thread.otherUser.role === "MODEL" &&
+                      thread.otherUser.slug
                         ? () =>
-                            router.push(
-                              `/m/${thread.otherUser.slug}` as never
-                            )
+                            router.push(`/m/${thread.otherUser.slug}` as never)
                         : undefined
                     }
                   />
@@ -344,6 +383,8 @@ export function MessagingShell({
                   currentUserId={currentUserId}
                   otherUser={thread.otherUser}
                   otherLastReadAt={thread.otherLastReadAt}
+                  isGroup={thread.isGroup}
+                  participants={thread.participants}
                   onMessageSent={handleMessageSent}
                 />
               </div>
@@ -363,6 +404,13 @@ export function MessagingShell({
             <div className="flex h-full items-center justify-center px-6 text-center">
               <p className="text-[12px] text-[var(--ink-3)]">{t("selectChat")}</p>
             </div>
+          ) : thread.isGroup ? (
+            <GroupMembersPanel
+              name={thread.groupName}
+              participants={thread.participants}
+              onClose={() => setView("thread")}
+              t={t}
+            />
           ) : profileLoading ? (
             <div className="flex h-full items-center justify-center">
               <span className="text-eyebrow text-[var(--ink-3)]">
@@ -377,6 +425,67 @@ export function MessagingShell({
             />
           )}
         </div>
+      </div>
+
+      <GroupCreateDialog
+        open={newGroupOpen}
+        onClose={() => setNewGroupOpen(false)}
+        onCreated={handleGroupCreated}
+      />
+    </div>
+  );
+}
+
+function GroupMembersPanel({
+  name,
+  participants,
+  onClose,
+  t,
+}: {
+  name: string | null;
+  participants: OtherUserSummary[];
+  onClose: () => void;
+  t: ReturnType<typeof useTranslations>;
+}) {
+  return (
+    <div className="flex h-full flex-col bg-[var(--bg)]">
+      <div className="flex items-center justify-between gap-2 border-b border-[var(--rule)] px-5 py-4">
+        <p className="truncate text-[15px] font-semibold text-[var(--ink)]">
+          {name}
+        </p>
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label={t("close")}
+          className="flex h-9 w-9 items-center justify-center rounded-full text-[var(--ink-2)] hover:bg-[var(--bg-soft)] hover:text-[var(--ink)] lg:hidden"
+        >
+          <ArrowLeft className="h-4 w-4" />
+        </button>
+      </div>
+      <div className="flex-1 overflow-y-auto px-3 py-4">
+        <p className="px-2 pb-2 text-eyebrow text-[var(--ink-3)]">
+          {t("membersCount", { count: participants.length + 1 })}
+        </p>
+        <ul className="space-y-0.5">
+          {participants.map((p) => (
+            <li key={p.id}>
+              <div className="flex items-center gap-3 rounded-xl px-2 py-2">
+                <Avatar src={p.image} name={p.name} size="sm" />
+                <span className="min-w-0 flex-1 truncate text-[14px] text-[var(--ink)]">
+                  {p.name}
+                </span>
+                {p.verified && (
+                  <VerifiedBadge
+                    size={14}
+                    variant="static"
+                    className="shrink-0"
+                    aria-label="verified"
+                  />
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

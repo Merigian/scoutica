@@ -34,6 +34,8 @@ interface MessageThreadViewProps {
   currentUserId: string;
   otherUser: OtherUserSummary;
   otherLastReadAt: Date | string | null;
+  isGroup?: boolean;
+  participants?: OtherUserSummary[];
   onMessageSent?: (preview: { body: string; createdAt: Date }) => void;
 }
 
@@ -47,6 +49,8 @@ export function MessageThreadView({
   currentUserId,
   otherUser,
   otherLastReadAt,
+  isGroup = false,
+  participants,
   onMessageSent,
 }: MessageThreadViewProps) {
   const t = useTranslations("components.messaging");
@@ -158,6 +162,12 @@ export function MessageThreadView({
 
   const grouped = useMemo(() => buildGroups(messages), [messages]);
 
+  const senderNames = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const p of participants ?? []) map.set(p.id, p.name);
+    return map;
+  }, [participants]);
+
   const lastReceiptIndex = useMemo(() => {
     if (!otherLastReadAt) return -1;
     const readAt = new Date(otherLastReadAt).getTime();
@@ -230,11 +240,17 @@ export function MessageThreadView({
                 );
               }
               const group = entry.group;
+              const groupIsMine = group[0].senderId === currentUserId;
               return (
                 <div
                   key={`grp-${group[0].id}`}
                   className={cn("flex flex-col gap-0.5 py-1")}
                 >
+                  {isGroup && !groupIsMine && (
+                    <p className="mb-0.5 pl-1 text-[11px] font-medium text-[var(--ink-3)]">
+                      {senderNames.get(group[0].senderId) ?? otherUser.name}
+                    </p>
+                  )}
                   {group.map((msg, mi) => {
                     const isMine = msg.senderId === currentUserId;
                     const isFirst = mi === 0;
@@ -258,7 +274,7 @@ export function MessageThreadView({
                               ? formatMessageTime(msg.createdAt, locale)
                               : undefined
                           }
-                          ariaLabel={`${isMine ? "you" : otherUser.name} · ${msg.body}`}
+                          ariaLabel={`${isMine ? "you" : senderNames.get(msg.senderId) ?? otherUser.name} · ${msg.body}`}
                         />
                         {msg.failed && (
                           <div

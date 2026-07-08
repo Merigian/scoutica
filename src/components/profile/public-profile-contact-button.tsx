@@ -13,6 +13,9 @@ interface PublicProfileContactButtonProps {
   locale: string;
   existingConversationId?: string | null;
   contactRequestStatus?: string | null;
+  /** Button sizing/width overrides for the mobile sticky action bar. */
+  size?: "default" | "lg";
+  className?: string;
 }
 
 export function PublicProfileContactButton({
@@ -21,6 +24,8 @@ export function PublicProfileContactButton({
   locale,
   existingConversationId,
   contactRequestStatus,
+  size = "default",
+  className,
 }: PublicProfileContactButtonProps) {
   const [open, setOpen] = useState(false);
   const t = useTranslations("components.profile");
@@ -29,7 +34,7 @@ export function PublicProfileContactButton({
   // Accepted: go directly to the existing chat
   if (contactRequestStatus === "ACCEPTED" && existingConversationId) {
     return (
-      <Button onClick={() => router.push(`/${locale}/scout/messages?chat=${existingConversationId}`)}>
+      <Button size={size} className={className} onClick={() => router.push(`/${locale}/scout/messages?chat=${existingConversationId}`)}>
         <MessageCircle className="h-4 w-4 mr-2" />
         {t("goToChat")}
       </Button>
@@ -39,7 +44,7 @@ export function PublicProfileContactButton({
   // Pending: show disabled state
   if (contactRequestStatus === "PENDING") {
     return (
-      <Button disabled variant="outline">
+      <Button size={size} className={className} disabled variant="outline">
         <Clock className="h-4 w-4 mr-2" />
         {t("requestPending")}
       </Button>
@@ -49,7 +54,7 @@ export function PublicProfileContactButton({
   // No request yet (or rejected): show form
   return (
     <>
-      <Button onClick={() => setOpen(true)}>
+      <Button size={size} className={className} onClick={() => setOpen(true)}>
         <Send className="h-4 w-4 mr-2" />
         {t("contact")}
       </Button>

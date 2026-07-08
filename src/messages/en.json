@@ -1794,6 +1794,7 @@
       "publishProfileRequired": "You must publish your profile before you can apply."
     },
     "publicProfile": {
+      "loginToContact": "Log in to contact",
       "about": "About",
       "portfolio": "Portfolio",
       "experience": "Experience",
@@ -2421,6 +2422,17 @@
       "roleStudio": "Studio",
       "backToList": "Back",
       "openProfile": "Open profile",
+      "close": "Close",
+      "newGroup": "New group",
+      "newGroupTitle": "Create a group",
+      "groupNameLabel": "Group name",
+      "groupNamePlaceholder": "e.g. Summer 2026 campaign",
+      "selectMembers": "Add participants",
+      "membersSelected": "{count} selected",
+      "membersCount": "{count} participants",
+      "createGroup": "Create group",
+      "groupCreateError": "Couldn't create the group. Please try again.",
+      "noCandidates": "You have no contacts to add yet. Start a conversation with someone first.",
       "closeProfile": "Close profile",
       "actions": "Actions",
       "goToProfile": "Go to profile",
@@ -3109,7 +3121,14 @@
       "notInConversation": "You are not part of this conversation",
       "newMessageTitle": "New message",
       "mustBeVerified": "Your account must be verified to send messages",
-      "userFallback": "User"
+      "userFallback": "User",
+      "groupFallback": "Group",
+      "groupOnlyScouts": "Only scouts can create groups",
+      "groupNameRequired": "Enter a name for the group",
+      "groupTooFewMembers": "Select at least 2 participants",
+      "groupTooManyMembers": "A group can have at most 30 participants",
+      "groupInvalidMembers": "You can only add people you've already contacted",
+      "groupCreatedTitle": "Added to a group"
     },
     "verification": {
       "alreadyVerified": "Your profile is already verified"
