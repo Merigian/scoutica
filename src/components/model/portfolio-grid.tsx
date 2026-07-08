@@ -28,8 +28,11 @@ import { EmptyState } from "@/components/shared/empty-state";
 import { deletePortfolioImage, setCoverImage, reorderImages } from "@/server/actions/portfolio";
 import { ImageCropper } from "@/components/ui/image-cropper";
 import { useConfirmSheet } from "@/components/ui/confirm-sheet";
+import { ActionSheet } from "@/components/ui/action-sheet";
+import { useIsDesktop } from "@/hooks/use-is-desktop";
+import { Star as PhStar, Trash as PhTrash } from "@phosphor-icons/react";
 import { uploadFileWithProgress } from "@/lib/upload-with-progress";
-import { Star, Trash2, Upload, Images, GripVertical } from "lucide-react";
+import { Star, Trash2, Upload, Images, GripVertical, Plus } from "lucide-react";
 
 interface PortfolioImage {
   id: string;
@@ -46,6 +49,8 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
   const t = useTranslations("components.portfolio");
   const tCommon = useTranslations("common");
   const { confirmSheet, requestConfirm } = useConfirmSheet();
+  const isDesktop = useIsDesktop();
+  const [actionImage, setActionImage] = useState<PortfolioImage | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -226,7 +231,37 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
     <div className="space-y-6">
       {confirmSheet}
       {fileInput}
-      <div className="flex justify-end">
+      {/* Photo context sheet (mobile tap-on-tile) */}
+      <ActionSheet
+        open={!!actionImage}
+        onClose={() => setActionImage(null)}
+        cancelLabel={tCommon("cancel")}
+        actions={
+          actionImage
+            ? [
+                ...(!actionImage.isCover
+                  ? [
+                      {
+                        key: "cover",
+                        label: t("setCover"),
+                        icon: <PhStar className="h-[22px] w-[22px]" />,
+                        onSelect: () => void handleSetCover(actionImage.id),
+                      },
+                    ]
+                  : []),
+                {
+                  key: "delete",
+                  label: tCommon("delete"),
+                  icon: <PhTrash className="h-[22px] w-[22px]" />,
+                  destructive: true,
+                  onSelect: () => void handleDelete(actionImage.id),
+                },
+              ]
+            : []
+        }
+      />
+      {/* Desktop keeps the toolbar button; mobile uploads via the grid add-tile */}
+      <div className="hidden lg:flex justify-end">
         <Button onClick={openPicker} isLoading={uploading} disabled={images.length >= maxPhotos}>
           <Upload className="h-4 w-4 mr-2" />
           {t("upload")}
@@ -245,7 +280,7 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
             <span>{t("uploading")}</span>
             <span className="tabular-nums">{progress}%</span>
           </div>
-          <div className="h-1 w-full overflow-hidden bg-[var(--bg-soft)]">
+          <div className="h-px w-full overflow-hidden bg-[var(--bg-soft)]">
             <div
               className="h-full bg-[var(--ink)] transition-[width] duration-200 ease-out"
               style={{ width: `${progress}%` }}
@@ -264,8 +299,15 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
         collisionDetection={closestCenter}
         onDragEnd={handleDragEnd}
       >
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {cover && <PortfolioCoverTile image={cover} onDelete={handleDelete} />}
+        {/* Edge-to-edge 3-col gallery on phones; padded grid returns at sm */}
+        <div className="-mx-4 grid grid-cols-3 gap-0.5 sm:mx-0 sm:gap-4 lg:grid-cols-4">
+          {cover && (
+            <PortfolioCoverTile
+              image={cover}
+              onDelete={handleDelete}
+              onTap={isDesktop ? undefined : setActionImage}
+            />
+          )}
           <SortableContext items={rest.map((i) => i.id)} strategy={rectSortingStrategy}>
             {rest.map((image) => (
               <PortfolioTile
@@ -273,9 +315,23 @@ export function PortfolioGrid({ images, maxPhotos = 3 }: { images: PortfolioImag
                 image={image}
                 onSetCover={handleSetCover}
                 onDelete={handleDelete}
+                onTap={isDesktop ? undefined : setActionImage}
               />
             ))}
           </SortableContext>
+          {images.length < maxPhotos && (
+            <button
+              type="button"
+              onClick={openPicker}
+              disabled={uploading}
+              className="flex aspect-[3/4] flex-col items-center justify-center gap-2 hairline text-[var(--ink-2)] transition-colors active:bg-[var(--bg-soft)] disabled:opacity-50 lg:hidden"
+            >
+              <span className="flex h-11 w-11 items-center justify-center rounded-full hairline border-[var(--rule-strong)]">
+                <Plus className="h-5 w-5" />
+              </span>
+              <span className="text-meta">{t("upload")}</span>
+            </button>
+          )}
         </div>
       </DndContext>
 
@@ -294,10 +350,13 @@ function PortfolioTile({
   image,
   onSetCover,
   onDelete,
+  onTap,
 }: {
   image: PortfolioImage;
   onSetCover: (id: string) => void;
   onDelete: (id: string) => void;
+  /** Mobile: tapping the photo opens the context action sheet. */
+  onTap?: (image: PortfolioImage) => void;
 }) {
   const t = useTranslations("components.portfolio");
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
@@ -313,6 +372,16 @@ function PortfolioTile({
     <div
       ref={setNodeRef}
       style={style}
+      onClick={onTap ? () => onTap(image) : undefined}
+      role={onTap ? "button" : undefined}
+      tabIndex={onTap ? 0 : undefined}
+      onKeyDown={
+        onTap
+          ? (e) => {
+              if (e.key === "Enter") onTap(image);
+            }
+          : undefined
+      }
       className="group relative aspect-[3/4] overflow-hidden bg-[var(--bg-soft)]"
     >
       <Image
@@ -339,13 +408,17 @@ function PortfolioTile({
         type="button"
         {...attributes}
         {...listeners}
+        onClick={(e) => e.stopPropagation()}
         aria-label={t("reorder")}
-        className="absolute top-2 right-2 z-20 flex h-8 w-8 touch-none items-center justify-center bg-[var(--bg)]/85 text-[var(--ink)] cursor-grab active:cursor-grabbing opacity-100 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100 transition-opacity"
+        className="absolute top-1 right-1 z-20 flex h-11 w-11 touch-none items-center justify-center text-[var(--ink)] cursor-grab active:cursor-grabbing transition-opacity lg:top-2 lg:right-2 lg:h-8 lg:w-8 lg:bg-[var(--bg)]/85 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100"
       >
-        <GripVertical className="h-4 w-4" />
+        <span className="flex h-7 w-7 items-center justify-center bg-[var(--bg)]/85 lg:h-full lg:w-full lg:bg-transparent">
+          <GripVertical className="h-4 w-4" />
+        </span>
       </button>
 
-      <div className="absolute inset-0 z-10 bg-black/50 transition-opacity flex items-center justify-center gap-2 opacity-100 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100">
+      {/* Desktop hover actions — mobile uses the tap context sheet */}
+      <div className="absolute inset-0 z-10 hidden bg-black/50 transition-opacity lg:flex items-center justify-center gap-2 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100">
         {!image.isCover && (
           <Button size="sm" variant="secondary" onClick={() => onSetCover(image.id)}>
             <Star className="h-4 w-4" />
@@ -362,13 +435,28 @@ function PortfolioTile({
 function PortfolioCoverTile({
   image,
   onDelete,
+  onTap,
 }: {
   image: PortfolioImage;
   onDelete: (id: string) => void;
+  /** Mobile: tapping the photo opens the context action sheet. */
+  onTap?: (image: PortfolioImage) => void;
 }) {
   const t = useTranslations("components.portfolio");
   return (
-    <div className="group relative aspect-[3/4] overflow-hidden bg-[var(--bg-soft)]">
+    <div
+      onClick={onTap ? () => onTap(image) : undefined}
+      role={onTap ? "button" : undefined}
+      tabIndex={onTap ? 0 : undefined}
+      onKeyDown={
+        onTap
+          ? (e) => {
+              if (e.key === "Enter") onTap(image);
+            }
+          : undefined
+      }
+      className="group relative aspect-[3/4] overflow-hidden bg-[var(--bg-soft)]"
+    >
       <Image
         src={image.url}
         alt={t("portfolioAlt")}
@@ -383,7 +471,8 @@ function PortfolioCoverTile({
           {t("cover")}
         </Badge>
       </div>
-      <div className="absolute inset-0 z-10 bg-black/50 transition-opacity flex items-center justify-center gap-2 opacity-100 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100">
+      {/* Desktop hover actions — mobile uses the tap context sheet */}
+      <div className="absolute inset-0 z-10 hidden bg-black/50 transition-opacity lg:flex items-center justify-center gap-2 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100">
         <Button size="sm" variant="destructive" onClick={() => onDelete(image.id)}>
           <Trash2 className="h-4 w-4" />
         </Button>

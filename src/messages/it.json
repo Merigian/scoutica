@@ -2873,6 +2873,7 @@
       "noImagesDesc": "Carica le tue prime foto per iniziare a costruire il tuo portfolio.",
       "upload": "Carica immagine",
       "portfolioAlt": "Portfolio",
+      "setCover": "Imposta come copertina",
       "cover": "Copertina",
       "formatError": "Formato non supportato. Usa JPG, PNG o WebP.",
       "sizeError": "Il file è troppo grande. Massimo 10MB.",

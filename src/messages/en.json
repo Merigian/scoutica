@@ -2873,6 +2873,7 @@
       "noImagesDesc": "Upload your first photos to start building your portfolio.",
       "upload": "Upload image",
       "portfolioAlt": "Portfolio",
+      "setCover": "Set as cover",
       "cover": "Cover",
       "formatError": "Format not supported. Use JPG, PNG or WebP.",
       "sizeError": "File is too large. Maximum 10MB.",
