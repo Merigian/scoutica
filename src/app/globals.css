@@ -236,12 +236,16 @@ body {
   body {
     overscroll-behavior-y: none;
   }
-  /* iOS Safari zooms in when a focused form control has a font-size < 16px.
-     Pin controls to 16px on touch devices so focusing an input never zooms. */
+  /* iOS Safari zooms in when a focused form control has a font-size < 16px, and
+     does not zoom back out afterwards, leaving the page stuck-zoomed. Pin every
+     text-entry control to 16px on touch so focusing one never triggers it.
+     !important is required to beat Tailwind font-size utilities (text-sm /
+     text-[14px]) that otherwise win on the element. */
   input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
   select,
-  textarea {
-    font-size: 16px;
+  textarea,
+  [contenteditable]:not([contenteditable="false"]) {
+    font-size: 16px !important;
   }
 }
 /* Interactive elements respond instantly (no 300ms delay, no double-tap zoom) */

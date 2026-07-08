@@ -70,7 +70,7 @@ export async function StudiosShowcase() {
             </Link>
           </Reveal>
         ) : (
-          <div className="flex md:grid md:grid-cols-3 gap-6 lg:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none -mx-6 px-6 md:mx-0 md:px-0">
+          <div className="flex md:grid md:grid-cols-3 gap-6 lg:gap-8 overflow-x-auto touch-pan-x overscroll-x-contain md:overflow-visible snap-x snap-mandatory md:snap-none -mx-6 px-6 md:mx-0 md:px-0">
             {studios.map((s, i) => (
               <Reveal
                 key={s.id}

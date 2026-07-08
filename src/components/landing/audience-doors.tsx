@@ -50,7 +50,7 @@ export async function AudienceDoors() {
           </p>
         </Reveal>
 
-        <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 md:mx-0 md:grid md:snap-none md:grid-cols-3 md:overflow-visible md:px-0 lg:gap-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto touch-pan-x overscroll-x-contain px-6 md:mx-0 md:grid md:snap-none md:grid-cols-3 md:overflow-visible md:px-0 lg:gap-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {doors.map((d, i) => (
             <Reveal
               key={d.href}
