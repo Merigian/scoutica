@@ -63,9 +63,7 @@ export default async function ModelDiscoverPage({
               <p className="text-sm text-[var(--ink-3)]">
                 {total} {total === 1 ? t("profile") : t("profiles")}
               </p>
-              <div className="hidden sm:block">
-                <GridDensitySelector cols={cols} />
-              </div>
+              <GridDensitySelector cols={cols} />
             </div>
             <DiscoverGrid cols={cols}>
               {profiles.map((profile) => (

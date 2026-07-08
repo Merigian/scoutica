@@ -146,9 +146,7 @@ export default async function DiscoverPage({
             ? `${results.total} ${results.total === 1 ? t("result") : t("results")}`
             : ""}
         </p>
-        <div className="hidden sm:block">
-          <GridDensitySelector cols={cols} />
-        </div>
+        <GridDensitySelector cols={cols} />
       </div>
 
       {/* Results Grid */}

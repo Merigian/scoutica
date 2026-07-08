@@ -183,7 +183,7 @@ export default async function PublicProfilePage({
       {/* Hero section */}
       <div className="flex flex-col md:flex-row gap-6 md:gap-8">
         {/* Cover image */}
-        <div className="md:w-1/3 aspect-[3/4] max-h-[60vh] md:max-h-none overflow-hidden bg-[var(--bg-soft)] relative hairline">
+        <div className="w-full md:w-1/3 aspect-[3/4] overflow-hidden bg-[var(--bg-soft)] relative hairline">
           {profile.portfolioImages.find((i) => i.isCover) ? (
             <ClickableCover
               coverUrl={profile.portfolioImages.find((i) => i.isCover)!.url}

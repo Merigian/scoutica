@@ -223,7 +223,7 @@ export function MessagingShell({
         heightClass
       )}
     >
-      <div className="grid h-full grid-cols-1 lg:grid-cols-[340px_minmax(0,1fr)_360px]">
+      <div className="grid h-full grid-rows-1 grid-cols-1 lg:grid-cols-[340px_minmax(0,1fr)_360px]">
         {/* SIDEBAR */}
         <div
           className={cn(

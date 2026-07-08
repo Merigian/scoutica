@@ -8,7 +8,6 @@ import type { ModelProfileCard } from "@/server/queries/model-profiles";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import {
-  MODEL_CATEGORY_LABELS,
   PROFESSIONAL_STATUS_LABELS,
   GENDER_LABELS,
   EYE_COLOR_LABELS,
@@ -374,11 +373,6 @@ export function ModelCard({
   ]
     .filter(Boolean)
     .join(" \u00b7 ");
-  const primaryCategory = profile.categories?.[0] ?? null;
-  const primaryCategoryLabel = primaryCategory
-    ? MODEL_CATEGORY_LABELS[primaryCategory as keyof typeof MODEL_CATEGORY_LABELS]?.[lang] ??
-      primaryCategory
-    : null;
   const statusLabel = profile.professionalStatus
     ? PROFESSIONAL_STATUS_LABELS[profile.professionalStatus as ProfessionalStatus]?.[lang]
     : null;
@@ -588,22 +582,6 @@ export function ModelCard({
               </section>
             )}
 
-            {profile.categories && profile.categories.length > 0 && (
-              <section className="hairline-t pt-4">
-                <div className="mb-2 text-eyebrow text-[var(--ink-3)]">
-                  {t("categories")}
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {profile.categories.map((cat) => (
-                    <Badge key={cat} variant="outline" className="text-xs">
-                      {MODEL_CATEGORY_LABELS[cat as keyof typeof MODEL_CATEGORY_LABELS]?.[lang] ||
-                        cat}
-                    </Badge>
-                  ))}
-                </div>
-              </section>
-            )}
-
             <div className="hairline-t flex flex-wrap items-center gap-x-5 gap-y-2 pt-4 text-sm text-[var(--ink-2)]">
               <span
                 className="flex items-center gap-1.5"
@@ -686,10 +664,6 @@ export function ModelCard({
             <p className="text-meta text-[var(--ink-3)]" suppressHydrationWarning>
               {gridMeta}
             </p>
-          )}
-
-          {primaryCategoryLabel && (
-            <p className="truncate text-eyebrow">{primaryCategoryLabel}</p>
           )}
         </div>
       </Card>

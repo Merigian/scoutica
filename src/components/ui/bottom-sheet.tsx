@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useDragControls, useReducedMotion } from "framer-motion";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useBodyScrollLock } from "@/hooks/use-body-scroll-lock";
@@ -45,6 +45,7 @@ export function BottomSheet({
   ariaLabel,
 }: BottomSheetProps) {
   const reduce = useReducedMotion();
+  const dragControls = useDragControls();
   const panelRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
 
@@ -103,9 +104,23 @@ export function BottomSheet({
                 ? { duration: 0 }
                 : { type: "spring", stiffness: 380, damping: 38 }
             }
+            drag={reduce ? false : "y"}
+            dragControls={dragControls}
+            dragListener={false}
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={{ top: 0, bottom: 0.5 }}
+            onDragEnd={(_, info) => {
+              if (info.offset.y > 120 || info.velocity.y > 600) onClose();
+            }}
           >
-            {/* Drag-handle affordance */}
-            <div className="flex shrink-0 justify-center pt-3 pb-1">
+            {/* Drag handle — grab to pull the sheet down and dismiss */}
+            <div
+              onPointerDown={(e) => {
+                if (!reduce) dragControls.start(e);
+              }}
+              className="flex shrink-0 cursor-grab touch-none justify-center pt-3 pb-2 active:cursor-grabbing"
+              aria-hidden="true"
+            >
               <span className="h-1 w-10 rounded-full bg-[var(--rule-strong)]" />
             </div>
 
