@@ -94,6 +94,9 @@ export default async function PublicProfilePage({
   const isBoosted = profile.boosts.length > 0;
   const isVerified = profile.verificationStatus === "APPROVED";
   const isScout = session?.user?.role === "SCOUT";
+  // Social links (Instagram/TikTok/website/followers) must not be visible to
+  // other models — only the owner and non-model viewers (scouts/studios/admin).
+  const canSeeSocials = isOwnProfile || session?.user?.role !== "MODEL";
   const lastActive = profile.user.lastActiveAt;
   const activeRecently = lastActive
     ? Date.now() - new Date(lastActive).getTime() < 7 * 24 * 60 * 60 * 1000
@@ -373,7 +376,7 @@ export default async function PublicProfilePage({
       )}
 
       {/* Social links */}
-      {(profile.instagramUrl || profile.tiktokUrl || profile.websiteUrl) && (
+      {canSeeSocials && (profile.instagramUrl || profile.tiktokUrl || profile.websiteUrl) && (
         <Card>
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
@@ -414,11 +417,7 @@ export default async function PublicProfilePage({
                 </a>
               )}
             </div>
-            {profile.followerCount && (
-              <p className="text-xs text-[var(--ink-3)] mt-2">
-                {profile.followerCount.toLocaleString()} followers
-              </p>
-            )}
+            {/* Numero follower nascosto per il momento (campo e dati mantenuti) */}
           </CardContent>
         </Card>
       )}

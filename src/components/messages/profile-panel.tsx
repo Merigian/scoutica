@@ -328,11 +328,7 @@ function ModelPanelBody({
             {profile.websiteUrl && (
               <SocialLink href={profile.websiteUrl} label="Website" />
             )}
-            {profile.followerCount && profile.followerCount > 0 && (
-              <p className="mt-3 font-[family-name:var(--font-jbm)] text-[11px] tabular-nums text-[var(--ink-2)]">
-                {t("followers")}: {profile.followerCount.toLocaleString()}
-              </p>
-            )}
+            {/* Numero follower nascosto per il momento (campo e dati mantenuti) */}
           </div>
         </div>
       )}

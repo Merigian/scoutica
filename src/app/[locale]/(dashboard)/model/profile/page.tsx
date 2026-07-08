@@ -6,6 +6,8 @@ import { ModelProfileForm } from "@/components/forms/model-profile-form";
 import { CompletenessScore } from "@/components/model/completeness-score";
 import { PublishControl } from "@/components/model/publish-control";
 import { ProfilePhotos } from "@/components/model/profile-photos";
+import { PLAN_LIMITS } from "@/config/plans";
+import type { PlanTier } from "@prisma/client";
 
 export default async function ModelProfilePage() {
   const session = await auth();
@@ -24,6 +26,13 @@ export default async function ModelProfilePage() {
 
   if (!profile) redirect("/login");
 
+  const subscription = await db.subscription.findUnique({
+    where: { userId: session.user.id },
+    select: { plan: true },
+  });
+  const planTier: PlanTier = subscription?.plan ?? "FREE";
+  const maxPhotos = PLAN_LIMITS[planTier].maxPhotos;
+
   const hasCover = profile.portfolioImages.some((img) => img.isCover);
 
   return (
@@ -41,7 +50,7 @@ export default async function ModelProfilePage() {
       <CompletenessScore score={profile.completenessScore} />
 
       {/* Profile Photos */}
-      <ProfilePhotos photos={profile.portfolioImages} />
+      <ProfilePhotos photos={profile.portfolioImages} maxPhotos={maxPhotos} />
 
       {/* Profile Form */}
       <ModelProfileForm

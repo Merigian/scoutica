@@ -293,7 +293,7 @@ export default async function ModelHomePage() {
                 {t("profileStrength")}
               </p>
               <div className="flex items-baseline justify-between gap-3">
-                <span className="font-[var(--font-display)] font-light text-[clamp(2rem,4vw,2.75rem)] leading-none tabular-nums text-[var(--ink)]">
+                <span className="font-display font-light text-[clamp(2rem,4vw,2.75rem)] leading-none tabular-nums text-[var(--ink)]">
                   {profile.completenessScore}%
                 </span>
                 {profile.completenessScore < 100 && (

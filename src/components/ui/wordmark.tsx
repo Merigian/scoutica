@@ -39,7 +39,7 @@ export function ScouticaWordmark({
       role="img"
       aria-label={title}
       className={cn(
-        "inline-block align-middle select-none whitespace-nowrap font-[var(--font-display)]",
+        "inline-block align-middle select-none whitespace-nowrap font-display",
         className,
       )}
       style={{
@@ -74,7 +74,7 @@ export function ScouticaMonogram({
       role="img"
       aria-label={title}
       className={cn(
-        "inline-block align-middle select-none font-[var(--font-display)]",
+        "inline-block align-middle select-none font-display",
         className,
       )}
       style={{

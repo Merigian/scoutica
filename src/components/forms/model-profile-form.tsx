@@ -105,22 +105,22 @@ export function ModelProfileForm({ profile }: ModelProfileFormProps) {
             <Input id="lastName" {...register("lastName")} error={errors.lastName?.message} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="dateOfBirth">{t("fields.dateOfBirth")}</Label>
+            <Label htmlFor="dateOfBirth" required>{t("fields.dateOfBirth")}</Label>
             <Input id="dateOfBirth" type="date" disabled={dobLocked} {...register("dateOfBirth")} error={errors.dateOfBirth?.message} />
             {dobLocked && (
               <p className="text-xs text-[var(--ink-3)]">{t("fields.dateOfBirthLocked")}</p>
             )}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="gender">{t("fields.gender")}</Label>
+            <Label htmlFor="gender" required>{t("fields.gender")}</Label>
             <Select id="gender" options={enumToOptions(GENDER_LABELS)} placeholder={selectPlaceholder} {...register("gender")} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="region">{t("fields.region")}</Label>
+            <Label htmlFor="region" required>{t("fields.region")}</Label>
             <Select id="region" options={ALL_REGION_NAMES.map((r) => ({ value: r, label: r }))} placeholder={selectPlaceholder} {...register("region")} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="city">{t("fields.city")}</Label>
+            <Label htmlFor="city" required>{t("fields.city")}</Label>
             <Controller
               control={control}
               name="city"
@@ -155,7 +155,7 @@ export function ModelProfileForm({ profile }: ModelProfileFormProps) {
         </CardHeader>
         <CardContent className="grid gap-6 sm:grid-cols-3">
           <div className="space-y-2">
-            <Label htmlFor="height">{t("fields.height")}</Label>
+            <Label htmlFor="height" required>{t("fields.height")}</Label>
             <Input id="height" type="number" placeholder="175" {...register("height")} error={errors.height?.message} />
           </div>
           <div className="space-y-2">
@@ -213,7 +213,7 @@ export function ModelProfileForm({ profile }: ModelProfileFormProps) {
             <Select id="professionalStatus" options={enumToOptions(PROFESSIONAL_STATUS_LABELS)} placeholder={selectPlaceholder} {...register("professionalStatus")} />
           </div>
           <div className="space-y-2">
-            <Label>{t("fields.categories")}</Label>
+            <Label required>{t("fields.categories")}</Label>
             <MultiSelect
               options={enumToOptions(MODEL_CATEGORY_LABELS)}
               selected={watch("categories") || []}

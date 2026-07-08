@@ -236,6 +236,13 @@ body {
   body {
     overscroll-behavior-y: none;
   }
+  /* iOS Safari zooms in when a focused form control has a font-size < 16px.
+     Pin controls to 16px on touch devices so focusing an input never zooms. */
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  select,
+  textarea {
+    font-size: 16px;
+  }
 }
 /* Interactive elements respond instantly (no 300ms delay, no double-tap zoom) */
 a,

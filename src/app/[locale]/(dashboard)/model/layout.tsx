@@ -16,6 +16,7 @@ export default async function ModelLayout({ children }: { children: React.ReactN
     select: {
       status: true,
       fullName: true,
+      gender: true,
       city: true,
       region: true,
       categories: true,
@@ -40,9 +41,11 @@ export default async function ModelLayout({ children }: { children: React.ReactN
 
   const missingLabels: Record<string, string> = {
     fullName: t("requireFullName"),
+    gender: t("requireGender"),
+    region: t("requireRegion"),
     city: t("requireCity"),
+    height: t("requireHeight"),
     category: t("requireCategory"),
-    measurements: t("requireMeasurements"),
     photos: t("requirePhotos"),
   };
 

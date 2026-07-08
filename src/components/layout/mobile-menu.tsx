@@ -6,6 +6,7 @@ import { useTheme } from "next-themes";
 import { useTranslations, useLocale } from "next-intl";
 import { Link, useRouter, usePathname } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
+import { useBodyScrollLock } from "@/hooks/use-body-scroll-lock";
 import { NAV_ITEMS } from "@/config/site";
 import { Avatar } from "@/components/ui/avatar";
 import { UnreadBadge } from "@/components/shared/unread-badge";
@@ -76,13 +77,7 @@ export function MobileMenu({ open, onClose, hideVerification = false }: MobileMe
 
   useEffect(() => setMounted(true), []);
 
-  useEffect(() => {
-    if (!open) return;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
+  useBodyScrollLock(open);
 
   if (!session?.user) return null;
 
@@ -153,7 +148,7 @@ export function MobileMenu({ open, onClose, hideVerification = false }: MobileMe
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto overscroll-contain">
           {/* User row -> profile */}
           {accountHref ? (
             <Link

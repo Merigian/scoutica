@@ -10,6 +10,7 @@ import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { cn } from "@/lib/utils";
 import { LayoutDashboard, Menu, X, ArrowUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useBodyScrollLock } from "@/hooks/use-body-scroll-lock";
 
 const ROLE_DASHBOARD: Record<string, string> = {
   MODEL: "/model/home",
@@ -47,15 +48,8 @@ export function MarketingNav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock body scroll while the full-screen mobile menu is open.
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [open]);
+  // Lock background scroll (iOS-safe) while the full-screen menu is open.
+  useBodyScrollLock(open);
 
   const dashboardHref = session?.user?.role ? ROLE_DASHBOARD[session.user.role] ?? "/dashboard" : null;
 
@@ -137,7 +131,7 @@ export function MarketingNav() {
       </div>
 
       {open && (
-        <div className="lg:hidden fixed inset-0 top-16 z-40 flex flex-col overflow-y-auto bg-[var(--bg)] text-[var(--ink)] animate-fade-in">
+        <div className="lg:hidden fixed inset-0 top-16 z-40 flex flex-col overflow-y-auto overscroll-contain bg-[var(--bg)] text-[var(--ink)] animate-fade-in">
           <nav className="flex flex-col px-6 pt-4">
             {[
               { href: "/pricing", label: t("pricing") },

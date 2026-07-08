@@ -89,7 +89,7 @@ export default async function CastingDetailPage({
               </Badge>
             )}
           </div>
-          <p className="text-sm text-[var(--ink-3)] mt-1">
+          <div className="text-sm text-[var(--ink-3)] mt-1">
             {t("postedBy")}{" "}
             <span className="font-medium text-[var(--ink)]">
               {casting.scoutProfile.businessName ?? "Scout"}
@@ -99,7 +99,7 @@ export default async function CastingDetailPage({
                 <CheckCircle className="h-2.5 w-2.5" />
               </Badge>
             )}
-          </p>
+          </div>
         </div>
 
         {/* Info cards */}

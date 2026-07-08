@@ -74,9 +74,19 @@ export function checkActivationRequirements(
     missing.push("fullName");
   }
 
-  // City or region
-  if (!profile.city && !profile.region) {
+  // City (local discovery)
+  if (!profile.city) {
     missing.push("city");
+  }
+
+  // Region (primary geo filter)
+  if (!profile.region) {
+    missing.push("region");
+  }
+
+  // Gender (primary search filter)
+  if (!profile.gender) {
+    missing.push("gender");
   }
 
   // At least 1 category
@@ -84,11 +94,9 @@ export function checkActivationRequirements(
     missing.push("category");
   }
 
-  // At least 3 measurements: height required + 2 of bust/waist/hips
-  const measurementCount = [profile.height, profile.bust, profile.waist, profile.hips]
-    .filter((v) => v !== null && v !== undefined && v > 0).length;
-  if (!profile.height || measurementCount < 3) {
-    missing.push("measurements");
+  // Height (primary measurement; other measurements are optional)
+  if (!profile.height) {
+    missing.push("height");
   }
 
   // At least 3 portfolio photos
