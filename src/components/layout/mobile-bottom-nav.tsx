@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
@@ -48,11 +49,60 @@ const SLOTS: Record<Role, Slot[]> = {
   ],
 } as const satisfies Record<Role, Slot[]>;
 
+/* Per-tab scroll persistence (native tab-bar behavior): the offset of the tab
+   root you leave is remembered for the session and restored when you return
+   to it via the tab bar. */
+const TAB_SCROLL_PREFIX = "scoutica:tab-scroll:";
+
+function saveScroll(pathname: string) {
+  try {
+    sessionStorage.setItem(TAB_SCROLL_PREFIX + pathname, String(window.scrollY));
+  } catch {
+    /* sessionStorage unavailable — skip */
+  }
+}
+
+function readScroll(pathname: string): number {
+  try {
+    return Number(sessionStorage.getItem(TAB_SCROLL_PREFIX + pathname)) || 0;
+  } catch {
+    return 0;
+  }
+}
+
 export function MobileBottomNav() {
   const { data: session } = useSession();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const t = useTranslations("nav");
+  const pendingRestore = useRef<string | null>(null);
+
+  // Restore the saved offset after a tab-bar navigation lands. Retries while
+  // the route is still streaming in (loading.tsx skeletons are shorter than
+  // the final content), then gives up quietly.
+  useEffect(() => {
+    const href = pendingRestore.current;
+    if (!href || !pathname.endsWith(href)) return;
+    pendingRestore.current = null;
+    const target = readScroll(pathname);
+    if (!target) return;
+    let attempts = 0;
+    let timer: ReturnType<typeof setTimeout>;
+    const tryRestore = () => {
+      if (
+        document.documentElement.scrollHeight - window.innerHeight >= target
+      ) {
+        window.scrollTo(0, target);
+      } else if (attempts++ < 20) {
+        timer = setTimeout(tryRestore, 50);
+      }
+    };
+    const raf = requestAnimationFrame(tryRestore);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(timer);
+    };
+  }, [pathname]);
 
   if (!session?.user) return null;
   const role = session.user.role.toLowerCase();
@@ -63,6 +113,21 @@ export function MobileBottomNav() {
 
   const slots = SLOTS[role as Role];
   const isActive = (href: string) => pathname.includes(href);
+
+  const handleTabClick =
+    (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+      saveScroll(pathname);
+      if (pathname.endsWith(href)) {
+        // Re-tapping the current tab scrolls its root back to top (iOS).
+        e.preventDefault();
+        const reduce = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+        return;
+      }
+      pendingRestore.current = href;
+    };
 
   return (
     <nav
@@ -77,10 +142,11 @@ export function MobileBottomNav() {
               <Link
                 key={slot.key}
                 href={slot.href as never}
+                onClick={handleTabClick(slot.href)}
                 aria-label={t(slot.key as never)}
                 className="flex flex-1 flex-col items-center justify-start"
               >
-                <span className="flex h-12 w-12 -translate-y-3 items-center justify-center bg-[var(--ink)] text-[var(--bg)] ring-4 ring-[var(--bg)] transition-transform active:scale-95">
+                <span className="flex h-12 w-12 -translate-y-3 items-center justify-center bg-[var(--ink)] text-[var(--bg)] ring-4 ring-[var(--bg)] transition-transform duration-150 active:scale-95">
                   <Plus className="h-6 w-6" weight="bold" />
                 </span>
                 <span className="-mt-2 text-[10px] leading-none text-[var(--ink-3)]">
@@ -96,14 +162,17 @@ export function MobileBottomNav() {
               <Link
                 key="avatar"
                 href={slot.href as never}
+                onClick={handleTabClick(slot.href)}
                 aria-label={t("profile")}
                 aria-current={active ? "page" : undefined}
-                className="flex flex-1 flex-col items-center gap-1 py-1"
+                className="group flex flex-1 flex-col items-center gap-1 py-1"
               >
                 <span
+                  key={String(active)}
                   className={cn(
-                    "flex h-7 w-7 items-center justify-center rounded-full transition-all",
-                    active && "ring-2 ring-[var(--ink)] ring-offset-2 ring-offset-[var(--bg)]",
+                    "flex h-7 w-7 items-center justify-center rounded-full transition-transform duration-150 group-active:scale-90",
+                    active &&
+                      "animate-tab-settle ring-2 ring-[var(--ink)] ring-offset-2 ring-offset-[var(--bg)]",
                   )}
                 >
                   <Avatar
@@ -131,13 +200,20 @@ export function MobileBottomNav() {
             <Link
               key={slot.key}
               href={slot.href as never}
+              onClick={handleTabClick(slot.href)}
               aria-current={active ? "page" : undefined}
               className={cn(
-                "flex flex-1 flex-col items-center gap-1 py-1 transition-colors",
+                "group flex flex-1 flex-col items-center gap-1 py-1 transition-colors",
                 active ? "text-[var(--ink)]" : "text-[var(--ink-3)]",
               )}
             >
-              <span className="relative">
+              <span
+                key={String(active)}
+                className={cn(
+                  "relative transition-transform duration-150 group-active:scale-90",
+                  active && "animate-tab-settle",
+                )}
+              >
                 <Icon className="h-[26px] w-[26px]" weight={active ? "fill" : "regular"} />
                 {slot.badge && <UnreadBadge />}
               </span>
