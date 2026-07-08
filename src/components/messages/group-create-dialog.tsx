@@ -5,6 +5,9 @@ import { Check, Loader2, Search, Users, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Avatar } from "@/components/ui/avatar";
+import { BottomSheet } from "@/components/ui/bottom-sheet";
+import { useIsDesktop } from "@/hooks/use-is-desktop";
+import { useBodyScrollLock } from "@/hooks/use-body-scroll-lock";
 import {
   createGroupConversation,
   getGroupCandidates,
@@ -23,6 +26,9 @@ export function GroupCreateDialog({
   onCreated,
 }: GroupCreateDialogProps) {
   const t = useTranslations("components.messaging");
+  const isDesktop = useIsDesktop();
+  // Mobile locking comes from BottomSheet; the desktop modal locks here.
+  useBodyScrollLock(open && isDesktop);
 
   const [candidates, setCandidates] = useState<OtherUserSummary[]>([]);
   const [loadingCandidates, setLoadingCandidates] = useState(false);
@@ -91,49 +97,10 @@ export function GroupCreateDialog({
     }
   };
 
-  if (!open) return null;
-
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-end justify-center sm:items-center"
-      role="dialog"
-      aria-modal="true"
-      aria-label={t("newGroupTitle")}
-    >
-      <button
-        type="button"
-        aria-label={t("close")}
-        onClick={onClose}
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-      />
-      <div
-        className={cn(
-          "relative flex max-h-[85dvh] w-full flex-col bg-[var(--bg-elevated)]",
-          "sm:max-w-md sm:rounded-2xl",
-          "rounded-t-2xl sm:rounded-b-2xl",
-          "border border-[var(--rule)]"
-        )}
-      >
-        {/* Header */}
-        <div className="flex items-center gap-3 border-b border-[var(--rule)] px-5 py-4">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--bg-soft)] text-[var(--ink)]">
-            <Users className="h-4 w-4" />
-          </span>
-          <h2 className="flex-1 text-[16px] font-semibold text-[var(--ink)]">
-            {t("newGroupTitle")}
-          </h2>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label={t("close")}
-            className="flex h-9 w-9 items-center justify-center rounded-full text-[var(--ink-2)] hover:bg-[var(--bg-soft)] hover:text-[var(--ink)]"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        </div>
-
-        {/* Body */}
-        <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">
+  // Body and footer are shared between the mobile BottomSheet and the
+  // desktop modal so the two shells can't drift.
+  const bodyContent = (
+    <>
           <label className="block">
             <span className="mb-1.5 block text-[12px] font-medium text-[var(--ink-2)]">
               {t("groupNameLabel")}
@@ -225,29 +192,92 @@ export function GroupCreateDialog({
               </ul>
             )}
           </div>
-        </div>
+    </>
+  );
 
-        {/* Footer */}
-        <div className="border-t border-[var(--rule)] px-5 py-4">
-          {error && (
-            <p className="mb-3 text-[12px] font-medium text-[var(--warning)]">
-              {error}
-            </p>
-          )}
+  const footerContent = (
+    <>
+      {error && (
+        <p className="mb-3 text-[12px] font-medium text-[var(--warning)]">
+          {error}
+        </p>
+      )}
+      <button
+        type="button"
+        onClick={() => void handleSubmit()}
+        disabled={!canSubmit}
+        className={cn(
+          "flex h-11 w-full items-center justify-center gap-2 rounded-xl text-[14px] font-semibold transition-opacity",
+          "bg-[var(--accent)] text-[var(--bg)]",
+          !canSubmit && "cursor-not-allowed opacity-40"
+        )}
+      >
+        {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
+        {t("createGroup")}
+      </button>
+    </>
+  );
+
+  // Mobile: the canonical sheet (spring, drag-dismiss, scroll lock, safe-area).
+  if (!isDesktop) {
+    return (
+      <BottomSheet
+        open={open}
+        onClose={onClose}
+        title={t("newGroupTitle")}
+        footer={footerContent}
+      >
+        {bodyContent}
+      </BottomSheet>
+    );
+  }
+
+  if (!open) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-end justify-center sm:items-center"
+      role="dialog"
+      aria-modal="true"
+      aria-label={t("newGroupTitle")}
+    >
+      <button
+        type="button"
+        aria-label={t("close")}
+        onClick={onClose}
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+      />
+      <div
+        className={cn(
+          "relative flex max-h-[85dvh] w-full flex-col bg-[var(--bg-elevated)]",
+          "sm:max-w-md sm:rounded-2xl",
+          "rounded-t-2xl sm:rounded-b-2xl",
+          "border border-[var(--rule)]"
+        )}
+      >
+        {/* Header */}
+        <div className="flex items-center gap-3 border-b border-[var(--rule)] px-5 py-4">
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--bg-soft)] text-[var(--ink)]">
+            <Users className="h-4 w-4" />
+          </span>
+          <h2 className="flex-1 text-[16px] font-semibold text-[var(--ink)]">
+            {t("newGroupTitle")}
+          </h2>
           <button
             type="button"
-            onClick={() => void handleSubmit()}
-            disabled={!canSubmit}
-            className={cn(
-              "flex h-11 w-full items-center justify-center gap-2 rounded-xl text-[14px] font-semibold transition-opacity",
-              "bg-[var(--accent)] text-[var(--bg)]",
-              !canSubmit && "cursor-not-allowed opacity-40"
-            )}
+            onClick={onClose}
+            aria-label={t("close")}
+            className="flex h-9 w-9 items-center justify-center rounded-full text-[var(--ink-2)] hover:bg-[var(--bg-soft)] hover:text-[var(--ink)]"
           >
-            {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
-            {t("createGroup")}
+            <X className="h-4 w-4" />
           </button>
         </div>
+
+        {/* Body */}
+        <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">{bodyContent}</div>
+
+        {/* Footer */}
+        <div className="border-t border-[var(--rule)] px-5 py-4">{footerContent}</div>
       </div>
     </div>
   );

@@ -93,7 +93,7 @@ export function ConversationSidebar({
             onClick={onNewGroup}
             aria-label={t("newGroup")}
             title={t("newGroup")}
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--bg-soft)] text-[var(--ink)] transition-colors hover:bg-[var(--bg-soft)]/70"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--bg-soft)] text-[var(--ink)] transition-colors hover:bg-[var(--bg-soft)]/70 active:opacity-70 lg:h-10 lg:w-10"
           >
             <Users className="h-[18px] w-[18px]" />
           </button>
@@ -195,7 +195,7 @@ export function ConversationSidebar({
                       "group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors",
                       isActive
                         ? "bg-[var(--bg-soft)]"
-                        : "hover:bg-[var(--bg-soft)]/60"
+                        : "hover:bg-[var(--bg-soft)]/60 active:bg-[var(--bg-soft)]"
                     )}
                   >
                     <div className="relative shrink-0">
