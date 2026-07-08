@@ -2597,6 +2597,15 @@
       "save": "Save",
       "saved": "Saved!"
     },
+    "imageCropper": {
+      "title": "Crop image",
+      "description": "Drag to move, pinch or use the buttons to zoom.",
+      "zoomOut": "Zoom out",
+      "zoomIn": "Zoom in",
+      "reset": "Reset",
+      "cancel": "Cancel",
+      "confirm": "Crop and upload"
+    },
     "createBoard": {
       "newBoard": "New board",
       "createBoard": "Create board",

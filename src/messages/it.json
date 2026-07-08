@@ -2597,6 +2597,15 @@
       "save": "Salva",
       "saved": "Salvato!"
     },
+    "imageCropper": {
+      "title": "Ritaglia immagine",
+      "description": "Trascina per spostare, pizzica o usa i pulsanti per zoomare.",
+      "zoomOut": "Riduci",
+      "zoomIn": "Ingrandisci",
+      "reset": "Ripristina",
+      "cancel": "Annulla",
+      "confirm": "Ritaglia e carica"
+    },
     "createBoard": {
       "newBoard": "Nuova bacheca",
       "createBoard": "Crea bacheca",

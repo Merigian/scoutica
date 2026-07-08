@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { ResponsiveDialog } from "@/components/ui/responsive-dialog";
 import { CONTACT_REASON_LABELS } from "@/config/enums";
 import { CheckCircle, AlertCircle } from "lucide-react";
 
@@ -75,17 +75,14 @@ export function ContactRequestForm({
   };
 
   return (
-    <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>
-            {t("dialogTitle")} {modelName}
-          </DialogTitle>
-          <DialogDescription>
-            {t("dialogDesc")}
-          </DialogDescription>
-        </DialogHeader>
-
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={(next) => {
+        if (!next) handleClose();
+      }}
+      title={`${t("dialogTitle")} ${modelName}`}
+      description={t("dialogDesc")}
+    >
         {result?.success ? (
           <div className="flex flex-col items-center gap-3 py-6">
             <CheckCircle className="h-12 w-12 text-success" />
@@ -156,7 +153,6 @@ export function ContactRequestForm({
             </div>
           </form>
         )}
-      </DialogContent>
-    </Dialog>
+    </ResponsiveDialog>
   );
 }

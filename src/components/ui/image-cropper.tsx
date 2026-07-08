@@ -1,14 +1,9 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+import { ResponsiveDialog } from "@/components/ui/responsive-dialog";
 import { ZoomIn, ZoomOut, RotateCcw, Check, X } from "lucide-react";
 
 interface ImageCropperProps {
@@ -31,6 +26,7 @@ export function ImageCropper({
   aspectRatio = 3 / 4,
   outputWidth = 1600,
 }: ImageCropperProps) {
+  const t = useTranslations("components.imageCropper");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -279,18 +275,13 @@ export function ImageCropper({
   }, [img, offset, scale, onCrop, aspectRatio, outputWidth, viewportWidth]);
 
   return (
-    <Dialog open={!!file} onOpenChange={(open) => !open && onCancel()}>
-      <DialogContent
-        className="max-w-sm sm:max-w-md"
-        onClose={onCancel}
-      >
-        <DialogHeader>
-          <DialogTitle>Ritaglia immagine</DialogTitle>
-          <DialogDescription>
-            Trascina per spostare, usa la rotellina o i pulsanti per zoomare.
-          </DialogDescription>
-        </DialogHeader>
-
+    <ResponsiveDialog
+      open={!!file}
+      onOpenChange={(next) => !next && onCancel()}
+      title={t("title")}
+      description={t("description")}
+      desktopClassName="max-w-sm sm:max-w-md"
+    >
         {/* Crop area */}
         <div
           ref={containerRef}
@@ -329,7 +320,8 @@ export function ImageCropper({
             variant="outline"
             size="sm"
             onClick={handleZoomOut}
-            title="Riduci"
+            title={t("zoomOut")}
+            aria-label={t("zoomOut")}
           >
             <ZoomOut className="h-4 w-4" />
           </Button>
@@ -343,7 +335,8 @@ export function ImageCropper({
             variant="outline"
             size="sm"
             onClick={handleZoomIn}
-            title="Ingrandisci"
+            title={t("zoomIn")}
+            aria-label={t("zoomIn")}
           >
             <ZoomIn className="h-4 w-4" />
           </Button>
@@ -353,7 +346,8 @@ export function ImageCropper({
             variant="ghost"
             size="sm"
             onClick={handleReset}
-            title="Ripristina"
+            title={t("reset")}
+            aria-label={t("reset")}
           >
             <RotateCcw className="h-4 w-4" />
           </Button>
@@ -368,7 +362,7 @@ export function ImageCropper({
             onClick={onCancel}
           >
             <X className="h-4 w-4 mr-1.5" />
-            Annulla
+            {t("cancel")}
           </Button>
           <Button
             type="button"
@@ -376,10 +370,9 @@ export function ImageCropper({
             onClick={handleConfirm}
           >
             <Check className="h-4 w-4 mr-1.5" />
-            Ritaglia e carica
+            {t("confirm")}
           </Button>
         </div>
-      </DialogContent>
-    </Dialog>
+    </ResponsiveDialog>
   );
 }

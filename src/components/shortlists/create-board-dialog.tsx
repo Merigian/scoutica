@@ -6,7 +6,7 @@ import { createBoard } from "@/server/actions/shortlists";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { ResponsiveDialog } from "@/components/ui/responsive-dialog";
 import { Plus, AlertCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -47,14 +47,7 @@ export function CreateBoardDialog({ locale }: CreateBoardDialogProps) {
         {t("newBoard")}
       </Button>
 
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>
-              {t("createBoard")}
-            </DialogTitle>
-          </DialogHeader>
-
+      <ResponsiveDialog open={open} onOpenChange={setOpen} title={t("createBoard")}>
           <div className="space-y-4">
             {error && (
               <div className="flex items-start gap-2 rounded-md bg-[var(--accent)]/10 p-3 text-sm text-[var(--accent)]">
@@ -90,8 +83,7 @@ export function CreateBoardDialog({ locale }: CreateBoardDialogProps) {
               </Button>
             </div>
           </div>
-        </DialogContent>
-      </Dialog>
+      </ResponsiveDialog>
     </>
   );
 }
