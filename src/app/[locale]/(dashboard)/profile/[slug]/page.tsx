@@ -33,6 +33,7 @@ import {
   User,
   ShieldCheck,
   Music2,
+  ArrowUpRight,
 } from "lucide-react";
 import { VerifiedBadge } from "@/components/ui/verified-badge";
 import { Button } from "@/components/ui/button";
@@ -175,17 +176,100 @@ export default async function PublicProfilePage({
     ? t("backToSearch")
     : t("back");
 
+  // Mobile showcase inputs: cover-first gallery + one-line identity meta.
+  const heroImages = [...profile.portfolioImages]
+    .sort((a, b) => (b.isCover ? 1 : 0) - (a.isCover ? 1 : 0))
+    .map((img) => img.url);
+  const heroMeta = [
+    age ? `${age} ${t("years")}` : null,
+    profile.city
+      ? `${profile.city}${profile.region ? `, ${profile.region}` : ""}`
+      : null,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+  const showActionBar = !isOwnProfile && (isScout || !isAuthenticated);
+
+  // Blocks shared between the desktop hero column and the mobile section.
+  const categoriesBlock =
+    profile.categories.length > 0 ? (
+      <div className="flex flex-wrap gap-1.5">
+        {profile.categories.map((cat) => (
+          <Badge key={cat} variant="secondary">
+            {MODEL_CATEGORY_LABELS[cat as keyof typeof MODEL_CATEGORY_LABELS]?.[lang] ?? cat}
+          </Badge>
+        ))}
+      </div>
+    ) : null;
+
+  const attributeBadges = (
+    <div className="flex flex-wrap gap-2 text-sm">
+      {profile.gender && (
+        <Badge variant="outline">
+          {GENDER_LABELS[profile.gender as keyof typeof GENDER_LABELS]?.[lang]}
+        </Badge>
+      )}
+      {profile.professionalStatus && (
+        <Badge variant="outline">
+          <Briefcase className="h-3 w-3 mr-1" />
+          {PROFESSIONAL_STATUS_LABELS[profile.professionalStatus as keyof typeof PROFESSIONAL_STATUS_LABELS]?.[lang]}
+        </Badge>
+      )}
+      {profile.travelAvailability && (
+        <Badge variant="outline">
+          <Plane className="h-3 w-3 mr-1" />
+          {t("availableToTravel")}
+        </Badge>
+      )}
+    </div>
+  );
+
+  const bioBlock = profile.bio ? (
+    <p className="text-sm text-[var(--ink-3)] leading-relaxed whitespace-pre-line">
+      {profile.bio}
+    </p>
+  ) : null;
+
+  const privateNoteBlock =
+    isScout && privateNoteContent !== null ? (
+      <PrivateNoteCard
+        modelProfileId={profile.id}
+        initialContent={privateNoteContent}
+      />
+    ) : null;
+
   return (
-    <div className="max-w-5xl mx-auto space-y-8">
+    <div className={`max-w-5xl mx-auto space-y-8 ${showActionBar ? "pb-24 lg:pb-0" : ""}`}>
       <div className="flex items-center justify-between">
         <BackLink href={backHref} label={backLabel} />
         {session?.user && session.user.id !== profile.userId && (
-          <ReportBlockMenu targetUserId={profile.userId} locale={locale} />
+          <span className="ml-auto">
+            <ReportBlockMenu targetUserId={profile.userId} locale={locale} />
+          </span>
         )}
       </div>
 
-      {/* Hero section */}
-      <div className="flex flex-col md:flex-row gap-6 md:gap-8">
+      {/* Mobile hero — full-bleed swipeable gallery, identity on the scrim */}
+      <ProfileHeroMobile
+        images={heroImages}
+        name={displayName || t("unnamed")}
+        meta={heroMeta}
+        verified={isVerified}
+        verifiedLabel={t("verified")}
+        boosted={isBoosted}
+        featuredLabel={t("featured")}
+      />
+
+      {/* Mobile spec sheet intro (categories, attributes, bio, scout note) */}
+      <div className="space-y-4 lg:hidden">
+        {categoriesBlock}
+        {attributeBadges}
+        {bioBlock}
+        {privateNoteBlock}
+      </div>
+
+      {/* Hero section (desktop) */}
+      <div className="hidden lg:flex gap-6 md:gap-8">
         {/* Cover image */}
         <div className="w-full md:w-1/3 aspect-[3/4] overflow-hidden bg-[var(--bg-soft)] relative hairline">
           {profile.portfolioImages.find((i) => i.isCover) ? (
@@ -242,43 +326,13 @@ export default async function PublicProfilePage({
           </div>
 
           {/* Categories */}
-          {profile.categories.length > 0 && (
-            <div className="flex flex-wrap gap-1.5">
-              {profile.categories.map((cat) => (
-                <Badge key={cat} variant="secondary">
-                  {MODEL_CATEGORY_LABELS[cat as keyof typeof MODEL_CATEGORY_LABELS]?.[lang] ?? cat}
-                </Badge>
-              ))}
-            </div>
-          )}
+          {categoriesBlock}
 
           {/* Badges row */}
-          <div className="flex flex-wrap gap-2 text-sm">
-            {profile.gender && (
-              <Badge variant="outline">
-                {GENDER_LABELS[profile.gender as keyof typeof GENDER_LABELS]?.[lang]}
-              </Badge>
-            )}
-            {profile.professionalStatus && (
-              <Badge variant="outline">
-                <Briefcase className="h-3 w-3 mr-1" />
-                {PROFESSIONAL_STATUS_LABELS[profile.professionalStatus as keyof typeof PROFESSIONAL_STATUS_LABELS]?.[lang]}
-              </Badge>
-            )}
-            {profile.travelAvailability && (
-              <Badge variant="outline">
-                <Plane className="h-3 w-3 mr-1" />
-                {t("availableToTravel")}
-              </Badge>
-            )}
-          </div>
+          {attributeBadges}
 
           {/* Bio */}
-          {profile.bio && (
-            <p className="text-sm text-[var(--ink-3)] leading-relaxed whitespace-pre-line">
-              {profile.bio}
-            </p>
-          )}
+          {bioBlock}
 
           {/* Contact button for scouts */}
           {isScout && (
@@ -292,20 +346,30 @@ export default async function PublicProfilePage({
           )}
 
           {/* Private note for scouts */}
-          {isScout && privateNoteContent !== null && (
-            <PrivateNoteCard
-              modelProfileId={profile.id}
-              initialContent={privateNoteContent}
-            />
-          )}
+          {privateNoteBlock}
         </div>
       </div>
 
       <Separator />
 
-      {/* Measurements grid */}
+      {/* Measurements — mobile: 2-col hairline lattice (call-sheet style) */}
       {stats.length > 0 && (
-        <Card>
+        <section className="lg:hidden">
+          <p className="text-eyebrow mb-3">{t("measurements")}</p>
+          <dl className="grid grid-cols-2 hairline-t hairline-l">
+            {stats.map((stat: any, i: number) => (
+              <div key={i} className="hairline-b hairline-r px-3 py-3">
+                <dt className="text-meta">{stat.label}</dt>
+                <dd className="text-mono-num text-lg text-[var(--ink)]">{stat.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
+
+      {/* Measurements grid (desktop) */}
+      {stats.length > 0 && (
+        <Card className="hidden lg:block">
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
               <Ruler className="h-4 w-4" />
@@ -325,9 +389,42 @@ export default async function PublicProfilePage({
         </Card>
       )}
 
-      {/* Appearance */}
+      {/* Appearance — mobile: hairline lattice */}
       {(profile.eyeColor || profile.hairColor || profile.ethnicity) && (
-        <Card>
+        <section className="lg:hidden">
+          <p className="text-eyebrow mb-3">{t("appearance")}</p>
+          <dl className="grid grid-cols-2 hairline-t hairline-l">
+            {profile.eyeColor && (
+              <div className="hairline-b hairline-r px-3 py-3">
+                <dt className="text-meta">{t("eyes")}</dt>
+                <dd className="text-[15px] text-[var(--ink)]">
+                  {EYE_COLOR_LABELS[profile.eyeColor as keyof typeof EYE_COLOR_LABELS]?.[lang]}
+                </dd>
+              </div>
+            )}
+            {profile.hairColor && (
+              <div className="hairline-b hairline-r px-3 py-3">
+                <dt className="text-meta">{t("hair")}</dt>
+                <dd className="text-[15px] text-[var(--ink)]">
+                  {HAIR_COLOR_LABELS[profile.hairColor as keyof typeof HAIR_COLOR_LABELS]?.[lang]}
+                </dd>
+              </div>
+            )}
+            {profile.ethnicity && (
+              <div className="hairline-b hairline-r px-3 py-3">
+                <dt className="text-meta">{t("ethnicity")}</dt>
+                <dd className="text-[15px] text-[var(--ink)]">
+                  {ETHNICITY_LABELS[profile.ethnicity as keyof typeof ETHNICITY_LABELS]?.[lang]}
+                </dd>
+              </div>
+            )}
+          </dl>
+        </section>
+      )}
+
+      {/* Appearance (desktop) */}
+      {(profile.eyeColor || profile.hairColor || profile.ethnicity) && (
+        <Card className="hidden lg:block">
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
               <Palette className="h-4 w-4" />
@@ -379,9 +476,44 @@ export default async function PublicProfilePage({
         </div>
       )}
 
-      {/* Social links */}
+      {/* Social links — mobile: iOS rows */}
       {canSeeSocials && (profile.instagramUrl || profile.tiktokUrl || profile.websiteUrl) && (
-        <Card>
+        <section className="lg:hidden">
+          <p className="text-eyebrow mb-3">{t("socialTitle")}</p>
+          <ul className="hairline-t">
+            {[
+              profile.instagramUrl
+                ? { href: profile.instagramUrl, label: "Instagram", icon: Instagram }
+                : null,
+              profile.tiktokUrl
+                ? { href: profile.tiktokUrl, label: "TikTok", icon: Music2 }
+                : null,
+              profile.websiteUrl
+                ? { href: profile.websiteUrl, label: t("website"), icon: Globe2 }
+                : null,
+            ]
+              .filter((l): l is { href: string; label: string; icon: typeof Instagram } => !!l)
+              .map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex min-h-14 items-center gap-3 hairline-b px-1 text-[15px] text-[var(--ink)] transition-colors active:bg-[var(--bg-soft)]"
+                  >
+                    <link.icon className="h-[18px] w-[18px] shrink-0 text-[var(--ink-2)]" />
+                    <span className="min-w-0 flex-1 truncate">{link.label}</span>
+                    <ArrowUpRight className="h-4 w-4 shrink-0 text-[var(--ink-3)]" />
+                  </a>
+                </li>
+              ))}
+          </ul>
+        </section>
+      )}
+
+      {/* Social links (desktop) */}
+      {canSeeSocials && (profile.instagramUrl || profile.tiktokUrl || profile.websiteUrl) && (
+        <Card className="hidden lg:block">
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
               <Globe2 className="h-4 w-4" />
@@ -439,6 +571,27 @@ export default async function PublicProfilePage({
       <p className="text-xs text-[var(--ink-3)]">
         {t("memberSince")} {formatDate(profile.user.createdAt, lang)}
       </p>
+
+      {/* Thumb-zone primary action (mobile) */}
+      {showActionBar && (
+        <MobileActionBar>
+          {isScout ? (
+            <PublicProfileContactButton
+              modelProfileId={profile.id}
+              modelName={displayName ?? "Model"}
+              locale={locale}
+              existingConversationId={existingConversationId}
+              contactRequestStatus={contactRequestStatus}
+              size="lg"
+              className="w-full"
+            />
+          ) : (
+            <Button size="lg" className="w-full" asChild>
+              <Link href={`/${locale}/login`}>{t("loginToContact")}</Link>
+            </Button>
+          )}
+        </MobileActionBar>
+      )}
     </div>
   );
 }
