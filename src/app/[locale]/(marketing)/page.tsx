@@ -4,7 +4,6 @@ import { getTranslations, getLocale } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { CinematicHero } from "@/components/landing/cinematic-hero";
-import { EditorialTicker } from "@/components/landing/editorial-ticker";
 import { AudienceDoors } from "@/components/landing/audience-doors";
 import { StickyCta } from "@/components/landing/sticky-cta";
 import { FeaturedProfiles } from "@/components/landing/featured-profiles";
@@ -51,12 +50,11 @@ export default async function LandingPage() {
     <>
       <HeroToneSetter tone="dark" />
 
-      {/* ───────── HERO — cinematic Atelier Noir cover ───────── */}
-      <CinematicHero heroSrc={heroSrc} />
-
-      {/* ───────── TICKER — outlined city masthead strip ───────── */}
-      <EditorialTicker
-        items={["Milano", "Roma", "Firenze", "Torino", "Napoli", "Venezia"]}
+      {/* ───────── HERO — "Aperture": photo-first app cover ───────── */}
+      <CinematicHero
+        heroSrc={heroSrc}
+        scoutCount={scoutCount}
+        modelCount={modelCount}
       />
 
       {/* ───────── PER CHI È — three audiences as photographic doors ───────── */}

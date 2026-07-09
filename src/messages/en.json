@@ -115,9 +115,17 @@
     "roleStudio": "Studio"
   },
   "landing": {
-    "coverV2": {
-      "line1": "New faces",
-      "line2": "for Italian fashion."
+    "heroV3": {
+      "chip": "{count} verified scouts",
+      "chipFallback": "Verified scouts",
+      "h1a": "New faces.",
+      "h1b": "Real scouts.",
+      "sub": "Models, scouts and photo studios. One platform, verified.",
+      "ctaPrimary": "Create your profile",
+      "ctaSecondary": "See how it works",
+      "statsModels": "{count}+ models",
+      "statsRegions": "20 regions",
+      "statsStudios": "50 partner studios"
     },
     "cover": {
       "masthead": "Scoutica · Italy",

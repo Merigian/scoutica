@@ -5,19 +5,34 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
-import { RevealText } from "@/components/motion/reveal-text";
+import { ArrowUpRight, BadgeCheck } from "lucide-react";
 
 /**
- * The cover. A cinematic full-bleed portrait with the editorial statement
- * itself as the masthead: the giant Didone headline is set high in the sky of
- * the photograph (no brand wordmark — the nav already carries it), the
- * supporting copy and CTAs dock at the base behind a film-grain pass.
- * Layered parallax (image vs. statement) collapses cleanly under
- * prefers-reduced-motion.
+ * "Aperture" — the hero as the opening screen of a flagship iOS app. The
+ * photograph owns the frame; every word of UI lives in ONE in-flow content
+ * group docked to the base (flex justify-end), so on short viewports the
+ * section GROWS instead of clipping and nothing can slide under the fixed
+ * nav. The anti-collision invariant: all copy and CTAs share a single motion
+ * group — intra-content collisions are impossible regardless of scroll
+ * direction; the image is a background layer the group may pass over.
+ *
+ * Entrances are CSS keyframes (server HTML is never invisible — LCP, no-JS
+ * and first-paint reduced-motion stay correct); Framer handles only the
+ * scroll physics (image reveal drift + group lift/fade, with visibility
+ * gating so a faded group is never clickable) and the press springs.
+ * The hero is photo-dark in BOTH themes, so accents are hardcoded (#C8A566)
+ * rather than theme tokens that would flip.
  */
-export function CinematicHero({ heroSrc }: { heroSrc: string }) {
-  const t = useTranslations("landing");
+export function CinematicHero({
+  heroSrc,
+  scoutCount = 0,
+  modelCount = 0,
+}: {
+  heroSrc: string;
+  scoutCount?: number;
+  modelCount?: number;
+}) {
+  const t = useTranslations("landing.heroV3");
   const reduce = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
 
@@ -25,146 +40,138 @@ export function CinematicHero({ heroSrc }: { heroSrc: string }) {
     target: ref,
     offset: ["start start", "end start"],
   });
-  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
-  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
-  const headY = useTransform(scrollYProgress, [0, 1], ["0%", "34%"]);
-  const headOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
+  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
+  const groupY = useTransform(scrollYProgress, [0, 1], [0, -32]);
+  const groupOpacity = useTransform(scrollYProgress, [0, 0.45], [1, 0]);
+  // A faded group must not remain tappable/focusable over the bare photo.
+  const groupVisibility = useTransform(groupOpacity, (v) =>
+    v < 0.03 ? "hidden" : "visible",
+  );
 
   return (
     <section
       ref={ref}
       id="top"
-      className="relative w-full min-h-[100svh] overflow-hidden bg-[#0A0A0B]"
+      className="relative flex min-h-[100svh] w-full flex-col justify-end overflow-hidden bg-[#0A0A0B]"
     >
-      {/* Cover photograph */}
+      {/* Cover photograph — scroll drift (Framer) wraps a CSS Ken Burns settle */}
       <motion.div
         className="absolute inset-0"
-        style={reduce ? undefined : { y: imgY, scale: imgScale }}
+        style={reduce ? undefined : { y: imgY }}
+        aria-hidden="true"
       >
-        <Image
-          src={heroSrc}
-          alt=""
-          fill
-          priority
-          quality={82}
-          sizes="100vw"
-          className="object-cover object-[62%_30%] md:object-[54%_24%]"
-        />
+        <div className="hero-settle absolute inset-0">
+          <Image
+            src={heroSrc}
+            alt=""
+            fill
+            priority
+            quality={82}
+            sizes="100vw"
+            className="object-cover object-[68%_22%] md:object-[54%_30%]"
+          />
+        </div>
       </motion.div>
 
-      {/* Legibility scrims — soft at the top for the statement, deep at the base */}
+      {/* Scrims — a whisper under the fixed nav, a deep base under the stack */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 z-[4] h-[46%] bg-gradient-to-b from-black/45 to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 z-[4] h-28 bg-gradient-to-b from-black/35 to-transparent"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-[62%] bg-gradient-to-t from-black/90 via-black/30 to-transparent"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-[68%] bg-gradient-to-t from-black/85 via-black/40 to-transparent"
       />
-      {/* Film grain — the tactile print pass */}
-      <div aria-hidden="true" className="noir-grain absolute inset-0 z-[6]" />
 
-      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1440px] flex-col px-6 sm:px-10 lg:px-12">
-        {/* Statement set into the sky */}
-        <motion.div
-          className="pt-[calc(env(safe-area-inset-top)+6.25rem)] lg:pt-[calc(env(safe-area-inset-top)+8.5rem)]"
-          style={reduce ? undefined : { y: headY, opacity: headOpacity }}
+      {/* The single content group — in-flow, so short viewports grow the section */}
+      <motion.div
+        className="relative z-10 mx-auto w-full max-w-[1440px] pt-28 pb-[calc(env(safe-area-inset-bottom)+16px)] pl-[max(1.25rem,env(safe-area-inset-left))] pr-[max(1.25rem,env(safe-area-inset-right))] sm:pl-[max(2.5rem,env(safe-area-inset-left))] sm:pr-[max(2.5rem,env(safe-area-inset-right))] lg:pl-[max(3rem,env(safe-area-inset-left))] lg:pr-[max(3rem,env(safe-area-inset-right))] lg:pb-16"
+        style={
+          reduce
+            ? undefined
+            : { y: groupY, opacity: groupOpacity, visibility: groupVisibility }
+        }
+      >
+        {/* Gilt hairline — the one ornament */}
+        <span
+          aria-hidden="true"
+          className="hero-rule mb-4 block h-px w-8 bg-[#C8A566]"
+        />
+
+        {/* Trust chip — the objection handled before the ask */}
+        <p
+          className="hero-rise inline-flex h-7 items-center gap-1.5 border border-white/25 bg-black/30 px-3 font-label text-[11px] uppercase tracking-[0.14em] text-white/90 backdrop-blur-md"
+          style={{ "--rise-delay": "0.15s" } as React.CSSProperties}
         >
-          <motion.p
-            className="flex items-center gap-3 font-label text-[11px] uppercase tracking-[0.28em] text-white/75"
-            initial={reduce ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-          >
-            <span className="h-px w-8 bg-[var(--gilt)]" aria-hidden="true" />
-            {t("cover.manifestoTop")}
-          </motion.p>
+          <BadgeCheck className="h-3.5 w-3.5 text-[#C8A566]" aria-hidden="true" />
+          {scoutCount >= 50 ? t("chip", { count: scoutCount }) : t("chipFallback")}
+        </p>
 
-          <h1 className="mt-5 font-display font-light leading-[0.96] tracking-[-0.03em] text-white text-[clamp(2.9rem,11.5vw,8.25rem)]">
-            <RevealText
-              as="span"
-              text={t("coverV2.line1")}
-              className="block max-w-[10ch]"
-              delay={0.2}
-            />
-            <RevealText
-              as="span"
-              text={t("coverV2.line2")}
-              className="block max-w-[10ch] italic"
-              delay={0.4}
-            />
-          </h1>
-        </motion.div>
-
-        {/* Supporting copy + actions docked at the base */}
-        <motion.div
-          className="mt-auto pb-[clamp(3.5rem,8vh,6rem)]"
-          style={reduce ? undefined : { y: contentY, opacity: contentOpacity }}
+        {/* Four words. */}
+        <h1
+          className="hero-rise mt-3.5 font-display font-normal leading-[1.02] tracking-[-0.02em] text-white text-[clamp(2rem,min(9.6vw,13svh),4.5rem)]"
+          style={{ "--rise-delay": "0.22s" } as React.CSSProperties}
         >
-          <motion.p
-            className="max-w-[44ch] text-[clamp(1rem,1.6vw,1.2rem)] leading-relaxed text-white/75"
-            initial={reduce ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.75 }}
-          >
-            {t("hero.subtitle")}
-          </motion.p>
+          {t("h1a")}
+          <br />
+          <em className="font-light">{t("h1b")}</em>
+        </h1>
 
+        {/* Sub-copy — two tight lines on phones, one line at lg */}
+        <p
+          className="hero-rise mt-2.5 max-w-[30ch] text-[clamp(0.9375rem,1.2vw,1.0625rem)] leading-[1.5] text-white/80 lg:max-w-[60ch]"
+          style={{ "--rise-delay": "0.29s" } as React.CSSProperties}
+        >
+          {t("sub")}
+        </p>
+
+        {/* Action stack — full-width thumb zone on phones, inline row at lg */}
+        <div
+          className="hero-rise mt-5 flex flex-col gap-1.5 [@media(max-height:700px)]:mt-4 lg:mt-7 lg:flex-row lg:items-center lg:gap-0"
+          style={{ "--rise-delay": "0.36s" } as React.CSSProperties}
+        >
           <motion.div
-            className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4"
-            initial={reduce ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
+            whileTap={reduce ? undefined : { scale: 0.97 }}
+            transition={{ type: "spring", stiffness: 600, damping: 32 }}
+            className="lg:w-auto"
           >
             <Link
               href="/register"
-              className="group inline-flex min-h-[52px] items-center gap-3 bg-white px-8 py-4 font-label text-[12px] uppercase tracking-[0.2em] text-black transition-[background-color,transform] duration-300 hover:bg-white/[0.88] active:scale-[0.985]"
+              className="flex h-[54px] w-full items-center justify-center gap-2 bg-white px-10 text-[16px] font-semibold text-black transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-white active:bg-[#E9E7E2] [@media(max-height:700px)]:h-12 lg:h-14 lg:w-auto"
             >
-              {t("cta.button")}
-              <ArrowUpRight className="h-4 w-4 group-arrow" aria-hidden="true" />
+              {t("ctaPrimary")}
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
             </Link>
+          </motion.div>
+          <motion.div
+            whileTap={reduce ? undefined : { opacity: 0.55 }}
+            transition={{ duration: 0.1 }}
+            className="lg:ml-6"
+          >
             <a
               href="#per-chi-e"
-              className="group inline-flex min-h-[44px] items-center py-2 font-label text-[12px] uppercase tracking-[0.18em] text-white/85 transition-colors duration-300 hover:text-white"
+              className="flex h-11 w-full items-center justify-center text-[15px] font-medium text-white/80 transition-colors duration-200 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-white [@media(max-height:700px)]:h-10 lg:w-auto lg:justify-start"
             >
-              <span className="link-underline">{t("audience.discover")}</span>
+              {t("ctaSecondary")}
             </a>
           </motion.div>
 
-          {/* Editorial colophon */}
-          <motion.div
-            className="mt-9 flex items-baseline justify-between gap-4 border-t border-white/15 pt-4"
-            initial={reduce ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.1 }}
-          >
-            <p className="font-label text-[10px] uppercase tracking-[0.24em] text-white/55">
-              {t("cover.reach")}
-            </p>
-            <p
-              aria-hidden="true"
-              className="hidden font-label text-[10px] uppercase tracking-[0.24em] text-white/45 sm:block"
-            >
-              Milano · 45°28′ N — 9°11′ E
-            </p>
-          </motion.div>
-        </motion.div>
-
-        {/* Scroll cue */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-5 hidden justify-center sm:flex">
-          <motion.span
-            aria-hidden="true"
-            className="h-10 w-px bg-white/40"
-            style={{ transformOrigin: "top" }}
-            animate={
-              reduce ? undefined : { scaleY: [0.35, 1, 0.35], opacity: [0.3, 0.7, 0.3] }
-            }
-            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-          />
+          {/* Desktop-only stats caption, same baseline, same motion unit */}
+          <p className="hidden font-label text-[11px] uppercase tracking-[0.2em] text-white/55 lg:ml-auto lg:block">
+            {modelCount >= 100 && (
+              <>
+                <span className="tabular-nums">
+                  {t("statsModels", { count: modelCount })}
+                </span>
+                <span aria-hidden="true"> · </span>
+              </>
+            )}
+            {t("statsRegions")}
+            <span aria-hidden="true"> · </span>
+            {t("statsStudios")}
+          </p>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -115,9 +115,17 @@
     "roleStudio": "Studio"
   },
   "landing": {
-    "coverV2": {
-      "line1": "Nuovi volti",
-      "line2": "per la moda italiana."
+    "heroV3": {
+      "chip": "{count} scout verificati",
+      "chipFallback": "Scout verificati",
+      "h1a": "Nuovi volti.",
+      "h1b": "Scout veri.",
+      "sub": "Modelli, scout e studi fotografici. Una sola piattaforma, verificata.",
+      "ctaPrimary": "Crea il tuo profilo",
+      "ctaSecondary": "Scopri come funziona",
+      "statsModels": "{count}+ modelli",
+      "statsRegions": "20 regioni",
+      "statsStudios": "50 studi partner"
     },
     "cover": {
       "masthead": "Scoutica · Italia",
