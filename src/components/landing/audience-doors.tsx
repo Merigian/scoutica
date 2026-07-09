@@ -34,8 +34,8 @@ export async function AudienceDoors() {
     },
     {
       href: "/register/studio",
-      img: "/images/chi-siamo.JPG",
-      pos: "object-[52%_28%]",
+      img: "/images/studio-affitto.jpg",
+      pos: "object-center",
       label: t("features.forStudio"),
       title: t("hero.ctaStudio"),
       desc: t("hero.ctaStudioDesc"),
